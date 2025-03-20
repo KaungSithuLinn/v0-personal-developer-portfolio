@@ -38,6 +38,21 @@ export default function About() {
     },
   ]
 
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  }
+
+  const item = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0 },
+  }
+
   return (
     <section
       id="about"
@@ -72,20 +87,41 @@ export default function About() {
               at James Cook University Singapore, where I continue to expand my expertise in data analytics and AI
               applications.
             </p>
+
+            <motion.div
+              className="mt-8 p-4 border-l-4 border-blue-500 bg-blue-50 dark:bg-blue-900/20 dark:border-blue-400 rounded"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+            >
+              <p className="italic text-gray-700 dark:text-gray-300">
+                "I believe in creating technology that not only solves problems but enhances human experiences. My goal
+                is to build secure, efficient, and user-friendly solutions that make a real difference."
+              </p>
+            </motion.div>
           </motion.div>
+
           <motion.div
             className="md:w-1/2 grid grid-cols-2 gap-6"
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            variants={container}
+            initial="hidden"
+            whileInView="show"
             viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
           >
             {skills.map((skill, index) => (
-              <div key={index} className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
+              <motion.div
+                key={index}
+                className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
+                variants={item}
+                whileHover={{ scale: 1.03 }}
+                role="group"
+                aria-label={`${skill.title} skills: ${skill.description}`}
+              >
                 {skill.icon}
                 <h3 className="text-xl font-semibold mt-4 mb-2 dark:text-white">{skill.title}</h3>
                 <p className="text-gray-600 dark:text-gray-300">{skill.description}</p>
-              </div>
+              </motion.div>
             ))}
           </motion.div>
         </div>

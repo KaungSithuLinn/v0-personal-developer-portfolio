@@ -1,8 +1,9 @@
 "use client"
 
 import Image from "next/image"
-import { Github, Linkedin, Mail, ArrowDown, ExternalLink } from "lucide-react"
+import { Github, Linkedin, Mail, ArrowDown, ExternalLink, Download, ChevronRight } from "lucide-react"
 import { motion } from "framer-motion"
+import Logo from "./Logo"
 
 const CodePattern = () => (
   <svg className="absolute inset-0 w-full h-full opacity-5" xmlns="http://www.w3.org/2000/svg">
@@ -45,6 +46,24 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
+            <div className="flex items-center justify-center lg:justify-start mb-6">
+              <Logo size={50} />
+              <motion.div
+                className="ml-4 h-8 w-1 bg-gradient-to-b from-blue-500 to-purple-500"
+                initial={{ height: 0 }}
+                animate={{ height: 32 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+              />
+              <motion.h2
+                className="ml-4 text-xl text-gray-600 dark:text-gray-400 italic"
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: 0.5 }}
+              >
+                Crafting Digital Solutions
+              </motion.h2>
+            </div>
+
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400">
               Kaung Sithu Linn
             </h1>
@@ -56,12 +75,13 @@ export default function Hero() {
               thorough testing, and delivering high-quality applications that meet complex requirements. Specializing in
               POS systems, fraud detection, and behavioral biometrics.
             </p>
-            <div className="flex justify-center lg:justify-start space-x-4 mb-8">
+
+            <div className="flex flex-wrap justify-center lg:justify-start gap-4 mb-8">
               <a
                 href="https://github.com/KaungSithuLinn"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-3 rounded-full bg-white/80 hover:bg-white dark:bg-gray-800/80 dark:hover:bg-gray-800 transition-colors duration-300 shadow-lg hover:shadow-xl"
+                className="p-3 rounded-full bg-white/80 hover:bg-white dark:bg-gray-800/80 dark:hover:bg-gray-800 transition-colors duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 transform transition-transform"
                 aria-label="GitHub Profile"
               >
                 <Github className="w-6 h-6 text-gray-700 dark:text-gray-300" />
@@ -70,14 +90,14 @@ export default function Hero() {
                 href="https://linkedin.com/in/kaung-sithu-linn-7933781a5"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-3 rounded-full bg-white/80 hover:bg-white dark:bg-gray-800/80 dark:hover:bg-gray-800 transition-colors duration-300 shadow-lg hover:shadow-xl"
+                className="p-3 rounded-full bg-white/80 hover:bg-white dark:bg-gray-800/80 dark:hover:bg-gray-800 transition-colors duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 transform transition-transform"
                 aria-label="LinkedIn Profile"
               >
                 <Linkedin className="w-6 h-6 text-gray-700 dark:text-gray-300" />
               </a>
               <a
                 href="mailto:kaungsithulinn1@gmail.com"
-                className="p-3 rounded-full bg-white/80 hover:bg-white dark:bg-gray-800/80 dark:hover:bg-gray-800 transition-colors duration-300 shadow-lg hover:shadow-xl"
+                className="p-3 rounded-full bg-white/80 hover:bg-white dark:bg-gray-800/80 dark:hover:bg-gray-800 transition-colors duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 transform transition-transform"
                 aria-label="Email Contact"
               >
                 <Mail className="w-6 h-6 text-gray-700 dark:text-gray-300" />
@@ -86,21 +106,43 @@ export default function Hero() {
                 href="https://cp3405.pages.dev/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-3 rounded-full bg-white/80 hover:bg-white dark:bg-gray-800/80 dark:hover:bg-gray-800 transition-colors duration-300 shadow-lg hover:shadow-xl"
+                className="p-3 rounded-full bg-white/80 hover:bg-white dark:bg-gray-800/80 dark:hover:bg-gray-800 transition-colors duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 transform transition-transform"
                 aria-label="Portfolio Website"
               >
                 <ExternalLink className="w-6 h-6 text-gray-700 dark:text-gray-300" />
               </a>
+              <a
+                href="/KaungSithuLinn_SoftwareDeveloper_Resume.pdf"
+                download
+                className="flex items-center gap-2 px-4 py-2 bg-white/80 hover:bg-white dark:bg-gray-800/80 dark:hover:bg-gray-800 rounded-full transition-colors duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 transform transition-transform text-gray-700 dark:text-gray-300"
+                aria-label="Download Resume"
+              >
+                <Download className="w-5 h-5" />
+                <span>Resume</span>
+              </a>
             </div>
-            <motion.button
-              onClick={() => document.getElementById("about")?.scrollIntoView({ behavior: "smooth" })}
-              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full hover:from-blue-700 hover:to-purple-700 transition-all duration-300 shadow-lg hover:shadow-xl"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Learn More
-              <ArrowDown className="w-4 h-4" />
-            </motion.button>
+
+            <div className="flex flex-wrap gap-4 justify-center lg:justify-start mb-8">
+              <motion.button
+                onClick={() => document.getElementById("about")?.scrollIntoView({ behavior: "smooth" })}
+                className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full hover:from-blue-700 hover:to-purple-700 transition-all duration-300 shadow-lg hover:shadow-xl"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Learn More
+                <ArrowDown className="w-4 h-4" />
+              </motion.button>
+
+              <motion.button
+                onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
+                className="inline-flex items-center gap-2 px-6 py-3 border-2 border-blue-600 dark:border-blue-400 text-blue-600 dark:text-blue-400 rounded-full hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-all duration-300"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Contact Me
+                <ChevronRight className="w-4 h-4" />
+              </motion.button>
+            </div>
           </motion.div>
 
           <motion.div
@@ -111,22 +153,43 @@ export default function Hero() {
           >
             <div className="relative w-72 h-72 md:w-96 md:h-96 mx-auto">
               {/* Decorative gradient backgrounds */}
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-400 dark:from-blue-600 dark:to-purple-600 rounded-3xl transform rotate-6 opacity-50"></div>
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-blue-400 dark:from-purple-600 dark:to-blue-600 rounded-3xl transform -rotate-6 opacity-50"></div>
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-400 dark:from-blue-600 dark:to-purple-600 rounded-3xl transform rotate-6 opacity-50"
+                animate={{
+                  rotate: [6, 8, 6, 4, 6],
+                  scale: [1, 1.02, 1, 0.98, 1],
+                }}
+                transition={{
+                  duration: 10,
+                  repeat: Number.POSITIVE_INFINITY,
+                  ease: "easeInOut",
+                }}
+              />
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-purple-400 to-blue-400 dark:from-purple-600 dark:to-blue-600 rounded-3xl transform -rotate-6 opacity-50"
+                animate={{
+                  rotate: [-6, -4, -6, -8, -6],
+                  scale: [1, 0.98, 1, 1.02, 1],
+                }}
+                transition={{
+                  duration: 10,
+                  repeat: Number.POSITIVE_INFINITY,
+                  ease: "easeInOut",
+                }}
+              />
 
               {/* Image container with explicit styling */}
               <div className="absolute inset-0 m-4 rounded-2xl overflow-hidden shadow-2xl" style={{ zIndex: 30 }}>
                 <div className="relative w-full h-full">
                   <Image
                     src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/KSTL%20Headshot%20Portrait.jpg-gxu4RedFPcOzqK3iU0lk96P56KVoZL.jpeg"
-                    alt="Kaung Sithu Linn"
+                    alt="Kaung Sithu Linn - Software Developer"
                     fill
                     sizes="(max-width: 768px) 100vw, 50vw"
                     className="object-cover object-center"
                     priority
                     onError={(e) => {
                       console.error("Image failed to load")
-                      // Fallback to a placeholder if the image fails to load
                       e.currentTarget.src = "/placeholder.svg?height=400&width=400"
                     }}
                   />
