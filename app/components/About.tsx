@@ -1,7 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Code, Database, Server, Zap, Globe, Brain } from "lucide-react"
+import { Code, Database, Server, Globe, Brain, TrendingUp } from "lucide-react"
 import Image from "next/image"
 
 export default function About() {
@@ -27,14 +27,14 @@ export default function About() {
       description: "Behavioral Biometrics, Deep Learning",
     },
     {
-      icon: <Globe className="w-8 h-8 text-red-500" />,
-      title: "Languages",
-      description: "English, Burmese, Chinese, Japanese",
+      icon: <TrendingUp className="w-8 h-8 text-red-500" />,
+      title: "Digital Marketing",
+      description: "SEO, Analytics, Content Strategy",
     },
     {
-      icon: <Zap className="w-8 h-8 text-indigo-500" />,
-      title: "Soft Skills",
-      description: "Problem-solving, Communication, Research",
+      icon: <Globe className="w-8 h-8 text-indigo-500" />,
+      title: "Languages",
+      description: "English, Burmese, Chinese, Japanese",
     },
   ]
 
@@ -83,9 +83,10 @@ export default function About() {
             </p>
             <p className="text-xl text-gray-700 dark:text-gray-300 leading-relaxed">
               My recent research focuses on cutting-edge behavioral biometrics and fraud detection using machine
-              learning. I'm currently pursuing my Master's in Information Technology with a Business Informatics major
-              at James Cook University Singapore, where I continue to expand my expertise in data analytics and AI
-              applications.
+              learning. I'm also certified in digital marketing fundamentals, allowing me to bridge technical
+              development with effective market strategies. I'm currently pursuing my Master's in Information Technology
+              with a Business Informatics major at James Cook University Singapore, where I continue to expand my
+              expertise in data analytics and AI applications.
             </p>
 
             <motion.div

@@ -10,11 +10,12 @@ const inter = Inter({ subsets: ["latin"] })
 export const metadata = {
   title: "Kaung Sithu Linn - Software Developer | Behavioral Biometrics Specialist",
   description:
-    "Portfolio of Kaung Sithu Linn, a Software Developer specializing in POS systems, fraud detection, and behavioral biometrics with 4+ years of experience.",
-  keywords: "Software Developer, Behavioral Biometrics, Fraud Detection, POS Systems, Machine Learning, Singapore",
+    "Portfolio of Kaung Sithu Linn, a Software Developer specializing in POS systems, fraud detection, behavioral biometrics, and digital marketing with 4+ years of experience.",
+  keywords:
+    "Software Developer, Behavioral Biometrics, Fraud Detection, POS Systems, Machine Learning, Digital Marketing, Singapore",
   openGraph: {
     title: "Kaung Sithu Linn - Software Developer",
-    description: "Specializing in POS systems, fraud detection, and behavioral biometrics",
+    description: "Specializing in POS systems, fraud detection, behavioral biometrics, and digital marketing",
     url: "https://kaungsithulinn.com",
     siteName: "Kaung Sithu Linn Portfolio",
     images: [
@@ -73,6 +74,19 @@ export default function RootLayout({
                 "Fraud Detection",
                 "POS Systems",
                 "Machine Learning",
+                "Digital Marketing",
+              ],
+              hasCredential: [
+                {
+                  "@type": "EducationalOccupationalCredential",
+                  name: "The Fundamentals of Digital Marketing",
+                  credentialCategory: "Certificate",
+                  recognizedBy: {
+                    "@type": "Organization",
+                    name: "Google Digital Garage",
+                  },
+                  dateCreated: "2023-04-03",
+                },
               ],
               image:
                 "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/KSTL%20Headshot%20Portrait.jpg-gxu4RedFPcOzqK3iU0lk96P56KVoZL.jpeg",

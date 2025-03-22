@@ -1,11 +1,14 @@
 "use client"
 
-import { GraduationCap, Calendar, Award, BookOpen } from "lucide-react"
+import { useState } from "react"
+import { GraduationCap, Calendar, Award, BookOpen, ExternalLink, Check } from "lucide-react"
 import Image from "next/image"
 import AnimatedSectionHeader from "./AnimatedSectionHeader"
 import { motion } from "framer-motion"
 
 export default function Education() {
+  const [expandedCert, setExpandedCert] = useState<number | null>(null)
+
   const education = [
     {
       degree: "Master of Information Technology (Business Informatics)",
@@ -41,14 +44,38 @@ export default function Education() {
 
   const certifications = [
     {
+      title: "The Fundamentals of Digital Marketing",
+      issuer: "Google Digital Garage",
+      date: "April 3, 2023",
+      image: "/images/digitalgarage_certificate.jpg",
+      verificationUrl: "https://learndigital.withgoogle.com/link/1qsdpcedm9s",
+      certId: "FMA TTQ H4J",
+      description:
+        "Comprehensive certification covering digital marketing fundamentals, including search engine optimization, social media marketing, and analytics.",
+    },
+    {
       title: "Bachelor of Information Technology",
       issuer: "James Cook University Singapore",
+      date: "February 2024",
+      description:
+        "Degree certification in Information Technology with focus on software development and system design.",
     },
     {
       title: "Google Data Analytics",
       issuer: "Google",
+      date: "2023",
+      description:
+        "Professional certification covering data analysis, visualization, and interpretation using Google's analytics tools.",
     },
   ]
+
+  const toggleCertificate = (index: number) => {
+    if (expandedCert === index) {
+      setExpandedCert(null)
+    } else {
+      setExpandedCert(index)
+    }
+  }
 
   return (
     <section
@@ -106,11 +133,103 @@ export default function Education() {
               <BookOpen className="w-6 h-6 mr-2" />
               Certifications
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-6">
               {certifications.map((cert, index) => (
-                <div key={index} className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
-                  <h4 className="font-medium dark:text-white">{cert.title}</h4>
-                  <p className="text-gray-600 dark:text-gray-400">{cert.issuer}</p>
+                <div
+                  key={index}
+                  className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden transition-all duration-300"
+                >
+                  <div
+                    className="p-4 bg-gray-50 dark:bg-gray-800 cursor-pointer flex justify-between items-center"
+                    onClick={() => toggleCertificate(index)}
+                  >
+                    <div>
+                      <h4 className="font-medium dark:text-white text-lg">{cert.title}</h4>
+                      <div className="flex items-center text-gray-600 dark:text-gray-400 text-sm mt-1">
+                        <span>{cert.issuer}</span>
+                        <span className="mx-2">•</span>
+                        <span>{cert.date}</span>
+                      </div>
+                    </div>
+                    <button
+                      className="p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                      aria-label={
+                        expandedCert === index ? "Collapse certificate details" : "Expand certificate details"
+                      }
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className={`h-5 w-5 transition-transform duration-300 ${expandedCert === index ? "transform rotate-180" : ""}`}
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+                  </div>
+
+                  <div
+                    className={`overflow-hidden transition-all duration-300 ${
+                      expandedCert === index ? "max-h-[2000px]" : "max-h-0"
+                    }`}
+                  >
+                    <div className="p-4 border-t border-gray-200 dark:border-gray-700">
+                      <p className="text-gray-700 dark:text-gray-300 mb-4">{cert.description}</p>
+
+                      {cert.image && (
+                        <div className="mb-4">
+                          <div className="relative w-full h-[400px] rounded-lg overflow-hidden shadow-md mb-4">
+                            <Image
+                              src={cert.image || "/placeholder.svg"}
+                              alt={`${cert.title} Certificate`}
+                              fill
+                              className="object-contain"
+                            />
+                          </div>
+
+                          {cert.verificationUrl && cert.certId && (
+                            <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
+                              <h5 className="font-medium text-blue-700 dark:text-blue-300 mb-2 flex items-center">
+                                <Check className="w-4 h-4 mr-2" /> Verification Details
+                              </h5>
+                              <p className="text-gray-700 dark:text-gray-300 mb-2">
+                                Verify the authenticity of this certificate at:
+                                <a
+                                  href={cert.verificationUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-blue-600 dark:text-blue-400 ml-1 inline-flex items-center hover:underline"
+                                >
+                                  {cert.verificationUrl.replace("https://", "")}
+                                  <ExternalLink className="w-3 h-3 ml-1" />
+                                </a>
+                              </p>
+                              <p className="text-gray-700 dark:text-gray-300">
+                                Certificate ID:{" "}
+                                <span className="font-mono bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-sm">
+                                  {cert.certId}
+                                </span>
+                              </p>
+                            </div>
+                          )}
+                        </div>
+                      )}
+
+                      <div className="flex justify-end">
+                        {cert.verificationUrl && (
+                          <a
+                            href={cert.verificationUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center text-blue-600 dark:text-blue-400 hover:underline"
+                          >
+                            Verify Certificate <ExternalLink className="w-4 h-4 ml-1" />
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>
