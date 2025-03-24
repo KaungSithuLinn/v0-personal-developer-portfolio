@@ -28,6 +28,7 @@ export default function Education() {
         "Focused on software development and system design",
         "Completed projects in user interface design and application development",
         "Gained expertise in multiple programming languages and frameworks",
+        "Conferred on March 7, 2024 with a GPA of 5.27",
       ],
     },
     {
@@ -44,6 +45,15 @@ export default function Education() {
 
   const certifications = [
     {
+      title: "Bachelor of Information Technology",
+      issuer: "James Cook University Singapore",
+      date: "March 7, 2024",
+      image: "/images/BACHELOR_OF_INFORMATION_TECHNOLOGY_Testamur.jpg",
+      description:
+        "Official testamur for the Bachelor of Information Technology degree, conferred on March 7, 2024. The degree provides a comprehensive foundation in information technology concepts, programming, database design, and system development.",
+      verificationMessage: "Verification details are not available for this testamur.",
+    },
+    {
       title: "The Fundamentals of Digital Marketing",
       issuer: "Google Digital Garage",
       date: "April 3, 2023",
@@ -52,13 +62,6 @@ export default function Education() {
       certId: "FMA TTQ H4J",
       description:
         "Comprehensive certification covering digital marketing fundamentals, including search engine optimization, social media marketing, and analytics.",
-    },
-    {
-      title: "Bachelor of Information Technology",
-      issuer: "James Cook University Singapore",
-      date: "February 2024",
-      description:
-        "Degree certification in Information Technology with focus on software development and system design.",
     },
     {
       title: "Google Data Analytics",
@@ -131,7 +134,7 @@ export default function Education() {
           >
             <h3 className="text-2xl font-semibold mb-6 dark:text-white flex items-center">
               <BookOpen className="w-6 h-6 mr-2" />
-              Certifications
+              Certifications & Testamurs
             </h3>
             <div className="space-y-6">
               {certifications.map((cert, index) => (
@@ -179,7 +182,7 @@ export default function Education() {
 
                       {cert.image && (
                         <div className="mb-4">
-                          <div className="relative w-full h-[400px] rounded-lg overflow-hidden shadow-md mb-4">
+                          <div className="relative w-full h-[500px] rounded-lg overflow-hidden shadow-md mb-4">
                             <Image
                               src={cert.image || "/placeholder.svg"}
                               alt={`${cert.title} Certificate`}
@@ -211,6 +214,15 @@ export default function Education() {
                                   {cert.certId}
                                 </span>
                               </p>
+                            </div>
+                          )}
+
+                          {cert.verificationMessage && (
+                            <div className="bg-gray-50 dark:bg-gray-700/30 p-4 rounded-lg">
+                              <h5 className="font-medium text-gray-700 dark:text-gray-300 mb-2 flex items-center">
+                                <Check className="w-4 h-4 mr-2" /> Verification Information
+                              </h5>
+                              <p className="text-gray-600 dark:text-gray-400">{cert.verificationMessage}</p>
                             </div>
                           )}
                         </div>

@@ -12,7 +12,7 @@ export const metadata = {
   description:
     "Portfolio of Kaung Sithu Linn, a Software Developer specializing in POS systems, fraud detection, behavioral biometrics, and digital marketing with 4+ years of experience.",
   keywords:
-    "Software Developer, Behavioral Biometrics, Fraud Detection, POS Systems, Machine Learning, Digital Marketing, Singapore",
+    "Software Developer, Behavioral Biometrics, Fraud Detection, POS Systems, Machine Learning, Digital Marketing, Singapore, Bachelor of Information Technology",
   openGraph: {
     title: "Kaung Sithu Linn - Software Developer",
     description: "Specializing in POS systems, fraud detection, behavioral biometrics, and digital marketing",
@@ -77,6 +77,16 @@ export default function RootLayout({
                 "Digital Marketing",
               ],
               hasCredential: [
+                {
+                  "@type": "EducationalOccupationalCredential",
+                  name: "Bachelor of Information Technology",
+                  credentialCategory: "Degree",
+                  recognizedBy: {
+                    "@type": "Organization",
+                    name: "James Cook University Singapore",
+                  },
+                  dateCreated: "2024-03-07",
+                },
                 {
                   "@type": "EducationalOccupationalCredential",
                   name: "The Fundamentals of Digital Marketing",
