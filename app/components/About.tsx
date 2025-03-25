@@ -1,7 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Code, Database, Server, Zap, Globe, Brain } from "lucide-react"
+import { Code, Database, Server, Globe, Brain, TrendingUp } from "lucide-react"
 import Image from "next/image"
 
 export default function About() {
@@ -27,16 +27,31 @@ export default function About() {
       description: "Behavioral Biometrics, Deep Learning",
     },
     {
-      icon: <Globe className="w-8 h-8 text-red-500" />,
+      icon: <TrendingUp className="w-8 h-8 text-red-500" />,
+      title: "Digital Marketing",
+      description: "SEO, Analytics, Content Strategy",
+    },
+    {
+      icon: <Globe className="w-8 h-8 text-indigo-500" />,
       title: "Languages",
       description: "English, Burmese, Chinese, Japanese",
     },
-    {
-      icon: <Zap className="w-8 h-8 text-indigo-500" />,
-      title: "Soft Skills",
-      description: "Problem-solving, Communication, Research",
-    },
   ]
+
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  }
+
+  const item = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0 },
+  }
 
   return (
     <section
@@ -68,24 +83,46 @@ export default function About() {
             </p>
             <p className="text-xl text-gray-700 dark:text-gray-300 leading-relaxed">
               My recent research focuses on cutting-edge behavioral biometrics and fraud detection using machine
-              learning. I'm currently pursuing my Master's in Information Technology with a Business Informatics major
-              at James Cook University Singapore, where I continue to expand my expertise in data analytics and AI
-              applications.
+              learning. I'm also certified in digital marketing fundamentals, allowing me to bridge technical
+              development with effective market strategies. I'm currently pursuing my Master's in Information Technology
+              with a Business Informatics major at James Cook University Singapore, where I continue to expand my
+              expertise in data analytics and AI applications.
             </p>
+
+            <motion.div
+              className="mt-8 p-4 border-l-4 border-blue-500 bg-blue-50 dark:bg-blue-900/20 dark:border-blue-400 rounded"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+            >
+              <p className="italic text-gray-700 dark:text-gray-300">
+                "I believe in creating technology that not only solves problems but enhances human experiences. My goal
+                is to build secure, efficient, and user-friendly solutions that make a real difference."
+              </p>
+            </motion.div>
           </motion.div>
+
           <motion.div
             className="md:w-1/2 grid grid-cols-2 gap-6"
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            variants={container}
+            initial="hidden"
+            whileInView="show"
             viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
           >
             {skills.map((skill, index) => (
-              <div key={index} className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
+              <motion.div
+                key={index}
+                className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
+                variants={item}
+                whileHover={{ scale: 1.03 }}
+                role="group"
+                aria-label={`${skill.title} skills: ${skill.description}`}
+              >
                 {skill.icon}
                 <h3 className="text-xl font-semibold mt-4 mb-2 dark:text-white">{skill.title}</h3>
                 <p className="text-gray-600 dark:text-gray-300">{skill.description}</p>
-              </div>
+              </motion.div>
             ))}
           </motion.div>
         </div>
