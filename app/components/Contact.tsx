@@ -2,11 +2,12 @@
 
 import { useState } from "react"
 import { motion } from "framer-motion"
-import { Mail, MapPin, Phone, Send, Loader2, CheckCircle } from "lucide-react"
+import { Mail, MapPin, Phone, Send, Loader2, CheckCircle, AlertCircle } from "lucide-react"
 import Image from "next/image"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
+import { submitContactForm } from "@/app/actions/contact-actions"
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -20,6 +21,7 @@ type FormData = z.infer<typeof formSchema>
 export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitSuccess, setSubmitSuccess] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
 
   const {
     register,
@@ -32,14 +34,17 @@ export default function Contact() {
 
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true)
+    setSubmitError(null)
+
     try {
-      // Here you would typically send the form data to your backend
-      await new Promise((resolve) => setTimeout(resolve, 1000)) // Simulate API call
+      // Use the server action with timeout protection
+      await submitContactForm(data)
       setSubmitSuccess(true)
       reset()
       setTimeout(() => setSubmitSuccess(false), 5000)
     } catch (error) {
       console.error("Error submitting form:", error)
+      setSubmitError(error instanceof Error ? error.message : "Failed to submit form. Please try again.")
     } finally {
       setIsSubmitting(false)
     }
@@ -261,6 +266,16 @@ export default function Contact() {
                 >
                   <CheckCircle className="w-5 h-5 mr-2" />
                   Thank you! Your message has been sent successfully. I'll get back to you soon.
+                </motion.div>
+              )}
+              {submitError && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mt-4 p-4 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 rounded-md flex items-center"
+                >
+                  <AlertCircle className="w-5 h-5 mr-2" />
+                  {submitError}
                 </motion.div>
               )}
             </form>
