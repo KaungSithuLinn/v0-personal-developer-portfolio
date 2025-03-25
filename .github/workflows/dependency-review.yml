@@ -1,0 +1,33 @@
+name: Dependency Review
+
+on:
+  pull_request:
+    # Run only on PRs that modify package files
+    paths:
+      - 'package.json'
+      - 'package-lock.json'
+      - 'yarn.lock'
+      - 'pnpm-lock.yaml'
+
+# Add explicit permissions with least privilege
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  dependency-review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        
+      - name: Dependency Review
+        uses: actions/dependency-review-action@v3
+        with:
+          # Fail the workflow if vulnerabilities are detected
+          fail-on-severity: high
+          # Scan for vulnerabilities in dependencies being added or updated
+          deny-licenses: 'GPL-1.0-only, LGPL-2.0-only'
+          # Prevent addition of dependencies with known vulnerabilities
+          deny-vulnerable-dependencies: true
+
