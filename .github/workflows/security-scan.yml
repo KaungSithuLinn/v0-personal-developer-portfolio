@@ -28,7 +28,9 @@ jobs:
           cache: 'npm'
       
       - name: Install dependencies
-        run: npm ci
+        # First try with normal install, fallback to legacy peer deps if needed
+        run: |
+          npm ci || npm ci --legacy-peer-deps
         
       - name: Run npm audit
         run: npm audit --production
