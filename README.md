@@ -66,4 +66,4 @@ This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) f
 
 ## 📧 Contact
 
-For any inquiries or feedback, feel free to reach out via the contact form on the website or email me directly at [your-email@example.com].
+For any inquiries or feedback, feel free to reach out via the contact form on the website or email me directly at [kaungsithulinn2@outlook.com].
