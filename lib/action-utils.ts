@@ -21,4 +21,3 @@ export function withTimeout<T, Args extends any[]>(
     return Promise.race([action(...args), timeoutPromise]) as Promise<T>
   }
 }
-

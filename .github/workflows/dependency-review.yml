@@ -30,4 +30,3 @@ jobs:
           deny-licenses: 'GPL-1.0-only, LGPL-2.0-only'
           # Prevent addition of dependencies with known vulnerabilities
           deny-vulnerable-dependencies: true
-

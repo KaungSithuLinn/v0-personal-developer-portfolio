@@ -19,4 +19,3 @@ export default function AnimatedSectionHeader({ title }: AnimatedSectionHeaderPr
     </motion.h2>
   )
 }
-

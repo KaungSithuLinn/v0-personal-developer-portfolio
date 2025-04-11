@@ -60,4 +60,3 @@ async function _submitContactForm(data: z.infer<typeof formSchema>) {
 
 // Export the server action with timeout protection
 export const submitContactForm = withTimeout(_submitContactForm, 5000)
-

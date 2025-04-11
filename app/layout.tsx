@@ -32,15 +32,26 @@ export const metadata = {
     generator: 'v0.dev'
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
+        {/* Add suppressHydrationWarning to prevent console errors */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              // This script helps prevent dark mode flicker
+              try {
+                if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                  document.documentElement.classList.add('dark')
+                } else {
+                  document.documentElement.classList.remove('dark')
+                }
+              } catch (_) {}
+            `,
+          }}
+        />
       </head>
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
@@ -108,7 +119,6 @@ export default function RootLayout({
     </html>
   )
 }
-
 
 
 import './globals.css'

@@ -30,4 +30,3 @@ export default function Logo({ size = 40, className = "" }: LogoProps) {
     </motion.div>
   )
 }
-

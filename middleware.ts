@@ -42,4 +42,3 @@ export const config = {
     // Add other protected routes as needed
   ],
 }
-

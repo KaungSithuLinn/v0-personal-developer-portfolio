@@ -11,4 +11,3 @@ module.exports = {
     "date-fns": "^2.30.0",
   },
 }
-

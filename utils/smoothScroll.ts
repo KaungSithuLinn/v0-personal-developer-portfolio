@@ -7,4 +7,3 @@ export const smoothScrollTo = (elementId: string) => {
     })
   }
 }
-

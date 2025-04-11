@@ -28,4 +28,3 @@ try {
   console.error("Error generating package-lock.json:", error.message)
   process.exit(1)
 }
-

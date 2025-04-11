@@ -3,6 +3,7 @@
 import Image from "next/image"
 import { Github, Linkedin, Mail, ArrowDown, ExternalLink, Download, ChevronRight } from "lucide-react"
 import { motion } from "framer-motion"
+import { useEffect, useState } from "react"
 import Logo from "./Logo"
 
 const CodePattern = () => (
@@ -23,6 +24,13 @@ const CodePattern = () => (
 )
 
 export default function Hero() {
+  // Add this to prevent hydration mismatch
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
   return (
     <section
       id="hero"
@@ -42,22 +50,22 @@ export default function Hero() {
         <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
           <motion.div
             className="lg:w-1/2 text-center lg:text-left"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={mounted ? { opacity: 0, y: 20 } : false}
+            animate={mounted ? { opacity: 1, y: 0 } : false}
             transition={{ duration: 0.6 }}
           >
             <div className="flex items-center justify-center lg:justify-start mb-6">
               <Logo size={50} />
               <motion.div
                 className="ml-4 h-8 w-1 bg-gradient-to-b from-blue-500 to-purple-500"
-                initial={{ height: 0 }}
-                animate={{ height: 32 }}
+                initial={mounted ? { height: 0 } : false}
+                animate={mounted ? { height: 32 } : false}
                 transition={{ duration: 0.5, delay: 0.3 }}
               />
               <motion.h2
                 className="ml-4 text-xl text-gray-600 dark:text-gray-400 italic"
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
+                initial={mounted ? { opacity: 0, x: -10 } : false}
+                animate={mounted ? { opacity: 1, x: 0 } : false}
                 transition={{ duration: 0.5, delay: 0.5 }}
               >
                 Crafting Digital Solutions
@@ -126,8 +134,8 @@ export default function Hero() {
               <motion.button
                 onClick={() => document.getElementById("about")?.scrollIntoView({ behavior: "smooth" })}
                 className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full hover:from-blue-700 hover:to-purple-700 transition-all duration-300 shadow-lg hover:shadow-xl"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={mounted ? { scale: 1.05 } : undefined}
+                whileTap={mounted ? { scale: 0.95 } : undefined}
               >
                 Learn More
                 <ArrowDown className="w-4 h-4" />
@@ -136,8 +144,8 @@ export default function Hero() {
               <motion.button
                 onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
                 className="inline-flex items-center gap-2 px-6 py-3 border-2 border-blue-600 dark:border-blue-400 text-blue-600 dark:text-blue-400 rounded-full hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-all duration-300"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={mounted ? { scale: 1.05 } : undefined}
+                whileTap={mounted ? { scale: 0.95 } : undefined}
               >
                 Contact Me
                 <ChevronRight className="w-4 h-4" />
@@ -147,35 +155,51 @@ export default function Hero() {
 
           <motion.div
             className="lg:w-1/2"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
+            initial={mounted ? { opacity: 0, scale: 0.9 } : false}
+            animate={mounted ? { opacity: 1, scale: 1 } : false}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <div className="relative w-72 h-72 md:w-96 md:h-96 mx-auto">
               {/* Decorative gradient backgrounds */}
               <motion.div
                 className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-400 dark:from-blue-600 dark:to-purple-600 rounded-3xl transform rotate-6 opacity-50"
-                animate={{
-                  rotate: [6, 8, 6, 4, 6],
-                  scale: [1, 1.02, 1, 0.98, 1],
-                }}
-                transition={{
-                  duration: 10,
-                  repeat: Number.POSITIVE_INFINITY,
-                  ease: "easeInOut",
-                }}
+                animate={
+                  mounted
+                    ? {
+                        rotate: [6, 8, 6, 4, 6],
+                        scale: [1, 1.02, 1, 0.98, 1],
+                      }
+                    : undefined
+                }
+                transition={
+                  mounted
+                    ? {
+                        duration: 10,
+                        repeat: Number.POSITIVE_INFINITY,
+                        ease: "easeInOut",
+                      }
+                    : undefined
+                }
               />
               <motion.div
                 className="absolute inset-0 bg-gradient-to-r from-purple-400 to-blue-400 dark:from-purple-600 dark:to-blue-600 rounded-3xl transform -rotate-6 opacity-50"
-                animate={{
-                  rotate: [-6, -4, -6, -8, -6],
-                  scale: [1, 0.98, 1, 1.02, 1],
-                }}
-                transition={{
-                  duration: 10,
-                  repeat: Number.POSITIVE_INFINITY,
-                  ease: "easeInOut",
-                }}
+                animate={
+                  mounted
+                    ? {
+                        rotate: [-6, -4, -6, -8, -6],
+                        scale: [1, 0.98, 1, 1.02, 1],
+                      }
+                    : undefined
+                }
+                transition={
+                  mounted
+                    ? {
+                        duration: 10,
+                        repeat: Number.POSITIVE_INFINITY,
+                        ease: "easeInOut",
+                      }
+                    : undefined
+                }
               />
 
               {/* Image container with explicit styling */}
@@ -203,8 +227,8 @@ export default function Hero() {
       {/* Decorative Elements */}
       <motion.div
         className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
+        initial={mounted ? { opacity: 0, y: 20 } : false}
+        animate={mounted ? { opacity: 1, y: 0 } : false}
         transition={{ delay: 0.8, duration: 0.6 }}
       >
         <div className="w-1 h-12 bg-gradient-to-b from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 rounded-full animate-pulse"></div>
@@ -212,4 +236,3 @@ export default function Hero() {
     </section>
   )
 }
-
