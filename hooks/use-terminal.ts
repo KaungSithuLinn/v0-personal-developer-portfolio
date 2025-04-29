@@ -1,10 +1,9 @@
 "use client"
 
-import type React from "react"
-
 import { useState, useCallback, type ReactNode } from "react"
 import { generateText } from "ai"
 import { groq } from "@ai-sdk/groq"
+import type { FormEvent } from "react"
 
 type CommandHistory = {
   command: string
@@ -61,6 +60,7 @@ export function useTerminal() {
             <p>
               <span className="text-cyan-400">education</span> - Show educational background
             </p>
+            <p> - Show educational background</p>
             <p>
               <span className="text-cyan-400">clear</span> - Clear the terminal
             </p>
@@ -245,7 +245,7 @@ export function useTerminal() {
   )
 
   const handleSubmit = useCallback(
-    (e?: React.FormEvent) => {
+    (e?: FormEvent) => {
       e?.preventDefault()
       if (!input.trim() || isProcessing) return
 

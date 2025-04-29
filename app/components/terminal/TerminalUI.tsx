@@ -24,7 +24,9 @@ export default function TerminalUI(): JSX.Element | null {
   // Focus input when terminal is opened
   useEffect(() => {
     if (isOpen && inputRef.current) {
-      inputRef.current.focus()
+      setTimeout(() => {
+        inputRef.current?.focus()
+      }, 100)
     }
   }, [isOpen])
 

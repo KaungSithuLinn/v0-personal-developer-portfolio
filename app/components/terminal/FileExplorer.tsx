@@ -4,12 +4,12 @@ import { useState } from "react"
 import { motion } from "framer-motion"
 import { Folder, ChevronRight, ChevronDown, Code, FileText, ImageIcon, Database } from "lucide-react"
 import { useMounted } from "@/lib/use-mounted"
-import type React from "react"
+import type { ReactNode } from "react"
 
 type FileItem = {
   name: string
   type: "file" | "folder"
-  icon?: React.ReactNode
+  icon?: ReactNode
   children?: FileItem[]
   description?: string
 }
