@@ -45,6 +45,201 @@ export default function TerminalUI(): JSX.Element | null {
     setIsFullscreen(!isFullscreen)
   }
 
+  // Function to render command output based on type and content
+  const renderCommandOutput = (item: any) => {
+    if (item.isProcessing) {
+      return (
+        <div className="flex items-center">
+          <div className="animate-pulse">Processing...</div>
+        </div>
+      )
+    }
+
+    if (item.type === "text" || !item.type) {
+      return item.output
+    }
+
+    // Handle JSX content based on the content identifier
+    if (item.type === "jsx") {
+      switch (item.output) {
+        case "help-content":
+          return (
+            <div className="space-y-1">
+              <p>Available commands:</p>
+              <p>
+                <span className="text-cyan-400">help</span> - Show this help message
+              </p>
+              <p>
+                <span className="text-cyan-400">about</span> - Display information about Kaung Sithu Linn
+              </p>
+              <p>
+                <span className="text-cyan-400">skills</span> - List technical skills
+              </p>
+              <p>
+                <span className="text-cyan-400">projects</span> - Show featured projects
+              </p>
+              <p>
+                <span className="text-cyan-400">contact</span> - Display contact information
+              </p>
+              <p>
+                <span className="text-cyan-400">experience</span> - Show work experience
+              </p>
+              <p>
+                <span className="text-cyan-400">education</span> - Show educational background
+              </p>
+              <p>
+                <span className="text-cyan-400">clear</span> - Clear the terminal
+              </p>
+              <p>
+                <span className="text-cyan-400">exit</span> - Exit terminal mode
+              </p>
+              <p>
+                <span className="text-cyan-400">[anything else]</span> - Ask the AI assistant
+              </p>
+            </div>
+          )
+        case "about-content":
+          return (
+            <div className="space-y-2">
+              <p className="text-green-400 font-bold">Kaung Sithu Linn</p>
+              <p>Software Developer specializing in POS systems, fraud detection, and behavioral biometrics.</p>
+              <p>
+                Results-driven developer with 4+ years of experience crafting intuitive user interfaces, conducting
+                thorough testing, and delivering high-quality applications that meet complex requirements.
+              </p>
+            </div>
+          )
+        case "skills-content":
+          return (
+            <div className="grid grid-cols-2 gap-2">
+              <div>
+                <p className="text-yellow-400 font-bold">Frontend</p>
+                <ul className="list-disc list-inside">
+                  <li>JavaScript</li>
+                  <li>HTML5</li>
+                  <li>CSS</li>
+                  <li>UI Design</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-green-400 font-bold">Backend</p>
+                <ul className="list-disc list-inside">
+                  <li>Python</li>
+                  <li>Java</li>
+                  <li>C++</li>
+                  <li>.NET</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-purple-400 font-bold">Database</p>
+                <ul className="list-disc list-inside">
+                  <li>SQL</li>
+                  <li>Data Management</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-blue-400 font-bold">AI/ML</p>
+                <ul className="list-disc list-inside">
+                  <li>Behavioral Biometrics</li>
+                  <li>Deep Learning</li>
+                </ul>
+              </div>
+            </div>
+          )
+        case "projects-content":
+          return (
+            <div className="space-y-3">
+              <div>
+                <p className="text-blue-400 font-bold">Mouse Dynamics for Online Assessment Fraud Detection</p>
+                <p>
+                  Developed a machine learning model to detect fraudulent behavior during online assessments using mouse
+                  dynamics as a behavioral biometric.
+                </p>
+              </div>
+              <div>
+                <p className="text-purple-400 font-bold">
+                  Mouse Dynamics Biometric Fraud Detection System using Deep Learning
+                </p>
+                <p>
+                  Developed a fraud detection system using mouse dynamics and deep learning to enhance the security of
+                  online assessments.
+                </p>
+              </div>
+              <div>
+                <p className="text-green-400 font-bold">Continuous Authentication with Behavioral Biometrics</p>
+                <p>
+                  Conducted a literature review on the use of behavioral biometrics, specifically mouse dynamics and
+                  keystroke analysis, for continuous user authentication.
+                </p>
+              </div>
+            </div>
+          )
+        case "contact-content":
+          return (
+            <div className="space-y-2">
+              <p>
+                <span className="text-cyan-400">Email:</span> kaungsithulinn1@gmail.com
+              </p>
+              <p>
+                <span className="text-cyan-400">Phone:</span> +65 8460 6093
+              </p>
+              <p>
+                <span className="text-cyan-400">Address:</span> Block 124 # 14-2923 Paya Lebar Way, Singapore 381124
+              </p>
+              <p>
+                <span className="text-cyan-400">GitHub:</span>{" "}
+                <a href="https://github.com/KaungSithuLinn" className="text-blue-400 hover:underline">
+                  github.com/KaungSithuLinn
+                </a>
+              </p>
+              <p>
+                <span className="text-cyan-400">LinkedIn:</span>{" "}
+                <a href="https://linkedin.com/in/kaung-sithu-linn-7933781a5" className="text-blue-400 hover:underline">
+                  linkedin.com/in/kaung-sithu-linn-7933781a5
+                </a>
+              </p>
+            </div>
+          )
+        case "experience-content":
+          return (
+            <div className="space-y-3">
+              <div>
+                <p className="text-green-400 font-bold">eVolva Software House</p>
+                <p className="text-gray-400">Software Developer and Client Tester | Dec 2018 - Present</p>
+                <ul className="list-disc list-inside">
+                  <li>Designed and developed a POS system using Microsoft .NET</li>
+                  <li>Upgraded an outdated Microsoft Access POS system to a modern SQL standalone application</li>
+                  <li>Resolved LAN interference issues with the VPN network</li>
+                  <li>Delivered an optimized POS system that increased store efficiency by over 50%</li>
+                </ul>
+              </div>
+            </div>
+          )
+        case "education-content":
+          return (
+            <div className="space-y-3">
+              <div>
+                <p className="text-purple-400 font-bold">Master of Information Technology (Business Informatics)</p>
+                <p className="text-gray-400">James Cook University Singapore | Mar 2024 – Apr 2025</p>
+              </div>
+              <div>
+                <p className="text-blue-400 font-bold">Bachelor of Information Technology</p>
+                <p className="text-gray-400">James Cook University Singapore | Nov 2022 – Feb 2024</p>
+              </div>
+              <div>
+                <p className="text-green-400 font-bold">Higher National Diploma of Software Engineering (Level 5)</p>
+                <p className="text-gray-400">INET IT ACADEMY | Mar 2018 – Oct 2022</p>
+              </div>
+            </div>
+          )
+        default:
+          return item.output
+      }
+    }
+
+    return item.output
+  }
+
   return (
     <>
       {/* Terminal toggle button */}
@@ -110,13 +305,7 @@ export default function TerminalUI(): JSX.Element | null {
                     </div>
                   )}
                   <div className={`pl-0 ${item.command === "system" ? "text-yellow-400" : "text-green-300"}`}>
-                    {item.isProcessing ? (
-                      <div className="flex items-center">
-                        <div className="animate-pulse">Processing...</div>
-                      </div>
-                    ) : (
-                      item.output
-                    )}
+                    {renderCommandOutput(item)}
                   </div>
                 </div>
               ))}
