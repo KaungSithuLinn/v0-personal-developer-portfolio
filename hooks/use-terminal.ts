@@ -60,7 +60,6 @@ export function useTerminal() {
             <p>
               <span className="text-cyan-400">education</span> - Show educational background
             </p>
-            <p> - Show educational background</p>
             <p>
               <span className="text-cyan-400">clear</span> - Clear the terminal
             </p>
