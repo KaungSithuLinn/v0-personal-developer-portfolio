@@ -7,11 +7,13 @@ import Testimonials from "./components/Testimonials"
 import Education from "./components/Education"
 import Contact from "./components/Contact"
 import FloatingNav from "./components/floating-nav"
+import EDEXInterface from "./components/terminal/eDEXInterface"
 
-export default function Home() {
+export default function Home(): JSX.Element {
   return (
     <main className="bg-gray-50 dark:bg-gray-900 min-h-screen">
       <FloatingNav />
+      <EDEXInterface />
       <Hero />
       <About />
       <Experience />
