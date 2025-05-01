@@ -4,6 +4,7 @@ import { useState } from "react"
 import { motion } from "framer-motion"
 import { Folder, ChevronRight, ChevronDown, Code, FileText, ImageIcon, Database } from "lucide-react"
 import { useMounted } from "@/lib/use-mounted"
+import { useTranslation } from "@/context/language-context"
 import type { ReactNode } from "react"
 
 type FileItem = {
@@ -164,6 +165,7 @@ function FileItemComponent({ item, level }: FileItemProps): JSX.Element {
 
 export default function FileExplorer(): JSX.Element | null {
   const mounted = useMounted()
+  const { t } = useTranslation()
 
   if (!mounted) return null
 
@@ -173,7 +175,9 @@ export default function FileExplorer(): JSX.Element | null {
       animate={{ opacity: 1 }}
       className="bg-gradient-to-br from-gray-900/90 to-blue-900/50 backdrop-blur-sm border border-blue-500/30 rounded-lg p-4 shadow-lg shadow-blue-500/10 h-full overflow-y-auto"
     >
-      <h3 className="text-blue-400 font-mono text-lg border-b border-blue-500/30 pb-2 mb-4">Portfolio Explorer</h3>
+      <h3 className="text-blue-400 font-mono text-lg border-b border-blue-500/30 pb-2 mb-4">
+        {t("fileExplorer.title")}
+      </h3>
       <div className="space-y-1">
         {fileSystem.map((item, index) => (
           <FileItemComponent key={index} item={item} level={0} />

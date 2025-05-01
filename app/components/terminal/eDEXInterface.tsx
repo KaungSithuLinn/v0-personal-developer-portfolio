@@ -3,14 +3,17 @@
 import { useState } from "react"
 import { motion } from "framer-motion"
 import { useMounted } from "@/lib/use-mounted"
+import { useTranslation } from "@/context/language-context"
 import TerminalUI from "./TerminalUI"
 import SystemMonitor from "./SystemMonitor"
 import HexGrid from "./HexGrid"
 import FileExplorer from "./FileExplorer"
+import LanguageSelector from "@/components/LanguageSelector"
 
 export default function DevConsoleInterface(): JSX.Element | null {
   const [isVisible, setIsVisible] = useState<boolean>(false)
   const mounted = useMounted()
+  const { t } = useTranslation()
 
   if (!mounted) return null
 
@@ -18,6 +21,9 @@ export default function DevConsoleInterface(): JSX.Element | null {
     <>
       {/* Background hex grid */}
       <HexGrid className="opacity-30" />
+
+      {/* Language Selector */}
+      <LanguageSelector />
 
       {/* Terminal UI (always visible) */}
       <TerminalUI />
@@ -30,7 +36,7 @@ export default function DevConsoleInterface(): JSX.Element | null {
         whileTap={{ scale: 0.9 }}
         aria-label="Toggle DevConsole Interface"
       >
-        {isVisible ? "Hide Interface" : "Show Interface"}
+        {isVisible ? t("systemMonitor.hide") : t("systemMonitor.show")}
       </motion.button>
 
       {/* Main interface */}

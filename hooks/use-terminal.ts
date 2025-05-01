@@ -1,9 +1,10 @@
 "use client"
 
-import { useState, useCallback } from "react"
+import { useState, useCallback, useEffect } from "react"
 import { generateText } from "ai"
 import { groq } from "@ai-sdk/groq"
 import type { FormEvent, ReactNode } from "react"
+import { useTranslation } from "@/context/language-context"
 
 // Define types for command history
 type CommandHistory = {
@@ -13,56 +14,61 @@ type CommandHistory = {
   type?: "text" | "jsx"
 }
 
-// Initial messages
-const INITIAL_MESSAGES: CommandHistory[] = [
-  {
-    command: "system",
-    output: "KSL DevConsole v1.0.0",
-    type: "text",
-  },
-  {
-    command: "system",
-    output: "Welcome to Kaung Sithu Linn's portfolio. Type 'help' to see available commands.",
-    type: "text",
-  },
-]
-
-// Command output templates
-const COMMAND_OUTPUTS = {
-  help: {
-    type: "jsx" as const,
-    content: "help-content", // This will be replaced with actual JSX in the component
-  },
-  about: {
-    type: "jsx" as const,
-    content: "about-content",
-  },
-  skills: {
-    type: "jsx" as const,
-    content: "skills-content",
-  },
-  projects: {
-    type: "jsx" as const,
-    content: "projects-content",
-  },
-  contact: {
-    type: "jsx" as const,
-    content: "contact-content",
-  },
-  experience: {
-    type: "jsx" as const,
-    content: "experience-content",
-  },
-  education: {
-    type: "jsx" as const,
-    content: "education-content",
-  },
-}
-
 export function useTerminal() {
   const [input, setInput] = useState<string>("")
-  const [history, setHistory] = useState<CommandHistory[]>(INITIAL_MESSAGES)
+  const [history, setHistory] = useState<CommandHistory[]>([])
   const [isProcessing, setIsProcessing] = useState<boolean>(false)
+  const { t, language } = useTranslation()
+
+  // Initialize messages when language changes
+  useEffect(() => {
+    const INITIAL_MESSAGES: CommandHistory[] = [
+      {
+        command: "system",
+        output: t("terminal.title") + " v1.0.0",
+        type: "text",
+      },
+      {
+        command: "system",
+        output: t("terminal.welcome"),
+        type: "text",
+      },
+    ]
+
+    setHistory(INITIAL_MESSAGES)
+  }, [language, t])
+
+  // Command output templates
+  const COMMAND_OUTPUTS = {
+    help: {
+      type: "jsx" as const,
+      content: "help-content", // This will be replaced with actual JSX in the component
+    },
+    about: {
+      type: "jsx" as const,
+      content: "about-content",
+    },
+    skills: {
+      type: "jsx" as const,
+      content: "skills-content",
+    },
+    projects: {
+      type: "jsx" as const,
+      content: "projects-content",
+    },
+    contact: {
+      type: "jsx" as const,
+      content: "contact-content",
+    },
+    experience: {
+      type: "jsx" as const,
+      content: "experience-content",
+    },
+    education: {
+      type: "jsx" as const,
+      content: "education-content",
+    },
+  }
 
   const processCommand = useCallback(
     async (command: string) => {
@@ -80,7 +86,18 @@ export function useTerminal() {
         output = commandOutput.content
         outputType = commandOutput.type
       } else if (lowerCommand === "clear") {
-        setHistory(INITIAL_MESSAGES)
+        setHistory([
+          {
+            command: "system",
+            output: t("terminal.title") + " v1.0.0",
+            type: "text",
+          },
+          {
+            command: "system",
+            output: t("terminal.welcome"),
+            type: "text",
+          },
+        ])
         setIsProcessing(false)
         return
       } else if (lowerCommand === "exit") {
@@ -121,7 +138,7 @@ export function useTerminal() {
       })
       setIsProcessing(false)
     },
-    [setHistory],
+    [t],
   )
 
   const handleSubmit = useCallback(
@@ -136,8 +153,19 @@ export function useTerminal() {
   )
 
   const clearHistory = useCallback(() => {
-    setHistory(INITIAL_MESSAGES)
-  }, [])
+    setHistory([
+      {
+        command: "system",
+        output: t("terminal.title") + " v1.0.0",
+        type: "text",
+      },
+      {
+        command: "system",
+        output: t("terminal.welcome"),
+        type: "text",
+      },
+    ])
+  }, [t])
 
   return {
     input,

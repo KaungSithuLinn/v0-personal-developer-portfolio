@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Maximize2, Minimize2, X, ChevronRight, Code } from "lucide-react"
 import { useTerminal } from "@/hooks/use-terminal"
 import { useMounted } from "@/lib/use-mounted"
+import { useTranslation } from "@/context/language-context"
 
 export default function TerminalUI(): JSX.Element | null {
   const [isOpen, setIsOpen] = useState<boolean>(false)
@@ -13,6 +14,7 @@ export default function TerminalUI(): JSX.Element | null {
   const terminalRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const mounted = useMounted()
+  const { t } = useTranslation()
 
   // Auto-scroll to bottom when new content is added
   useEffect(() => {
@@ -65,27 +67,27 @@ export default function TerminalUI(): JSX.Element | null {
         case "help-content":
           return (
             <div className="space-y-1">
-              <p>Available commands:</p>
+              <p>{t("terminal.help")}:</p>
               <p>
-                <span className="text-blue-400">help</span> - Show this help message
+                <span className="text-blue-400">help</span> - {t("terminal.help")}
               </p>
               <p>
-                <span className="text-blue-400">about</span> - Display information about Kaung Sithu Linn
+                <span className="text-blue-400">about</span> - {t("terminal.about")}
               </p>
               <p>
-                <span className="text-blue-400">skills</span> - List technical skills
+                <span className="text-blue-400">skills</span> - {t("terminal.skills")}
               </p>
               <p>
-                <span className="text-blue-400">projects</span> - Show featured projects
+                <span className="text-blue-400">projects</span> - {t("terminal.projects")}
               </p>
               <p>
-                <span className="text-blue-400">contact</span> - Display contact information
+                <span className="text-blue-400">contact</span> - {t("terminal.contact")}
               </p>
               <p>
-                <span className="text-blue-400">experience</span> - Show work experience
+                <span className="text-blue-400">experience</span> - {t("terminal.experience")}
               </p>
               <p>
-                <span className="text-blue-400">education</span> - Show educational background
+                <span className="text-blue-400">education</span> - {t("terminal.education")}
               </p>
               <p>
                 <span className="text-blue-400">clear</span> - Clear the terminal
@@ -274,7 +276,7 @@ export default function TerminalUI(): JSX.Element | null {
                 <div className="w-3 h-3 rounded-full bg-red-500" onClick={() => setIsOpen(false)}></div>
                 <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
                 <div className="w-3 h-3 rounded-full bg-green-500"></div>
-                <span className="ml-2 text-blue-300 text-sm font-mono">KSL DevConsole</span>
+                <span className="ml-2 text-blue-300 text-sm font-mono">{t("terminal.title")}</span>
               </div>
               <div className="flex items-center space-x-2">
                 <button
