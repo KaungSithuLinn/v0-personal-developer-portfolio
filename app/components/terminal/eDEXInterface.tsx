@@ -8,7 +8,7 @@ import SystemMonitor from "./SystemMonitor"
 import HexGrid from "./HexGrid"
 import FileExplorer from "./FileExplorer"
 
-export default function EDEXInterface(): JSX.Element | null {
+export default function DevConsoleInterface(): JSX.Element | null {
   const [isVisible, setIsVisible] = useState<boolean>(false)
   const mounted = useMounted()
 
@@ -24,11 +24,11 @@ export default function EDEXInterface(): JSX.Element | null {
 
       {/* Floating action button to toggle interface */}
       <motion.button
-        className="fixed top-24 right-6 z-50 p-3 rounded-full bg-gray-800 text-cyan-400 shadow-lg hover:bg-gray-700 transition-colors"
+        className="fixed top-24 right-6 z-50 p-3 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-300"
         onClick={() => setIsVisible(!isVisible)}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
-        aria-label="Toggle eDEX Interface"
+        aria-label="Toggle DevConsole Interface"
       >
         {isVisible ? "Hide Interface" : "Show Interface"}
       </motion.button>

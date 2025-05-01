@@ -93,10 +93,10 @@ export default function HexGrid({ className = "" }: HexGridProps): JSX.Element |
           }
           ctx.closePath()
 
-          // Style based on position and time
+          // Style based on position and time - using blue/purple gradient to match portfolio theme
           const gradient = ctx.createLinearGradient(x - hexSize, y - hexSize, x + hexSize, y + hexSize)
-          gradient.addColorStop(0, `rgba(0, 255, 255, ${opacity * 0.7})`) // Cyan
-          gradient.addColorStop(1, `rgba(128, 0, 255, ${opacity * 0.7})`) // Purple
+          gradient.addColorStop(0, `rgba(59, 130, 246, ${opacity * 0.7})`) // Blue-500
+          gradient.addColorStop(1, `rgba(147, 51, 234, ${opacity * 0.7})`) // Purple-600
 
           ctx.strokeStyle = gradient
           ctx.lineWidth = 1

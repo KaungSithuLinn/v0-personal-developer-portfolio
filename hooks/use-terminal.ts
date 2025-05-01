@@ -17,12 +17,12 @@ type CommandHistory = {
 const INITIAL_MESSAGES: CommandHistory[] = [
   {
     command: "system",
-    output: "eDEX-UI Portfolio Terminal v1.0.0",
+    output: "KSL DevConsole v1.0.0",
     type: "text",
   },
   {
     command: "system",
-    output: "Type 'help' to see available commands",
+    output: "Welcome to Kaung Sithu Linn's portfolio. Type 'help' to see available commands.",
     type: "text",
   },
 ]

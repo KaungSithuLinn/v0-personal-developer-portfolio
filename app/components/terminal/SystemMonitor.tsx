@@ -55,19 +55,19 @@ export default function SystemMonitor(): JSX.Element | null {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="bg-gray-900/90 backdrop-blur-sm border border-cyan-500/30 rounded-lg p-4 shadow-lg shadow-cyan-500/10"
+      className="bg-gradient-to-br from-gray-900/90 to-blue-900/50 backdrop-blur-sm border border-blue-500/30 rounded-lg p-4 shadow-lg shadow-blue-500/10"
     >
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* System Stats */}
         <div className="space-y-4">
-          <h3 className="text-cyan-400 font-mono text-lg border-b border-cyan-500/30 pb-2">System Monitor</h3>
+          <h3 className="text-blue-400 font-mono text-lg border-b border-blue-500/30 pb-2">System Monitor</h3>
 
           <div className="flex items-center justify-between">
             <div className="flex items-center">
-              <Clock className="text-green-400 mr-2" size={18} />
+              <Clock className="text-blue-400 mr-2" size={18} />
               <span className="text-gray-300 font-mono">System Time</span>
             </div>
-            <span className="text-green-400 font-mono">
+            <span className="text-blue-400 font-mono">
               {date.toLocaleTimeString()} - {date.toLocaleDateString()}
             </span>
           </div>
@@ -75,14 +75,14 @@ export default function SystemMonitor(): JSX.Element | null {
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <div className="flex items-center">
-                <Cpu className="text-yellow-400 mr-2" size={18} />
+                <Cpu className="text-blue-500 mr-2" size={18} />
                 <span className="text-gray-300 font-mono">CPU Usage</span>
               </div>
-              <span className="text-yellow-400 font-mono">{cpuUsage}%</span>
+              <span className="text-blue-500 font-mono">{cpuUsage}%</span>
             </div>
             <div className="w-full bg-gray-700 rounded-full h-2">
               <motion.div
-                className="bg-yellow-400 h-2 rounded-full"
+                className="bg-blue-500 h-2 rounded-full"
                 initial={{ width: 0 }}
                 animate={{ width: `${cpuUsage}%` }}
                 transition={{ duration: 0.5 }}
@@ -93,14 +93,14 @@ export default function SystemMonitor(): JSX.Element | null {
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <div className="flex items-center">
-                <HardDrive className="text-blue-400 mr-2" size={18} />
+                <HardDrive className="text-indigo-500 mr-2" size={18} />
                 <span className="text-gray-300 font-mono">Memory Usage</span>
               </div>
-              <span className="text-blue-400 font-mono">{memoryUsage}%</span>
+              <span className="text-indigo-500 font-mono">{memoryUsage}%</span>
             </div>
             <div className="w-full bg-gray-700 rounded-full h-2">
               <motion.div
-                className="bg-blue-400 h-2 rounded-full"
+                className="bg-indigo-500 h-2 rounded-full"
                 initial={{ width: 0 }}
                 animate={{ width: `${memoryUsage}%` }}
                 transition={{ duration: 0.5 }}
@@ -111,14 +111,14 @@ export default function SystemMonitor(): JSX.Element | null {
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <div className="flex items-center">
-                <Activity className="text-purple-400 mr-2" size={18} />
+                <Activity className="text-purple-500 mr-2" size={18} />
                 <span className="text-gray-300 font-mono">Network Activity</span>
               </div>
-              <span className="text-purple-400 font-mono">{networkActivity} KB/s</span>
+              <span className="text-purple-500 font-mono">{networkActivity} KB/s</span>
             </div>
             <div className="w-full bg-gray-700 rounded-full h-2">
               <motion.div
-                className="bg-purple-400 h-2 rounded-full"
+                className="bg-purple-500 h-2 rounded-full"
                 initial={{ width: 0 }}
                 animate={{ width: `${networkActivity}%` }}
                 transition={{ duration: 0.5 }}
@@ -129,36 +129,38 @@ export default function SystemMonitor(): JSX.Element | null {
 
         {/* Skills Monitor */}
         <div className="space-y-4">
-          <h3 className="text-cyan-400 font-mono text-lg border-b border-cyan-500/30 pb-2">Skills Monitor</h3>
+          <h3 className="text-blue-400 font-mono text-lg border-b border-blue-500/30 pb-2">Skills Monitor</h3>
 
           <div className="space-y-3 max-h-[300px] overflow-y-auto pr-2">
-            {skills.map((skill, index) => (
-              <div key={index} className="space-y-1">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center">
-                    <Zap className="text-cyan-400 mr-2" size={14} />
-                    <span className="text-gray-300 font-mono text-sm">{skill.name}</span>
+            {skills.map((skill, index) => {
+              return (
+                <div key={index} className="space-y-1">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center">
+                      <Zap className="text-blue-400 mr-2" size={14} />
+                      <span className="text-gray-300 font-mono text-sm">{skill.name}</span>
+                    </div>
+                    <span className="text-blue-400 font-mono text-sm">{skill.level}%</span>
                   </div>
-                  <span className="text-cyan-400 font-mono text-sm">{skill.level}%</span>
+                  <div className="w-full bg-gray-700 rounded-full h-1.5">
+                    <motion.div
+                      className={`h-1.5 rounded-full ${
+                        skill.category === "Frontend"
+                          ? "bg-blue-500"
+                          : skill.category === "Backend"
+                            ? "bg-indigo-500"
+                            : skill.category === "Database"
+                              ? "bg-purple-500"
+                              : "bg-blue-600"
+                      }`}
+                      initial={{ width: 0 }}
+                      animate={{ width: `${skill.level}%` }}
+                      transition={{ duration: 0.8, delay: index * 0.1 }}
+                    />
+                  </div>
                 </div>
-                <div className="w-full bg-gray-700 rounded-full h-1.5">
-                  <motion.div
-                    className={`h-1.5 rounded-full ${
-                      skill.category === "Frontend"
-                        ? "bg-yellow-400"
-                        : skill.category === "Backend"
-                          ? "bg-green-400"
-                          : skill.category === "Database"
-                            ? "bg-blue-400"
-                            : "bg-purple-400"
-                    }`}
-                    initial={{ width: 0 }}
-                    animate={{ width: `${skill.level}%` }}
-                    transition={{ duration: 0.8, delay: index * 0.1 }}
-                  />
-                </div>
-              </div>
-            ))}
+              )
+            })}
           </div>
         </div>
       </div>

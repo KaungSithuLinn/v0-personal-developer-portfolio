@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Terminal, Maximize2, Minimize2, X, ChevronRight } from "lucide-react"
+import { Maximize2, Minimize2, X, ChevronRight, Code } from "lucide-react"
 import { useTerminal } from "@/hooks/use-terminal"
 import { useMounted } from "@/lib/use-mounted"
 
@@ -67,41 +67,41 @@ export default function TerminalUI(): JSX.Element | null {
             <div className="space-y-1">
               <p>Available commands:</p>
               <p>
-                <span className="text-cyan-400">help</span> - Show this help message
+                <span className="text-blue-400">help</span> - Show this help message
               </p>
               <p>
-                <span className="text-cyan-400">about</span> - Display information about Kaung Sithu Linn
+                <span className="text-blue-400">about</span> - Display information about Kaung Sithu Linn
               </p>
               <p>
-                <span className="text-cyan-400">skills</span> - List technical skills
+                <span className="text-blue-400">skills</span> - List technical skills
               </p>
               <p>
-                <span className="text-cyan-400">projects</span> - Show featured projects
+                <span className="text-blue-400">projects</span> - Show featured projects
               </p>
               <p>
-                <span className="text-cyan-400">contact</span> - Display contact information
+                <span className="text-blue-400">contact</span> - Display contact information
               </p>
               <p>
-                <span className="text-cyan-400">experience</span> - Show work experience
+                <span className="text-blue-400">experience</span> - Show work experience
               </p>
               <p>
-                <span className="text-cyan-400">education</span> - Show educational background
+                <span className="text-blue-400">education</span> - Show educational background
               </p>
               <p>
-                <span className="text-cyan-400">clear</span> - Clear the terminal
+                <span className="text-blue-400">clear</span> - Clear the terminal
               </p>
               <p>
-                <span className="text-cyan-400">exit</span> - Exit terminal mode
+                <span className="text-blue-400">exit</span> - Exit terminal mode
               </p>
               <p>
-                <span className="text-cyan-400">[anything else]</span> - Ask the AI assistant
+                <span className="text-blue-400">[anything else]</span> - Ask the AI assistant
               </p>
             </div>
           )
         case "about-content":
           return (
             <div className="space-y-2">
-              <p className="text-green-400 font-bold">Kaung Sithu Linn</p>
+              <p className="text-blue-500 font-bold">Kaung Sithu Linn</p>
               <p>Software Developer specializing in POS systems, fraud detection, and behavioral biometrics.</p>
               <p>
                 Results-driven developer with 4+ years of experience crafting intuitive user interfaces, conducting
@@ -113,7 +113,7 @@ export default function TerminalUI(): JSX.Element | null {
           return (
             <div className="grid grid-cols-2 gap-2">
               <div>
-                <p className="text-yellow-400 font-bold">Frontend</p>
+                <p className="text-blue-400 font-bold">Frontend</p>
                 <ul className="list-disc list-inside">
                   <li>JavaScript</li>
                   <li>HTML5</li>
@@ -122,7 +122,7 @@ export default function TerminalUI(): JSX.Element | null {
                 </ul>
               </div>
               <div>
-                <p className="text-green-400 font-bold">Backend</p>
+                <p className="text-indigo-400 font-bold">Backend</p>
                 <ul className="list-disc list-inside">
                   <li>Python</li>
                   <li>Java</li>
@@ -138,7 +138,7 @@ export default function TerminalUI(): JSX.Element | null {
                 </ul>
               </div>
               <div>
-                <p className="text-blue-400 font-bold">AI/ML</p>
+                <p className="text-blue-500 font-bold">AI/ML</p>
                 <ul className="list-disc list-inside">
                   <li>Behavioral Biometrics</li>
                   <li>Deep Learning</li>
@@ -150,14 +150,14 @@ export default function TerminalUI(): JSX.Element | null {
           return (
             <div className="space-y-3">
               <div>
-                <p className="text-blue-400 font-bold">Mouse Dynamics for Online Assessment Fraud Detection</p>
+                <p className="text-blue-500 font-bold">Mouse Dynamics for Online Assessment Fraud Detection</p>
                 <p>
                   Developed a machine learning model to detect fraudulent behavior during online assessments using mouse
                   dynamics as a behavioral biometric.
                 </p>
               </div>
               <div>
-                <p className="text-purple-400 font-bold">
+                <p className="text-purple-500 font-bold">
                   Mouse Dynamics Biometric Fraud Detection System using Deep Learning
                 </p>
                 <p>
@@ -166,7 +166,7 @@ export default function TerminalUI(): JSX.Element | null {
                 </p>
               </div>
               <div>
-                <p className="text-green-400 font-bold">Continuous Authentication with Behavioral Biometrics</p>
+                <p className="text-indigo-500 font-bold">Continuous Authentication with Behavioral Biometrics</p>
                 <p>
                   Conducted a literature review on the use of behavioral biometrics, specifically mouse dynamics and
                   keystroke analysis, for continuous user authentication.
@@ -178,23 +178,26 @@ export default function TerminalUI(): JSX.Element | null {
           return (
             <div className="space-y-2">
               <p>
-                <span className="text-cyan-400">Email:</span> kaungsithulinn1@gmail.com
+                <span className="text-blue-400">Email:</span> kaungsithulinn1@gmail.com
               </p>
               <p>
-                <span className="text-cyan-400">Phone:</span> +65 8460 6093
+                <span className="text-blue-400">Phone:</span> +65 8460 6093
               </p>
               <p>
-                <span className="text-cyan-400">Address:</span> Block 124 # 14-2923 Paya Lebar Way, Singapore 381124
+                <span className="text-blue-400">Address:</span> Block 124 # 14-2923 Paya Lebar Way, Singapore 381124
               </p>
               <p>
-                <span className="text-cyan-400">GitHub:</span>{" "}
-                <a href="https://github.com/KaungSithuLinn" className="text-blue-400 hover:underline">
+                <span className="text-blue-400">GitHub:</span>{" "}
+                <a href="https://github.com/KaungSithuLinn" className="text-indigo-400 hover:underline">
                   github.com/KaungSithuLinn
                 </a>
               </p>
               <p>
-                <span className="text-cyan-400">LinkedIn:</span>{" "}
-                <a href="https://linkedin.com/in/kaung-sithu-linn-7933781a5" className="text-blue-400 hover:underline">
+                <span className="text-blue-400">LinkedIn:</span>{" "}
+                <a
+                  href="https://linkedin.com/in/kaung-sithu-linn-7933781a5"
+                  className="text-indigo-400 hover:underline"
+                >
                   linkedin.com/in/kaung-sithu-linn-7933781a5
                 </a>
               </p>
@@ -204,7 +207,7 @@ export default function TerminalUI(): JSX.Element | null {
           return (
             <div className="space-y-3">
               <div>
-                <p className="text-green-400 font-bold">eVolva Software House</p>
+                <p className="text-blue-500 font-bold">eVolva Software House</p>
                 <p className="text-gray-400">Software Developer and Client Tester | Dec 2018 - Present</p>
                 <ul className="list-disc list-inside">
                   <li>Designed and developed a POS system using Microsoft .NET</li>
@@ -219,15 +222,15 @@ export default function TerminalUI(): JSX.Element | null {
           return (
             <div className="space-y-3">
               <div>
-                <p className="text-purple-400 font-bold">Master of Information Technology (Business Informatics)</p>
+                <p className="text-purple-500 font-bold">Master of Information Technology (Business Informatics)</p>
                 <p className="text-gray-400">James Cook University Singapore | Mar 2024 – Apr 2025</p>
               </div>
               <div>
-                <p className="text-blue-400 font-bold">Bachelor of Information Technology</p>
+                <p className="text-blue-500 font-bold">Bachelor of Information Technology</p>
                 <p className="text-gray-400">James Cook University Singapore | Nov 2022 – Feb 2024</p>
               </div>
               <div>
-                <p className="text-green-400 font-bold">Higher National Diploma of Software Engineering (Level 5)</p>
+                <p className="text-indigo-500 font-bold">Higher National Diploma of Software Engineering (Level 5)</p>
                 <p className="text-gray-400">INET IT ACADEMY | Mar 2018 – Oct 2022</p>
               </div>
             </div>
@@ -244,13 +247,13 @@ export default function TerminalUI(): JSX.Element | null {
     <>
       {/* Terminal toggle button */}
       <motion.button
-        className="fixed bottom-6 right-6 z-50 p-3 rounded-full bg-gray-800 text-cyan-400 shadow-lg hover:bg-gray-700 transition-colors"
+        className="fixed bottom-6 right-6 z-50 p-3 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-300"
         onClick={toggleTerminal}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         aria-label="Toggle Terminal"
       >
-        <Terminal size={24} />
+        <Code size={24} />
       </motion.button>
 
       {/* Terminal window */}
@@ -263,15 +266,15 @@ export default function TerminalUI(): JSX.Element | null {
             transition={{ type: "spring", damping: 20 }}
             className={`fixed ${
               isFullscreen ? "inset-0" : "bottom-20 right-6 w-[90%] md:w-[600px] h-[500px]"
-            } z-40 flex flex-col rounded-lg overflow-hidden border border-cyan-500/30 shadow-2xl shadow-cyan-500/20`}
+            } z-40 flex flex-col rounded-lg overflow-hidden border border-blue-500/30 shadow-2xl shadow-blue-500/20`}
           >
             {/* Terminal header */}
-            <div className="bg-gray-900 border-b border-cyan-500/30 p-2 flex items-center justify-between">
+            <div className="bg-gradient-to-r from-blue-900/95 to-purple-900/95 backdrop-blur-md border-b border-blue-500/30 p-2 flex items-center justify-between">
               <div className="flex items-center space-x-2">
                 <div className="w-3 h-3 rounded-full bg-red-500" onClick={() => setIsOpen(false)}></div>
                 <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
                 <div className="w-3 h-3 rounded-full bg-green-500"></div>
-                <span className="ml-2 text-cyan-400 text-sm font-mono">eDEX-UI Portfolio Terminal</span>
+                <span className="ml-2 text-blue-300 text-sm font-mono">KSL DevConsole</span>
               </div>
               <div className="flex items-center space-x-2">
                 <button
@@ -294,17 +297,17 @@ export default function TerminalUI(): JSX.Element | null {
             {/* Terminal content */}
             <div
               ref={terminalRef}
-              className="flex-1 bg-gray-900/95 backdrop-blur-sm p-4 overflow-y-auto font-mono text-sm text-green-400"
+              className="flex-1 bg-gradient-to-br from-gray-900/95 to-blue-900/40 backdrop-blur-sm p-4 overflow-y-auto font-mono text-sm text-blue-300"
             >
               {history.map((item, index) => (
                 <div key={index} className="mb-2">
                   {item.command !== "system" && (
-                    <div className="flex items-center text-cyan-400 mb-1">
-                      <span className="mr-1">guest@portfolio:~$</span>
+                    <div className="flex items-center text-blue-400 mb-1">
+                      <span className="mr-1">ksl@portfolio:~$</span>
                       <span>{item.command}</span>
                     </div>
                   )}
-                  <div className={`pl-0 ${item.command === "system" ? "text-yellow-400" : "text-green-300"}`}>
+                  <div className={`pl-0 ${item.command === "system" ? "text-indigo-300" : "text-blue-100"}`}>
                     {renderCommandOutput(item)}
                   </div>
                 </div>
@@ -312,14 +315,17 @@ export default function TerminalUI(): JSX.Element | null {
             </div>
 
             {/* Terminal input */}
-            <form onSubmit={handleSubmit} className="bg-gray-900 border-t border-cyan-500/30 p-2 flex items-center">
-              <span className="text-cyan-400 mr-2 flex-shrink-0">guest@portfolio:~$</span>
+            <form
+              onSubmit={handleSubmit}
+              className="bg-gradient-to-r from-blue-900/95 to-purple-900/95 backdrop-blur-md border-t border-blue-500/30 p-2 flex items-center"
+            >
+              <span className="text-blue-400 mr-2 flex-shrink-0">ksl@portfolio:~$</span>
               <input
                 ref={inputRef}
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                className="flex-1 bg-transparent border-none outline-none text-green-400 font-mono"
+                className="flex-1 bg-transparent border-none outline-none text-blue-200 font-mono"
                 placeholder="Type a command or question..."
                 disabled={isProcessing}
                 autoComplete="off"
@@ -328,7 +334,7 @@ export default function TerminalUI(): JSX.Element | null {
               <button
                 type="submit"
                 disabled={isProcessing}
-                className="text-cyan-400 hover:text-cyan-300 transition-colors"
+                className="text-blue-400 hover:text-blue-300 transition-colors"
                 aria-label="Execute Command"
               >
                 <ChevronRight size={20} />

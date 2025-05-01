@@ -18,17 +18,17 @@ const fileSystem: FileItem[] = [
   {
     name: "Projects",
     type: "folder",
-    icon: <Folder className="text-yellow-400" size={18} />,
+    icon: <Folder className="text-blue-400" size={18} />,
     children: [
       {
         name: "Mouse Dynamics Fraud Detection",
         type: "folder",
-        icon: <Folder className="text-yellow-400" size={18} />,
+        icon: <Folder className="text-blue-400" size={18} />,
         children: [
           {
             name: "main.py",
             type: "file",
-            icon: <Code className="text-blue-400" size={18} />,
+            icon: <Code className="text-indigo-400" size={18} />,
             description: "Main Python script for the fraud detection system",
           },
           {
@@ -40,7 +40,7 @@ const fileSystem: FileItem[] = [
           {
             name: "README.md",
             type: "file",
-            icon: <FileText className="text-green-400" size={18} />,
+            icon: <FileText className="text-blue-400" size={18} />,
             description: "Project documentation",
           },
         ],
@@ -48,18 +48,18 @@ const fileSystem: FileItem[] = [
       {
         name: "Continuous Authentication",
         type: "folder",
-        icon: <Folder className="text-yellow-400" size={18} />,
+        icon: <Folder className="text-blue-400" size={18} />,
         children: [
           {
             name: "auth_system.py",
             type: "file",
-            icon: <Code className="text-blue-400" size={18} />,
+            icon: <Code className="text-indigo-400" size={18} />,
             description: "Authentication system implementation",
           },
           {
             name: "research_paper.pdf",
             type: "file",
-            icon: <FileText className="text-red-400" size={18} />,
+            icon: <FileText className="text-purple-400" size={18} />,
             description: "Research paper on behavioral biometrics",
           },
         ],
@@ -69,18 +69,18 @@ const fileSystem: FileItem[] = [
   {
     name: "Resume",
     type: "folder",
-    icon: <Folder className="text-yellow-400" size={18} />,
+    icon: <Folder className="text-blue-400" size={18} />,
     children: [
       {
         name: "KaungSithuLinn_Resume.pdf",
         type: "file",
-        icon: <FileText className="text-red-400" size={18} />,
+        icon: <FileText className="text-purple-400" size={18} />,
         description: "Current professional resume",
       },
       {
         name: "profile_photo.jpg",
         type: "file",
-        icon: <ImageIcon className="text-green-400" size={18} />,
+        icon: <ImageIcon className="text-blue-400" size={18} />,
         description: "Professional headshot",
       },
     ],
@@ -88,18 +88,18 @@ const fileSystem: FileItem[] = [
   {
     name: "Certificates",
     type: "folder",
-    icon: <Folder className="text-yellow-400" size={18} />,
+    icon: <Folder className="text-blue-400" size={18} />,
     children: [
       {
         name: "Bachelor_of_IT.pdf",
         type: "file",
-        icon: <FileText className="text-red-400" size={18} />,
+        icon: <FileText className="text-purple-400" size={18} />,
         description: "Bachelor of Information Technology degree certificate",
       },
       {
         name: "Google_Digital_Marketing.pdf",
         type: "file",
-        icon: <FileText className="text-red-400" size={18} />,
+        icon: <FileText className="text-purple-400" size={18} />,
         description: "Google Digital Marketing certification",
       },
     ],
@@ -125,7 +125,7 @@ function FileItemComponent({ item, level }: FileItemProps): JSX.Element {
     <div>
       <div
         className={`flex items-center py-1 px-2 rounded-md ${
-          isHovered ? "bg-gray-800" : "bg-transparent"
+          isHovered ? "bg-blue-900/40" : "bg-transparent"
         } transition-colors cursor-pointer`}
         style={{ paddingLeft: `${level * 16}px` }}
         onClick={toggleOpen}
@@ -171,9 +171,9 @@ export default function FileExplorer(): JSX.Element | null {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="bg-gray-900/90 backdrop-blur-sm border border-cyan-500/30 rounded-lg p-4 shadow-lg shadow-cyan-500/10 h-full overflow-y-auto"
+      className="bg-gradient-to-br from-gray-900/90 to-blue-900/50 backdrop-blur-sm border border-blue-500/30 rounded-lg p-4 shadow-lg shadow-blue-500/10 h-full overflow-y-auto"
     >
-      <h3 className="text-cyan-400 font-mono text-lg border-b border-cyan-500/30 pb-2 mb-4">Portfolio Explorer</h3>
+      <h3 className="text-blue-400 font-mono text-lg border-b border-blue-500/30 pb-2 mb-4">Portfolio Explorer</h3>
       <div className="space-y-1">
         {fileSystem.map((item, index) => (
           <FileItemComponent key={index} item={item} level={0} />
