@@ -1,41 +1,14 @@
-"use client"
+import type { Language } from "./language-context"
 
-import { createContext, useContext } from "react"
-
-// Define supported languages
-export type Language = "en" | "zh" | "ms" | "ta" | "ar"
-
-// Define the context type
-type LanguageContextType = {
-  language: Language
-  setLanguage: (lang: Language) => void
-  t: (key: string, params?: Record<string, string>) => string
-  getDirection: () => "ltr" | "rtl"
-  isRTL: boolean
-  languageName: (code: Language) => string
-}
-
-// Create the context with default values
-export const LanguageContext = createContext<LanguageContextType>({
-  language: "en",
-  setLanguage: () => {},
-  t: (key) => key,
-  getDirection: () => "ltr",
-  isRTL: false,
-  languageName: () => "",
-})
-
-// Custom hook for using the language context
-export function useTranslation() {
-  const context = useContext(LanguageContext)
-  if (context === undefined) {
-    throw new Error("useTranslation must be used within a LanguageProvider")
+// Define the translations type
+type TranslationsType = {
+  [key in Language]?: {
+    [key: string]: string
   }
-  return context
 }
 
 // Translation data for all supported languages
-const translations = {
+const translations: TranslationsType = {
   en: {
     // Common
     "common.language": "Language",
@@ -92,7 +65,8 @@ const translations = {
     "hero.title": "Kaung Sithu Linn",
     "hero.subtitle": "Software Developer",
     "hero.jobTitle": "Software Developer",
-    "hero.description": "Results-driven developer with 4+ years of experience crafting intuitive user interfaces, conducting thorough testing, and delivering high-quality applications that meet complex requirements. Specializing in POS systems, fraud detection, and behavioral biometrics.",
+    "hero.description":
+      "Results-driven developer with 4+ years of experience crafting intuitive user interfaces, conducting thorough testing, and delivering high-quality applications that meet complex requirements. Specializing in POS systems, fraud detection, and behavioral biometrics.",
     "hero.githubProfile": "GitHub Profile",
     "hero.linkedinProfile": "LinkedIn Profile",
     "hero.emailContact": "Email Contact",
@@ -105,9 +79,12 @@ const translations = {
 
     // About
     "about.title": "About Me",
-    "about.paragraph1": "As a passionate Software Developer based in Singapore, I specialize in developing robust applications with a focus on user experience and system optimization. With over 4 years at eVolva Software House, I've transformed business operations through innovative POS systems and network solutions.",
-    "about.paragraph2": "My recent research focuses on cutting-edge behavioral biometrics and fraud detection using machine learning. I'm also certified in digital marketing fundamentals, allowing me to bridge technical development with effective market strategies. I'm currently pursuing my Master's in Information Technology with a Business Informatics major at James Cook University Singapore, where I continue to expand my expertise in data analytics and AI applications.",
-    "about.quote": "I believe in creating technology that not only solves problems but enhances human experiences. My goal is to build secure, efficient, and user-friendly solutions that make a real difference.",
+    "about.paragraph1":
+      "As a passionate Software Developer based in Singapore, I specialize in developing robust applications with a focus on user experience and system optimization. With over 4 years at eVolva Software House, I've transformed business operations through innovative POS systems and network solutions.",
+    "about.paragraph2":
+      "My recent research focuses on cutting-edge behavioral biometrics and fraud detection using machine learning. I'm also certified in digital marketing fundamentals, allowing me to bridge technical development with effective market strategies. I'm currently pursuing my Master's in Information Technology with a Business Informatics major at James Cook University Singapore, where I continue to expand my expertise in data analytics and AI applications.",
+    "about.quote":
+      "I believe in creating technology that not only solves problems but enhances human experiences. My goal is to build secure, efficient, and user-friendly solutions that make a real difference.",
     "about.decorativeImageAlt": "Decorative background",
     "about.skills.frontend.title": "Frontend",
     "about.skills.frontend.description": "JavaScript, HTML5, CSS, UI Design",
@@ -121,7 +98,7 @@ const translations = {
     "about.skills.marketing.description": "SEO, Analytics, Content Strategy",
     "about.skills.languages.title": "Languages",
     "about.skills.languages.description": "English, Burmese, Chinese, Japanese",
-    
+
     // Header
     "header.about": "About",
     "header.experience": "Experience",
@@ -129,7 +106,7 @@ const translations = {
     "header.services": "Services",
     "header.education": "Education",
     "header.contact": "Contact",
-    
+
     // Skills
     "skills.title": "Skills & Expertise",
     "skills.frontend": "Frontend Development",
@@ -140,7 +117,8 @@ const translations = {
     "skills.backend.desc": "Creating robust server-side applications with focus on performance and reliability.",
     "skills.database": "Database Management",
     "skills.database.tech": "SQL, Data Management",
-    "skills.database.desc": "Designing and implementing efficient database schemas and queries for optimal data management.",
+    "skills.database.desc":
+      "Designing and implementing efficient database schemas and queries for optimal data management.",
     "skills.uiux": "UI/UX Design",
     "skills.uiux.tech": "User Interface Design",
     "skills.uiux.desc": "Crafting intuitive user interfaces with focus on usability and accessibility.",
@@ -155,13 +133,16 @@ const translations = {
     "skills.multilingual.desc": "Communicating effectively across multiple languages for international collaboration.",
     "skills.communication": "Communication",
     "skills.communication.tech": "Technical Writing, Public Speaking",
-    "skills.communication.desc": "Conveying complex technical concepts clearly to both technical and non-technical audiences.",
+    "skills.communication.desc":
+      "Conveying complex technical concepts clearly to both technical and non-technical audiences.",
     "skills.optimization": "System Optimization",
     "skills.optimization.tech": "Performance Tuning, Network Solutions",
-    "skills.optimization.desc": "Enhancing system performance and resolving complex technical issues for optimal operation.",
+    "skills.optimization.desc":
+      "Enhancing system performance and resolving complex technical issues for optimal operation.",
     "skills.research": "Research",
     "skills.research.tech": "Academic Research, Literature Review",
-    "skills.research.desc": "Conducting thorough research to identify gaps and propose innovative solutions in technology.",
+    "skills.research.desc":
+      "Conducting thorough research to identify gaps and propose innovative solutions in technology.",
 
     // Experience
     "experience.title": "Professional Experience",
@@ -169,14 +150,19 @@ const translations = {
     "experience.location": "Mandalay, Myanmar",
     "experience.period": "Dec 2018 - Present",
     "experience.role": "Software Developer and Client Tester",
-    "experience.responsibilities.1": "Designed and developed a POS system using Microsoft .NET to streamline stock and inventory management, improving operational efficiency",
-    "experience.responsibilities.2": "Upgraded an outdated Microsoft Access (Office 2003) POS system to a modern SQL standalone application, enhancing performance",
-    "experience.responsibilities.3": "Resolved LAN interference issues with the VPN network by implementing a custom tunneling solution, ensuring stable connectivity",
-    "experience.responsibilities.4": "Delivered an optimized POS system that increased store efficiency by over 50%, reducing transaction time and improving inventory tracking",
-    "experience.responsibilities.5": "Conducted comprehensive testing and client training to ensure seamless adoption of new systems",
+    "experience.responsibilities.1":
+      "Designed and developed a POS system using Microsoft .NET to streamline stock and inventory management, improving operational efficiency",
+    "experience.responsibilities.2":
+      "Upgraded an outdated Microsoft Access (Office 2003) POS system to a modern SQL standalone application, enhancing performance",
+    "experience.responsibilities.3":
+      "Resolved LAN interference issues with the VPN network by implementing a custom tunneling solution, ensuring stable connectivity",
+    "experience.responsibilities.4":
+      "Delivered an optimized POS system that increased store efficiency by over 50%, reducing transaction time and improving inventory tracking",
+    "experience.responsibilities.5":
+      "Conducted comprehensive testing and client training to ensure seamless adoption of new systems",
     "experience.decorativeImageAlt": "Decorative background",
     "experience.keyAchievements": "Key Achievements",
-    
+
     // Projects
     "projects.title": "Featured Projects",
     "projects.viewProject": "View Project",
@@ -186,47 +172,70 @@ const translations = {
     "projects.approach": "Approach",
     "projects.results": "Results",
     "projects.technologies": "Technologies Used",
+    "projects.achievements": "Key Achievements",
     "projects.project1.title": "Mouse Dynamics for Online Assessment Fraud Detection",
     "projects.project1.period": "May 2024 - Nov 2024",
-    "projects.project1.description": "Developed a machine learning model to detect fraudulent behavior during online assessments using mouse dynamics as a behavioral biometric.",
-    "projects.project1.achievement1": "Analyzed mouse movement and click patterns to create user profiles and identify anomalies indicative of fraud",
-    "projects.project1.achievement2": "Implemented feature selection techniques and evaluated multiple machine learning models, achieving high accuracy in fraud detection",
-    "projects.project1.achievement3": "Identified key mouse dynamics features that are most discriminative for user authentication",
-    "projects.project1.challenge": "Educational institutions faced increasing incidents of cheating in online assessments, with traditional proctoring methods proving insufficient for detecting sophisticated fraud techniques.",
-    "projects.project1.approach": "Developed a non-intrusive behavioral biometric system that analyzes mouse movement patterns to identify anomalous behavior without compromising user privacy or requiring additional hardware.",
-    "projects.project1.results": "The system achieved 92% accuracy in detecting fraudulent behavior with a false positive rate of only 3%, significantly improving assessment integrity while maintaining a positive user experience.",
+    "projects.project1.description":
+      "Developed a machine learning model to detect fraudulent behavior during online assessments using mouse dynamics as a behavioral biometric.",
+    "projects.project1.achievement1":
+      "Analyzed mouse movement and click patterns to create user profiles and identify anomalies indicative of fraud",
+    "projects.project1.achievement2":
+      "Implemented feature selection techniques and evaluated multiple machine learning models, achieving high accuracy in fraud detection",
+    "projects.project1.achievement3":
+      "Identified key mouse dynamics features that are most discriminative for user authentication",
+    "projects.project1.challenge":
+      "Educational institutions faced increasing incidents of cheating in online assessments, with traditional proctoring methods proving insufficient for detecting sophisticated fraud techniques.",
+    "projects.project1.approach":
+      "Developed a non-intrusive behavioral biometric system that analyzes mouse movement patterns to identify anomalous behavior without compromising user privacy or requiring additional hardware.",
+    "projects.project1.results":
+      "The system achieved 92% accuracy in detecting fraudulent behavior with a false positive rate of only 3%, significantly improving assessment integrity while maintaining a positive user experience.",
     "projects.project2.title": "Mouse Dynamics Biometric Fraud Detection System using Deep Learning",
     "projects.project2.period": "May 2024 - Nov 2024",
-    "projects.project2.description": "Developed a fraud detection system using mouse dynamics and deep learning to enhance the security of online assessments.",
+    "projects.project2.description":
+      "Developed a fraud detection system using mouse dynamics and deep learning to enhance the security of online assessments.",
     "projects.project2.achievement1": "Implemented data preprocessing pipelines achieving 100% data usability",
     "projects.project2.achievement2": "Engineered 12 optimized feature sets using advanced selection methods",
-    "projects.project2.achievement3": "Developed and tested multiple deep learning models (ANN, LSTM, LSTM-CNN, LSTM-Transformer)",
+    "projects.project2.achievement3":
+      "Developed and tested multiple deep learning models (ANN, LSTM, LSTM-CNN, LSTM-Transformer)",
     "projects.project2.achievement4": "Built data visualization tools to monitor system performance",
-    "projects.project2.achievement5": "Exceeded project goals, achieving 95% detection accuracy and a false negative rate below 5%",
-    "projects.project2.challenge": "Existing fraud detection systems struggled with real-time analysis and had high computational requirements, making them impractical for widespread implementation.",
-    "projects.project2.approach": "Leveraged deep learning architectures to create a lightweight, efficient system capable of real-time analysis with minimal computational overhead, focusing on optimizing both accuracy and performance.",
-    "projects.project2.results": "The system processed user behavior in real-time with a latency of less than 200ms, while maintaining 95% detection accuracy and reducing computational requirements by 60% compared to previous solutions.",
+    "projects.project2.achievement5":
+      "Exceeded project goals, achieving 95% detection accuracy and a false negative rate below 5%",
+    "projects.project2.challenge":
+      "Existing fraud detection systems struggled with real-time analysis and had high computational requirements, making them impractical for widespread implementation.",
+    "projects.project2.approach":
+      "Leveraged deep learning architectures to create a lightweight, efficient system capable of real-time analysis with minimal computational overhead, focusing on optimizing both accuracy and performance.",
+    "projects.project2.results":
+      "The system processed user behavior in real-time with a latency of less than 200ms, while maintaining 95% detection accuracy and reducing computational requirements by 60% compared to previous solutions.",
     "projects.project3.title": "Continuous Authentication with Behavioral Biometrics",
     "projects.project3.period": "May 2024 - Nov 2024",
-    "projects.project3.description": "Conducted a literature review on the use of behavioral biometrics, specifically mouse dynamics and keystroke analysis, for continuous user authentication.",
+    "projects.project3.description":
+      "Conducted a literature review on the use of behavioral biometrics, specifically mouse dynamics and keystroke analysis, for continuous user authentication.",
     "projects.project3.achievement1": "Researched current methods, challenges, and potential improvements in the field",
-    "projects.project3.achievement2": "Identified key research gaps and proposed a novel authentication method using real-time behavioral biometric information security (RBBIS)",
-    "projects.project3.achievement3": "Developed a research framework and work plan for implementing and evaluating the proposed method",
-    "projects.project3.challenge": "Traditional authentication methods rely on one-time verification, creating security vulnerabilities once a user is logged in, while continuous methods often create friction in the user experience.",
-    "projects.project3.approach": "Developed a framework for passive, continuous authentication that monitors behavioral patterns in the background without interrupting the user's workflow, adapting to changing user behavior over time.",
-    "projects.project3.results": "The proposed framework demonstrated the potential to reduce unauthorized access incidents by up to 87% in simulated environments, while maintaining a seamless user experience with no additional authentication prompts.",
-    
+    "projects.project3.achievement2":
+      "Identified key research gaps and proposed a novel authentication method using real-time behavioral biometric information security (RBBIS)",
+    "projects.project3.achievement3":
+      "Developed a research framework and work plan for implementing and evaluating the proposed method",
+    "projects.project3.challenge":
+      "Traditional authentication methods rely on one-time verification, creating security vulnerabilities once a user is logged in, while continuous methods often create friction in the user experience.",
+    "projects.project3.approach":
+      "Developed a framework for passive, continuous authentication that monitors behavioral patterns in the background without interrupting the user's workflow, adapting to changing user behavior over time.",
+    "projects.project3.results":
+      "The proposed framework demonstrated the potential to reduce unauthorized access incidents by up to 87% in simulated environments, while maintaining a seamless user experience with no additional authentication prompts.",
+
     // Services
     "services.title": "My Services",
     "services.web": "Web Application Development",
-    "services.web.desc": "Custom web applications built with React and Next.js, focusing on performance and user experience.",
+    "services.web.desc":
+      "Custom web applications built with React and Next.js, focusing on performance and user experience.",
     "services.backend": "Backend Development",
     "services.backend.desc": "Robust and scalable server-side solutions using Node.js, Express, and Fastify.",
     "services.api": "API Development",
-    "services.api.desc": "RESTful and GraphQL API design and implementation for seamless data flow between client and server.",
+    "services.api.desc":
+      "RESTful and GraphQL API design and implementation for seamless data flow between client and server.",
     "services.responsive": "Responsive Design",
-    "services.responsive.desc": "Mobile-first, responsive web designs that work flawlessly across all devices and screen sizes.",
-    
+    "services.responsive.desc":
+      "Mobile-first, responsive web designs that work flawlessly across all devices and screen sizes.",
+
     // Education
     "education.title": "Education & Certifications",
     "education.master": "Master of Information Technology (Business Informatics)",
@@ -254,21 +263,24 @@ const translations = {
     "education.cert1.title": "Bachelor of Information Technology",
     "education.cert1.issuer": "James Cook University Singapore",
     "education.cert1.date": "March 7, 2024",
-    "education.cert1.description": "Official testamur for the Bachelor of Information Technology degree, conferred on March 7, 2024. The degree provides a comprehensive foundation in information technology concepts, programming, database design, and system development.",
+    "education.cert1.description":
+      "Official testamur for the Bachelor of Information Technology degree, conferred on March 7, 2024. The degree provides a comprehensive foundation in information technology concepts, programming, database design, and system development.",
     "education.cert1.verificationMessage": "Verification details are not available for this testamur.",
     "education.cert2.title": "The Fundamentals of Digital Marketing",
     "education.cert2.issuer": "Google Digital Garage",
     "education.cert2.date": "April 3, 2023",
-    "education.cert2.description": "Comprehensive certification covering digital marketing fundamentals, including search engine optimization, social media marketing, and analytics.",
+    "education.cert2.description":
+      "Comprehensive certification covering digital marketing fundamentals, including search engine optimization, social media marketing, and analytics.",
     "education.cert3.title": "Google Data Analytics",
     "education.cert3.issuer": "Google",
     "education.cert3.date": "2023",
-    "education.cert3.description": "Professional certification covering data analysis, visualization, and interpretation using Google's analytics tools.",
+    "education.cert3.description":
+      "Professional certification covering data analysis, visualization, and interpretation using Google's analytics tools.",
     "education.verifyAuthenticity": "Verify the authenticity of this certificate at:",
     "education.certificateId": "Certificate ID:",
     "education.verificationInfo": "Verification Information",
     "education.verifyButton": "Verify Certificate",
-    
+
     // Contact
     "contact.title": "Get in Touch",
     "contact.info": "Contact Information",
@@ -276,7 +288,8 @@ const translations = {
     "contact.phone": "Phone",
     "contact.address": "Address",
     "contact.connect": "Connect With Me",
-    "contact.connect.desc": "I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.",
+    "contact.connect.desc":
+      "I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.",
     "contact.form.name": "Name",
     "contact.form.email": "Email",
     "contact.form.subject": "Subject",
@@ -289,19 +302,22 @@ const translations = {
     "contact.form.emailRequired": "Please enter a valid email address",
     "contact.form.subjectRequired": "Subject must be at least 5 characters",
     "contact.form.messageRequired": "Message must be at least 10 characters",
-    
+
     // Testimonials
     "testimonials.title": "Client Testimonials",
     "testimonials.prev": "Previous testimonial",
     "testimonials.next": "Next testimonial",
     "testimonials.goto": "Go to testimonial {number}",
-    "testimonials.client1.quote": "Kaung's expertise in developing our POS system transformed our business operations. His attention to detail and problem-solving skills are exceptional.",
+    "testimonials.client1.quote":
+      "Kaung's expertise in developing our POS system transformed our business operations. His attention to detail and problem-solving skills are exceptional.",
     "testimonials.client1.name": "Sarah Chen",
     "testimonials.client1.title": "Operations Manager, RetailTech Solutions",
-    "testimonials.client2.quote": "Working with Kaung on our fraud detection system was a game-changer. His deep understanding of behavioral biometrics and machine learning delivered results beyond our expectations.",
+    "testimonials.client2.quote":
+      "Working with Kaung on our fraud detection system was a game-changer. His deep understanding of behavioral biometrics and machine learning delivered results beyond our expectations.",
     "testimonials.client2.name": "Michael Rodriguez",
     "testimonials.client2.title": "CTO, SecureFinance",
-    "testimonials.client3.quote": "Kaung's ability to translate complex technical requirements into user-friendly solutions is remarkable. His work on our network infrastructure significantly improved our system stability.",
+    "testimonials.client3.quote":
+      "Kaung's ability to translate complex technical requirements into user-friendly solutions is remarkable. His work on our network infrastructure significantly improved our system stability.",
     "testimonials.client3.name": "Priya Sharma",
     "testimonials.client3.title": "IT Director, Global Connect",
 
@@ -400,7 +416,8 @@ const translations = {
     "hero.title": "Kaung Sithu Linn",
     "hero.subtitle": "软件开发工程师",
     "hero.jobTitle": "软件开发工程师",
-    "hero.description": "拥有4年以上经验的软件开发人员，专注于创建直观的用户界面，进行全面测试，并提供满足复杂需求的高质量应用程序。专长于POS系统、欺诈检测和行为生物识别。",
+    "hero.description":
+      "拥有4年以上经验的软件开发人员，专注于创建直观的用户界面，进行全面测试，并提供满足复杂需求的高质量应用程序。专长于POS系统、欺诈检测和行为生物识别。",
     "hero.githubProfile": "GitHub 主页",
     "hero.linkedinProfile": "LinkedIn 主页",
     "hero.emailContact": "电子邮件联系",
@@ -413,9 +430,12 @@ const translations = {
 
     // About
     "about.title": "关于我",
-    "about.paragraph1": "作为一名热情的软件开发人员，我专注于开发稳健的应用程序，注重用户体验和系统优化。在eVolva Software House工作超过4年，我通过创新的POS系统和网络解决方案改变了业务运营。",
-    "about.paragraph2": "我最近的研究专注于使用机器学习的前沿行为生物识别和欺诈检测。我还获得了数字营销基础认证，使我能够将技术开发与有效的市场策略相结合。我目前正在新加坡詹姆斯库克大学攻读信息技术硕士学位，主修商业信息学，继续扩展我在数据分析和人工智能应用方面的专业知识。",
-    "about.quote": "我相信创造的技术不仅能解决问题，还能提升人类体验。我的目标是构建安全、高效、用户友好的解决方案，带来真正的改变。",
+    "about.paragraph1":
+      "作为一名热情的软件开发人员，我专注于开发稳健的应用程序，注重用户体验和系统优化。在eVolva Software House工作超过4年，我通过创新的POS系统和网络解决方案改变了业务运营。",
+    "about.paragraph2":
+      "我最近的研究专注于使用机器学习的前沿行为生物识别和欺诈检测。我还获得了数字营销基础认证，使我能够将技术开发与有效的市场策略相结合。我目前正在新加坡詹姆斯库克大学攻读信息技术硕士学位，主修商业信息学，继续扩展我在数据分析和人工智能应用方面的专业知识。",
+    "about.quote":
+      "我相信创造的技术不仅能解决问题，还能提升人类体验。我的目标是构建安全、高效、用户友好的解决方案，带来真正的改变。",
     "about.decorativeImageAlt": "装饰背景",
     "about.skills.frontend.title": "前端",
     "about.skills.frontend.description": "JavaScript, HTML5, CSS, 用户界面设计",
@@ -429,7 +449,7 @@ const translations = {
     "about.skills.marketing.description": "搜索引擎优化, 分析, 内容策略",
     "about.skills.languages.title": "语言",
     "about.skills.languages.description": "英语, 缅甸语, 中文, 日语",
-    
+
     // Header
     "header.about": "关于",
     "header.experience": "经验",
@@ -437,7 +457,7 @@ const translations = {
     "header.services": "服务",
     "header.education": "教育",
     "header.contact": "联系",
-    
+
     // Skills
     "skills.title": "技能与专长",
     "skills.frontend": "前端开发",
@@ -478,13 +498,14 @@ const translations = {
     "experience.period": "2018年12月至今",
     "experience.role": "软件开发人员和客户测试员",
     "experience.responsibilities.1": "使用Microsoft .NET设计和开发POS系统，简化库存管理，提高运营效率",
-    "experience.responsibilities.2": "将过时的Microsoft Access（Office 2003）POS系统升级为现代SQL独立应用程序，提升性能",
+    "experience.responsibilities.2":
+      "将过时的Microsoft Access（Office 2003）POS系统升级为现代SQL独立应用程序，提升性能",
     "experience.responsibilities.3": "通过实施自定义隧道解决方案解决VPN网络的LAN干扰问题，确保连接稳定",
     "experience.responsibilities.4": "提供优化的POS系统，将商店效率提高50%以上，减少交易时间并改进库存跟踪",
     "experience.responsibilities.5": "进行全面测试和客户培训，确保新系统的无缝采用",
     "experience.decorativeImageAlt": "装饰背景",
     "experience.keyAchievements": "主要成就",
-    
+
     // Projects
     "projects.title": "精选项目",
     "projects.viewProject": "查看项目",
@@ -494,6 +515,7 @@ const translations = {
     "projects.approach": "方法",
     "projects.results": "结果",
     "projects.technologies": "使用的技术",
+    "projects.achievements": "主要成就",
     "projects.project1.title": "在线评估欺诈检测的鼠标动态分析",
     "projects.project1.period": "2024年5月 - 2024年11月",
     "projects.project1.description": "开发了一个机器学习模型，使用鼠标动态作为行为生物识别来检测在线评估中的欺诈行为。",
@@ -501,8 +523,10 @@ const translations = {
     "projects.project1.achievement2": "实施特征选择技术并评估多个机器学习模型，在欺诈检测中实现高准确度",
     "projects.project1.achievement3": "识别对用户认证最具辨别力的关键鼠标动态特征",
     "projects.project1.challenge": "教育机构面临在线评估作弊事件增加的问题，传统监考方法无法检测复杂的欺诈技术。",
-    "projects.project1.approach": "开发了一种非侵入式行为生物识别系统，分析鼠标移动模式以识别异常行为，无需损害用户隐私或额外硬件。",
-    "projects.project1.results": "该系统在检测欺诈行为方面达到92%的准确率，误报率仅为3%，显著提高了评估完整性，同时保持了良好的用户体验。",
+    "projects.project1.approach":
+      "开发了一种非侵入式行为生物识别系统，分析鼠标移动模式以识别异常行为，无需损害用户隐私或额外硬件。",
+    "projects.project1.results":
+      "该系统在检测欺诈行为方面达到92%的准确率，误报率仅为3%，显著提高了评估完整性，同时保持了良好的用户体验。",
     "projects.project2.title": "使用深度学习的鼠标动态生物识别欺诈检测系统",
     "projects.project2.period": "2024年5月 - 2024年11月",
     "projects.project2.description": "开发了一个使用鼠标动态和深度学习的欺诈检测系统，增强在线评估的安全性。",
@@ -512,18 +536,23 @@ const translations = {
     "projects.project2.achievement4": "构建数据可视化工具监控系统性能",
     "projects.project2.achievement5": "超越项目目标，实现95%的检测准确率和低于5%的假阴性率",
     "projects.project2.challenge": "现有欺诈检测系统难以进行实时分析，且计算需求高，使其难以广泛实施。",
-    "projects.project2.approach": "利用深度学习架构创建轻量级、高效的系统，能够以最小的计算开销进行实时分析，专注于优化准确性和性能。",
-    "projects.project2.results": "该系统以不到200毫秒的延迟实时处理用户行为，同时保持95%的检测准确率，与之前的解决方案相比，计算需求减少了60%。",
+    "projects.project2.approach":
+      "利用深度学习架构创建轻量级、高效的系统，能够以最小的计算开销进行实时分析，专注于优化准确性和性能。",
+    "projects.project2.results":
+      "该系统以不到200毫秒的延迟实时处理用户行为，同时保持95%的检测准确率，与之前的解决方案相比，计算需求减少了60%。",
     "projects.project3.title": "使用行为生物识别的持续认证",
     "projects.project3.period": "2024年5月 - 2024年11月",
     "projects.project3.description": "对使用行为生物识别，特别是鼠标动态和击键分析进行持续用户认证的文献综述。",
     "projects.project3.achievement1": "研究了该领域的当前方法、挑战和潜在改进",
     "projects.project3.achievement2": "识别关键研究差距并提出使用实时行为生物识别信息安全（RBBIS）的新型认证方法",
     "projects.project3.achievement3": "开发了实施和评估所提方法的研究框架和工作计划",
-    "projects.project3.challenge": "传统认证方法依赖一次性验证，一旦用户登录就会产生安全漏洞，而持续方法往往会在用户体验中造成摩擦。",
-    "projects.project3.approach": "开发了一个被动、持续认证的框架，在后台监控行为模式，不中断用户的工作流程，适应随时间变化的用户行为。",
-    "projects.project3.results": "所提框架在模拟环境中展示了将未授权访问事件减少高达87%的潜力，同时保持无缝用户体验，无需额外认证提示。",
-    
+    "projects.project3.challenge":
+      "传统认证方法依赖一次性验证，一旦用户登录就会产生安全漏洞，而持续方法往往会在用户体验中造成摩擦。",
+    "projects.project3.approach":
+      "开发了一个被动、持续认证的框架，在后台监控行为模式，不中断用户的工作流程，适应随时间变化的用户行为。",
+    "projects.project3.results":
+      "所提框架在模拟环境中展示了将未授权访问事件减少高达87%的潜力，同时保持无缝用户体验，无需额外认证提示。",
+
     // Services
     "services.title": "我的服务",
     "services.web": "Web应用程序开发",
@@ -534,7 +563,7 @@ const translations = {
     "services.api.desc": "RESTful和GraphQL API设计和实现，实现客户端和服务器之间的无缝数据流。",
     "services.responsive": "响应式设计",
     "services.responsive.desc": "移动优先的响应式Web设计，在所有设备和屏幕尺寸上完美运行。",
-    
+
     // Education
     "education.title": "教育与认证",
     "education.master": "信息技术硕士（商业信息学）",
@@ -562,7 +591,8 @@ const translations = {
     "education.cert1.title": "信息技术学士",
     "education.cert1.issuer": "新加坡詹姆斯库克大学",
     "education.cert1.date": "2024年3月7日",
-    "education.cert1.description": "信息技术学士学位的官方证明，于2024年3月7日授予。该学位为信息技术概念、编程、数据库设计和系统开发提供了全面的基础。",
+    "education.cert1.description":
+      "信息技术学士学位的官方证明，于2024年3月7日授予。该学位为信息技术概念、编程、数据库设计和系统开发提供了全面的基础。",
     "education.cert1.verificationMessage": "此证明没有可用的验证详情。",
     "education.cert2.title": "数字营销基础",
     "education.cert2.issuer": "Google数字车库",
@@ -576,7 +606,7 @@ const translations = {
     "education.certificateId": "证书ID：",
     "education.verificationInfo": "验证信息",
     "education.verifyButton": "验证证书",
-    
+
     // Contact
     "contact.title": "联系我",
     "contact.info": "联系信息",
@@ -597,19 +627,22 @@ const translations = {
     "contact.form.emailRequired": "请输入有效的电子邮件地址",
     "contact.form.subjectRequired": "主题必须至少有5个字符",
     "contact.form.messageRequired": "消息必须至少有10个字符",
-    
+
     // Testimonials
     "testimonials.title": "客户推荐",
     "testimonials.prev": "上一个推荐",
     "testimonials.next": "下一个推荐",
     "testimonials.goto": "前往推荐{number}",
-    "testimonials.client1.quote": "Kaung在开发我们的POS系统方面的专业知识改变了我们的业务运营。他的注重细节和解决问题的能力非常出色。",
+    "testimonials.client1.quote":
+      "Kaung在开发我们的POS系统方面的专业知识改变了我们的业务运营。他的注重细节和解决问题的能力非常出色。",
     "testimonials.client1.name": "Sarah Chen",
     "testimonials.client1.title": "RetailTech Solutions运营经理",
-    "testimonials.client2.quote": "与Kaung合作开发我们的欺诈检测系统是一个改变游戏规则的经历。他对行为生物识别和机器学习的深刻理解带来了超出我们预期的结果。",
+    "testimonials.client2.quote":
+      "与Kaung合作开发我们的欺诈检测系统是一个改变游戏规则的经历。他对行为生物识别和机器学习的深刻理解带来了超出我们预期的结果。",
     "testimonials.client2.name": "Michael Rodriguez",
     "testimonials.client2.title": "SecureFinance首席技术官",
-    "testimonials.client3.quote": "Kaung将复杂的技术需求转化为用户友好解决方案的能力非常出色。他对我们网络基础设施的工作显著提高了我们的系统稳定性。",
+    "testimonials.client3.quote":
+      "Kaung将复杂的技术需求转化为用户友好解决方案的能力非常出色。他对我们网络基础设施的工作显著提高了我们的系统稳定性。",
     "testimonials.client3.name": "Priya Sharma",
     "testimonials.client3.title": "Global Connect IT总监",
 
@@ -708,7 +741,8 @@ const translations = {
     "hero.title": "Kaung Sithu Linn",
     "hero.subtitle": "Pembangun Perisian",
     "hero.jobTitle": "Pembangun Perisian",
-    "hero.description": "Pembangun yang berpengalaman lebih dari 4 tahun dalam mencipta antara muka pengguna yang intuitif, menjalankan ujian menyeluruh, dan menyampaikan aplikasi berkualiti tinggi yang memenuhi keperluan kompleks. Pakar dalam sistem POS, pengesanan penipuan, dan biometrik tingkah laku.",
+    "hero.description":
+      "Pembangun yang berpengalaman lebih dari 4 tahun dalam mencipta antara muka pengguna yang intuitif, menjalankan ujian menyeluruh, dan menyampaikan aplikasi berkualiti tinggi yang memenuhi keperluan kompleks. Pakar dalam sistem POS, pengesanan penipuan, dan biometrik tingkah laku.",
     "hero.githubProfile": "Profil GitHub",
     "hero.linkedinProfile": "Profil LinkedIn",
     "hero.emailContact": "Hubungi Emel",
@@ -721,9 +755,12 @@ const translations = {
 
     // About
     "about.title": "Tentang Saya",
-    "about.paragraph1": "Sebagai Pembangun Perisian yang bersemangat di Singapura, saya pakar dalam membangunkan aplikasi yang teguh dengan fokus pada pengalaman pengguna dan pengoptimuman sistem. Dengan lebih dari 4 tahun di eVolva Software House, saya telah mengubah operasi perniagaan melalui sistem POS dan penyelesaian rangkaian yang inovatif.",
-    "about.paragraph2": "Penyelidikan terkini saya fokus pada biometrik tingkah laku dan pengesanan penipuan menggunakan pembelajaran mesin. Saya juga mempunyai sijil dalam asas pemasaran digital, membolehkan saya menghubungkan pembangunan teknikal dengan strategi pasaran yang berkesan. Saya kini sedang mengejar Sarjana dalam Teknologi Maklumat dengan pengkhususan dalam Informatik Perniagaan di James Cook University Singapore, di mana saya terus mengembangkan kepakaran saya dalam analisis data dan aplikasi AI.",
-    "about.quote": "Saya percaya dalam mencipta teknologi yang bukan sahaja menyelesaikan masalah tetapi meningkatkan pengalaman manusia. Matlamat saya adalah untuk membina penyelesaian yang selamat, cekap, dan mesra pengguna yang membuat perbezaan sebenar.",
+    "about.paragraph1":
+      "Sebagai Pembangun Perisian yang bersemangat di Singapura, saya pakar dalam membangunkan aplikasi yang teguh dengan fokus pada pengalaman pengguna dan pengoptimuman sistem. Dengan lebih dari 4 tahun di eVolva Software House, saya telah mengubah operasi perniagaan melalui sistem POS dan penyelesaian rangkaian yang inovatif.",
+    "about.paragraph2":
+      "Penyelidikan terkini saya fokus pada biometrik tingkah laku dan pengesanan penipuan menggunakan pembelajaran mesin. Saya juga mempunyai sijil dalam asas pemasaran digital, membolehkan saya menghubungkan pembangunan teknikal dengan strategi pasaran yang berkesan. Saya kini sedang mengejar Sarjana dalam Teknologi Maklumat dengan pengkhususan dalam Informatik Perniagaan di James Cook University Singapore, di mana saya terus mengembangkan kepakaran saya dalam analisis data dan aplikasi AI.",
+    "about.quote":
+      "Saya percaya dalam mencipta teknologi yang bukan sahaja menyelesaikan masalah tetapi meningkatkan pengalaman manusia. Matlamat saya adalah untuk membina penyelesaian yang selamat, cekap, dan mesra pengguna yang membuat perbezaan sebenar.",
     "about.decorativeImageAlt": "Latar belakang hiasan",
     "about.skills.frontend.title": "Frontend",
     "about.skills.frontend.description": "JavaScript, HTML5, CSS, Reka Bentuk UI",
@@ -737,7 +774,7 @@ const translations = {
     "about.skills.marketing.description": "SEO, Analitik, Strategi Kandungan",
     "about.skills.languages.title": "Bahasa",
     "about.skills.languages.description": "Bahasa Inggeris, Burma, Cina, Jepun",
-    
+
     // Header
     "header.about": "Tentang",
     "header.experience": "Pengalaman",
@@ -745,7 +782,7 @@ const translations = {
     "header.services": "Perkhidmatan",
     "header.education": "Pendidikan",
     "header.contact": "Hubungi",
-    
+
     // Skills
     "skills.title": "Kemahiran & Kepakaran",
     "skills.frontend": "Pembangunan Frontend",
@@ -756,16 +793,128 @@ const translations = {
     "skills.backend.desc": "Mencipta aplikasi pelayan yang teguh dengan fokus pada prestasi dan kebolehpercayaan.",
     "skills.database": "Pengurusan Pangkalan Data",
     "skills.database.tech": "SQL, Pengurusan Data",
-    "skills.database.desc": "Merancang dan melaksanakan skema dan pertanyaan pangkalan data yang cekap untuk pengurusan data yang optimum.",
+    "skills.database.desc":
+      "Merancang dan melaksanakan skema dan pertanyaan pangkalan data yang cekap untuk pengurusan data yang optimum.",
     "skills.uiux": "Reka Bentuk UI/UX",
     "skills.uiux.tech": "Reka Bentuk Antara Muka Pengguna",
-    "skills.uiux.desc": "Mencipta antara muka pengguna yang intuitif dengan fokus pada kebolehgunaan和 kebolehcapaian.",
+    "skills.uiux.desc":
+      "Mencipta antara muka pengguna yang intuitif dengan fokus pada kebolehgunaan dan kebolehcapaian.",
     "skills.ml": "Pembelajaran Mesin",
     "skills.ml.tech": "Biometrik Tingkah Laku, Pembelajaran Mendalam",
-    "skills.ml.desc": "Membangunkan model ML untuk pengesanan penipuan dan pengesahan pengguna menggunakan corak tingkah laku.",
+    "skills.ml.desc":
+      "Membangunkan model ML untuk pengesanan penipuan dan pengesahan pengguna menggunakan corak tingkah laku.",
     "skills.programming": "Bahasa Pengaturcaraan",
     "skills.programming.tech": "JavaScript, Python, Java, C++",
-    "skills.programming.desc": "Menulis kod yang cekap dalam pelbagai bahasa pengaturcaraan untuk aplikasi yang pelbagai.",
+    "skills.programming.desc":
+      "Menulis kod yang cekap dalam pelbagai bahasa pengaturcaraan untuk aplikasi yang pelbagai.",
     "skills.multilingual": "Berbilang Bahasa",
     "skills.multilingual.tech": "Bahasa Inggeris, Burma, Cina, Jepun",
-    "skills.multilingual.desc": "Berkomunikasi secara berkesan dalam pelbagai bahasa untuk kerjasama antarabangsa.",\
+    "skills.multilingual.desc": "Berkomunikasi secara berkesan dalam pelbagai bahasa untuk kerjasama antarabangsa.",
+    "skills.communication": "Komunikasi",
+    "skills.communication.tech": "Penulisan Teknikal, Pengucapan Awam",
+    "skills.communication.desc":
+      "Menyampaikan konsep teknikal yang kompleks dengan jelas kepada kedua-dua audiens teknikal dan bukan teknikal.",
+    "skills.optimization": "Pengoptimuman Sistem",
+    "skills.optimization.tech": "Penalaan Prestasi, Penyelesaian Rangkaian",
+    "skills.optimization.desc":
+      "Meningkatkan prestasi sistem dan menyelesaikan isu teknikal yang kompleks untuk operasi yang optimum.",
+    "skills.research": "Penyelidikan",
+    "skills.research.tech": "Penyelidikan Akademik, Kajian Literatur",
+    "skills.research.desc":
+      "Menjalankan penyelidikan menyeluruh untuk mengenal pasti jurang dan mencadangkan penyelesaian inovatif dalam teknologi.",
+
+    // System Monitor
+    "systemMonitor.title": "Monitor Sistem",
+    "systemMonitor.systemTime": "Masa Sistem",
+    "systemMonitor.cpuUsage": "Penggunaan CPU",
+    "systemMonitor.memoryUsage": "Penggunaan Memori",
+    "systemMonitor.networkActivity": "Aktiviti Rangkaian",
+    "systemMonitor.skillsMonitor": "Monitor Kemahiran",
+    "systemMonitor.show": "Tunjukkan Antara Muka",
+    "systemMonitor.hide": "Sembunyikan Antara Muka",
+
+    // Terminal
+    "terminal.title": "Konsol Pembangun KSL",
+    "terminal.welcome": "Selamat datang ke portfolio Kaung Sithu Linn. Taip 'help' untuk melihat arahan yang tersedia.",
+    "terminal.help": "Arahan tersedia",
+    "terminal.about": "Tentang",
+    "terminal.skills": "Kemahiran",
+    "terminal.projects": "Projek",
+    "terminal.contact": "Hubungi",
+    "terminal.experience": "Pengalaman",
+    "terminal.education": "Pendidikan",
+    "terminal.clear": "Kosongkan terminal",
+    "terminal.exit": "Keluar mod terminal",
+    "terminal.askAI": "Tanya pembantu AI",
+  },
+  ta: {
+    // Common
+    "common.language": "மொழி",
+    "common.english": "English",
+    "common.chinese": "中文",
+    "common.malay": "Bahasa Melayu",
+    "common.tamil": "தமிழ்",
+    "common.arabic": "العربية",
+    "common.learnMore": "மேலும் அறிக",
+    "common.contactMe": "என்னை தொடர்பு கொள்ள",
+    "common.downloadResume": "சுயவிவரத்தை பதிவிறக்கவும்",
+    "common.resume": "சுயவிவரம்",
+
+    // Navigation
+    "nav.home": "முகப்பு",
+    "nav.about": "என்னைப் பற்றி",
+    "nav.experience": "அனுபவம்",
+    "nav.skills": "திறன்கள்",
+    "nav.projects": "திட்டங்கள்",
+    "nav.services": "சேவைகள்",
+    "nav.testimonials": "சான்றுகள்",
+    "nav.education": "கல்வி",
+    "nav.contact": "தொடர்பு",
+
+    // System Monitor
+    "systemMonitor.title": "கணினி கண்காணிப்பு",
+    "systemMonitor.systemTime": "கணினி நேரம்",
+    "systemMonitor.cpuUsage": "CPU பயன்பாடு",
+    "systemMonitor.memoryUsage": "நினைவக பயன்பாடு",
+    "systemMonitor.networkActivity": "வலையமைப்பு செயல்பாடு",
+    "systemMonitor.skillsMonitor": "திறன்கள் கண்காணிப்பு",
+    "systemMonitor.show": "இடைமுகத்தைக் காட்டு",
+    "systemMonitor.hide": "இடைமுகத்தை மறை",
+  },
+  ar: {
+    // Common
+    "common.language": "اللغة",
+    "common.english": "English",
+    "common.chinese": "中文",
+    "common.malay": "Bahasa Melayu",
+    "common.tamil": "தமிழ்",
+    "common.arabic": "العربية",
+    "common.learnMore": "اعرف المزيد",
+    "common.contactMe": "اتصل بي",
+    "common.downloadResume": "تحميل السيرة الذاتية",
+    "common.resume": "السيرة الذاتية",
+
+    // Navigation
+    "nav.home": "الرئيسية",
+    "nav.about": "عني",
+    "nav.experience": "الخبرة",
+    "nav.skills": "المهارات",
+    "nav.projects": "المشاريع",
+    "nav.services": "الخدمات",
+    "nav.testimonials": "آراء العملاء",
+    "nav.education": "التعليم",
+    "nav.contact": "اتصل",
+
+    // System Monitor
+    "systemMonitor.title": "مراقب النظام",
+    "systemMonitor.systemTime": "وقت النظام",
+    "systemMonitor.cpuUsage": "استخدام المعالج",
+    "systemMonitor.memoryUsage": "استخدام الذاكرة",
+    "systemMonitor.networkActivity": "نشاط الشبكة",
+    "systemMonitor.skillsMonitor": "مراقب المهارات",
+    "systemMonitor.show": "إظهار الواجهة",
+    "systemMonitor.hide": "إخفاء الواجهة",
+  },
+}
+
+export default translations

@@ -3,38 +3,41 @@
 import { motion } from "framer-motion"
 import { Code, Database, Server, Globe, Brain, TrendingUp } from "lucide-react"
 import Image from "next/image"
+import { useTranslation } from "@/context/language-context"
 
 export default function About() {
+  const { t } = useTranslation()
+
   const skills = [
     {
       icon: <Code className="w-8 h-8 text-blue-500" />,
-      title: "Frontend",
-      description: "JavaScript, HTML5, CSS, UI Design",
+      title: t("about.skills.frontend.title"),
+      description: t("about.skills.frontend.description"),
     },
     {
       icon: <Server className="w-8 h-8 text-green-500" />,
-      title: "Backend",
-      description: "Python, Java, C++, .NET",
+      title: t("about.skills.backend.title"),
+      description: t("about.skills.backend.description"),
     },
     {
       icon: <Database className="w-8 h-8 text-purple-500" />,
-      title: "Database",
-      description: "SQL, Data Management",
+      title: t("about.skills.database.title"),
+      description: t("about.skills.database.description"),
     },
     {
       icon: <Brain className="w-8 h-8 text-yellow-500" />,
-      title: "AI/ML",
-      description: "Behavioral Biometrics, Deep Learning",
+      title: t("about.skills.ai.title"),
+      description: t("about.skills.ai.description"),
     },
     {
       icon: <TrendingUp className="w-8 h-8 text-red-500" />,
-      title: "Digital Marketing",
-      description: "SEO, Analytics, Content Strategy",
+      title: t("about.skills.marketing.title"),
+      description: t("about.skills.marketing.description"),
     },
     {
       icon: <Globe className="w-8 h-8 text-indigo-500" />,
-      title: "Languages",
-      description: "English, Burmese, Chinese, Japanese",
+      title: t("about.skills.languages.title"),
+      description: t("about.skills.languages.description"),
     },
   ]
 
@@ -66,7 +69,7 @@ export default function About() {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          About Me
+          {t("about.title")}
         </motion.h2>
         <div className="flex flex-col md:flex-row items-center justify-between">
           <motion.div
@@ -76,18 +79,8 @@ export default function About() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <p className="text-xl text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
-              As a passionate Software Developer based in Singapore, I specialize in developing robust applications with
-              a focus on user experience and system optimization. With over 4 years at eVolva Software House, I've
-              transformed business operations through innovative POS systems and network solutions.
-            </p>
-            <p className="text-xl text-gray-700 dark:text-gray-300 leading-relaxed">
-              My recent research focuses on cutting-edge behavioral biometrics and fraud detection using machine
-              learning. I'm also certified in digital marketing fundamentals, allowing me to bridge technical
-              development with effective market strategies. I'm currently pursuing my Master's in Information Technology
-              with a Business Informatics major at James Cook University Singapore, where I continue to expand my
-              expertise in data analytics and AI applications.
-            </p>
+            <p className="text-xl text-gray-700 dark:text-gray-300 leading-relaxed mb-6">{t("about.paragraph1")}</p>
+            <p className="text-xl text-gray-700 dark:text-gray-300 leading-relaxed">{t("about.paragraph2")}</p>
 
             <motion.div
               className="mt-8 p-4 border-l-4 border-blue-500 bg-blue-50 dark:bg-blue-900/20 dark:border-blue-400 rounded"
@@ -96,10 +89,7 @@ export default function About() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.3 }}
             >
-              <p className="italic text-gray-700 dark:text-gray-300">
-                "I believe in creating technology that not only solves problems but enhances human experiences. My goal
-                is to build secure, efficient, and user-friendly solutions that make a real difference."
-              </p>
+              <p className="italic text-gray-700 dark:text-gray-300">{t("about.quote")}</p>
             </motion.div>
           </motion.div>
 
@@ -128,7 +118,12 @@ export default function About() {
         </div>
       </div>
       <div className="absolute bottom-0 right-0 w-64 h-64 -mb-32 -mr-32 opacity-20">
-        <Image src="/placeholder.svg?height=256&width=256" alt="Decorative background" width={256} height={256} />
+        <Image
+          src="/placeholder.svg?height=256&width=256"
+          alt={t("about.decorativeImageAlt")}
+          width={256}
+          height={256}
+        />
       </div>
     </section>
   )

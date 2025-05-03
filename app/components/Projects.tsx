@@ -5,6 +5,7 @@ import { ExternalLink, Brain, Shield, LineChart, ChevronDown, ChevronUp } from "
 import Image from "next/image"
 import AnimatedSectionHeader from "./AnimatedSectionHeader"
 import { useState } from "react"
+import { useTranslation } from "@/context/language-context"
 
 interface ProjectProps {
   title: string
@@ -23,6 +24,7 @@ interface ProjectProps {
 
 const Project = ({ project, index }: { project: ProjectProps; index: number }) => {
   const [expanded, setExpanded] = useState(false)
+  const { t } = useTranslation()
 
   return (
     <motion.div
@@ -43,7 +45,7 @@ const Project = ({ project, index }: { project: ProjectProps; index: number }) =
               <p className="text-gray-600 dark:text-gray-400">{project.period}</p>
             </div>
             <p className="text-gray-700 dark:text-gray-300 mb-4">{project.description}</p>
-            <h4 className="font-semibold text-lg mb-2 dark:text-gray-200">Key Achievements:</h4>
+            <h4 className="font-semibold text-lg mb-2 dark:text-gray-200">{t("projects.achievements")}:</h4>
             <ul className="list-none space-y-2 mb-4">
               {project.achievements.map((achievement, idx) => (
                 <li key={idx} className="text-gray-700 dark:text-gray-300 flex items-start">
@@ -60,7 +62,7 @@ const Project = ({ project, index }: { project: ProjectProps; index: number }) =
                 rel="noopener noreferrer"
                 className="inline-flex items-center text-blue-600 dark:text-blue-400 hover:underline"
               >
-                View Project <ExternalLink className="w-4 h-4 ml-1" />
+                {t("projects.viewProject")} <ExternalLink className="w-4 h-4 ml-1" />
               </a>
 
               {project.caseStudy && (
@@ -70,7 +72,7 @@ const Project = ({ project, index }: { project: ProjectProps; index: number }) =
                   aria-expanded={expanded}
                   aria-controls={`case-study-${index}`}
                 >
-                  {expanded ? "Hide Case Study" : "View Case Study"}
+                  {expanded ? t("projects.hideCase") : t("projects.viewCase")}
                   {expanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                 </button>
               )}
@@ -92,19 +94,19 @@ const Project = ({ project, index }: { project: ProjectProps; index: number }) =
             <div className="border-t border-gray-200 dark:border-gray-700 pt-6 mt-2">
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
-                  <h5 className="font-semibold text-gray-900 dark:text-white mb-2">Challenge</h5>
+                  <h5 className="font-semibold text-gray-900 dark:text-white mb-2">{t("projects.challenge")}</h5>
                   <p className="text-gray-700 dark:text-gray-300">{project.caseStudy.challenge}</p>
                 </div>
                 <div>
-                  <h5 className="font-semibold text-gray-900 dark:text-white mb-2">Approach</h5>
+                  <h5 className="font-semibold text-gray-900 dark:text-white mb-2">{t("projects.approach")}</h5>
                   <p className="text-gray-700 dark:text-gray-300">{project.caseStudy.approach}</p>
                 </div>
                 <div>
-                  <h5 className="font-semibold text-gray-900 dark:text-white mb-2">Results</h5>
+                  <h5 className="font-semibold text-gray-900 dark:text-white mb-2">{t("projects.results")}</h5>
                   <p className="text-gray-700 dark:text-gray-300">{project.caseStudy.results}</p>
                 </div>
                 <div>
-                  <h5 className="font-semibold text-gray-900 dark:text-white mb-2">Technologies Used</h5>
+                  <h5 className="font-semibold text-gray-900 dark:text-white mb-2">{t("projects.technologies")}</h5>
                   <div className="flex flex-wrap gap-2">
                     {project.caseStudy.technologies.map((tech, idx) => (
                       <span
@@ -126,6 +128,8 @@ const Project = ({ project, index }: { project: ProjectProps; index: number }) =
 }
 
 export default function Projects() {
+  const { t } = useTranslation()
+
   const projects = [
     {
       title: "Mouse Dynamics for Online Assessment Fraud Detection",
@@ -217,7 +221,7 @@ export default function Projects() {
       className="py-20 bg-gradient-to-br from-indigo-50 to-purple-100 dark:from-gray-900 dark:to-purple-900 transition-colors duration-300 overflow-hidden relative"
     >
       <div className="container mx-auto px-6 relative z-10">
-        <AnimatedSectionHeader title="Featured Projects" />
+        <AnimatedSectionHeader title={t("projects.title")} />
         <div className="space-y-12">
           {projects.map((project, index) => (
             <Project key={index} project={project} index={index} />

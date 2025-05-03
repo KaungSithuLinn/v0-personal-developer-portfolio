@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { useTheme } from "next-themes"
+import { useTranslation } from "@/context/language-context"
 
 export default function Header() {
   const [mounted, setMounted] = useState(false)
@@ -9,6 +10,7 @@ export default function Header() {
   const [lastScrollY, setLastScrollY] = useState(0)
   const [activeSection, setActiveSection] = useState("home")
   const { theme } = useTheme()
+  const { t } = useTranslation()
 
   useEffect(() => setMounted(true), [])
 
@@ -59,6 +61,15 @@ export default function Header() {
     }
   }
 
+  const navItems = [
+    ["about", t("header.about")],
+    ["experience", t("header.experience")],
+    ["skills", t("header.skills")],
+    ["services", t("header.services")],
+    ["education", t("header.education")],
+    ["contact", t("header.contact")],
+  ]
+
   return (
     <header
       className={`
@@ -70,14 +81,7 @@ export default function Header() {
     >
       <nav className="container mx-auto px-6 py-4">
         <ul className="flex justify-center space-x-6">
-          {[
-            ["about", "About"],
-            ["experience", "Experience"],
-            ["skills", "Skills"],
-            ["services", "Services"],
-            ["education", "Education"],
-            ["contact", "Contact"],
-          ].map(([id, label]) => (
+          {navItems.map(([id, label]) => (
             <li key={id}>
               <button
                 onClick={() => scrollToSection(id)}

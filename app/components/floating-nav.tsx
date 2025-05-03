@@ -1,21 +1,26 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useMemo } from "react"
 import { motion } from "framer-motion"
-
-const sections = [
-  { id: "hero", label: "Home" },
-  { id: "about", label: "About" },
-  { id: "experience", label: "Experience" },
-  { id: "skills", label: "Skills" },
-  { id: "projects", label: "Projects" },
-  { id: "testimonials", label: "Testimonials" },
-  { id: "education", label: "Education" },
-  { id: "contact", label: "Contact" },
-]
+import { useTranslation } from "@/context/language-context"
 
 export default function FloatingNav() {
   const [activeSection, setActiveSection] = useState("hero")
+  const { t } = useTranslation()
+
+  const sections = useMemo(
+    () => [
+      { id: "hero", label: t("nav.home") },
+      { id: "about", label: t("nav.about") },
+      { id: "experience", label: t("nav.experience") },
+      { id: "skills", label: t("nav.skills") },
+      { id: "projects", label: t("nav.projects") },
+      { id: "testimonials", label: t("nav.testimonials") },
+      { id: "education", label: t("nav.education") },
+      { id: "contact", label: t("nav.contact") },
+    ],
+    [t],
+  )
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -35,7 +40,7 @@ export default function FloatingNav() {
     })
 
     return () => observer.disconnect()
-  }, [])
+  }, [sections])
 
   return (
     <motion.div
@@ -50,7 +55,7 @@ export default function FloatingNav() {
             key={id}
             onClick={() => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" })}
             className="group relative flex items-center"
-            aria-label={`Scroll to ${label}`}
+            aria-label={t("nav.scrollTo", { section: label })}
           >
             <span className="absolute right-8 px-2 py-1 rounded bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300">
               {label}

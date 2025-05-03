@@ -8,8 +8,9 @@ import Education from "./components/Education"
 import Contact from "./components/Contact"
 import FloatingNav from "./components/floating-nav"
 import DevConsoleInterface from "./components/terminal/eDEXInterface"
+import TranslationTester from "@/components/TranslationTester"
 
-export default function Home(): JSX.Element {
+export default function Home() {
   return (
     <main className="bg-gray-50 dark:bg-gray-900 min-h-screen">
       <FloatingNav />
@@ -22,6 +23,7 @@ export default function Home(): JSX.Element {
       <Testimonials />
       <Education />
       <Contact />
+      {process.env.NODE_ENV === "development" && <TranslationTester />}
     </main>
   )
 }

@@ -10,6 +10,101 @@ body {
   @apply text-gray-800 dark:text-gray-200 bg-white dark:bg-gray-900 transition-colors duration-300;
 }
 
+/* Language transition effects */
+.language-transition * {
+  transition: all 0.3s ease-in-out;
+}
+
+/* RTL Support */
+[dir="rtl"] {
+  text-align: right;
+}
+
+[dir="rtl"] .ml-1,
+[dir="rtl"] .ml-2,
+[dir="rtl"] .ml-3,
+[dir="rtl"] .ml-4,
+[dir="rtl"] .ml-6,
+[dir="rtl"] .ml-8,
+[dir="rtl"] .ml-10,
+[dir="rtl"] .ml-12 {
+  margin-left: 0;
+}
+
+[dir="rtl"] .mr-1,
+[dir="rtl"] .mr-2,
+[dir="rtl"] .mr-3,
+[dir="rtl"] .mr-4,
+[dir="rtl"] .mr-6,
+[dir="rtl"] .mr-8,
+[dir="rtl"] .mr-10,
+[dir="rtl"] .mr-12 {
+  margin-right: 0;
+}
+
+[dir="rtl"] .ml-1 {
+  margin-right: 0.25rem;
+}
+[dir="rtl"] .ml-2 {
+  margin-right: 0.5rem;
+}
+[dir="rtl"] .ml-3 {
+  margin-right: 0.75rem;
+}
+[dir="rtl"] .ml-4 {
+  margin-right: 1rem;
+}
+[dir="rtl"] .ml-6 {
+  margin-right: 1.5rem;
+}
+[dir="rtl"] .ml-8 {
+  margin-right: 2rem;
+}
+[dir="rtl"] .ml-10 {
+  margin-right: 2.5rem;
+}
+[dir="rtl"] .ml-12 {
+  margin-right: 3rem;
+}
+
+[dir="rtl"] .mr-1 {
+  margin-left: 0.25rem;
+}
+[dir="rtl"] .mr-2 {
+  margin-left: 0.5rem;
+}
+[dir="rtl"] .mr-3 {
+  margin-left: 0.75rem;
+}
+[dir="rtl"] .mr-4 {
+  margin-left: 1rem;
+}
+[dir="rtl"] .mr-6 {
+  margin-left: 1.5rem;
+}
+[dir="rtl"] .mr-8 {
+  margin-left: 2rem;
+}
+[dir="rtl"] .mr-10 {
+  margin-left: 2.5rem;
+}
+[dir="rtl"] .mr-12 {
+  margin-left: 3rem;
+}
+
+/* RTL flexbox direction */
+[dir="rtl"] .flex-row {
+  flex-direction: row-reverse;
+}
+
+/* RTL text alignment for specific components */
+[dir="rtl"] .text-left {
+  text-align: right;
+}
+[dir="rtl"] .text-right {
+  text-align: left;
+}
+
 @layer utilities {
   .animate-gradient-x {
     animation: gradient-x 15s ease infinite;

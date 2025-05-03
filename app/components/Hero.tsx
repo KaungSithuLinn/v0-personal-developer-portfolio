@@ -5,6 +5,7 @@ import { Github, Linkedin, Mail, ArrowDown, ExternalLink, Download, ChevronRight
 import { motion } from "framer-motion"
 import { useEffect, useState } from "react"
 import Logo from "./Logo"
+import { useTranslation } from "@/context/language-context"
 
 const CodePattern = () => (
   <svg className="absolute inset-0 w-full h-full opacity-5" xmlns="http://www.w3.org/2000/svg">
@@ -26,6 +27,7 @@ const CodePattern = () => (
 export default function Hero() {
   // Add this to prevent hydration mismatch
   const [mounted, setMounted] = useState(false)
+  const { t } = useTranslation()
 
   useEffect(() => {
     setMounted(true)
@@ -68,7 +70,7 @@ export default function Hero() {
                 animate={mounted ? { opacity: 1, x: 0 } : false}
                 transition={{ duration: 0.5, delay: 0.5 }}
               >
-                Crafting Digital Solutions
+                {t("hero.tagline")}
               </motion.h2>
             </div>
 
@@ -76,12 +78,10 @@ export default function Hero() {
               Kaung Sithu Linn
             </h1>
             <h2 className="text-2xl md:text-3xl font-semibold mb-6 text-gray-700 dark:text-gray-300">
-              Software Developer
+              {t("hero.jobTitle")}
             </h2>
             <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto lg:mx-0">
-              Results-driven developer with 4+ years of experience crafting intuitive user interfaces, conducting
-              thorough testing, and delivering high-quality applications that meet complex requirements. Specializing in
-              POS systems, fraud detection, and behavioral biometrics.
+              {t("hero.description")}
             </p>
 
             <div className="flex flex-wrap justify-center lg:justify-start gap-4 mb-8">
@@ -90,7 +90,7 @@ export default function Hero() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-3 rounded-full bg-white/80 hover:bg-white dark:bg-gray-800/80 dark:hover:bg-gray-800 transition-colors duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 transform transition-transform"
-                aria-label="GitHub Profile"
+                aria-label={t("hero.githubProfile")}
               >
                 <Github className="w-6 h-6 text-gray-700 dark:text-gray-300" />
               </a>
@@ -99,14 +99,14 @@ export default function Hero() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-3 rounded-full bg-white/80 hover:bg-white dark:bg-gray-800/80 dark:hover:bg-gray-800 transition-colors duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 transform transition-transform"
-                aria-label="LinkedIn Profile"
+                aria-label={t("hero.linkedinProfile")}
               >
                 <Linkedin className="w-6 h-6 text-gray-700 dark:text-gray-300" />
               </a>
               <a
                 href="mailto:kaungsithulinn1@gmail.com"
                 className="p-3 rounded-full bg-white/80 hover:bg-white dark:bg-gray-800/80 dark:hover:bg-gray-800 transition-colors duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 transform transition-transform"
-                aria-label="Email Contact"
+                aria-label={t("hero.emailContact")}
               >
                 <Mail className="w-6 h-6 text-gray-700 dark:text-gray-300" />
               </a>
@@ -115,7 +115,7 @@ export default function Hero() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-3 rounded-full bg-white/80 hover:bg-white dark:bg-gray-800/80 dark:hover:bg-gray-800 transition-colors duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 transform transition-transform"
-                aria-label="Portfolio Website"
+                aria-label={t("hero.portfolioWebsite")}
               >
                 <ExternalLink className="w-6 h-6 text-gray-700 dark:text-gray-300" />
               </a>
@@ -123,10 +123,10 @@ export default function Hero() {
                 href="/KaungSithuLinn_SoftwareDeveloper_Resume.pdf"
                 download
                 className="flex items-center gap-2 px-4 py-2 bg-white/80 hover:bg-white dark:bg-gray-800/80 dark:hover:bg-gray-800 rounded-full transition-colors duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 transform transition-transform text-gray-700 dark:text-gray-300"
-                aria-label="Download Resume"
+                aria-label={t("hero.downloadResume")}
               >
                 <Download className="w-5 h-5" />
-                <span>Resume</span>
+                <span>{t("hero.resume")}</span>
               </a>
             </div>
 
@@ -137,7 +137,7 @@ export default function Hero() {
                 whileHover={mounted ? { scale: 1.05 } : undefined}
                 whileTap={mounted ? { scale: 0.95 } : undefined}
               >
-                Learn More
+                {t("hero.learnMore")}
                 <ArrowDown className="w-4 h-4" />
               </motion.button>
 
@@ -147,7 +147,7 @@ export default function Hero() {
                 whileHover={mounted ? { scale: 1.05 } : undefined}
                 whileTap={mounted ? { scale: 0.95 } : undefined}
               >
-                Contact Me
+                {t("hero.contactMe")}
                 <ChevronRight className="w-4 h-4" />
               </motion.button>
             </div>
@@ -207,7 +207,7 @@ export default function Hero() {
                 <div className="relative w-full h-full">
                   <Image
                     src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/KSTL%20Headshot%20Portrait.jpg-gxu4RedFPcOzqK3iU0lk96P56KVoZL.jpeg"
-                    alt="Kaung Sithu Linn - Software Developer"
+                    alt={t("hero.profileImageAlt")}
                     fill
                     sizes="(max-width: 768px) 100vw, 50vw"
                     className="object-cover object-center"

@@ -4,9 +4,11 @@ import { motion } from "framer-motion"
 import { Quote } from "lucide-react"
 import { useState } from "react"
 import AnimatedSectionHeader from "./AnimatedSectionHeader"
+import { useTranslation } from "@/context/language-context"
 
 export default function Testimonials() {
   const [activeIndex, setActiveIndex] = useState(0)
+  const { t } = useTranslation()
 
   const testimonials = [
     {
@@ -46,7 +48,7 @@ export default function Testimonials() {
       className="py-20 bg-gradient-to-br from-purple-50 to-blue-50 dark:from-purple-900 dark:to-blue-900 transition-colors duration-300 overflow-hidden relative"
     >
       <div className="container mx-auto px-6 relative z-10">
-        <AnimatedSectionHeader title="Client Testimonials" />
+        <AnimatedSectionHeader title={t("testimonials.title")} />
 
         <div className="max-w-4xl mx-auto">
           <div className="relative">
@@ -87,7 +89,7 @@ export default function Testimonials() {
               <button
                 onClick={prevTestimonial}
                 className="p-2 rounded-full bg-white dark:bg-gray-800 shadow-md hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors duration-300"
-                aria-label="Previous testimonial"
+                aria-label={t("testimonials.prev")}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -110,7 +112,7 @@ export default function Testimonials() {
                         ? "bg-blue-600 dark:bg-blue-400"
                         : "bg-gray-300 dark:bg-gray-600 hover:bg-blue-400 dark:hover:bg-blue-500"
                     } transition-colors duration-300`}
-                    aria-label={`Go to testimonial ${index + 1}`}
+                    aria-label={`${t("testimonials.goto")} ${index + 1}`}
                     aria-current={index === activeIndex ? "true" : "false"}
                   />
                 ))}
@@ -119,7 +121,7 @@ export default function Testimonials() {
               <button
                 onClick={nextTestimonial}
                 className="p-2 rounded-full bg-white dark:bg-gray-800 shadow-md hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors duration-300"
-                aria-label="Next testimonial"
+                aria-label={t("testimonials.next")}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

@@ -3,29 +3,31 @@
 import { motion } from "framer-motion"
 import { Code, Layout, Server, Smartphone } from "lucide-react"
 import Image from "next/image"
+import { useTranslation } from "@/context/language-context"
 
 export default function Services() {
+  const { t } = useTranslation()
+
   const services = [
     {
       icon: <Layout className="w-12 h-12 text-blue-500" />,
-      title: "Web Application Development",
-      description: "Custom web applications built with React and Next.js, focusing on performance and user experience.",
+      title: t("services.web"),
+      description: t("services.web.desc"),
     },
     {
       icon: <Server className="w-12 h-12 text-green-500" />,
-      title: "Backend Development",
-      description: "Robust and scalable server-side solutions using Node.js, Express, and Fastify.",
+      title: t("services.backend"),
+      description: t("services.backend.desc"),
     },
     {
       icon: <Code className="w-12 h-12 text-purple-500" />,
-      title: "API Development",
-      description:
-        "RESTful and GraphQL API design and implementation for seamless data flow between client and server.",
+      title: t("services.api"),
+      description: t("services.api.desc"),
     },
     {
       icon: <Smartphone className="w-12 h-12 text-yellow-500" />,
-      title: "Responsive Design",
-      description: "Mobile-first, responsive web designs that work flawlessly across all devices and screen sizes.",
+      title: t("services.responsive"),
+      description: t("services.responsive.desc"),
     },
   ]
 
@@ -42,7 +44,7 @@ export default function Services() {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          My Services
+          {t("services.title")}
         </motion.h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {services.map((service, index) => (

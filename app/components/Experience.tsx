@@ -4,20 +4,23 @@ import { Briefcase, Calendar, MapPin } from "lucide-react"
 import Image from "next/image"
 import { motion } from "framer-motion"
 import AnimatedSectionHeader from "./AnimatedSectionHeader"
+import { useTranslation } from "@/context/language-context"
 
 export default function Experience() {
+  const { t } = useTranslation()
+
   const experiences = [
     {
-      company: "eVolva Software House",
-      location: "Mandalay, Myanmar",
-      period: "Dec 2018 - Present",
-      role: "Software Developer and Client Tester",
+      company: t("experience.company"),
+      location: t("experience.location"),
+      period: t("experience.period"),
+      role: t("experience.role"),
       responsibilities: [
-        "Designed and developed a POS system using Microsoft .NET to streamline stock and inventory management, improving operational efficiency",
-        "Upgraded an outdated Microsoft Access (Office 2003) POS system to a modern SQL standalone application, enhancing performance",
-        "Resolved LAN interference issues with the VPN network by implementing a custom tunneling solution, ensuring stable connectivity",
-        "Delivered an optimized POS system that increased store efficiency by over 50%, reducing transaction time and improving inventory tracking",
-        "Conducted comprehensive testing and client training to ensure seamless adoption of new systems",
+        t("experience.responsibilities.1"),
+        t("experience.responsibilities.2"),
+        t("experience.responsibilities.3"),
+        t("experience.responsibilities.4"),
+        t("experience.responsibilities.5"),
       ],
     },
   ]
@@ -28,7 +31,7 @@ export default function Experience() {
       className="py-20 bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-indigo-900 transition-colors duration-300 overflow-hidden relative"
     >
       <div className="container mx-auto px-6 relative z-10">
-        <AnimatedSectionHeader title="Professional Experience" />
+        <AnimatedSectionHeader title={t("experience.title")} />
         <div className="space-y-16">
           {experiences.map((exp, index) => (
             <motion.div
@@ -71,7 +74,12 @@ export default function Experience() {
         </div>
       </div>
       <div className="absolute bottom-0 right-0 w-64 h-64 -mb-32 -mr-32 opacity-20">
-        <Image src="/placeholder.svg?height=256&width=256" alt="Decorative background" width={256} height={256} />
+        <Image
+          src="/placeholder.svg?height=256&width=256"
+          alt={t("experience.decorativeImageAlt")}
+          width={256}
+          height={256}
+        />
       </div>
     </section>
   )
