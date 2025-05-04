@@ -14,7 +14,7 @@ export default function Hero() {
       className="min-h-screen pt-28 pb-20 bg-gradient-to-br from-indigo-50 to-blue-100 dark:from-gray-900 dark:to-blue-900 transition-colors duration-300 overflow-hidden relative"
     >
       <div className="container mx-auto px-6 relative">
-        <div className={`flex flex-col ${isRTL ? "items-end text-right" : "items-start text-left"} max-w-[800px] mx-auto`}>
+        <div className={`flex flex-col ${isRTL ? "items-end text-right" : "items-start text-left"} max-w-[800px] mx-auto relative`}>
           <motion.h1
             className="text-4xl sm:text-6xl font-bold mb-4"
             initial={{ opacity: 0, y: 20 }}
@@ -96,20 +96,29 @@ export default function Hero() {
           </motion.div>
         </div>
 
-        <div className="absolute bottom-0 right-0 w-96 h-96 -mb-32 -mr-32">
-          <Image 
-            src="/placeholder-user.jpg" 
-            alt={t("hero.profileImageAlt")} 
-            width={384} 
-            height={384}
-            priority
-            className="rounded-full opacity-90 shadow-2xl"
-          />
+        {/* Image container with explicit styling */}
+        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] -mb-32 -mr-32">
+          <div className="absolute inset-0 m-4 rounded-2xl overflow-hidden shadow-2xl hero-image-container">
+            <div className="relative w-full h-full">
+              <Image
+                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/KSTL%20Headshot%20Portrait.jpg-gxu4RedFPcOzqK3iU0lk96P56KVoZL.jpeg"
+                alt={t("hero.profileImageAlt")}
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className="object-cover object-center"
+                priority
+                onError={(e) => {
+                  console.error("Image failed to load")
+                  e.currentTarget.src = "/placeholder.svg?height=400&width=400"
+                }}
+              />
+            </div>
+          </div>
         </div>
-      </div>
 
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-white/20 dark:to-black/20" />
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-white/20 dark:to-black/20" />
+        </div>
       </div>
     </section>
   )

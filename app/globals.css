@@ -428,6 +428,11 @@ button {
   }
 }
 
+/* Hero image container */
+.hero-image-container {
+  z-index: 30;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
