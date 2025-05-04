@@ -19,10 +19,11 @@ interface Props {
 }
 
 export default function Home({ params: { locale } }: Props) {
+  // Get RTL status from the language utility
   const isRTL = isRTLLanguage(locale)
   
   return (
-    <main className="bg-gray-50 dark:bg-gray-900 min-h-screen">
+    <main className="bg-gray-50 dark:bg-gray-900 min-h-screen" dir={isRTL ? "rtl" : "ltr"}>
       <FloatingNav />
       <DevConsoleInterface />
       <Hero />
