@@ -9,8 +9,7 @@ import Contact from "../components/Contact"
 import FloatingNav from "../components/floating-nav"
 import DevConsoleInterface from "../components/terminal/eDEXInterface"
 import TranslationTester from "@/components/TranslationTester"
-import { Language } from "@/context/language-utils"
-import { isRTLLanguage } from "@/lib/utils"
+import { Language, useTranslation } from "@/context/language-utils"
 
 interface Props {
   params: {
@@ -19,8 +18,7 @@ interface Props {
 }
 
 export default function Home({ params: { locale } }: Props) {
-  // Get RTL status from the language utility
-  const isRTL = isRTLLanguage(locale)
+  const { t, isRTL } = useTranslation()
   
   return (
     <main className="bg-gray-50 dark:bg-gray-900 min-h-screen" dir={isRTL ? "rtl" : "ltr"}>
