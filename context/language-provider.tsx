@@ -1,15 +1,13 @@
 "use client"
 
 import { useState, useEffect, type ReactNode } from "react"
-import { LanguageContext } from "./language-utils"
-import { translate } from "./language-utils"
-import translations from "./translations"
+import { LanguageContext, translate } from "./language-utils"
+import type { TranslationKey } from "./language-utils"
 import {
   SUPPORTED_LANGUAGES,
   DEFAULT_LANGUAGE,
   RTL_LANGUAGES,
   LANGUAGE_NAMES,
-  getLanguageConfig,
   type Language,
 } from "@/config/language.config"
 
@@ -25,7 +23,7 @@ export function LanguageProvider({ children, initialLocale }: LanguageProviderPr
   const [isTransitioning, setIsTransitioning] = useState(false)
   const isRTL = RTL_LANGUAGES.includes(language)
 
-  const t = (key: keyof typeof translations[Language], params?: Record<string, string | number>) => {
+  const t = (key: TranslationKey, params?: Record<string, string | number>) => {
     return translate(key, language, params)
   }
 

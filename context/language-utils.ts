@@ -1,11 +1,14 @@
 import { createContext, useContext } from "react"
 import { LANGUAGE_NAMES, type Language } from "@/config/language.config"
-import translations, { type TranslationsType } from "./translations"
+import translations from "./translations"
+
+// Define TranslationsType using the structure of our translations
+export type TranslationKey = keyof typeof translations[Language]
 
 export interface LanguageContextType {
   language: Language
   setLanguage: (language: Language) => void
-  t: (key: keyof TranslationsType[Language], params?: Record<string, string | number>) => string
+  t: (key: TranslationKey, params?: Record<string, string | number>) => string
   getDirection: () => "ltr" | "rtl"
   isRTL: boolean
   isTransitioning: boolean
@@ -15,7 +18,7 @@ export interface LanguageContextType {
 export const LanguageContext = createContext<LanguageContextType>({
   language: "en",
   setLanguage: () => {},
-  t: (key) => key,
+  t: (key: TranslationKey) => String(key),
   getDirection: () => "ltr",
   isRTL: false,
   isTransitioning: false,
@@ -25,18 +28,18 @@ export const LanguageContext = createContext<LanguageContextType>({
 export const useTranslation = () => useContext(LanguageContext)
 
 export function translate(
-  key: keyof TranslationsType[Language],
+  key: TranslationKey,
   language: Language,
   params?: Record<string, string | number>
 ): string {
-  const translation = translations[language]?.[key] || key
+  const translation = String(translations[language]?.[key] || key)
 
   if (!params) {
     return translation
   }
 
   return Object.entries(params).reduce(
-    (acc, [key, value]) => acc.replace(`{${key}}`, String(value)),
+    (acc, [paramKey, value]) => acc.replace(`{${paramKey}}`, String(value)),
     translation
   )
 }
