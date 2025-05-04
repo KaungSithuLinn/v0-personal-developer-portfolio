@@ -6,15 +6,17 @@ export interface LanguageContextType {
   language: Language
   setLanguage: (language: Language) => void
   t: (key: keyof TranslationsType[Language], params?: Record<string, string | number>) => string
+  getDirection: () => "ltr" | "rtl"
   isRTL: boolean
   isTransitioning: boolean
-  languageName: (lang: Language) => string
+  languageName: (code: Language) => string
 }
 
 export const LanguageContext = createContext<LanguageContextType>({
   language: "en",
   setLanguage: () => {},
   t: (key) => key,
+  getDirection: () => "ltr",
   isRTL: false,
   isTransitioning: false,
   languageName: (lang) => LANGUAGE_NAMES[lang] || lang,

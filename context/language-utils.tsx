@@ -2,17 +2,7 @@
 
 import { createContext, useContext } from "react"
 import { type Language } from "../config/language.config"
-
-// Define the context type
-interface LanguageContextType {
-  language: Language
-  setLanguage: (lang: Language) => void
-  t: (key: string, params?: Record<string, string>) => string
-  getDirection: () => "ltr" | "rtl"
-  isRTL: boolean
-  isTransitioning: boolean
-  languageName: (code: Language) => string
-}
+import { type LanguageContextType } from "./language-utils"
 
 // Create the context with default values
 export const LanguageContext = createContext<LanguageContextType>({
