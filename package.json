@@ -66,6 +66,7 @@
     "zod": "latest"
   },
   "devDependencies": {
+    "@types/negotiator": "^0.6.3",
     "@types/node": "^22",
     "@types/react": "^19",
     "@types/react-dom": "^19",
