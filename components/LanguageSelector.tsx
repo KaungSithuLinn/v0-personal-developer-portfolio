@@ -3,12 +3,14 @@
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Globe, Check } from "lucide-react"
-import { useTranslation, type Language } from "@/context/language-context"
+import { useTranslation, type Language } from "@/context/language-utils"
+import { useRouter } from "next/navigation"
 
 export default function LanguageSelector() {
   const [isOpen, setIsOpen] = useState(false)
   const { language, setLanguage, t, languageName, isRTL } = useTranslation()
   const [mounted, setMounted] = useState(false)
+  const router = useRouter()
 
   const languages: Language[] = ["en", "zh", "ms", "ta", "ar"]
 
@@ -30,6 +32,14 @@ export default function LanguageSelector() {
       document.removeEventListener("mousedown", handleClickOutside)
     }
   }, [isOpen])
+
+  const handleLanguageChange = (lang: Language) => {
+    setLanguage(lang)
+    setIsOpen(false)
+    localStorage.setItem("language", lang)
+    // Use router.push for client-side navigation
+    router.push(`/${lang}${window.location.pathname.substring(3)}`)
+  }
 
   // Don't render anything until mounted to prevent hydration issues
   if (!mounted) return null
@@ -65,11 +75,7 @@ export default function LanguageSelector() {
                 {languages.map((lang) => (
                   <button
                     key={lang}
-                    onClick={() => {
-                      setLanguage(lang)
-                      setIsOpen(false)
-                      localStorage.setItem("language", lang)
-                    }}
+                    onClick={() => handleLanguageChange(lang)}
                     className={`flex items-center w-full px-3 py-2 rounded-md text-left text-sm transition-colors ${
                       language === lang ? "bg-blue-600/30 text-blue-300" : "hover:bg-gray-800/50 text-gray-300"
                     }`}

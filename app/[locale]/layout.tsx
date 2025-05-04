@@ -4,6 +4,7 @@ import { LanguageProvider } from "@/context/language-provider"
 import { Inter, Noto_Sans_SC, Noto_Sans_Arabic, Noto_Sans_Tamil } from "next/font/google"
 import { type Language } from "@/context/language-utils"
 import { i18n } from "@/config/language.config"
+import LanguageSelector from "@/components/LanguageSelector"
 import "../globals.css"
 
 // Load fonts with proper subsets and weights
@@ -74,6 +75,7 @@ export default function LocaleLayout({
       <body>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
           <LanguageProvider initialLocale={locale}>
+            <LanguageSelector />
             {children}
           </LanguageProvider>
         </ThemeProvider>

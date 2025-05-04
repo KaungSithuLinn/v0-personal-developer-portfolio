@@ -49,7 +49,7 @@ export default function Hero() {
             transition={{ duration: 0.5, delay: 0.3 }}
           >
             <a
-              href="https://github.com/yourusername"
+              href="https://github.com/kaungthu97" // Replace with your actual GitHub username
               target="_blank"
               rel="noopener noreferrer"
               className={`flex items-center gap-2 ${
@@ -61,7 +61,7 @@ export default function Hero() {
             </a>
 
             <a
-              href="https://linkedin.com/in/yourusername"
+              href="https://linkedin.com/in/kaung-sithu-linn" // Replace with your actual LinkedIn username
               target="_blank"
               rel="noopener noreferrer"
               className={`flex items-center gap-2 ${
@@ -73,7 +73,7 @@ export default function Hero() {
             </a>
 
             <a
-              href="mailto:your.email@example.com"
+              href="mailto:kaungthu.sithu97@gmail.com" // Replace with your actual email
               className={`flex items-center gap-2 ${
                 isRTL ? "flex-row-reverse" : ""
               } bg-purple-600 text-white px-4 py-2 rounded-full hover:bg-purple-500 transition-colors`}
@@ -96,8 +96,15 @@ export default function Hero() {
           </motion.div>
         </div>
 
-        <div className="absolute bottom-0 right-0 w-64 h-64 -mb-32 -mr-32 opacity-20">
-          <Image src="/placeholder.svg?height=256&width=256" alt={t("hero.profileImageAlt")} width={256} height={256} />
+        <div className="absolute bottom-0 right-0 w-96 h-96 -mb-32 -mr-32">
+          <Image 
+            src="/placeholder-user.jpg" 
+            alt={t("hero.profileImageAlt")} 
+            width={384} 
+            height={384}
+            priority
+            className="rounded-full opacity-90 shadow-2xl"
+          />
         </div>
       </div>
 
