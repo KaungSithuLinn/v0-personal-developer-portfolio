@@ -1,6 +1,7 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
+import type { ReactNode, JSX } from "react"
 
 export function useMounted(): boolean {
   const [mounted, setMounted] = useState(false)
@@ -37,26 +38,28 @@ export function useDelayedMount(delay = 100) {
 }
 
 interface MountedProps {
-  children: React.ReactNode
-  fallback?: React.ReactNode
+  children: ReactNode
+  fallback?: ReactNode
 }
 
-export function ClientOnly({ children, fallback = null }: MountedProps) {
+export function ClientOnly({ children, fallback = null }: MountedProps): JSX.Element {
   const mounted = useMounted()
-  return mounted ? <>{children}</> : <>{fallback}</>
+  return React.createElement(React.Fragment, null, mounted ? children : fallback)
 }
 
-export function WithMountTransition({ children, fallback = null }: MountedProps) {
+export function WithMountTransition({ children, fallback = null }: MountedProps): JSX.Element {
   const mounted = useDelayedMount()
   
-  if (!mounted) return <>{fallback}</>
+  if (!mounted) {
+    return React.createElement(React.Fragment, null, fallback)
+  }
 
-  return (
-    <div
-      className="transition-opacity duration-300"
-      style={{ opacity: mounted ? 1 : 0 }}
-    >
-      {children}
-    </div>
+  return React.createElement(
+    'div',
+    {
+      className: "transition-opacity duration-300",
+      style: { opacity: mounted ? 1 : 0 }
+    },
+    children
   )
 }

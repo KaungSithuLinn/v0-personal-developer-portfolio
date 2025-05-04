@@ -114,9 +114,9 @@ export function getBiDiStyles(direction: "ltr" | "rtl", isMixed: boolean) {
   } as const
 }
 
-// Utility function to wrap text segments in direction-specific spans
-export function wrapTextSegments(text: string): JSX.Element[] {
-  const segments: JSX.Element[] = []
+// Utility function to wrap text segments
+export function wrapTextSegments(text: string): { dir: 'ltr' | 'rtl'; content: string }[] {
+  const segments: { dir: 'ltr' | 'rtl'; content: string }[] = []
   let currentSegment = ""
   let currentDirection: "ltr" | "rtl" | null = null
 
@@ -132,22 +132,20 @@ export function wrapTextSegments(text: string): JSX.Element[] {
     if (direction === currentDirection) {
       currentSegment += char
     } else {
-      segments.push(
-        <span key={segments.length} dir={currentDirection}>
-          {currentSegment}
-        </span>
-      )
+      segments.push({
+        dir: currentDirection,
+        content: currentSegment
+      })
       currentSegment = char
       currentDirection = direction
     }
   }
 
   if (currentSegment) {
-    segments.push(
-      <span key={segments.length} dir={currentDirection!}>
-        {currentSegment}
-      </span>
-    )
+    segments.push({
+      dir: currentDirection!,
+      content: currentSegment
+    })
   }
 
   return segments
