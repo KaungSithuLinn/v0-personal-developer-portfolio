@@ -5,53 +5,57 @@ import Negotiator from 'negotiator'
 import { i18n } from './config/language.config'
 
 function getLocale(request: NextRequest): string {
-  // Negotiator expects plain object so we need to transform headers
+  // Bypass locale detection for static files and api routes
+  if (
+    request.nextUrl.pathname.startsWith('/_next') ||
+    request.nextUrl.pathname.startsWith('/api') ||
+    request.nextUrl.pathname.includes('.')
+  ) {
+    return i18n.defaultLocale
+  }
+
   const negotiatorHeaders: Record<string, string> = {}
   request.headers.forEach((value, key) => (negotiatorHeaders[key] = value))
 
-  // Use negotiator and intl-localematcher to get best locale
-  let languages = new Negotiator({ headers: negotiatorHeaders }).languages()
-  // @ts-ignore locales are readonly
-  const locales: string[] = i18n.locales
-  const defaultLocale = i18n.defaultLocale
-
-  return matchLocale(languages, locales, defaultLocale)
+  // Get language preferences
+  const languages = new Negotiator({ headers: negotiatorHeaders }).languages()
+  return matchLocale(languages, i18n.locales, i18n.defaultLocale)
 }
 
 export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
-  
-  // Handle root path
-  if (pathname === '/') {
-    const locale = getLocale(request)
-    return NextResponse.redirect(new URL(`/${locale}`, request.url))
+
+  // Early return for static files, api routes, and direct locale access
+  if (
+    pathname.startsWith('/_next') ||
+    pathname.startsWith('/api') ||
+    pathname.includes('.') ||
+    i18n.locales.some(locale => pathname === `/${locale}`)
+  ) {
+    return NextResponse.next()
   }
 
-  // Check if there is any supported locale in the pathname
+  // Check if the pathname is missing a locale
   const pathnameIsMissingLocale = i18n.locales.every(
-    (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
+    locale => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
   )
 
-  // Redirect if there is no locale
   if (pathnameIsMissingLocale) {
     const locale = getLocale(request)
-
-    // e.g. incoming request is /products
-    // The new URL is now /en/products
-    return NextResponse.redirect(
-      new URL(
-        `/${locale}${pathname.startsWith('/') ? '' : '/'}${pathname}`,
-        request.url
-      )
-    )
+    const newUrl = new URL(`/${locale}${pathname}`, request.url)
+    
+    // Add original path to URL to help prevent loops
+    newUrl.searchParams.set('from', pathname)
+    
+    return NextResponse.redirect(newUrl)
   }
+
+  return NextResponse.next()
 }
 
 export const config = {
-  // Match all pathnames except for
-  // - /api routes
-  // - /_next (Next.js internals)
-  // - /static (inside /public)
-  // - all root files inside /public (e.g. /favicon.ico)
-  matcher: ['/((?!api|_next|static|.*\\..*|_vercel|[\\w-]+\\.\\w+).*)']
+  matcher: [
+    // Skip all internal paths (_next)
+    '/((?!_next|api|static|.*\\..*).*)',
+  ],
 }

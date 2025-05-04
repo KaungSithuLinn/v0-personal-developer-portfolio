@@ -26,14 +26,23 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  async redirects() {
-    return [
-      {
-        source: "/",
-        destination: "/en",
-        permanent: true,
-      },
-    ]
+  // Handle static files and avoid redirect loops
+  async rewrites() {
+    return {
+      beforeFiles: [
+        {
+          source: '/:locale/:path*',
+          has: [
+            {
+              type: 'header',
+              key: 'x-skip-locale-redirect',
+              value: 'true',
+            },
+          ],
+          destination: '/:path*',
+        },
+      ],
+    }
   },
   async headers() {
     return [
@@ -67,15 +76,7 @@ const nextConfig = {
         ],
       },
     ]
-  },
-  webpack: (config) => {
-    config.resolve.fallback = { fs: false, path: false }
-    return config
-  },
-  // Add basePath if your app is not hosted at the root
-  // basePath: '',
-  // Handle trailing slashes and redirects
-  trailingSlash: false,
+  }
 }
 
 export default nextConfig
