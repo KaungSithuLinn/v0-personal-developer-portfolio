@@ -60,15 +60,19 @@ export default function LocaleLayout({
   children: React.ReactNode
   params: { locale: Language }
 }) {
+  // Explicitly compute RTL state based on locale
+  const isRTL = locale === "ar"
+
   return (
     <html
       lang={locale}
-      dir={locale === "ar" ? "rtl" : "ltr"}
+      dir={isRTL ? "rtl" : "ltr"}
       suppressHydrationWarning
       className={`${inter.variable} ${notoSansArabic.variable} ${notoSansSC.variable} ${notoSansTamil.variable}`}
     >
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="dir" content={isRTL ? "rtl" : "ltr"} />
         <link rel="icon" href="/placeholder-logo.svg" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />

@@ -1,9 +1,7 @@
 "use client"
 
 import { createContext, useContext } from "react"
-
-// Define supported languages
-export type Language = "en" | "zh" | "ms" | "ta" | "ar"
+import { type Language } from "../config/language.config"
 
 // Define the context type
 interface LanguageContextType {

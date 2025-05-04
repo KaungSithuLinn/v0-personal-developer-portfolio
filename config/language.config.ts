@@ -1,4 +1,4 @@
-import { type Language } from "@/context/language-utils"
+export type Language = "en" | "zh" | "ms" | "ta" | "ar"
 
 export const SUPPORTED_LANGUAGES: Language[] = ["en", "zh", "ms", "ta", "ar"]
 export const DEFAULT_LANGUAGE: Language = "en"

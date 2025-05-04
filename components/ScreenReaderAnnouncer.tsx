@@ -19,14 +19,8 @@ export function ScreenReaderAnnouncer({
 
   useEffect(() => {
     if (message && announcerRef.current) {
-      // Clear existing content first
       announcerRef.current.textContent = ""
-      
-      // Force a reflow to ensure the change is announced
-      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       announcerRef.current.offsetHeight
-      
-      // Set the new message
       announcerRef.current.textContent = message
     }
   }, [message])
@@ -40,15 +34,38 @@ export function ScreenReaderAnnouncer({
   }, [clearOnUnmount])
 
   return (
-    <div
-      ref={announcerRef}
-      role="status"
-      aria-live={assertive === true ? "assertive" : "polite"}
-      aria-atomic="true"
-      className="sr-only"
-      lang={language}
-      dir={isRTL ? "rtl" : "ltr"}
-    />
+    <>
+      {assertive ? (
+        <div
+          ref={announcerRef}
+          role="alert"
+          aria-live="assertive"
+          aria-atomic="true"
+          className="sr-only"
+          lang={language}
+          dir={isRTL ? "rtl" : "ltr"}
+        />
+      ) : (
+        <div
+          ref={announcerRef}
+          role="status"
+          aria-live="polite"
+          aria-atomic="true"
+          className="sr-only"
+          lang={language}
+          dir={isRTL ? "rtl" : "ltr"}
+        />
+      )}
+      <div
+        id="sr-announcer"
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+        className="sr-only"
+        lang={language}
+        dir={isRTL ? "rtl" : "ltr"}
+      />
+    </>
   )
 }
 

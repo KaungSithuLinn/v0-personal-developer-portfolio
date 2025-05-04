@@ -19,7 +19,7 @@ export function useKeyboardNavigation<T extends HTMLElement>(
   options: KeyboardNavigationOptions = {}
 ) {
   const ref = useRef<T>(null)
-  const { isRTL } = useTranslation()
+  const { isRTL, t } = useTranslation()
   
   const {
     trapFocus = false,
@@ -31,6 +31,36 @@ export function useKeyboardNavigation<T extends HTMLElement>(
     spaceActivation = true,
     escDismissal = false,
   } = options
+
+  const announceNavigationInstructions = useCallback(() => {
+    const instructions = [
+      t('a11y.keyboardNav.arrowKeys'),
+      t('a11y.keyboardNav.enterSelect'),
+      t('a11y.keyboardNav.escClose'),
+      t('a11y.keyboardNav.tabKey')
+    ].join('. ');
+
+    // Announce instructions to screen readers
+    const announcer = document.getElementById('sr-announcer');
+    if (announcer) {
+      announcer.textContent = instructions;
+    }
+  }, [t]);
+
+  useEffect(() => {
+    const handleFirstTab = (e: KeyboardEvent) => {
+      if (e.key === 'Tab') {
+        document.body.classList.add('user-is-tabbing');
+        announceNavigationInstructions();
+        window.removeEventListener('keydown', handleFirstTab);
+      }
+    };
+
+    window.addEventListener('keydown', handleFirstTab);
+    return () => {
+      window.removeEventListener('keydown', handleFirstTab);
+    };
+  }, [announceNavigationInstructions]);
 
   // Get all focusable elements within the container
   const getFocusableElements = useCallback(() => {

@@ -1,8 +1,8 @@
-import type { Language } from "./language-context"
+import { type Language } from "@/config/language.config"
 
 // Define the translations type
 type TranslationsType = {
-  [key in Language]?: {
+  [key in Language]: {
     [key: string]: string
   }
 }
@@ -365,6 +365,12 @@ const translations: TranslationsType = {
     "fileExplorer.profilePhoto": "Professional headshot",
     "fileExplorer.bachelorCert": "Bachelor of Information Technology degree certificate",
     "fileExplorer.googleCert": "Google Digital Marketing certification",
+
+    // Accessibility
+    "a11y.keyboardNav.arrowKeys": "Use arrow keys to navigate",
+    "a11y.keyboardNav.enterSelect": "Press Enter to select",
+    "a11y.keyboardNav.escClose": "Press Escape to close",
+    "a11y.keyboardNav.tabKey": "Press Tab to move between interactive elements",
   },
   zh: {
     // Common
@@ -696,6 +702,12 @@ const translations: TranslationsType = {
     "fileExplorer.profilePhoto": "专业头像",
     "fileExplorer.bachelorCert": "信息技术学士学位证书",
     "fileExplorer.googleCert": "Google数字营销认证",
+
+    // Accessibility
+    "a11y.keyboardNav.arrowKeys": "使用方向键导航",
+    "a11y.keyboardNav.enterSelect": "按回车键选择",
+    "a11y.keyboardNav.escClose": "按ESC键关闭",
+    "a11y.keyboardNav.tabKey": "按Tab键在交互元素之间移动",
   },
   ms: {
     // Common
@@ -1056,6 +1068,12 @@ const translations: TranslationsType = {
     "fileExplorer.profilePhoto": "Gambar profil profesional",
     "fileExplorer.bachelorCert": "Sijil ijazah Sarjana Muda Teknologi Maklumat",
     "fileExplorer.googleCert": "Sijil Pemasaran Digital Google",
+
+    // Accessibility
+    "a11y.keyboardNav.arrowKeys": "Gunakan kekunci anak panah untuk menavigasi",
+    "a11y.keyboardNav.enterSelect": "Tekan Enter untuk memilih",
+    "a11y.keyboardNav.escClose": "Tekan Escape untuk menutup",
+    "a11y.keyboardNav.tabKey": "Tekan Tab untuk bergerak antara elemen interaktif",
   },
   ta: {
     // Common
