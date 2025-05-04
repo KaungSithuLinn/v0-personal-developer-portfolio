@@ -36,6 +36,11 @@ export const TEXT_DIRECTION: Record<Language, "ltr" | "rtl"> = {
   ar: "rtl",
 }
 
+export const i18n = {
+  defaultLocale: DEFAULT_LANGUAGE,
+  locales: SUPPORTED_LANGUAGES,
+} as const
+
 interface LanguageConfig {
   lang: Language
   region: string

@@ -13,10 +13,11 @@ import {
 
 interface LanguageProviderProps {
   children: ReactNode
+  initialLocale?: Language
 }
 
-export function LanguageProvider({ children }: LanguageProviderProps) {
-  const [language, setLanguageState] = useState<Language>(DEFAULT_LANGUAGE)
+export function LanguageProvider({ children, initialLocale }: LanguageProviderProps) {
+  const [language, setLanguageState] = useState<Language>(initialLocale || DEFAULT_LANGUAGE)
   const [mounted, setMounted] = useState(false)
   const [isTransitioning, setIsTransitioning] = useState(false)
 

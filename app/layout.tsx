@@ -4,6 +4,8 @@ import { LanguageProvider } from "@/context/language-provider"
 import { Inter, Noto_Sans_SC, Noto_Sans_Arabic, Noto_Sans_Tamil } from "next/font/google"
 import { type Language } from "@/context/language-utils"
 import "./globals.css"
+import { DEFAULT_LANGUAGE } from "@/config/language.config"
+import { redirect } from "next/navigation"
 
 // Load fonts with proper subsets and weights
 const inter = Inter({
@@ -73,39 +75,6 @@ const translations: Record<Language, { title: string; description: string; keywo
   },
 }
 
-export default function RootLayout({
-  children,
-  params,
-}: {
-  children: React.ReactNode
-  params: { locale: Language }
-}) {
-  const currentTranslation = translations[params.locale] || translations.en
-
-  return (
-    <html
-      lang={params.locale}
-      dir={params.locale === "ar" ? "rtl" : "ltr"}
-      suppressHydrationWarning
-      className={`${inter.variable} ${notoSansArabic.variable} ${notoSansSC.variable} ${notoSansTamil.variable}`}
-    >
-      <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="description" content={currentTranslation.description} />
-        <meta name="keywords" content={currentTranslation.keywords.join(", ")} />
-        <title>{currentTranslation.title}</title>
-        <link rel="icon" href="/placeholder-logo.svg" />
-        {/* Add preconnect for Google Fonts */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-      </head>
-      <body>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
-          <LanguageProvider>
-            {children}
-          </LanguageProvider>
-        </ThemeProvider>
-      </body>
-    </html>
-  )
+export default function RootLayout() {
+  redirect(`/${DEFAULT_LANGUAGE}`)
 }
