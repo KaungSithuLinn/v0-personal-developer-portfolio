@@ -8,8 +8,13 @@ import { useTranslation, type Language } from "@/context/language-context"
 export default function LanguageSelector() {
   const [isOpen, setIsOpen] = useState(false)
   const { language, setLanguage, t, languageName, isRTL } = useTranslation()
+  const [mounted, setMounted] = useState(false)
 
   const languages: Language[] = ["en", "zh", "ms", "ta", "ar"]
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   // Close the language selector when clicking outside
   useEffect(() => {
@@ -26,6 +31,9 @@ export default function LanguageSelector() {
     }
   }, [isOpen])
 
+  // Don't render anything until mounted to prevent hydration issues
+  if (!mounted) return null
+
   return (
     <div className="relative language-selector">
       <motion.button
@@ -34,7 +42,7 @@ export default function LanguageSelector() {
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         aria-label={t("common.language")}
-        style={isRTL ? { left: "auto", right: "6" } : {}}
+        style={isRTL ? { left: "auto", right: "1.5rem" } : {}}
       >
         <Globe size={20} />
       </motion.button>
@@ -42,14 +50,14 @@ export default function LanguageSelector() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
+            initial={{ opacity: 0, y: -20, x: isRTL ? 20 : -20 }}
+            animate={{ opacity: 1, y: 0, x: 0 }}
+            exit={{ opacity: 0, y: -20, x: isRTL ? 20 : -20 }}
             transition={{ duration: 0.2 }}
             className="fixed top-40 left-6 z-50 bg-gradient-to-br from-gray-900/90 to-blue-900/50 backdrop-blur-sm border border-blue-500/30 rounded-lg shadow-lg shadow-blue-500/10 overflow-hidden language-selector"
-            style={isRTL ? { left: "auto", right: "6" } : {}}
+            style={isRTL ? { left: "auto", right: "1.5rem" } : {}}
           >
-            <div className="p-2">
+            <div className="p-2 min-w-[160px]">
               <h3 className="text-blue-400 font-mono text-sm border-b border-blue-500/30 pb-1 mb-2">
                 {t("common.language")}
               </h3>
@@ -60,13 +68,15 @@ export default function LanguageSelector() {
                     onClick={() => {
                       setLanguage(lang)
                       setIsOpen(false)
+                      localStorage.setItem("language", lang)
                     }}
                     className={`flex items-center w-full px-3 py-2 rounded-md text-left text-sm transition-colors ${
                       language === lang ? "bg-blue-600/30 text-blue-300" : "hover:bg-gray-800/50 text-gray-300"
                     }`}
+                    dir={lang === "ar" ? "rtl" : "ltr"}
                   >
-                    {language === lang && <Check size={14} className="mr-2 text-blue-400" />}
-                    {language !== lang && <div className="w-[14px] mr-2" />}
+                    {language === lang && <Check size={14} className={`${isRTL ? "ml-2" : "mr-2"} text-blue-400`} />}
+                    {language !== lang && <div className={`w-[14px] ${isRTL ? "ml-2" : "mr-2"}`} />}
                     {languageName(lang)}
                   </button>
                 ))}

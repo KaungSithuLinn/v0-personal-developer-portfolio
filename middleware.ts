@@ -1,44 +1,104 @@
 import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
+import { match } from "@formatjs/intl-localematcher"
+import { type Language } from "./context/language-utils"
+import { SUPPORTED_LANGUAGES, DEFAULT_LANGUAGE, LANGUAGE_REGIONS } from "./config/language.config"
 
-export function middleware(request: NextRequest) {
-  // Check for the x-middleware-subrequest header that could be used in the bypass attack
-  const middlewareSubrequest = request.headers.get("x-middleware-subrequest")
+// Determine user's preferred language
+function getPreferredLanguage(request: NextRequest): Language {
+  // Get language from cookie
+  const cookieLang = request.cookies.get("NEXT_LOCALE")?.value as Language
+  if (cookieLang && SUPPORTED_LANGUAGES.includes(cookieLang)) {
+    return cookieLang
+  }
 
-  // If this header is present in an external request, it could be an attempt to bypass middleware
-  // Block requests with this header unless they're legitimate internal requests
-  if (middlewareSubrequest && !isLegitimateInternalRequest(request)) {
-    return new NextResponse(null, {
-      status: 403,
-      statusText: "Forbidden",
+  // Get Accept-Language header
+  const acceptLanguage = request.headers.get("accept-language") || ""
+  try {
+    // Parse languages from header
+    const languages = acceptLanguage
+      .split(",")
+      .map(lang => lang.split(";")[0])
+      .map(lang => lang.split("-")[0])
+
+    // Match against supported languages
+    const matchedLanguage = match(
+      languages,
+      SUPPORTED_LANGUAGES,
+      DEFAULT_LANGUAGE
+    ) as Language
+
+    return matchedLanguage
+  } catch {
+    return DEFAULT_LANGUAGE
+  }
+}
+
+export async function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl
+
+  // Skip middleware for static files and API routes
+  if (
+    pathname.includes("/_next") ||
+    pathname.includes("/api/") ||
+    pathname.includes("/static/") ||
+    pathname.match(/\.(ico|jpg|jpeg|png|gif|svg|css|js)$/)
+  ) {
+    return NextResponse.next()
+  }
+
+  // Get language from URL or user preference
+  const pathnameLanguage = pathname.split("/")[1] as Language
+  const isValidLanguage = SUPPORTED_LANGUAGES.includes(pathnameLanguage)
+  const preferredLanguage = getPreferredLanguage(request)
+
+  // If URL has no language prefix, redirect to preferred language
+  if (!isValidLanguage) {
+    const redirectUrl = new URL(
+      `/${preferredLanguage}${pathname === "/" ? "" : pathname}`,
+      request.url
+    )
+    return NextResponse.redirect(redirectUrl)
+  }
+
+  // Store language preference in cookie
+  const response = NextResponse.next()
+  response.cookies.set("NEXT_LOCALE", pathnameLanguage, {
+    path: "/",
+    maxAge: 60 * 60 * 24 * 365, // 1 year
+  })
+
+  // Set language-specific headers
+  response.headers.set("Content-Language", LANGUAGE_REGIONS[pathnameLanguage])
+  
+  // Set vary header to ensure proper caching
+  response.headers.set("Vary", "Accept-Language")
+
+  // Add Link header for language alternates
+  const alternateLinks = SUPPORTED_LANGUAGES
+    .filter(lang => lang !== pathnameLanguage)
+    .map(lang => {
+      const url = new URL(request.url)
+      url.pathname = `/${lang}${pathname.replace(`/${pathnameLanguage}`, "")}`
+      return `<${url.href}>; rel="alternate"; hreflang="${LANGUAGE_REGIONS[lang]}"`
     })
+    .join(", ")
+
+  if (alternateLinks) {
+    response.headers.set("Link", alternateLinks)
   }
 
-  return NextResponse.next()
+  // Add x-default language
+  const defaultUrl = new URL(request.url)
+  defaultUrl.pathname = `/${DEFAULT_LANGUAGE}${pathname.replace(`/${pathnameLanguage}`, "")}`
+  response.headers.append("Link", `<${defaultUrl.href}>; rel="alternate"; hreflang="x-default"`)
+
+  return response
 }
 
-// Helper function to determine if a request is a legitimate internal request
-// You may need to customize this based on your application's architecture
-function isLegitimateInternalRequest(request: NextRequest): boolean {
-  // Check if the request is coming from a trusted source
-  // This is a simplified example - you should implement proper validation
-  const referer = request.headers.get("referer")
-  const host = request.headers.get("host")
-
-  // If the request is from the same host, it's likely legitimate
-  if (referer && host && referer.includes(host)) {
-    return true
-  }
-
-  return false
-}
-
-// Only run middleware on specific paths that need protection
 export const config = {
   matcher: [
-    // Add paths that use middleware and need protection
-    "/api/:path*",
-    "/dashboard/:path*",
-    // Add other protected routes as needed
+    // Skip static files and API routes
+    "/((?!api|_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml).*)",
   ],
 }

@@ -302,6 +302,12 @@ const translations: TranslationsType = {
     "contact.form.emailRequired": "Please enter a valid email address",
     "contact.form.subjectRequired": "Subject must be at least 5 characters",
     "contact.form.messageRequired": "Message must be at least 10 characters",
+    "form.errors.required": "This field is required",
+    "form.errors.minLength": "Must be at least {length} characters",
+    "form.errors.maxLength": "Must be at most {length} characters",
+    "form.errors.pattern": "Please enter a valid value",
+    "form.errors.email": "Please enter a valid email address",
+    "form.errors.general": "Something went wrong. Please try again.",
 
     // Testimonials
     "testimonials.title": "Client Testimonials",
@@ -627,6 +633,12 @@ const translations: TranslationsType = {
     "contact.form.emailRequired": "请输入有效的电子邮件地址",
     "contact.form.subjectRequired": "主题必须至少有5个字符",
     "contact.form.messageRequired": "消息必须至少有10个字符",
+    "form.errors.required": "此字段为必填项",
+    "form.errors.minLength": "必须至少{length}个字符",
+    "form.errors.maxLength": "不能超过{length}个字符",
+    "form.errors.pattern": "请输入有效的值",
+    "form.errors.email": "请输入有效的电子邮件地址",
+    "form.errors.general": "出现错误，请重试。",
 
     // Testimonials
     "testimonials.title": "客户推荐",
@@ -823,6 +835,189 @@ const translations: TranslationsType = {
     "skills.research.desc":
       "Menjalankan penyelidikan menyeluruh untuk mengenal pasti jurang dan mencadangkan penyelesaian inovatif dalam teknologi.",
 
+    // Experience
+    "experience.title": "Pengalaman Profesional",
+    "experience.company": "eVolva Software House",
+    "experience.location": "Mandalay, Myanmar",
+    "experience.period": "Dis 2018 - Kini",
+    "experience.role": "Pembangun Perisian dan Penguji Pelanggan",
+    "experience.responsibilities.1":
+      "Mereka bentuk dan membangunkan sistem POS menggunakan Microsoft .NET untuk menyelaraskan pengurusan stok dan inventori, meningkatkan kecekapan operasi",
+    "experience.responsibilities.2":
+      "Menaik taraf sistem POS Microsoft Access (Office 2003) yang usang kepada aplikasi SQL yang moden, meningkatkan prestasi",
+    "experience.responsibilities.3":
+      "Menyelesaikan isu gangguan LAN dengan rangkaian VPN dengan melaksanakan penyelesaian terowong tersuai, memastikan sambungan stabil",
+    "experience.responsibilities.4":
+      "Menyampaikan sistem POS yang dioptimumkan yang meningkatkan kecekapan kedai lebih daripada 50%, mengurangkan masa transaksi dan meningkatkan penjejakan inventori",
+    "experience.responsibilities.5":
+      "Menjalankan ujian menyeluruh dan latihan pelanggan untuk memastikan penggunaan sistem baharu yang lancar",
+    "experience.decorativeImageAlt": "Latar belakang hiasan",
+    "experience.keyAchievements": "Pencapaian Utama",
+
+    // Projects
+    "projects.title": "Projek Pilihan",
+    "projects.viewProject": "Lihat Projek",
+    "projects.hideCase": "Sembunyikan Kajian Kes",
+    "projects.viewCase": "Lihat Kajian Kes",
+    "projects.challenge": "Cabaran",
+    "projects.approach": "Pendekatan",
+    "projects.results": "Keputusan",
+    "projects.technologies": "Teknologi Digunakan",
+    "projects.achievements": "Pencapaian Utama",
+    "projects.project1.title": "Dinamik Tetikus untuk Pengesanan Penipuan Penilaian Dalam Talian",
+    "projects.project1.period": "Mei 2024 - Nov 2024",
+    "projects.project1.description":
+      "Membangunkan model pembelajaran mesin untuk mengesan tingkah laku penipuan semasa penilaian dalam talian menggunakan dinamik tetikus sebagai biometrik tingkah laku.",
+    "projects.project1.achievement1":
+      "Menganalisis pergerakan tetikus dan corak klik untuk mencipta profil pengguna dan mengenal pasti anomali yang menunjukkan penipuan",
+    "projects.project1.achievement2":
+      "Melaksanakan teknik pemilihan ciri dan menilai pelbagai model pembelajaran mesin, mencapai ketepatan tinggi dalam pengesanan penipuan",
+    "projects.project1.achievement3":
+      "Mengenal pasti ciri dinamik tetikus utama yang paling diskriminatif untuk pengesahan pengguna",
+    "projects.project1.challenge":
+      "Institusi pendidikan menghadapi peningkatan insiden penipuan dalam penilaian dalam talian, dengan kaedah pengawas tradisional terbukti tidak mencukupi untuk mengesan teknik penipuan yang canggih.",
+    "projects.project1.approach":
+      "Membangunkan sistem biometrik tingkah laku yang tidak mengganggu yang menganalisis corak pergerakan tetikus untuk mengenal pasti tingkah laku anomali tanpa menjejaskan privasi pengguna atau memerlukan perkakasan tambahan.",
+    "projects.project1.results":
+      "Sistem ini mencapai ketepatan 92% dalam mengesan tingkah laku penipuan dengan kadar positif palsu hanya 3%, meningkatkan integriti penilaian dengan ketara sambil mengekalkan pengalaman pengguna yang positif.",
+    "projects.project2.title": "Sistem Pengesanan Penipuan Biometrik Dinamik Tetikus menggunakan Pembelajaran Mendalam",
+    "projects.project2.period": "Mei 2024 - Nov 2024",
+    "projects.project2.description":
+      "Membangunkan sistem pengesanan penipuan menggunakan dinamik tetikus dan pembelajaran mendalam untuk meningkatkan keselamatan penilaian dalam talian.",
+    "projects.project2.achievement1": "Melaksanakan saluran paip prapemprosesan data mencapai kebolehgunaan data 100%",
+    "projects.project2.achievement2": "Mereka bentuk 12 set ciri yang dioptimumkan menggunakan kaedah pemilihan lanjutan",
+    "projects.project2.achievement3":
+      "Membangunkan dan menguji pelbagai model pembelajaran mendalam (ANN, LSTM, LSTM-CNN, LSTM-Transformer)",
+    "projects.project2.achievement4": "Membina alat visualisasi data untuk memantau prestasi sistem",
+    "projects.project2.achievement5":
+      "Melebihi matlamat projek, mencapai ketepatan pengesanan 95% dan kadar negatif palsu di bawah 5%",
+    "projects.project2.challenge":
+      "Sistem pengesanan penipuan sedia ada bergelut dengan analisis masa nyata dan mempunyai keperluan pengiraan yang tinggi, menjadikannya tidak praktikal untuk pelaksanaan yang meluas.",
+    "projects.project2.approach":
+      "Memanfaatkan seni bina pembelajaran mendalam untuk mencipta sistem ringan dan cekap yang mampu melakukan analisis masa nyata dengan kos pengiraan yang minimum, memberi tumpuan kepada mengoptimumkan kedua-dua ketepatan dan prestasi.",
+    "projects.project2.results":
+      "Sistem ini memproses tingkah laku pengguna dalam masa nyata dengan kependaman kurang daripada 200ms, sambil mengekalkan ketepatan pengesanan 95% dan mengurangkan keperluan pengiraan sebanyak 60% berbanding penyelesaian sebelumnya.",
+    "projects.project3.title": "Pengesahan Berterusan dengan Biometrik Tingkah Laku",
+    "projects.project3.period": "Mei 2024 - Nov 2024",
+    "projects.project3.description":
+      "Menjalankan kajian literatur mengenai penggunaan biometrik tingkah laku, khususnya dinamik tetikus dan analisis keystroke, untuk pengesahan pengguna berterusan.",
+    "projects.project3.achievement1": "Menyelidik kaedah semasa, cabaran dan penambahbaikan yang berpotensi dalam bidang ini",
+    "projects.project3.achievement2":
+      "Mengenal pasti jurang penyelidikan utama dan mencadangkan kaedah pengesahan novel menggunakan keselamatan maklumat biometrik tingkah laku masa nyata (RBBIS)",
+    "projects.project3.achievement3":
+      "Membangunkan rangka kerja penyelidikan dan pelan kerja untuk melaksanakan dan menilai kaedah yang dicadangkan",
+    "projects.project3.challenge":
+      "Kaedah pengesahan tradisional bergantung pada pengesahan sekali sahaja, mewujudkan kelemahan keselamatan sebaik sahaja pengguna log masuk, manakala kaedah berterusan sering menimbulkan geseran dalam pengalaman pengguna.",
+    "projects.project3.approach":
+      "Membangunkan rangka kerja untuk pengesahan pasif dan berterusan yang memantau corak tingkah laku di latar belakang tanpa mengganggu aliran kerja pengguna, menyesuaikan diri dengan perubahan tingkah laku pengguna dari semasa ke semasa.",
+    "projects.project3.results":
+      "Rangka kerja yang dicadangkan menunjukkan potensi untuk mengurangkan insiden akses tanpa kebenaran sehingga 87% dalam persekitaran simulasi, sambil mengekalkan pengalaman pengguna yang lancar tanpa gesaan pengesahan tambahan.",
+
+    // Services
+    "services.title": "Perkhidmatan Saya",
+    "services.web": "Pembangunan Aplikasi Web",
+    "services.web.desc":
+      "Aplikasi web tersuai yang dibina dengan React dan Next.js, memberi tumpuan kepada prestasi dan pengalaman pengguna.",
+    "services.backend": "Pembangunan Backend",
+    "services.backend.desc": "Penyelesaian pelayan yang teguh dan boleh diskalakan menggunakan Node.js, Express dan Fastify.",
+    "services.api": "Pembangunan API",
+    "services.api.desc":
+      "Reka bentuk dan pelaksanaan API RESTful dan GraphQL untuk aliran data yang lancar antara pelanggan dan pelayan.",
+    "services.responsive": "Reka Bentuk Responsif",
+    "services.responsive.desc":
+      "Reka bentuk web responsif yang mengutamakan mudah alih yang berfungsi dengan sempurna merentas semua peranti dan saiz skrin.",
+
+    // Education
+    "education.title": "Pendidikan & Sijil",
+    "education.master": "Sarjana Teknologi Maklumat (Informatik Perniagaan)",
+    "education.master.institution": "James Cook University Singapore",
+    "education.master.period": "Mac 2024 – Apr 2025",
+    "education.master.achievement1": "Kepakaran dalam analisis data dan kecerdasan perniagaan",
+    "education.master.achievement2": "Menjalankan penyelidikan dalam biometrik tingkah laku dan pengesanan penipuan",
+    "education.master.achievement3": "Membangunkan model pembelajaran mesin lanjutan untuk aplikasi keselamatan",
+    "education.bachelor": "Sarjana Muda Teknologi Maklumat",
+    "education.bachelor.institution": "James Cook University Singapore",
+    "education.bachelor.period": "Nov 2022 – Feb 2024",
+    "education.bachelor.achievement1": "Fokus pada pembangunan perisian dan reka bentuk sistem",
+    "education.bachelor.achievement2": "Menyiapkan projek dalam reka bentuk antara muka pengguna dan pembangunan aplikasi",
+    "education.bachelor.achievement3": "Memperoleh kepakaran dalam pelbagai bahasa dan rangka kerja pengaturcaraan",
+    "education.bachelor.achievement4": "Dianugerahkan pada 7 Mac 2024 dengan GPA 5.27",
+    "education.diploma": "Diploma Kebangsaan Tinggi Kejuruteraan Perisian (Tahap 5)",
+    "education.diploma.institution": "INET IT ACADEMY",
+    "education.diploma.period": "Mac 2018 – Okt 2022",
+    "education.diploma.achievement1": "Membangunkan pengetahuan asas dalam prinsip kejuruteraan perisian",
+    "education.diploma.achievement2": "Menyiapkan projek praktikal dalam pembangunan aplikasi",
+    "education.diploma.achievement3": "Mempelajari metodologi analisis dan reka bentuk sistem",
+    "education.achievements": "Pencapaian Utama",
+    "education.certifications": "Sijil & Testamur",
+    "education.verification": "Butiran Pengesahan",
+    "education.cert1.title": "Sarjana Muda Teknologi Maklumat",
+    "education.cert1.issuer": "James Cook University Singapore",
+    "education.cert1.date": "7 Mac 2024",
+    "education.cert1.description":
+      "Testamur rasmi untuk ijazah Sarjana Muda Teknologi Maklumat, dianugerahkan pada 7 Mac 2024. Ijazah ini menyediakan asas yang komprehensif dalam konsep teknologi maklumat, pengaturcaraan, reka bentuk pangkalan data dan pembangunan sistem.",
+    "education.cert1.verificationMessage": "Butiran pengesahan tidak tersedia untuk testamur ini.",
+    "education.cert2.title": "Asas Pemasaran Digital",
+    "education.cert2.issuer": "Google Digital Garage",
+    "education.cert2.date": "3 April 2023",
+    "education.cert2.description":
+      "Sijil komprehensif yang merangkumi asas pemasaran digital, termasuk pengoptimuman enjin carian, pemasaran media sosial dan analitik.",
+    "education.cert3.title": "Analisis Data Google",
+    "education.cert3.issuer": "Google",
+    "education.cert3.date": "2023",
+    "education.cert3.description":
+      "Sijil profesional yang merangkumi analisis data, visualisasi dan tafsiran menggunakan alat analitik Google.",
+    "education.verifyAuthenticity": "Sahkan kesahihan sijil ini di:",
+    "education.certificateId": "ID Sijil:",
+    "education.verificationInfo": "Maklumat Pengesahan",
+    "education.verifyButton": "Sahkan Sijil",
+
+    // Contact
+    "contact.title": "Hubungi Saya",
+    "contact.info": "Maklumat Perhubungan",
+    "contact.email": "Emel",
+    "contact.phone": "Telefon",
+    "contact.address": "Alamat",
+    "contact.connect": "Berhubung Dengan Saya",
+    "contact.connect.desc":
+      "Saya sentiasa terbuka untuk membincangkan projek baharu, idea kreatif atau peluang untuk menjadi sebahagian daripada visi anda.",
+    "contact.form.name": "Nama",
+    "contact.form.email": "Emel",
+    "contact.form.subject": "Subjek",
+    "contact.form.message": "Mesej",
+    "contact.form.send": "Hantar Mesej",
+    "contact.form.sending": "Menghantar...",
+    "contact.form.success": "Terima kasih! Mesej anda telah berjaya dihantar. Saya akan menghubungi anda tidak lama lagi.",
+    "contact.form.error": "Gagal menghantar borang. Sila cuba lagi.",
+    "contact.form.nameRequired": "Nama mesti sekurang-kurangnya 2 aksara",
+    "contact.form.emailRequired": "Sila masukkan alamat e-mel yang sah",
+    "contact.form.subjectRequired": "Subjek mesti sekurang-kurangnya 5 aksara",
+    "contact.form.messageRequired": "Mesej mesti sekurang-kurangnya 10 aksara",
+    "form.errors.required": "Bidang ini diperlukan",
+    "form.errors.minLength": "Mesti sekurang-kurangnya {length} aksara",
+    "form.errors.maxLength": "Mesti tidak melebihi {length} aksara",
+    "form.errors.pattern": "Sila masukkan nilai yang sah",
+    "form.errors.email": "Sila masukkan alamat e-mel yang sah",
+    "form.errors.general": "Sesuatu telah berlaku. Sila cuba lagi.",
+
+    // Testimonials
+    "testimonials.title": "Testimoni Pelanggan",
+    "testimonials.prev": "Testimoni sebelumnya",
+    "testimonials.next": "Testimoni seterusnya",
+    "testimonials.goto": "Pergi ke testimoni {number}",
+    "testimonials.client1.quote":
+      "Kepakaran Kaung dalam membangunkan sistem POS kami telah mengubah operasi perniagaan kami. Perhatiannya terhadap perincian dan kemahiran menyelesaikan masalah adalah luar biasa.",
+    "testimonials.client1.name": "Sarah Chen",
+    "testimonials.client1.title": "Pengurus Operasi, RetailTech Solutions",
+    "testimonials.client2.quote":
+      "Bekerja dengan Kaung pada sistem pengesanan penipuan kami adalah pengubah permainan. Pemahamannya yang mendalam tentang biometrik tingkah laku dan pembelajaran mesin memberikan hasil yang melebihi jangkaan kami.",
+    "testimonials.client2.name": "Michael Rodriguez",
+    "testimonials.client2.title": "CTO, SecureFinance",
+    "testimonials.client3.quote":
+      "Keupayaan Kaung untuk menterjemahkan keperluan teknikal yang kompleks kepada penyelesaian mesra pengguna adalah luar biasa. Kerjanya pada infrastruktur rangkaian kami telah meningkatkan kestabilan sistem kami dengan ketara.",
+    "testimonials.client3.name": "Priya Sharma",
+    "testimonials.client3.title": "Pengarah IT, Global Connect",
+
     // System Monitor
     "systemMonitor.title": "Monitor Sistem",
     "systemMonitor.systemTime": "Masa Sistem",
@@ -846,6 +1041,21 @@ const translations: TranslationsType = {
     "terminal.clear": "Kosongkan terminal",
     "terminal.exit": "Keluar mod terminal",
     "terminal.askAI": "Tanya pembantu AI",
+
+    // File Explorer
+    "fileExplorer.title": "Penjelajah Portfolio",
+    "fileExplorer.projects": "Projek",
+    "fileExplorer.resume": "Resume",
+    "fileExplorer.certificates": "Sijil",
+    "fileExplorer.mainPython": "Skrip Python utama untuk sistem pengesanan penipuan",
+    "fileExplorer.model": "Model pembelajaran mesin terlatih",
+    "fileExplorer.readme": "Dokumentasi projek",
+    "fileExplorer.authSystem": "Pelaksanaan sistem pengesahan",
+    "fileExplorer.researchPaper": "Kertas penyelidikan mengenai biometrik tingkah laku",
+    "fileExplorer.currentResume": "Resume profesional semasa",
+    "fileExplorer.profilePhoto": "Gambar profil profesional",
+    "fileExplorer.bachelorCert": "Sijil ijazah Sarjana Muda Teknologi Maklumat",
+    "fileExplorer.googleCert": "Sijil Pemasaran Digital Google",
   },
   ta: {
     // Common
@@ -880,6 +1090,12 @@ const translations: TranslationsType = {
     "systemMonitor.skillsMonitor": "திறன்கள் கண்காணிப்பு",
     "systemMonitor.show": "இடைமுகத்தைக் காட்டு",
     "systemMonitor.hide": "இடைமுகத்தை மறை",
+    "form.errors.required": "இந்த புலம் தேவை",
+    "form.errors.minLength": "குறைந்தது {length} எழுத்துகள் இருக்க வேண்டும்",
+    "form.errors.maxLength": "அதிகபட்சம் {length} எழுத்துகள் மட்டுமே",
+    "form.errors.pattern": "சரியான மதிப்பை உள்ளிடவும்",
+    "form.errors.email": "சரியான மின்னஞ்சல் முகவரியை உள்ளிடவும்",
+    "form.errors.general": "ஏதோ தவறு நடந்துவிட்டது. மீண்டும் முயற்சிக்கவும்.",
   },
   ar: {
     // Common
@@ -914,6 +1130,12 @@ const translations: TranslationsType = {
     "systemMonitor.skillsMonitor": "مراقب المهارات",
     "systemMonitor.show": "إظهار الواجهة",
     "systemMonitor.hide": "إخفاء الواجهة",
+    "form.errors.required": "هذا الحقل مطلوب",
+    "form.errors.minLength": "يجب أن يكون {length} حروف على الأقل",
+    "form.errors.maxLength": "يجب أن لا يتجاوز {length} حرف",
+    "form.errors.pattern": "الرجاء إدخال قيمة صحيحة",
+    "form.errors.email": "الرجاء إدخال عنوان بريد إلكتروني صحيح",
+    "form.errors.general": "حدث خطأ ما. الرجاء المحاولة مرة أخرى.",
   },
 }
 

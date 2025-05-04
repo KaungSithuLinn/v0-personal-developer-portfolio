@@ -1,20 +1,24 @@
 "use client"
 
 import { useState, useEffect, type ReactNode } from "react"
-import { LanguageContext, type Language } from "./language-context"
+import { LanguageContext, type Language } from "./language-utils"
 import translations from "./translations"
-
-// Define RTL languages
-const RTL_LANGUAGES: Language[] = ["ar"] // Arabic is RTL
+import {
+  SUPPORTED_LANGUAGES,
+  DEFAULT_LANGUAGE,
+  RTL_LANGUAGES,
+  LANGUAGE_NAMES,
+  getLanguageConfig,
+} from "@/config/language.config"
 
 interface LanguageProviderProps {
   children: ReactNode
 }
 
 export function LanguageProvider({ children }: LanguageProviderProps) {
-  // Initialize with default language
-  const [language, setLanguageState] = useState<Language>("en")
+  const [language, setLanguageState] = useState<Language>(DEFAULT_LANGUAGE)
   const [mounted, setMounted] = useState(false)
+  const [isTransitioning, setIsTransitioning] = useState(false)
 
   // Set up language on client-side
   useEffect(() => {
@@ -22,19 +26,23 @@ export function LanguageProvider({ children }: LanguageProviderProps) {
 
     // Get stored language preference
     const storedLanguage = localStorage.getItem("language") as Language | null
+    const htmlLang = document.documentElement.lang as Language | undefined
 
-    // If there's a stored preference, use it
-    if (storedLanguage && Object.keys(translations).includes(storedLanguage)) {
+    // Priority: 1. Stored preference 2. HTML lang attribute 3. Browser language 4. Default
+    if (storedLanguage && SUPPORTED_LANGUAGES.includes(storedLanguage)) {
       setLanguageState(storedLanguage)
+      applyLanguageConfig(storedLanguage)
+    } else if (htmlLang && SUPPORTED_LANGUAGES.includes(htmlLang)) {
+      setLanguageState(htmlLang)
+      localStorage.setItem("language", htmlLang)
+      applyLanguageConfig(htmlLang)
     } else {
-      // Otherwise try to detect from browser
       try {
         const browserLanguage = navigator.language.split("-")[0] as Language
-
-        // If browser language is supported, use it
-        if (Object.keys(translations).includes(browserLanguage)) {
+        if (SUPPORTED_LANGUAGES.includes(browserLanguage)) {
           setLanguageState(browserLanguage)
           localStorage.setItem("language", browserLanguage)
+          applyLanguageConfig(browserLanguage)
         }
       } catch (error) {
         console.error("Error detecting browser language:", error)
@@ -42,27 +50,38 @@ export function LanguageProvider({ children }: LanguageProviderProps) {
     }
   }, [])
 
-  // Update language with side effects
-  const setLanguage = (newLanguage: Language) => {
-    setLanguageState(newLanguage)
-    localStorage.setItem("language", newLanguage)
-
-    // Apply RTL if needed
-    if (typeof document !== "undefined") {
-      document.documentElement.dir = RTL_LANGUAGES.includes(newLanguage) ? "rtl" : "ltr"
-    }
+  // Apply language configuration to the document
+  const applyLanguageConfig = (lang: Language) => {
+    const config = getLanguageConfig(lang)
+    document.documentElement.lang = config.lang
+    document.documentElement.dir = config.dir
+    document.documentElement.style.setProperty("--font-primary", config.fontFamily)
   }
 
-  // Apply RTL when language changes
-  useEffect(() => {
-    if (mounted && typeof document !== "undefined") {
-      document.documentElement.dir = RTL_LANGUAGES.includes(language) ? "rtl" : "ltr"
-    }
-  }, [language, mounted])
+  // Update language with side effects
+  const setLanguage = async (newLanguage: Language) => {
+    if (newLanguage === language || isTransitioning) return
 
-  // Translation function
+    setIsTransitioning(true)
+    document.documentElement.classList.add("language-transition")
+    
+    // Update language state and storage
+    setLanguageState(newLanguage)
+    localStorage.setItem("language", newLanguage)
+    
+    // Apply new language configuration
+    applyLanguageConfig(newLanguage)
+
+    // Allow time for transition
+    await new Promise(resolve => setTimeout(resolve, 300))
+    
+    document.documentElement.classList.remove("language-transition")
+    setIsTransitioning(false)
+  }
+
+  // Translation function with fallback
   const t = (key: string, params?: Record<string, string>): string => {
-    // Get the translation
+    // Get translation with fallback to English
     let translation = translations[language]?.[key] || translations.en?.[key] || key
 
     // Replace parameters if any
@@ -75,24 +94,17 @@ export function LanguageProvider({ children }: LanguageProviderProps) {
     return translation
   }
 
-  // Get text direction
-  const getDirection = (): "ltr" | "rtl" => {
-    return RTL_LANGUAGES.includes(language) ? "rtl" : "ltr"
+  // Get language name
+  const languageName = (code: Language): string => {
+    return LANGUAGE_NAMES[code] || code
   }
 
   // Check if current language is RTL
   const isRTL = RTL_LANGUAGES.includes(language)
 
-  // Get language name
-  const languageName = (code: Language): string => {
-    const names: Record<Language, string> = {
-      en: "English",
-      zh: "中文",
-      ms: "Bahasa Melayu",
-      ta: "தமிழ்",
-      ar: "العربية",
-    }
-    return names[code] || code
+  // Get text direction
+  const getDirection = (): "ltr" | "rtl" => {
+    return isRTL ? "rtl" : "ltr"
   }
 
   // Don't render anything on the server
@@ -101,7 +113,17 @@ export function LanguageProvider({ children }: LanguageProviderProps) {
   }
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t, getDirection, isRTL, languageName }}>
+    <LanguageContext.Provider
+      value={{
+        language,
+        setLanguage,
+        t,
+        getDirection,
+        isRTL,
+        isTransitioning,
+        languageName,
+      }}
+    >
       {children}
     </LanguageContext.Provider>
   )

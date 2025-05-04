@@ -24,8 +24,9 @@ const nextConfig = {
   },
   // Accessibility improvements
   i18n: {
-    locales: ["en"],
+    locales: ["en", "zh", "ms", "ta", "ar"],
     defaultLocale: "en",
+    localeDetection: true,
   },
   // Additional security headers
   async headers() {
@@ -67,6 +68,13 @@ const nextConfig = {
   },
   typescript: {
     ignoreBuildErrors: true,
+  },
+  experimental: {
+    optimizeFonts: true,
+  },
+  webpack: (config) => {
+    config.resolve.fallback = { fs: false, path: false }
+    return config
   },
 }
 

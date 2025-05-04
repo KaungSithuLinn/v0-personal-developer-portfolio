@@ -4,7 +4,7 @@ import { motion } from "framer-motion"
 import { Code, Database, Server, Globe, Brain, Zap, MessageSquare, Settings, Search } from "lucide-react"
 import Image from "next/image"
 import AnimatedSectionHeader from "./AnimatedSectionHeader"
-import { useTranslation } from "@/context/language-context"
+import { useTranslation } from "@/context/language-utils"
 
 export default function Skills() {
   const { t } = useTranslation()

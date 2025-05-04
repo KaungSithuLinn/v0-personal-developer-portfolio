@@ -3,7 +3,7 @@
 import { motion } from "framer-motion"
 import { Code, Database, Server, Globe, Brain, TrendingUp } from "lucide-react"
 import Image from "next/image"
-import { useTranslation } from "@/context/language-context"
+import { useTranslation } from "@/context/language-utils"
 
 export default function About() {
   const { t } = useTranslation()

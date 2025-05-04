@@ -4,7 +4,7 @@ import { Briefcase, Calendar, MapPin } from "lucide-react"
 import Image from "next/image"
 import { motion } from "framer-motion"
 import AnimatedSectionHeader from "./AnimatedSectionHeader"
-import { useTranslation } from "@/context/language-context"
+import { useTranslation } from "@/context/language-utils"
 
 export default function Experience() {
   const { t } = useTranslation()

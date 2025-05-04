@@ -1,238 +1,109 @@
 "use client"
 
-import Image from "next/image"
-import { Github, Linkedin, Mail, ArrowDown, ExternalLink, Download, ChevronRight } from "lucide-react"
 import { motion } from "framer-motion"
-import { useEffect, useState } from "react"
-import Logo from "./Logo"
-import { useTranslation } from "@/context/language-context"
-
-const CodePattern = () => (
-  <svg className="absolute inset-0 w-full h-full opacity-5" xmlns="http://www.w3.org/2000/svg">
-    <pattern
-      id="pattern-circles"
-      x="0"
-      y="0"
-      width="50"
-      height="50"
-      patternUnits="userSpaceOnUse"
-      patternContentUnits="userSpaceOnUse"
-    >
-      <circle id="pattern-circle" cx="10" cy="10" r="1.6257413380501518" fill="#000"></circle>
-    </pattern>
-    <rect id="rect" x="0" y="0" width="100%" height="100%" fill="url(#pattern-circles)"></rect>
-  </svg>
-)
+import { Github, Linkedin, Mail, FileText } from "lucide-react"
+import Image from "next/image"
+import { useTranslation } from "@/context/language-utils"
 
 export default function Hero() {
-  // Add this to prevent hydration mismatch
-  const [mounted, setMounted] = useState(false)
-  const { t } = useTranslation()
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
+  const { t, isRTL } = useTranslation()
 
   return (
     <section
-      id="hero"
-      className="min-h-screen relative overflow-hidden bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-indigo-900 dark:to-purple-900"
+      id="home"
+      className="min-h-screen pt-28 pb-20 bg-gradient-to-br from-indigo-50 to-blue-100 dark:from-gray-900 dark:to-blue-900 transition-colors duration-300 overflow-hidden relative"
     >
-      {/* Programming-themed Background */}
-      <div className="absolute inset-0 z-0">
-        <CodePattern />
-      </div>
-
-      {/* Animated Gradient */}
-      <div className="absolute inset-0 z-0 opacity-30">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-400 via-indigo-500 to-purple-600 animate-gradient-x"></div>
-      </div>
-
-      <div className="container mx-auto px-6 pt-32 pb-20 relative z-10">
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
-          <motion.div
-            className="lg:w-1/2 text-center lg:text-left"
-            initial={mounted ? { opacity: 0, y: 20 } : false}
-            animate={mounted ? { opacity: 1, y: 0 } : false}
-            transition={{ duration: 0.6 }}
+      <div className="container mx-auto px-6 relative">
+        <div className={`flex flex-col ${isRTL ? "items-end text-right" : "items-start text-left"} max-w-[800px] mx-auto`}>
+          <motion.h1
+            className="text-4xl sm:text-6xl font-bold mb-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
           >
-            <div className="flex items-center justify-center lg:justify-start mb-6">
-              <Logo size={50} />
-              <motion.div
-                className="ml-4 h-8 w-1 bg-gradient-to-b from-blue-500 to-purple-500"
-                initial={mounted ? { height: 0 } : false}
-                animate={mounted ? { height: 32 } : false}
-                transition={{ duration: 0.5, delay: 0.3 }}
-              />
-              <motion.h2
-                className="ml-4 text-xl text-gray-600 dark:text-gray-400 italic"
-                initial={mounted ? { opacity: 0, x: -10 } : false}
-                animate={mounted ? { opacity: 1, x: 0 } : false}
-                transition={{ duration: 0.5, delay: 0.5 }}
-              >
-                {t("hero.tagline")}
-              </motion.h2>
-            </div>
+            {t("hero.title")}
+          </motion.h1>
 
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400">
-              Kaung Sithu Linn
-            </h1>
-            <h2 className="text-2xl md:text-3xl font-semibold mb-6 text-gray-700 dark:text-gray-300">
-              {t("hero.jobTitle")}
-            </h2>
-            <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto lg:mx-0">
-              {t("hero.description")}
-            </p>
+          <motion.h2
+            className="text-2xl sm:text-3xl text-gray-600 dark:text-gray-300 mb-8"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+          >
+            {t("hero.subtitle")}
+          </motion.h2>
 
-            <div className="flex flex-wrap justify-center lg:justify-start gap-4 mb-8">
-              <a
-                href="https://github.com/KaungSithuLinn"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-3 rounded-full bg-white/80 hover:bg-white dark:bg-gray-800/80 dark:hover:bg-gray-800 transition-colors duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 transform transition-transform"
-                aria-label={t("hero.githubProfile")}
-              >
-                <Github className="w-6 h-6 text-gray-700 dark:text-gray-300" />
-              </a>
-              <a
-                href="https://linkedin.com/in/kaung-sithu-linn-7933781a5"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-3 rounded-full bg-white/80 hover:bg-white dark:bg-gray-800/80 dark:hover:bg-gray-800 transition-colors duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 transform transition-transform"
-                aria-label={t("hero.linkedinProfile")}
-              >
-                <Linkedin className="w-6 h-6 text-gray-700 dark:text-gray-300" />
-              </a>
-              <a
-                href="mailto:kaungsithulinn1@gmail.com"
-                className="p-3 rounded-full bg-white/80 hover:bg-white dark:bg-gray-800/80 dark:hover:bg-gray-800 transition-colors duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 transform transition-transform"
-                aria-label={t("hero.emailContact")}
-              >
-                <Mail className="w-6 h-6 text-gray-700 dark:text-gray-300" />
-              </a>
-              <a
-                href="https://cp3405.pages.dev/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-3 rounded-full bg-white/80 hover:bg-white dark:bg-gray-800/80 dark:hover:bg-gray-800 transition-colors duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 transform transition-transform"
-                aria-label={t("hero.portfolioWebsite")}
-              >
-                <ExternalLink className="w-6 h-6 text-gray-700 dark:text-gray-300" />
-              </a>
-              <a
-                href="/KaungSithuLinn_SoftwareDeveloper_Resume.pdf"
-                download
-                className="flex items-center gap-2 px-4 py-2 bg-white/80 hover:bg-white dark:bg-gray-800/80 dark:hover:bg-gray-800 rounded-full transition-colors duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 transform transition-transform text-gray-700 dark:text-gray-300"
-                aria-label={t("hero.downloadResume")}
-              >
-                <Download className="w-5 h-5" />
-                <span>{t("hero.resume")}</span>
-              </a>
-            </div>
-
-            <div className="flex flex-wrap gap-4 justify-center lg:justify-start mb-8">
-              <motion.button
-                onClick={() => document.getElementById("about")?.scrollIntoView({ behavior: "smooth" })}
-                className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full hover:from-blue-700 hover:to-purple-700 transition-all duration-300 shadow-lg hover:shadow-xl"
-                whileHover={mounted ? { scale: 1.05 } : undefined}
-                whileTap={mounted ? { scale: 0.95 } : undefined}
-              >
-                {t("hero.learnMore")}
-                <ArrowDown className="w-4 h-4" />
-              </motion.button>
-
-              <motion.button
-                onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
-                className="inline-flex items-center gap-2 px-6 py-3 border-2 border-blue-600 dark:border-blue-400 text-blue-600 dark:text-blue-400 rounded-full hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-all duration-300"
-                whileHover={mounted ? { scale: 1.05 } : undefined}
-                whileTap={mounted ? { scale: 0.95 } : undefined}
-              >
-                {t("hero.contactMe")}
-                <ChevronRight className="w-4 h-4" />
-              </motion.button>
-            </div>
-          </motion.div>
+          <motion.p
+            className="text-lg text-gray-700 dark:text-gray-200 mb-8 max-w-2xl"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            {t("hero.description")}
+          </motion.p>
 
           <motion.div
-            className="lg:w-1/2"
-            initial={mounted ? { opacity: 0, scale: 0.9 } : false}
-            animate={mounted ? { opacity: 1, scale: 1 } : false}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            className={`flex flex-wrap gap-4 ${isRTL ? "flex-row-reverse" : ""}`}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
           >
-            <div className="relative w-72 h-72 md:w-96 md:h-96 mx-auto">
-              {/* Decorative gradient backgrounds */}
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-400 dark:from-blue-600 dark:to-purple-600 rounded-3xl transform rotate-6 opacity-50"
-                animate={
-                  mounted
-                    ? {
-                        rotate: [6, 8, 6, 4, 6],
-                        scale: [1, 1.02, 1, 0.98, 1],
-                      }
-                    : undefined
-                }
-                transition={
-                  mounted
-                    ? {
-                        duration: 10,
-                        repeat: Number.POSITIVE_INFINITY,
-                        ease: "easeInOut",
-                      }
-                    : undefined
-                }
-              />
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-purple-400 to-blue-400 dark:from-purple-600 dark:to-blue-600 rounded-3xl transform -rotate-6 opacity-50"
-                animate={
-                  mounted
-                    ? {
-                        rotate: [-6, -4, -6, -8, -6],
-                        scale: [1, 0.98, 1, 1.02, 1],
-                      }
-                    : undefined
-                }
-                transition={
-                  mounted
-                    ? {
-                        duration: 10,
-                        repeat: Number.POSITIVE_INFINITY,
-                        ease: "easeInOut",
-                      }
-                    : undefined
-                }
-              />
+            <a
+              href="https://github.com/yourusername"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`flex items-center gap-2 ${
+                isRTL ? "flex-row-reverse" : ""
+              } bg-gray-900 text-white px-4 py-2 rounded-full hover:bg-gray-700 transition-colors`}
+            >
+              <Github size={20} />
+              {t("hero.githubProfile")}
+            </a>
 
-              {/* Image container with explicit styling */}
-              <div className="absolute inset-0 m-4 rounded-2xl overflow-hidden shadow-2xl" style={{ zIndex: 30 }}>
-                <div className="relative w-full h-full">
-                  <Image
-                    src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/KSTL%20Headshot%20Portrait.jpg-gxu4RedFPcOzqK3iU0lk96P56KVoZL.jpeg"
-                    alt={t("hero.profileImageAlt")}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    className="object-cover object-center"
-                    priority
-                    onError={(e) => {
-                      console.error("Image failed to load")
-                      e.currentTarget.src = "/placeholder.svg?height=400&width=400"
-                    }}
-                  />
-                </div>
-              </div>
-            </div>
+            <a
+              href="https://linkedin.com/in/yourusername"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`flex items-center gap-2 ${
+                isRTL ? "flex-row-reverse" : ""
+              } bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-500 transition-colors`}
+            >
+              <Linkedin size={20} />
+              {t("hero.linkedinProfile")}
+            </a>
+
+            <a
+              href="mailto:your.email@example.com"
+              className={`flex items-center gap-2 ${
+                isRTL ? "flex-row-reverse" : ""
+              } bg-purple-600 text-white px-4 py-2 rounded-full hover:bg-purple-500 transition-colors`}
+            >
+              <Mail size={20} />
+              {t("hero.emailContact")}
+            </a>
+
+            <a
+              href="/KaungSithuLinn_SoftwareDeveloper_Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`flex items-center gap-2 ${
+                isRTL ? "flex-row-reverse" : ""
+              } bg-green-600 text-white px-4 py-2 rounded-full hover:bg-green-500 transition-colors`}
+            >
+              <FileText size={20} />
+              {t("hero.downloadResume")}
+            </a>
           </motion.div>
+        </div>
+
+        <div className="absolute bottom-0 right-0 w-64 h-64 -mb-32 -mr-32 opacity-20">
+          <Image src="/placeholder.svg?height=256&width=256" alt={t("hero.profileImageAlt")} width={256} height={256} />
         </div>
       </div>
 
-      {/* Decorative Elements */}
-      <motion.div
-        className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center"
-        initial={mounted ? { opacity: 0, y: 20 } : false}
-        animate={mounted ? { opacity: 1, y: 0 } : false}
-        transition={{ delay: 0.8, duration: 0.6 }}
-      >
-        <div className="w-1 h-12 bg-gradient-to-b from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 rounded-full animate-pulse"></div>
-      </motion.div>
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-white/20 dark:to-black/20" />
+      </div>
     </section>
   )
 }
