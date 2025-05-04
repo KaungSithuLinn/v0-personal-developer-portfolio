@@ -8,7 +8,7 @@ import { type LanguageContextType } from "./language-utils"
 export const LanguageContext = createContext<LanguageContextType>({
   language: "en",
   setLanguage: () => {},
-  t: (key) => key,
+  t: (key) => String(key),
   getDirection: () => "ltr",
   isRTL: false,
   isTransitioning: false,

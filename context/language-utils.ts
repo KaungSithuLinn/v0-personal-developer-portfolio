@@ -2,8 +2,11 @@ import { createContext, useContext } from "react"
 import { LANGUAGE_NAMES, type Language } from "@/config/language.config"
 import translations from "./translations"
 
+// Re-export the Language type
+export type { Language }
+
 // Define TranslationsType using the structure of our translations
-export type TranslationKey = keyof typeof translations[Language]
+export type TranslationKey = keyof typeof translations.en
 
 export interface LanguageContextType {
   language: Language

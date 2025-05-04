@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect, type ReactNode } from "react"
-import { LanguageContext, translate } from "./language-utils"
+import { LanguageContext } from "./language-utils"
 import type { TranslationKey } from "./language-utils"
 import {
   SUPPORTED_LANGUAGES,
@@ -10,6 +10,7 @@ import {
   LANGUAGE_NAMES,
   type Language,
 } from "@/config/language.config"
+import { translate } from "./language-utils"
 
 interface LanguageProviderProps {
   children: ReactNode
@@ -38,11 +39,18 @@ export function LanguageProvider({ children, initialLocale }: LanguageProviderPr
     }
   }, [])
 
+  const handleLanguageChange = (newLanguage: Language) => {
+    setIsTransitioning(true)
+    setLanguage(newLanguage)
+    localStorage.setItem("language", newLanguage)
+    setTimeout(() => setIsTransitioning(false), 300)
+  }
+
   return (
     <LanguageContext.Provider
       value={{
         language,
-        setLanguage,
+        setLanguage: handleLanguageChange,
         t,
         getDirection,
         isRTL,
