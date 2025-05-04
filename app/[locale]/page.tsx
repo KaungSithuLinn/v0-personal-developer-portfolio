@@ -1,5 +1,3 @@
-"use client"
-
 import Hero from "../components/Hero"
 import About from "../components/About"
 import Experience from "../components/Experience"
@@ -12,7 +10,7 @@ import FloatingNav from "../components/floating-nav"
 import DevConsoleInterface from "../components/terminal/eDEXInterface"
 import TranslationTester from "@/components/TranslationTester"
 import { Language } from "@/context/language-utils"
-import { useTranslation } from "@/context/language-utils"
+import { isRTLLanguage } from "@/lib/utils"
 
 interface Props {
   params: {
@@ -21,7 +19,7 @@ interface Props {
 }
 
 export default function Home({ params: { locale } }: Props) {
-  const { isRTL } = useTranslation()
+  const isRTL = isRTLLanguage(locale)
   
   return (
     <main className="bg-gray-50 dark:bg-gray-900 min-h-screen">
