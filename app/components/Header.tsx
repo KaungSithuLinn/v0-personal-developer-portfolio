@@ -79,28 +79,33 @@ export default function Header() {
         backdrop-blur-sm shadow-md
       `}
     >
-      <nav className="container mx-auto px-6 py-4">
-        <ul className="flex justify-center space-x-6">
-          {navItems.map(([id, label]) => (
-            <li key={id}>
-              <button
-                onClick={() => scrollToSection(id)}
-                className={`
-                  transition-colors duration-300
-                  ${
-                    activeSection === id
-                      ? "text-blue-600 dark:text-blue-400"
-                      : theme === "dark"
-                        ? "text-gray-300 hover:text-white"
-                        : "text-gray-800 hover:text-blue-600"
-                  }
-                `}
-              >
-                {label}
-              </button>
-            </li>
-          ))}
-        </ul>
+      <nav className="container mx-auto px-4 sm:px-6 py-3 sm:py-4">
+        <div className="flex justify-between sm:justify-center items-center">
+          <ul className="flex overflow-x-auto scrollbar-hide gap-3 sm:gap-6 sm:flex-wrap sm:justify-center">
+            {navItems.map(([id, label]) => (
+              <li key={id} className="flex-shrink-0">
+                <button
+                  onClick={() => scrollToSection(id)}
+                  className={`
+                    text-sm sm:text-base whitespace-nowrap transition-colors duration-300
+                    ${
+                      activeSection === id
+                        ? "text-blue-600 dark:text-blue-400"
+                        : theme === "dark"
+                          ? "text-gray-300 hover:text-white"
+                          : "text-gray-800 hover:text-blue-600"
+                    }
+                  `}
+                >
+                  {label}
+                </button>
+              </li>
+            ))}
+          </ul>
+          <div className="flex items-center gap-2 sm:hidden">
+            {/* Mobile menu button if needed */}
+          </div>
+        </div>
       </nav>
     </header>
   )

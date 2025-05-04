@@ -47,14 +47,14 @@ export default function LanguageSelector() {
   return (
     <div className="relative language-selector">
       <motion.button
-        className="fixed top-24 left-6 z-50 p-3 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-300"
+        className="fixed top-20 sm:top-24 left-4 sm:left-6 z-50 p-2 sm:p-3 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-300"
         onClick={() => setIsOpen(!isOpen)}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         aria-label={t("common.language")}
-        style={isRTL ? { left: "auto", right: "1.5rem" } : {}}
+        style={isRTL ? { left: "auto", right: "1rem" } : {}}
       >
-        <Globe size={20} />
+        <Globe size={18} className="sm:size-20" />
       </motion.button>
 
       <AnimatePresence>
@@ -64,8 +64,8 @@ export default function LanguageSelector() {
             animate={{ opacity: 1, y: 0, x: 0 }}
             exit={{ opacity: 0, y: -20, x: isRTL ? 20 : -20 }}
             transition={{ duration: 0.2 }}
-            className="fixed top-40 left-6 z-50 bg-gradient-to-br from-gray-900/90 to-blue-900/50 backdrop-blur-sm border border-blue-500/30 rounded-lg shadow-lg shadow-blue-500/10 overflow-hidden language-selector"
-            style={isRTL ? { left: "auto", right: "1.5rem" } : {}}
+            className="fixed top-36 sm:top-40 left-4 sm:left-6 z-50 bg-gradient-to-br from-gray-900/90 to-blue-900/50 backdrop-blur-sm border border-blue-500/30 rounded-lg shadow-lg shadow-blue-500/10 overflow-hidden language-selector max-w-[90vw] sm:max-w-none"
+            style={isRTL ? { left: "auto", right: "1rem" } : {}}
           >
             <div className="p-2 min-w-[160px]">
               <h3 className="text-blue-400 font-mono text-sm border-b border-blue-500/30 pb-1 mb-2">

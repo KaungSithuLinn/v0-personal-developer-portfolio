@@ -44,24 +44,24 @@ export default function FloatingNav() {
 
   return (
     <motion.div
-      className="fixed right-4 top-1/2 transform -translate-y-1/2 z-50"
+      className="fixed bottom-4 sm:right-4 sm:bottom-auto sm:top-1/2 sm:-translate-y-1/2 z-50 left-1/2 -translate-x-1/2 sm:translate-x-0 sm:left-auto"
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
-      transition={{ delay: 1 }}
+      transition={{ delay: 0.5 }}
     >
-      <div className="flex flex-col gap-3">
+      <div className="flex sm:flex-col gap-3 bg-gradient-to-r sm:bg-gradient-to-b from-gray-900/90 to-blue-900/50 backdrop-blur-sm p-3 rounded-full border border-blue-500/30 shadow-lg shadow-blue-500/10">
         {sections.map(({ id, label }) => (
           <button
             key={id}
             onClick={() => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" })}
-            className="group relative flex items-center"
+            className="group relative flex items-center justify-center"
             aria-label={t("nav.scrollTo", { section: label })}
           >
-            <span className="absolute right-8 px-2 py-1 rounded bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <span className={`absolute ${isRTL ? "right-full" : "left-full"} hidden sm:block mr-2 px-2 py-1 rounded bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap`}>
               {label}
             </span>
             <div
-              className={`w-3 h-3 rounded-full transition-all duration-300 ${
+              className={`w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${
                 activeSection === id
                   ? "bg-blue-600 dark:bg-blue-400 scale-125"
                   : "bg-gray-400 dark:bg-gray-600 hover:scale-110"

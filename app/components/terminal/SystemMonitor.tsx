@@ -1,8 +1,9 @@
 "use client"
 
+import * as React from "react"
 import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
-import { Cpu, HardDrive, Activity, Clock, Zap } from "lucide-react"
+import { Cpu, HardDrive, Activity, Clock, Zap, X } from "lucide-react"
 import { useMounted } from "@/lib/use-mounted"
 import { useTranslation } from "@/context/language-context"
 
@@ -25,7 +26,7 @@ const skills: Skill[] = [
   { name: "Deep Learning", level: 65, category: "AI/ML" },
 ]
 
-export default function SystemMonitor(): JSX.Element | null {
+export default function SystemMonitor({ onClose }: { onClose: () => void }): React.ReactElement | null {
   const [date, setDate] = useState<Date>(new Date())
   const [cpuUsage, setCpuUsage] = useState<number>(0)
   const [memoryUsage, setMemoryUsage] = useState<number>(0)
@@ -57,8 +58,17 @@ export default function SystemMonitor(): JSX.Element | null {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="bg-gradient-to-br from-gray-900/90 to-blue-900/50 backdrop-blur-sm border border-blue-500/30 rounded-lg p-4 shadow-lg shadow-blue-500/10"
+      className="monitor-window bg-gradient-to-br from-gray-900/90 to-blue-900/50 backdrop-blur-sm border border-blue-500/30 rounded-lg p-4 shadow-lg shadow-blue-500/10"
     >
+      {/* Close button */}
+      <button
+        onClick={onClose}
+        className="absolute top-2 right-2 text-gray-400 hover:text-white transition-colors"
+        aria-label="Close System Monitor"
+      >
+        <X size={16} />
+      </button>
+
       <div className="grid grid-cols-1 gap-4">
         {/* System Stats */}
         <div className="space-y-4">
@@ -66,7 +76,7 @@ export default function SystemMonitor(): JSX.Element | null {
             {t("systemMonitor.title")}
           </h3>
 
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between flex-wrap gap-2">
             <div className="flex items-center">
               <Clock className="text-blue-400 mr-2" size={18} />
               <span className="text-gray-300 font-mono">{t("systemMonitor.systemTime")}</span>
@@ -77,57 +87,63 @@ export default function SystemMonitor(): JSX.Element | null {
             </span>
           </div>
 
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <Cpu className="text-blue-500 mr-2" size={18} />
-                <span className="text-gray-300 font-mono">{t("systemMonitor.cpuUsage")}</span>
+          {/* Stats Grid */}
+          <div className="grid sm:grid-cols-2 gap-4">
+            {/* CPU Usage */}
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center">
+                  <Cpu className="text-blue-500 mr-2" size={18} />
+                  <span className="text-gray-300 font-mono">{t("systemMonitor.cpuUsage")}</span>
+                </div>
+                <span className="text-blue-500 font-mono">{cpuUsage}%</span>
               </div>
-              <span className="text-blue-500 font-mono">{cpuUsage}%</span>
+              <div className="w-full bg-gray-700 rounded-full h-2.5">
+                <motion.div
+                  className="bg-blue-500 h-2.5 rounded-full"
+                  initial={{ width: 0 }}
+                  animate={{ width: `${cpuUsage}%` }}
+                  transition={{ duration: 0.5 }}
+                />
+              </div>
             </div>
-            <div className="w-full bg-gray-700 rounded-full h-2.5">
-              <motion.div
-                className="bg-blue-500 h-2.5 rounded-full"
-                initial={{ width: 0 }}
-                animate={{ width: `${cpuUsage}%` }}
-                transition={{ duration: 0.5 }}
-              />
-            </div>
-          </div>
 
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <HardDrive className="text-indigo-500 mr-2" size={18} />
-                <span className="text-gray-300 font-mono">{t("systemMonitor.memoryUsage")}</span>
+            {/* Memory Usage */}
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center">
+                  <HardDrive className="text-indigo-500 mr-2" size={18} />
+                  <span className="text-gray-300 font-mono">{t("systemMonitor.memoryUsage")}</span>
+                </div>
+                <span className="text-indigo-500 font-mono">{memoryUsage}%</span>
               </div>
-              <span className="text-indigo-500 font-mono">{memoryUsage}%</span>
+              <div className="w-full bg-gray-700 rounded-full h-2.5">
+                <motion.div
+                  className="bg-indigo-500 h-2.5 rounded-full"
+                  initial={{ width: 0 }}
+                  animate={{ width: `${memoryUsage}%` }}
+                  transition={{ duration: 0.5 }}
+                />
+              </div>
             </div>
-            <div className="w-full bg-gray-700 rounded-full h-2.5">
-              <motion.div
-                className="bg-indigo-500 h-2.5 rounded-full"
-                initial={{ width: 0 }}
-                animate={{ width: `${memoryUsage}%` }}
-                transition={{ duration: 0.5 }}
-              />
-            </div>
-          </div>
 
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <Activity className="text-purple-500 mr-2" size={18} />
-                <span className="text-gray-300 font-mono">{t("systemMonitor.networkActivity")}</span>
+            {/* Network Activity */}
+            <div className="space-y-2 sm:col-span-2">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center">
+                  <Activity className="text-purple-500 mr-2" size={18} />
+                  <span className="text-gray-300 font-mono">{t("systemMonitor.networkActivity")}</span>
+                </div>
+                <span className="text-purple-500 font-mono">{networkActivity} KB/s</span>
               </div>
-              <span className="text-purple-500 font-mono">{networkActivity} KB/s</span>
-            </div>
-            <div className="w-full bg-gray-700 rounded-full h-2.5">
-              <motion.div
-                className="bg-purple-500 h-2.5 rounded-full"
-                initial={{ width: 0 }}
-                animate={{ width: `${networkActivity}%` }}
-                transition={{ duration: 0.5 }}
-              />
+              <div className="w-full bg-gray-700 rounded-full h-2.5">
+                <motion.div
+                  className="bg-purple-500 h-2.5 rounded-full"
+                  initial={{ width: 0 }}
+                  animate={{ width: `${networkActivity}%` }}
+                  transition={{ duration: 0.5 }}
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -138,36 +154,34 @@ export default function SystemMonitor(): JSX.Element | null {
             {t("systemMonitor.skillsMonitor")}
           </h3>
 
-          <div className="grid grid-cols-2 gap-4">
-            {skills.slice(0, 6).map((skill, index) => {
-              return (
-                <div key={index} className="space-y-1">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center">
-                      <Zap className="text-blue-400 mr-2" size={14} />
-                      <span className="text-gray-300 font-mono text-sm">{skill.name}</span>
-                    </div>
-                    <span className="text-blue-400 font-mono text-sm">{skill.level}%</span>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {skills.slice(0, 6).map((skill, index) => (
+              <div key={index} className="space-y-1">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center">
+                    <Zap className="text-blue-400 mr-2" size={14} />
+                    <span className="text-gray-300 font-mono text-sm">{skill.name}</span>
                   </div>
-                  <div className="w-full bg-gray-700 rounded-full h-1.5">
-                    <motion.div
-                      className={`h-1.5 rounded-full ${
-                        skill.category === "Frontend"
-                          ? "bg-blue-500"
-                          : skill.category === "Backend"
-                            ? "bg-indigo-500"
-                            : skill.category === "Database"
-                              ? "bg-purple-500"
-                              : "bg-blue-600"
-                      }`}
-                      initial={{ width: 0 }}
-                      animate={{ width: `${skill.level}%` }}
-                      transition={{ duration: 0.8, delay: index * 0.1 }}
-                    />
-                  </div>
+                  <span className="text-blue-400 font-mono text-sm">{skill.level}%</span>
                 </div>
-              )
-            })}
+                <div className="w-full bg-gray-700 rounded-full h-1.5">
+                  <motion.div
+                    className={`h-1.5 rounded-full ${
+                      skill.category === "Frontend"
+                        ? "bg-blue-500"
+                        : skill.category === "Backend"
+                          ? "bg-indigo-500"
+                          : skill.category === "Database"
+                            ? "bg-purple-500"
+                            : "bg-blue-600"
+                    }`}
+                    initial={{ width: 0 }}
+                    animate={{ width: `${skill.level}%` }}
+                    transition={{ duration: 0.8, delay: index * 0.1 }}
+                  />
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
