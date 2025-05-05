@@ -1,6 +1,6 @@
 "use client"
 
-import { useTranslation } from "@/context/language-utils"
+import { useTranslation } from "@/context/language-context"
 import Hero from "@/app/components/Hero"
 import About from "@/app/components/About"
 import Experience from "@/app/components/Experience" 
