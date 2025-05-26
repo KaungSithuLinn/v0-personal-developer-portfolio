@@ -1,6 +1,5 @@
 "use client"
 
-import { useTranslation } from "@/context/language-context"
 import Hero from "@/app/components/Hero"
 import About from "@/app/components/About"
 import Experience from "@/app/components/Experience" 
@@ -14,10 +13,8 @@ import DevConsoleInterface from "@/app/components/terminal/eDEXInterface"
 import TranslationTester from "@/components/TranslationTester"
 
 export default function MainContent() {
-  const { isRTL } = useTranslation()
-  
   return (
-    <main className="bg-gray-50 dark:bg-gray-900 min-h-screen" dir={isRTL ? "rtl" : "ltr"}>
+    <main className="bg-gray-50 dark:bg-gray-900 min-h-screen">
       <FloatingNav />
       <DevConsoleInterface />
       <Hero />

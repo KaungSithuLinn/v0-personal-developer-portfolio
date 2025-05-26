@@ -1,0 +1,48 @@
+
+> my-v0-project@0.1.0 build
+> next build
+
+   Γû▓ Next.js 15.2.4
+
+   Creating an optimized production build ...
+ ΓÜá Compiled with warnings
+
+./context/language-provider.tsx
+Attempted import error: 'getIsRTL' is not exported from './language-utils' (imported as 'getIsRTL').
+
+Import trace for requested module:
+./context/language-provider.tsx
+
+./app/[locale]/layout.tsx
+Attempted import error: 'getIsRTL' is not exported from '@/context/language-utils' (imported as 'getIsRTL').
+
+Import trace for requested module:
+./app/[locale]/layout.tsx
+
+ ΓÜá Compiled with warnings
+
+./context/language-provider.tsx
+Attempted import error: 'getIsRTL' is not exported from './language-utils' (imported as 'getIsRTL').
+
+Import trace for requested module:
+./context/language-provider.tsx
+
+ Γ£ô Compiled successfully
+   Skipping validation of types
+   Skipping linting
+   Collecting page data ...
+   Generating static pages (0/9) ...
+Error occurred prerendering page "/en". Read more: https://nextjs.org/docs/messages/prerender-error
+TypeError: (0 , f.getIsRTL) is not a function
+    at k (D:\Kaung Sithu Linn's Portfolio Website\v0-personal-developer-portfolio\.next\server\app\[locale]\page.js:1:11766)
+    at ek (D:\Kaung Sithu Linn's Portfolio Website\v0-personal-developer-portfolio\node_modules\next\dist\compiled\next-server\app-page.runtime.prod.js:17:13337)
+    at e (D:\Kaung Sithu Linn's Portfolio Website\v0-personal-developer-portfolio\node_modules\next\dist\compiled\next-server\app-page.runtime.prod.js:17:17246)
+    at e$ (D:\Kaung Sithu Linn's Portfolio Website\v0-personal-developer-portfolio\node_modules\next\dist\compiled\next-server\app-page.runtime.prod.js:17:17708)
+    at Array.toJSON (D:\Kaung Sithu Linn's Portfolio Website\v0-personal-developer-portfolio\node_modules\next\dist\compiled\next-server\app-page.runtime.prod.js:17:14854)
+    at stringify (<anonymous>)
+    at eF (D:\Kaung Sithu Linn's Portfolio Website\v0-personal-developer-portfolio\node_modules\next\dist\compiled\next-server\app-page.runtime.prod.js:17:26079)
+    at eq (D:\Kaung Sithu Linn's Portfolio Website\v0-personal-developer-portfolio\node_modules\next\dist\compiled\next-server\app-page.runtime.prod.js:17:26391)
+    at ez (D:\Kaung Sithu Linn's Portfolio Website\v0-personal-developer-portfolio\node_modules\next\dist\compiled\next-server\app-page.runtime.prod.js:17:26887)
+    at AsyncLocalStorage.run (node:internal/async_local_storage/async_hooks:91:14)
+Export encountered an error on /[locale]/page: /en, exiting the build.
+ Γ¿» Next.js build worker exited with code: 1 and signal: null

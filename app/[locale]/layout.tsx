@@ -1,9 +1,11 @@
 import { Metadata } from "next"
 import { ThemeProvider } from "@/components/theme-provider"
 import { LanguageProvider } from "@/context/language-provider"
+import { RTLProvider } from "@/context/rtl-provider"
 import { Inter, Noto_Sans_SC, Noto_Sans_Arabic, Noto_Sans_Tamil } from "next/font/google"
 import { type Language } from "@/context/language-utils"
 import { i18n } from "@/config/language.config"
+import { isRTL } from "@/lib/rtl-utils"
 import LanguageSelector from "@/components/LanguageSelector"
 import DevInterface from "../components/terminal/DevInterface"
 import "../globals.css"
@@ -60,19 +62,19 @@ export default function LocaleLayout({
   children: React.ReactNode
   params: { locale: Language }
 }) {
-  // Explicitly compute RTL state based on locale
-  const isRTL = locale === "ar"
+  // Pre-calculate RTL state for initial render using server-compatible function
+  const defaultRTL = isRTL(locale)
 
   return (
     <html
       lang={locale}
-      dir={isRTL ? "rtl" : "ltr"}
+      dir={defaultRTL ? "rtl" : "ltr"}
       suppressHydrationWarning
       className={`${inter.variable} ${notoSansArabic.variable} ${notoSansSC.variable} ${notoSansTamil.variable}`}
     >
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="dir" content={isRTL ? "rtl" : "ltr"} />
+        <meta name="dir" content={defaultRTL ? "rtl" : "ltr"} />
         <link rel="icon" href="/placeholder-logo.svg" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
@@ -80,9 +82,11 @@ export default function LocaleLayout({
       <body>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
           <LanguageProvider initialLocale={locale}>
-            <LanguageSelector />
-            {children}
-            <DevInterface />
+            <RTLProvider defaultRTL={defaultRTL}>
+              <LanguageSelector />
+              {children}
+              <DevInterface />
+            </RTLProvider>
           </LanguageProvider>
         </ThemeProvider>
       </body>

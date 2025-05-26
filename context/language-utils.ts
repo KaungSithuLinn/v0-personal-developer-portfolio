@@ -1,5 +1,11 @@
+"use client"
+
 import { createContext, useContext } from "react"
-import { LANGUAGE_NAMES, type Language } from "@/config/language.config"
+import { 
+  LANGUAGE_NAMES, 
+  DEFAULT_LANGUAGE,
+  type Language 
+} from "@/config/language.config"
 import translations from "./translations"
 
 // Re-export the Language type
@@ -18,31 +24,49 @@ export interface LanguageContextType {
   languageName: (code: Language) => string
 }
 
+// Default translation function that works without context
+export const defaultTranslate = (
+  key: TranslationKey,
+  language: Language = DEFAULT_LANGUAGE,
+  params?: Record<string, string | number>
+): string => {
+  const translation = String(translations[language]?.[key] || translations[DEFAULT_LANGUAGE][key] || key)
+
+  if (!params) {
+    return translation
+  }
+
+  return Object.entries(params).reduce<string>(
+    (acc, [paramKey, value]) => acc.replace(`{${paramKey}}`, String(value)),
+    translation
+  )
+}
+
+// Create the context with default values using the defaultTranslate function
 export const LanguageContext = createContext<LanguageContextType>({
-  language: "en",
+  language: DEFAULT_LANGUAGE,
   setLanguage: () => {},
-  t: (key: TranslationKey) => String(key),
+  t: (key, params) => defaultTranslate(key, DEFAULT_LANGUAGE, params),
   getDirection: () => "ltr",
   isRTL: false,
   isTransitioning: false,
   languageName: (lang) => LANGUAGE_NAMES[lang] || lang,
 })
 
-export const useTranslation = () => useContext(LanguageContext)
-
-export function translate(
-  key: TranslationKey,
-  language: Language,
-  params?: Record<string, string | number>
-): string {
-  const translation = String(translations[language]?.[key] || key)
-
-  if (!params) {
-    return translation
+export const useTranslation = () => {
+  const context = useContext(LanguageContext)
+  if (!context) {
+    // Provide fallback implementation if context is not available
+    return {
+      language: DEFAULT_LANGUAGE,
+      setLanguage: () => {},
+      t: (key: TranslationKey, params?: Record<string, string | number>) => 
+        defaultTranslate(key, DEFAULT_LANGUAGE, params),
+      getDirection: () => "ltr",
+      isRTL: false,
+      isTransitioning: false,
+      languageName: (lang: Language) => LANGUAGE_NAMES[lang] || lang,
+    }
   }
-
-  return Object.entries(params).reduce(
-    (acc, [paramKey, value]) => acc.replace(`{${paramKey}}`, String(value)),
-    translation
-  )
+  return context
 }

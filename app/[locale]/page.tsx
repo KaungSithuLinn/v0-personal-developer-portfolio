@@ -1,5 +1,6 @@
 import MainContent from "@/components/MainContent"
 import type { Language } from "@/context/language-utils"
+import { getTextDirection } from "@/lib/rtl-utils"
 
 interface Props {
   params: {
@@ -8,5 +9,12 @@ interface Props {
 }
 
 export default function Home({ params: { locale } }: Props) {
-  return <MainContent />
+  // Use server-compatible direction detection
+  const direction = getTextDirection(locale)
+  
+  return (
+    <div dir={direction}>
+      <MainContent />
+    </div>
+  )
 }
