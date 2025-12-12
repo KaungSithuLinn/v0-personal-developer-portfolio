@@ -50,12 +50,12 @@
     "framer-motion": "latest",
     "input-otp": "1.4.1",
     "lucide-react": "^0.454.0",
-    "negotiator": "^1.0.0",
-    "next": "15.2.4",
+    "negotiator": "^0.6.4",
+    "next": "^15.5.9",
     "next-themes": "latest",
-    "react": "^19",
+    "react": "^19.2.3",
     "react-day-picker": "8.10.1",
-    "react-dom": "^19",
+    "react-dom": "^19.2.3",
     "react-hook-form": "latest",
     "react-resizable-panels": "^2.1.7",
     "recharts": "2.15.0",
@@ -74,5 +74,34 @@
     "tailwindcss": "^3.4.17",
     "typescript": "^5"
   },
-  "packageManager": "pnpm@10.10.0"
+  "packageManager": "pnpm@10.10.0",
+  "overrides": {
+    "next": "^15.5.9",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "glob": "^10.3.10",
+    "jsondiffpatch": "^0.6.0",
+    "negotiator": "^0.6.4"
+  },
+  "resolutions": {
+    "next": "^15.5.9",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "glob": "^10.3.10",
+    "jsondiffpatch": "^0.6.0",
+    "negotiator": "^0.6.4"
+  },
+  "pnpm": {
+    "overrides": {
+      "next": "^15.5.9",
+      "react": "^19.2.3",
+      "react-dom": "^19.2.3",
+      "glob": "^10.3.10",
+      "jsondiffpatch": "^0.6.0",
+      "negotiator": "^0.6.4"
+    },
+    "onlyBuiltDependencies": [
+      "sharp"
+    ]
+  }
 }

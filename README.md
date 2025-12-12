@@ -5,6 +5,7 @@ A professional portfolio website showcasing my skills, projects, and experience 
 ---
 
 ## ✨ Features
+
 - **Responsive Design**: Optimized for all devices, from desktops to mobile phones.
 - **Interactive Project Showcase**: Highlighting key projects with detailed descriptions and visuals.
 - **Contact Form Integration**: Seamless communication via a built-in contact form.
@@ -13,6 +14,7 @@ A professional portfolio website showcasing my skills, projects, and experience 
 ---
 
 ## 🛠️ Technologies Used
+
 - **Frontend**: HTML, CSS, JavaScript, React
 - **Hosting**: [Vercel](https://vercel.com)
 
@@ -23,23 +25,27 @@ A professional portfolio website showcasing my skills, projects, and experience 
 Follow the steps below to set up the project locally:
 
 1. **Clone the Repository**:
+
    ```bash
    git clone https://github.com/your-username/v0-personal-developer-portfolio.git
    ```
 
 2. **Navigate to the Project Directory**:
+
    ```bash
    cd v0-personal-developer-portfolio
    ```
 
-3. **Install Dependencies**:
+3. **Install Dependencies** (pnpm recommended):
+
    ```bash
-   npm install
+   pnpm install
    ```
 
 4. **Start the Development Server**:
+
    ```bash
-   npm start
+   pnpm dev
    ```
 
 Once the server is running, open your browser and navigate to `http://localhost:3000` to view the project.
@@ -67,3 +73,27 @@ This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) f
 ## 📧 Contact
 
 For any inquiries or feedback, feel free to reach out via the contact form on the website or email me directly at [kaungsithulinn2@outlook.com].
+
+---
+
+## 🔒 Dependency and Security Maintenance
+
+- The project uses pnpm overrides to pin patched versions for Next.js, React, glob, jsondiffpatch, and negotiator to mitigate known advisories.
+- After cloning, run `pnpm install` (or `pnpm install --lockfile-only`) to ensure overrides are applied.
+- Verify the enforced versions anytime:
+
+  ```bash
+  pnpm why next glob jsondiffpatch negotiator react react-dom
+  ```
+
+- Run a quick security check:
+
+  ```bash
+  pnpm audit
+  ```
+
+- If prompted about blocked build scripts (e.g., sharp), allow as needed:
+
+  ```bash
+  pnpm approve-builds
+  ```
