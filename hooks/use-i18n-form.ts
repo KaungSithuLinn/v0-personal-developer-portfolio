@@ -7,7 +7,7 @@ import { getErrorMessage } from "@/lib/action-utils"
 
 interface I18nFormOptions<T> {
   initialValues: T
-  validationSchema: z.ZodObject<any>
+  validationSchema: z.ZodObject<z.ZodRawShape>
   onSubmit: (values: T) => Promise<void> | void
   validateOnChange?: boolean
   validateOnBlur?: boolean
@@ -26,14 +26,14 @@ type I18nFormHandlers = {
   handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
   handleBlur: (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => void
   handleSubmit: (e: React.FormEvent) => void
-  setFieldValue: (field: string, value: any) => void
+  setFieldValue: (field: string, value: unknown) => void
   setFieldTouched: (field: string, touched?: boolean) => void
   resetForm: () => void
   validateField: (field: string) => void
   validateForm: () => boolean
 }
 
-export function useI18nForm<T extends Record<string, any>>({
+export function useI18nForm<T extends Record<string, unknown>>({
   initialValues,
   validationSchema,
   onSubmit,

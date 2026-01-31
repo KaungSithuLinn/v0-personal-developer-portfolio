@@ -14,7 +14,7 @@ export function useMounted(): boolean {
   return mounted
 }
 
-export function useMountedEffect(effect: () => void | (() => void), deps: any[] = []) {
+export function useMountedEffect(effect: () => void | (() => void), deps: unknown[] = []) {
   const mounted = useMounted()
   const hasRunRef = useRef(false)
 

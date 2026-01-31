@@ -85,7 +85,7 @@ export async function generateSEOMetadata({
 }
 
 export function generateStructuredData(
-  data: Record<string, any>,
+  data: Record<string, unknown>,
   language: Language
 ): string {
   return JSON.stringify({

@@ -30,6 +30,7 @@ export async function submitContact(formData: ContactFormData) {
             data: validData,
           }
         } catch (error) {
+          console.error('submitContact error:', error)
           return {
             success: false,
             errors: {

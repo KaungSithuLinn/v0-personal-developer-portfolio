@@ -66,7 +66,7 @@ export interface SanitySpan {
 export interface SanityMarkDef {
   _type: string;
   _key: string;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export interface CodeBlock {
