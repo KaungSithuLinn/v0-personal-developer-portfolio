@@ -18,17 +18,19 @@ export function ScreenReaderAnnouncer({
   const announcerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    if (message && announcerRef.current) {
-      announcerRef.current.textContent = ""
-      announcerRef.current.offsetHeight
-      announcerRef.current.textContent = message
+    const announcer = announcerRef.current
+    if (message && announcer) {
+      announcer.textContent = ""
+      void announcer.offsetHeight
+      announcer.textContent = message
     }
   }, [message])
 
   useEffect(() => {
+    const announcer = announcerRef.current
     return () => {
-      if (clearOnUnmount && announcerRef.current) {
-        announcerRef.current.textContent = ""
+      if (clearOnUnmount && announcer) {
+        announcer.textContent = ""
       }
     }
   }, [clearOnUnmount])
@@ -84,8 +86,7 @@ export function useScreenReader() {
     document.body.appendChild(announcer)
     
     // Force a reflow
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-    announcer.offsetHeight
+    void announcer.offsetHeight
     
     // Set the message
     announcer.textContent = message

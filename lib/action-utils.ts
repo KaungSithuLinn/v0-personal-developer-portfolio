@@ -1,6 +1,5 @@
-import { type Language } from "@/context/language-utils"
-import { type ZodError, z } from "zod"
-import { SUPPORTED_LANGUAGES } from "@/config/language.config"
+import { type Language } from "@/context/language-utils";
+import { type ZodError, z } from "zod";
 
 /**
  * Wraps a server action with a timeout to prevent DoS attacks
@@ -8,7 +7,7 @@ import { SUPPORTED_LANGUAGES } from "@/config/language.config"
  * @param timeoutMs The timeout in milliseconds (default: 5000ms)
  * @returns A wrapped server action that will timeout after the specified duration
  */
-export function withTimeout<T, Args extends any[]>(
+export function withTimeout<T, Args extends unknown[]>(
   action: (...args: Args) => Promise<T>,
   timeoutMs = 5000,
 ): (...args: Args) => Promise<T> {
@@ -16,25 +15,25 @@ export function withTimeout<T, Args extends any[]>(
     // Create a promise that rejects after the specified timeout
     const timeoutPromise = new Promise<never>((_, reject) => {
       const id = setTimeout(() => {
-        clearTimeout(id)
-        reject(new Error(`Server action timed out after ${timeoutMs}ms`))
-      }, timeoutMs)
-    })
+        clearTimeout(id);
+        reject(new Error(`Server action timed out after ${timeoutMs}ms`));
+      }, timeoutMs);
+    });
 
     // Race the action against the timeout
-    return Promise.race([action(...args), timeoutPromise]) as Promise<T>
-  }
+    return Promise.race([action(...args), timeoutPromise]) as Promise<T>;
+  };
 }
 
 interface ActionErrorMessages {
-  formErrors?: string[]
-  fieldErrors?: Record<string, string[]>
+  formErrors?: string[];
+  fieldErrors?: Record<string, string[]>;
 }
 
 interface ActionResponse<T> {
-  success: boolean
-  data?: T
-  errors?: ActionErrorMessages
+  success: boolean;
+  data?: T;
+  errors?: ActionErrorMessages;
 }
 
 const errorMessages: Record<Language, Record<string, string>> = {
@@ -78,34 +77,41 @@ const errorMessages: Record<Language, Record<string, string>> = {
     invalidFormat: "الرجاء إدخال تنسيق صحيح",
     serverError: "حدث خطأ ما. الرجاء المحاولة مرة أخرى.",
   },
-}
+};
 
 export function getErrorMessage(
   key: string,
   language: Language,
-  params?: Record<string, string | number>
+  params?: Record<string, string | number>,
 ): string {
-  let message = errorMessages[language]?.[key] || errorMessages.en[key] || key
+  let message = errorMessages[language]?.[key] || errorMessages.en[key] || key;
 
   if (params) {
     Object.entries(params).forEach(([param, value]) => {
-      message = message.replace(`{${param}}`, String(value))
-    })
+      message = message.replace(`{${param}}`, String(value));
+    });
   }
 
-  return message
+  return message;
 }
 
-export function formatZodError(error: ZodError, language: Language): ActionErrorMessages {
+export function formatZodError(
+  error: ZodError,
+  language: Language,
+): ActionErrorMessages {
   return {
-    formErrors: error.errors.map(err => getErrorMessage(err.message, language)),
-    fieldErrors: Object.fromEntries(
-      Object.entries(error.formErrors?.fieldErrors || {}).map(([field, errors]) => [
-        field,
-        (errors ?? []).map(err => getErrorMessage(err, language)),
-      ])
+    formErrors: error.errors.map((err) =>
+      getErrorMessage(err.message, language),
     ),
-  }
+    fieldErrors: Object.fromEntries(
+      Object.entries(error.formErrors?.fieldErrors || {}).map(
+        ([field, errors]) => [
+          field,
+          (errors ?? []).map((err) => getErrorMessage(err, language)),
+        ],
+      ),
+    ),
+  };
 }
 
 export function createContactSchema(language: Language) {
@@ -122,24 +128,24 @@ export function createContactSchema(language: Language) {
     message: z.string().min(10, {
       message: getErrorMessage("tooShort", language, { min: "10" }),
     }),
-  })
+  });
 }
 
 export async function validateAction<T>(
   data: unknown,
   schema: z.ZodSchema,
   language: Language,
-  action: (validData: T) => Promise<ActionResponse<T>>
+  action: (validData: T) => Promise<ActionResponse<T>>,
 ): Promise<ActionResponse<T>> {
   try {
-    const validData = await schema.parseAsync(data)
-    return await action(validData as T)
+    const validData = await schema.parseAsync(data);
+    return await action(validData as T);
   } catch (error) {
     if (error instanceof z.ZodError) {
       return {
         success: false,
         errors: formatZodError(error, language),
-      }
+      };
     }
 
     return {
@@ -147,6 +153,6 @@ export async function validateAction<T>(
       errors: {
         formErrors: [getErrorMessage("serverError", language)],
       },
-    }
+    };
   }
 }

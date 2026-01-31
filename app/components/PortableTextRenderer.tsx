@@ -2,13 +2,7 @@ import { PortableText, PortableTextComponents } from "@portabletext/react";
 import Image from "next/image";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
-import {
-  AlertCircle,
-  Info,
-  CheckCircle,
-  AlertTriangle,
-  XCircle,
-} from "lucide-react";
+import { Info, CheckCircle, AlertTriangle, XCircle } from "lucide-react";
 import { buildImageUrl } from "@/lib/sanity.client";
 import { cn } from "@/lib/utils";
 import type {
@@ -65,7 +59,7 @@ const components: PortableTextComponents = {
             value.width === "small" && "max-w-sm mx-auto",
             value.width === "medium" && "max-w-md mx-auto",
             value.width === "large" && "max-w-2xl mx-auto",
-            value.width === "full" && "w-full"
+            value.width === "full" && "w-full",
           )}
         >
           <div className="relative overflow-hidden rounded-lg border border-border">
@@ -124,7 +118,7 @@ const components: PortableTextComponents = {
                   });
 
                 const isHighlighted = highlights.some(
-                  ({ start, end }) => lineNumber >= start && lineNumber <= end
+                  ({ start, end }) => lineNumber >= start && lineNumber <= end,
                 );
 
                 if (isHighlighted) {
@@ -152,7 +146,7 @@ const components: PortableTextComponents = {
         <div
           className={cn(
             "my-6 rounded-lg border p-4",
-            calloutStyles[value.type]
+            calloutStyles[value.type],
           )}
         >
           <div className="flex items-start gap-3">
@@ -175,7 +169,7 @@ const components: PortableTextComponents = {
       const getVideoId = (url: string) => {
         // YouTube
         const youtubeMatch = url.match(
-          /(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/
+          /(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/,
         );
         if (youtubeMatch) return { platform: "youtube", id: youtubeMatch[1] };
 
@@ -210,7 +204,7 @@ const components: PortableTextComponents = {
           <div
             className={cn(
               "relative overflow-hidden rounded-lg border border-border",
-              aspectRatioClasses[value.aspectRatio]
+              aspectRatioClasses[value.aspectRatio],
             )}
           >
             <iframe
@@ -307,7 +301,7 @@ export function PortableTextRenderer({
     <div
       className={cn(
         "prose prose-slate dark:prose-invert max-w-none",
-        className
+        className,
       )}
     >
       <PortableText value={content} components={components} />

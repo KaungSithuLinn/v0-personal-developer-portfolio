@@ -8,7 +8,6 @@ import {
   Clock,
   User,
   ArrowLeft,
-  Share2,
   Twitter,
   Facebook,
   Linkedin,
@@ -16,7 +15,7 @@ import {
 import { getPostBySlug, getRelatedPosts } from "@/lib/sanity.api";
 import { buildImageUrl } from "@/lib/sanity.client";
 import { PortableTextRenderer } from "@/app/components/PortableTextRenderer";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -326,12 +325,11 @@ async function BlogPostContent({
     notFound();
   }
 
-  const categorySlug = post.categories?.[0]?.slug.current;
   const relatedPosts = await getRelatedPosts(
     post._id,
     post.categories?.map((cat) => cat.slug.current) || [],
     locale,
-    3
+    3,
   );
 
   const imageUrl = post.mainImage
@@ -389,7 +387,7 @@ async function BlogPostContent({
                     category.color === "pink" &&
                       "bg-pink-100 text-pink-800 dark:bg-pink-900 dark:text-pink-100",
                     category.color === "yellow" &&
-                      "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-100"
+                      "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-100",
                   )}
                 >
                   <Link

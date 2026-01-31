@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Home, User, Briefcase, Wrench, FolderGit2, GraduationCap, PhoneCall } from "lucide-react"
 import { useTranslation } from "@/context/language-utils"
@@ -10,7 +10,7 @@ export default function FloatingNav() {
   const [visible, setVisible] = useState(true)
   const { t, isRTL, isTransitioning } = useTranslation()
 
-  const navItems = [
+  const navItems = useMemo(() => [
     { id: "home", label: t("nav.home"), icon: Home },
     { id: "about", label: t("nav.about"), icon: User },
     { id: "experience", label: t("nav.experience"), icon: Briefcase },
@@ -18,7 +18,7 @@ export default function FloatingNav() {
     { id: "projects", label: t("nav.projects"), icon: FolderGit2 },
     { id: "education", label: t("nav.education"), icon: GraduationCap },
     { id: "contact", label: t("nav.contact"), icon: PhoneCall },
-  ]
+  ], [t])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -42,7 +42,7 @@ export default function FloatingNav() {
     let lastScroll = 0
     window.addEventListener("scroll", handleScroll, { passive: true })
     return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+  }, [navItems])
 
   return (
     <AnimatePresence>

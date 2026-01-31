@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { CalendarDays, Clock, User, Tag } from "lucide-react";
 import { getPosts, getCategories, getAllTags } from "@/lib/sanity.api";
-import { buildImageUrl, urlFor } from "@/lib/sanity.client";
+import { urlFor } from "@/lib/sanity.client";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -119,7 +119,7 @@ function BlogPostCard({ post, locale }: BlogPostCardProps) {
                     category.color === "pink" &&
                       "bg-pink-100 text-pink-800 dark:bg-pink-900 dark:text-pink-100",
                     category.color === "yellow" &&
-                      "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-100"
+                      "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-100",
                   )}
                 >
                   {category.title}
@@ -230,7 +230,7 @@ function BlogFilters({
               href={`/${locale}/blog?category=${category.slug.current}`}
               className={cn(
                 "flex items-center justify-between rounded-md px-3 py-2 text-sm transition-colors hover:bg-muted",
-                currentCategory === category.slug.current && "bg-muted"
+                currentCategory === category.slug.current && "bg-muted",
               )}
             >
               <span>{category.title}</span>
@@ -317,7 +317,7 @@ async function BlogContent({
           category: searchParams.category,
           tag: searchParams.tag,
         },
-        { page, limit }
+        { page, limit },
       ),
       getCategories(locale),
       getAllTags(locale),

@@ -8,7 +8,7 @@ import { getPostsByCategory, getCategoryBySlug } from "@/lib/sanity.api";
 import { buildImageUrl } from "@/lib/sanity.client";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card, CardHeader } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import type { Language } from "@/config/language.config";
 import type { PostListItem } from "@/lib/sanity.types";
@@ -117,7 +117,7 @@ function PostCard({ post, locale }: PostCardProps) {
                     category.color === "pink" &&
                       "bg-pink-100 text-pink-800 dark:bg-pink-900 dark:text-pink-100",
                     category.color === "yellow" &&
-                      "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-100"
+                      "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-100",
                   )}
                 >
                   {category.title}
@@ -218,7 +218,7 @@ async function CategoryContent({
               categoryData.color === "pink" &&
                 "bg-pink-100 text-pink-800 dark:bg-pink-900 dark:text-pink-100",
               categoryData.color === "yellow" &&
-                "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-100"
+                "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-100",
             )}
           >
             {categoryData.title}

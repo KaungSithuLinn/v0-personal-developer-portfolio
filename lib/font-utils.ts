@@ -137,6 +137,8 @@ export function needsFontOptimization(language: Language): boolean {
 export function generateFontPreloadLinks(
   language: Language
 ): React.ReactElement[] {
+  // Keep parameter in use for future enhancements
+  void language
   // For Next.js fonts, preloading is handled automatically
   // This function is kept for potential future custom font implementations
   return [];

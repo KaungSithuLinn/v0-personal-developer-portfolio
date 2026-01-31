@@ -65,7 +65,7 @@ export function useLanguageAnimation(config: AnimationConfig = {}): AnimationRes
     }
 
     return transforms.join(" ")
-  }, [getSlideTransform, scale, rotate, isRTL])
+  }, [getSlideTransform, scale, rotate, isRTL, slide])
 
   // Animation styles
   const style: React.CSSProperties = {

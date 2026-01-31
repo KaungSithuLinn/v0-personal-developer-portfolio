@@ -38,40 +38,19 @@ export function useTerminal() {
     setHistory(INITIAL_MESSAGES);
   }, [language, t]);
 
-  // Command output templates
-  const COMMAND_OUTPUTS = {
-    help: {
-      type: "jsx" as const,
-      content: "help-content", // This will be replaced with actual JSX in the component
-    },
-    about: {
-      type: "jsx" as const,
-      content: "about-content",
-    },
-    skills: {
-      type: "jsx" as const,
-      content: "skills-content",
-    },
-    projects: {
-      type: "jsx" as const,
-      content: "projects-content",
-    },
-    contact: {
-      type: "jsx" as const,
-      content: "contact-content",
-    },
-    experience: {
-      type: "jsx" as const,
-      content: "experience-content",
-    },
-    education: {
-      type: "jsx" as const,
-      content: "education-content",
-    },
-  };
-
   const processCommand = useCallback(
     async (command: string) => {
+      // Command output templates
+      const COMMAND_OUTPUTS = {
+        help: { type: "jsx" as const, content: "help-content" },
+        about: { type: "jsx" as const, content: "about-content" },
+        skills: { type: "jsx" as const, content: "skills-content" },
+        projects: { type: "jsx" as const, content: "projects-content" },
+        contact: { type: "jsx" as const, content: "contact-content" },
+        experience: { type: "jsx" as const, content: "experience-content" },
+        education: { type: "jsx" as const, content: "education-content" },
+      };
+
       setIsProcessing(true);
       setHistory((prev) => [
         ...prev,
@@ -111,7 +90,7 @@ export function useTerminal() {
         // Use Groq API for AI responses
         try {
           const response = await generateText({
-            model: groq("llama3-70b-8192") as any,
+            model: groq("llama3-70b-8192") as unknown as string,
             prompt: `You are an AI assistant embedded in Kaung Sithu Linn's portfolio website. 
             The portfolio is for a Software Developer specializing in POS systems, fraud detection, and behavioral biometrics with 4+ years of experience.
             

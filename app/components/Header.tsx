@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 import { useTranslation } from "@/context/language-context";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+
 
 export default function Header() {
   const [mounted, setMounted] = useState(false);
@@ -13,7 +13,6 @@ export default function Header() {
   const [activeSection, setActiveSection] = useState("home");
   const { theme } = useTheme();
   const { t, language } = useTranslation();
-  const params = useParams();
 
   useEffect(() => setMounted(true), []);
 

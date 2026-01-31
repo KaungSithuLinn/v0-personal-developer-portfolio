@@ -21,12 +21,14 @@ export function useMountedEffect(
   const mounted = useMounted();
   const hasRunRef = useRef(false);
 
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     if (mounted && !hasRunRef.current) {
       hasRunRef.current = true;
       return effect();
     }
-  }, [mounted, ...deps]);
+  }, [mounted, effect, ...deps]);
+  /* eslint-enable react-hooks/exhaustive-deps */
 }
 
 export function useDelayedMount(delay = 100) {

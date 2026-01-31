@@ -40,7 +40,8 @@ export default function Testimonials() {
 
   const prevTestimonial = () => {
     setActiveIndex(
-      (prevIndex) => (prevIndex - 1 + testimonials.length) % testimonials.length
+      (prevIndex) =>
+        (prevIndex - 1 + testimonials.length) % testimonials.length,
     );
   };
 
@@ -72,6 +73,7 @@ export default function Testimonials() {
 
               <div className="flex items-center">
                 <div className="w-16 h-16 rounded-full overflow-hidden mr-4">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={testimonials[activeIndex].image || "/placeholder.svg"}
                     alt={testimonials[activeIndex].name}

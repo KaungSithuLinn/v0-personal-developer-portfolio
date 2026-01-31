@@ -25,8 +25,9 @@ export default function Contact() {
 
   const { handleChange, handleBlur, validateField } = useI18nForm({
     initialValues: { name: "", email: "", subject: "", message: "" },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     validationSchema: {} as any, // Keep existing schema definition elsewhere; kept as any for now
-  } as unknown as any); // Use `unknown` to acknowledge the temporary typing gap
+  } as unknown); // Use `unknown` to acknowledge the temporary typing gap
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -66,7 +67,7 @@ export default function Contact() {
       } else {
         setSubmitStatus("error");
       }
-    } catch (error) {
+    } catch {
       setSubmitStatus("error");
     }
 
