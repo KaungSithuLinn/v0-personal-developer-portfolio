@@ -24,7 +24,7 @@ export default function Contact() {
   };
 
   const { handleChange, handleBlur, validateField } = useI18nForm({
-    initialValues: { name: '', email: '', subject: '', message: '' },
+    initialValues: { name: "", email: "", subject: "", message: "" },
     validationSchema: {} as any, // Keep existing schema definition elsewhere; kept as any for now
   } as unknown as any); // Use `unknown` to acknowledge the temporary typing gap
 
@@ -46,7 +46,7 @@ export default function Contact() {
 
     // Check if there are any validation errors
     const hasErrors = Object.values(validations).some((result) =>
-      Array.isArray(result)
+      Array.isArray(result),
     );
     if (hasErrors) {
       setSubmitStatus("error");

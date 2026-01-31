@@ -63,7 +63,7 @@ export async function generateSEOMetadata({
     (lang) => ({
       language: lang as Language,
       url: `${baseUrl}/${lang}${path}`,
-    })
+    }),
   );
 
   return {
@@ -86,7 +86,7 @@ export async function generateSEOMetadata({
 
 export function generateStructuredData(
   data: Record<string, unknown>,
-  language: Language
+  language: Language,
 ): string {
   return JSON.stringify({
     "@context": "https://schema.org",
@@ -97,7 +97,7 @@ export function generateStructuredData(
 }
 
 export function generateHrefLangTags(
-  alternates: LanguageAlternate[]
+  alternates: LanguageAlternate[],
 ): React.ReactElement[] {
   return alternates.map(({ language, url }) =>
     React.createElement("link", {
@@ -105,12 +105,12 @@ export function generateHrefLangTags(
       rel: "alternate",
       hrefLang: language,
       href: url,
-    })
+    }),
   );
 }
 
 export function generateLanguageMetaTags(
-  language: Language
+  language: Language,
 ): React.ReactElement[] {
   return [
     React.createElement("meta", {
@@ -158,7 +158,7 @@ export function generateLocalizedURL({
   const queryString = Object.entries(query)
     .map(
       ([key, value]) =>
-        `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
+        `${encodeURIComponent(key)}=${encodeURIComponent(value)}`,
     )
     .join("&");
 
