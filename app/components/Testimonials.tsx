@@ -1,14 +1,14 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { Quote } from "lucide-react"
-import { useState } from "react"
-import AnimatedSectionHeader from "./AnimatedSectionHeader"
-import { useTranslation } from "@/context/language-context"
+import { motion } from "framer-motion";
+import { Quote } from "lucide-react";
+import { useState } from "react";
+import AnimatedSectionHeader from "./AnimatedSectionHeader";
+import { useTranslation } from "@/context/language-context";
 
 export default function Testimonials() {
-  const [activeIndex, setActiveIndex] = useState(0)
-  const { t } = useTranslation()
+  const [activeIndex, setActiveIndex] = useState(0);
+  const { t } = useTranslation();
 
   const testimonials = [
     {
@@ -32,15 +32,17 @@ export default function Testimonials() {
       title: "IT Director, Global Connect",
       image: "/placeholder.svg?height=80&width=80",
     },
-  ]
+  ];
 
   const nextTestimonial = () => {
-    setActiveIndex((prevIndex) => (prevIndex + 1) % testimonials.length)
-  }
+    setActiveIndex((prevIndex) => (prevIndex + 1) % testimonials.length);
+  };
 
   const prevTestimonial = () => {
-    setActiveIndex((prevIndex) => (prevIndex - 1 + testimonials.length) % testimonials.length)
-  }
+    setActiveIndex(
+      (prevIndex) => (prevIndex - 1 + testimonials.length) % testimonials.length
+    );
+  };
 
   return (
     <section
@@ -65,7 +67,7 @@ export default function Testimonials() {
               </div>
 
               <blockquote className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 italic mt-6 mb-8">
-                "{testimonials[activeIndex].quote}"
+                &ldquo;{testimonials[activeIndex].quote}&rdquo;
               </blockquote>
 
               <div className="flex items-center">
@@ -80,7 +82,9 @@ export default function Testimonials() {
                   <p className="font-semibold text-lg text-gray-900 dark:text-white">
                     {testimonials[activeIndex].name}
                   </p>
-                  <p className="text-gray-600 dark:text-gray-400">{testimonials[activeIndex].title}</p>
+                  <p className="text-gray-600 dark:text-gray-400">
+                    {testimonials[activeIndex].title}
+                  </p>
                 </div>
               </div>
             </motion.div>
@@ -98,7 +102,12 @@ export default function Testimonials() {
                   viewBox="0 0 24 24"
                   stroke="currentColor"
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M15 19l-7-7 7-7"
+                  />
                 </svg>
               </button>
 
@@ -130,7 +139,12 @@ export default function Testimonials() {
                   viewBox="0 0 24 24"
                   stroke="currentColor"
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 5l7 7-7 7"
+                  />
                 </svg>
               </button>
             </div>
@@ -138,5 +152,5 @@ export default function Testimonials() {
         </div>
       </div>
     </section>
-  )
+  );
 }

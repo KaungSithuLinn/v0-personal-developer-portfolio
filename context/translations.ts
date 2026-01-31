@@ -1,11 +1,11 @@
-import { type Language } from "@/config/language.config"
+import { type Language } from "@/config/language.config";
 
 // Define the translations type
 type TranslationsType = {
   [key in Language]: {
-    [key: string]: string
-  }
-}
+    [key: string]: string;
+  };
+};
 
 // Translation data for all supported languages
 const translations: TranslationsType = {
@@ -58,6 +58,7 @@ const translations: TranslationsType = {
     "nav.testimonials": "Testimonials",
     "nav.education": "Education",
     "nav.contact": "Contact",
+    "nav.blog": "Blog",
     "nav.scrollTo": "Scroll to {section}",
 
     // Hero
@@ -111,26 +112,32 @@ const translations: TranslationsType = {
     "skills.title": "Skills & Expertise",
     "skills.frontend": "Frontend Development",
     "skills.frontend.tech": "JavaScript, HTML5, CSS",
-    "skills.frontend.desc": "Building responsive and interactive user interfaces with modern web technologies.",
+    "skills.frontend.desc":
+      "Building responsive and interactive user interfaces with modern web technologies.",
     "skills.backend": "Backend Development",
     "skills.backend.tech": "Python, Java, C++, .NET",
-    "skills.backend.desc": "Creating robust server-side applications with focus on performance and reliability.",
+    "skills.backend.desc":
+      "Creating robust server-side applications with focus on performance and reliability.",
     "skills.database": "Database Management",
     "skills.database.tech": "SQL, Data Management",
     "skills.database.desc":
       "Designing and implementing efficient database schemas and queries for optimal data management.",
     "skills.uiux": "UI/UX Design",
     "skills.uiux.tech": "User Interface Design",
-    "skills.uiux.desc": "Crafting intuitive user interfaces with focus on usability and accessibility.",
+    "skills.uiux.desc":
+      "Crafting intuitive user interfaces with focus on usability and accessibility.",
     "skills.ml": "Machine Learning",
     "skills.ml.tech": "Behavioral Biometrics, Deep Learning",
-    "skills.ml.desc": "Developing ML models for fraud detection and user authentication using behavioral patterns.",
+    "skills.ml.desc":
+      "Developing ML models for fraud detection and user authentication using behavioral patterns.",
     "skills.programming": "Programming Languages",
     "skills.programming.tech": "JavaScript, Python, Java, C++",
-    "skills.programming.desc": "Writing efficient code across multiple programming languages for diverse applications.",
+    "skills.programming.desc":
+      "Writing efficient code across multiple programming languages for diverse applications.",
     "skills.multilingual": "Multilingual",
     "skills.multilingual.tech": "English, Burmese, Chinese, Japanese",
-    "skills.multilingual.desc": "Communicating effectively across multiple languages for international collaboration.",
+    "skills.multilingual.desc":
+      "Communicating effectively across multiple languages for international collaboration.",
     "skills.communication": "Communication",
     "skills.communication.tech": "Technical Writing, Public Speaking",
     "skills.communication.desc":
@@ -173,7 +180,8 @@ const translations: TranslationsType = {
     "projects.results": "Results",
     "projects.technologies": "Technologies Used",
     "projects.achievements": "Key Achievements",
-    "projects.project1.title": "Mouse Dynamics for Online Assessment Fraud Detection",
+    "projects.project1.title":
+      "Mouse Dynamics for Online Assessment Fraud Detection",
     "projects.project1.period": "May 2024 - Nov 2024",
     "projects.project1.description":
       "Developed a machine learning model to detect fraudulent behavior during online assessments using mouse dynamics as a behavioral biometric.",
@@ -189,15 +197,19 @@ const translations: TranslationsType = {
       "Developed a non-intrusive behavioral biometric system that analyzes mouse movement patterns to identify anomalous behavior without compromising user privacy or requiring additional hardware.",
     "projects.project1.results":
       "The system achieved 92% accuracy in detecting fraudulent behavior with a false positive rate of only 3%, significantly improving assessment integrity while maintaining a positive user experience.",
-    "projects.project2.title": "Mouse Dynamics Biometric Fraud Detection System using Deep Learning",
+    "projects.project2.title":
+      "Mouse Dynamics Biometric Fraud Detection System using Deep Learning",
     "projects.project2.period": "May 2024 - Nov 2024",
     "projects.project2.description":
       "Developed a fraud detection system using mouse dynamics and deep learning to enhance the security of online assessments.",
-    "projects.project2.achievement1": "Implemented data preprocessing pipelines achieving 100% data usability",
-    "projects.project2.achievement2": "Engineered 12 optimized feature sets using advanced selection methods",
+    "projects.project2.achievement1":
+      "Implemented data preprocessing pipelines achieving 100% data usability",
+    "projects.project2.achievement2":
+      "Engineered 12 optimized feature sets using advanced selection methods",
     "projects.project2.achievement3":
       "Developed and tested multiple deep learning models (ANN, LSTM, LSTM-CNN, LSTM-Transformer)",
-    "projects.project2.achievement4": "Built data visualization tools to monitor system performance",
+    "projects.project2.achievement4":
+      "Built data visualization tools to monitor system performance",
     "projects.project2.achievement5":
       "Exceeded project goals, achieving 95% detection accuracy and a false negative rate below 5%",
     "projects.project2.challenge":
@@ -206,11 +218,13 @@ const translations: TranslationsType = {
       "Leveraged deep learning architectures to create a lightweight, efficient system capable of real-time analysis with minimal computational overhead, focusing on optimizing both accuracy and performance.",
     "projects.project2.results":
       "The system processed user behavior in real-time with a latency of less than 200ms, while maintaining 95% detection accuracy and reducing computational requirements by 60% compared to previous solutions.",
-    "projects.project3.title": "Continuous Authentication with Behavioral Biometrics",
+    "projects.project3.title":
+      "Continuous Authentication with Behavioral Biometrics",
     "projects.project3.period": "May 2024 - Nov 2024",
     "projects.project3.description":
       "Conducted a literature review on the use of behavioral biometrics, specifically mouse dynamics and keystroke analysis, for continuous user authentication.",
-    "projects.project3.achievement1": "Researched current methods, challenges, and potential improvements in the field",
+    "projects.project3.achievement1":
+      "Researched current methods, challenges, and potential improvements in the field",
     "projects.project3.achievement2":
       "Identified key research gaps and proposed a novel authentication method using real-time behavioral biometric information security (RBBIS)",
     "projects.project3.achievement3":
@@ -228,7 +242,8 @@ const translations: TranslationsType = {
     "services.web.desc":
       "Custom web applications built with React and Next.js, focusing on performance and user experience.",
     "services.backend": "Backend Development",
-    "services.backend.desc": "Robust and scalable server-side solutions using Node.js, Express, and Fastify.",
+    "services.backend.desc":
+      "Robust and scalable server-side solutions using Node.js, Express, and Fastify.",
     "services.api": "API Development",
     "services.api.desc":
       "RESTful and GraphQL API design and implementation for seamless data flow between client and server.",
@@ -238,25 +253,37 @@ const translations: TranslationsType = {
 
     // Education
     "education.title": "Education & Certifications",
-    "education.master": "Master of Information Technology (Business Informatics)",
+    "education.master":
+      "Master of Information Technology (Business Informatics)",
     "education.master.institution": "James Cook University Singapore",
     "education.master.period": "Mar 2024 – Apr 2025",
-    "education.master.achievement1": "Specializing in data analytics and business intelligence",
-    "education.master.achievement2": "Conducting research in behavioral biometrics and fraud detection",
-    "education.master.achievement3": "Developing advanced machine learning models for security applications",
+    "education.master.achievement1":
+      "Specializing in data analytics and business intelligence",
+    "education.master.achievement2":
+      "Conducting research in behavioral biometrics and fraud detection",
+    "education.master.achievement3":
+      "Developing advanced machine learning models for security applications",
     "education.bachelor": "Bachelor of Information Technology",
     "education.bachelor.institution": "James Cook University Singapore",
     "education.bachelor.period": "Nov 2022 – Feb 2024",
-    "education.bachelor.achievement1": "Focused on software development and system design",
-    "education.bachelor.achievement2": "Completed projects in user interface design and application development",
-    "education.bachelor.achievement3": "Gained expertise in multiple programming languages and frameworks",
-    "education.bachelor.achievement4": "Conferred on March 7, 2024 with a GPA of 5.27",
-    "education.diploma": "Higher National Diploma of Software Engineering (Level 5)",
+    "education.bachelor.achievement1":
+      "Focused on software development and system design",
+    "education.bachelor.achievement2":
+      "Completed projects in user interface design and application development",
+    "education.bachelor.achievement3":
+      "Gained expertise in multiple programming languages and frameworks",
+    "education.bachelor.achievement4":
+      "Conferred on March 7, 2024 with a GPA of 5.27",
+    "education.diploma":
+      "Higher National Diploma of Software Engineering (Level 5)",
     "education.diploma.institution": "INET IT ACADEMY",
     "education.diploma.period": "Mar 2018 – Oct 2022",
-    "education.diploma.achievement1": "Developed foundational knowledge in software engineering principles",
-    "education.diploma.achievement2": "Completed practical projects in application development",
-    "education.diploma.achievement3": "Learned system analysis and design methodologies",
+    "education.diploma.achievement1":
+      "Developed foundational knowledge in software engineering principles",
+    "education.diploma.achievement2":
+      "Completed practical projects in application development",
+    "education.diploma.achievement3":
+      "Learned system analysis and design methodologies",
     "education.achievements": "Key Achievements",
     "education.certifications": "Certifications & Testamurs",
     "education.verification": "Verification Details",
@@ -265,7 +292,8 @@ const translations: TranslationsType = {
     "education.cert1.date": "March 7, 2024",
     "education.cert1.description":
       "Official testamur for the Bachelor of Information Technology degree, conferred on March 7, 2024. The degree provides a comprehensive foundation in information technology concepts, programming, database design, and system development.",
-    "education.cert1.verificationMessage": "Verification details are not available for this testamur.",
+    "education.cert1.verificationMessage":
+      "Verification details are not available for this testamur.",
     "education.cert2.title": "The Fundamentals of Digital Marketing",
     "education.cert2.issuer": "Google Digital Garage",
     "education.cert2.date": "April 3, 2023",
@@ -276,7 +304,8 @@ const translations: TranslationsType = {
     "education.cert3.date": "2023",
     "education.cert3.description":
       "Professional certification covering data analysis, visualization, and interpretation using Google's analytics tools.",
-    "education.verifyAuthenticity": "Verify the authenticity of this certificate at:",
+    "education.verifyAuthenticity":
+      "Verify the authenticity of this certificate at:",
     "education.certificateId": "Certificate ID:",
     "education.verificationInfo": "Verification Information",
     "education.verifyButton": "Verify Certificate",
@@ -296,7 +325,8 @@ const translations: TranslationsType = {
     "contact.form.message": "Message",
     "contact.form.send": "Send Message",
     "contact.form.sending": "Sending...",
-    "contact.form.success": "Thank you! Your message has been sent successfully. I'll get back to you soon.",
+    "contact.form.success":
+      "Thank you! Your message has been sent successfully. I'll get back to you soon.",
     "contact.form.error": "Failed to submit form. Please try again.",
     "contact.form.nameRequired": "Name must be at least 2 characters",
     "contact.form.emailRequired": "Please enter a valid email address",
@@ -339,7 +369,8 @@ const translations: TranslationsType = {
 
     // Terminal
     "terminal.title": "KSL DevConsole",
-    "terminal.welcome": "Welcome to Kaung Sithu Linn's portfolio. Type 'help' to see available commands.",
+    "terminal.welcome":
+      "Welcome to Kaung Sithu Linn's portfolio. Type 'help' to see available commands.",
     "terminal.help": "Available commands",
     "terminal.about": "About",
     "terminal.skills": "Skills",
@@ -356,14 +387,16 @@ const translations: TranslationsType = {
     "fileExplorer.projects": "Projects",
     "fileExplorer.resume": "Resume",
     "fileExplorer.certificates": "Certificates",
-    "fileExplorer.mainPython": "Main Python script for the fraud detection system",
+    "fileExplorer.mainPython":
+      "Main Python script for the fraud detection system",
     "fileExplorer.model": "Trained machine learning model",
     "fileExplorer.readme": "Project documentation",
     "fileExplorer.authSystem": "Authentication system implementation",
     "fileExplorer.researchPaper": "Research paper on behavioral biometrics",
     "fileExplorer.currentResume": "Current professional resume",
     "fileExplorer.profilePhoto": "Professional headshot",
-    "fileExplorer.bachelorCert": "Bachelor of Information Technology degree certificate",
+    "fileExplorer.bachelorCert":
+      "Bachelor of Information Technology degree certificate",
     "fileExplorer.googleCert": "Google Digital Marketing certification",
 
     // Accessibility
@@ -421,6 +454,7 @@ const translations: TranslationsType = {
     "nav.testimonials": "推荐",
     "nav.education": "教育",
     "nav.contact": "联系",
+    "nav.blog": "博客",
     "nav.scrollTo": "滚动到{section}",
 
     // Hero
@@ -480,7 +514,8 @@ const translations: TranslationsType = {
     "skills.backend.desc": "创建注重性能和可靠性的强大服务器端应用程序。",
     "skills.database": "数据库管理",
     "skills.database.tech": "SQL, 数据管理",
-    "skills.database.desc": "设计和实现高效的数据库架构和查询，实现最佳数据管理。",
+    "skills.database.desc":
+      "设计和实现高效的数据库架构和查询，实现最佳数据管理。",
     "skills.uiux": "UI/UX设计",
     "skills.uiux.tech": "用户界面设计",
     "skills.uiux.desc": "打造注重可用性和可访问性的直观用户界面。",
@@ -498,10 +533,12 @@ const translations: TranslationsType = {
     "skills.communication.desc": "向技术和非技术受众清晰传达复杂的技术概念。",
     "skills.optimization": "系统优化",
     "skills.optimization.tech": "性能调优, 网络解决方案",
-    "skills.optimization.desc": "提升系统性能并解决复杂技术问题，实现最佳运行。",
+    "skills.optimization.desc":
+      "提升系统性能并解决复杂技术问题，实现最佳运行。",
     "skills.research": "研究能力",
     "skills.research.tech": "学术研究, 文献综述",
-    "skills.research.desc": "进行深入研究，识别差距并在技术领域提出创新解决方案。",
+    "skills.research.desc":
+      "进行深入研究，识别差距并在技术领域提出创新解决方案。",
 
     // Experience
     "experience.title": "专业经验",
@@ -509,12 +546,16 @@ const translations: TranslationsType = {
     "experience.location": "缅甸曼德勒",
     "experience.period": "2018年12月至今",
     "experience.role": "软件开发人员和客户测试员",
-    "experience.responsibilities.1": "使用Microsoft .NET设计和开发POS系统，简化库存管理，提高运营效率",
+    "experience.responsibilities.1":
+      "使用Microsoft .NET设计和开发POS系统，简化库存管理，提高运营效率",
     "experience.responsibilities.2":
       "将过时的Microsoft Access（Office 2003）POS系统升级为现代SQL独立应用程序，提升性能",
-    "experience.responsibilities.3": "通过实施自定义隧道解决方案解决VPN网络的LAN干扰问题，确保连接稳定",
-    "experience.responsibilities.4": "提供优化的POS系统，将商店效率提高50%以上，减少交易时间并改进库存跟踪",
-    "experience.responsibilities.5": "进行全面测试和客户培训，确保新系统的无缝采用",
+    "experience.responsibilities.3":
+      "通过实施自定义隧道解决方案解决VPN网络的LAN干扰问题，确保连接稳定",
+    "experience.responsibilities.4":
+      "提供优化的POS系统，将商店效率提高50%以上，减少交易时间并改进库存跟踪",
+    "experience.responsibilities.5":
+      "进行全面测试和客户培训，确保新系统的无缝采用",
     "experience.decorativeImageAlt": "装饰背景",
     "experience.keyAchievements": "主要成就",
 
@@ -530,34 +571,47 @@ const translations: TranslationsType = {
     "projects.achievements": "主要成就",
     "projects.project1.title": "在线评估欺诈检测的鼠标动态分析",
     "projects.project1.period": "2024年5月 - 2024年11月",
-    "projects.project1.description": "开发了一个机器学习模型，使用鼠标动态作为行为生物识别来检测在线评估中的欺诈行为。",
-    "projects.project1.achievement1": "分析鼠标移动和点击模式，创建用户配置文件并识别表明欺诈的异常",
-    "projects.project1.achievement2": "实施特征选择技术并评估多个机器学习模型，在欺诈检测中实现高准确度",
-    "projects.project1.achievement3": "识别对用户认证最具辨别力的关键鼠标动态特征",
-    "projects.project1.challenge": "教育机构面临在线评估作弊事件增加的问题，传统监考方法无法检测复杂的欺诈技术。",
+    "projects.project1.description":
+      "开发了一个机器学习模型，使用鼠标动态作为行为生物识别来检测在线评估中的欺诈行为。",
+    "projects.project1.achievement1":
+      "分析鼠标移动和点击模式，创建用户配置文件并识别表明欺诈的异常",
+    "projects.project1.achievement2":
+      "实施特征选择技术并评估多个机器学习模型，在欺诈检测中实现高准确度",
+    "projects.project1.achievement3":
+      "识别对用户认证最具辨别力的关键鼠标动态特征",
+    "projects.project1.challenge":
+      "教育机构面临在线评估作弊事件增加的问题，传统监考方法无法检测复杂的欺诈技术。",
     "projects.project1.approach":
       "开发了一种非侵入式行为生物识别系统，分析鼠标移动模式以识别异常行为，无需损害用户隐私或额外硬件。",
     "projects.project1.results":
       "该系统在检测欺诈行为方面达到92%的准确率，误报率仅为3%，显著提高了评估完整性，同时保持了良好的用户体验。",
     "projects.project2.title": "使用深度学习的鼠标动态生物识别欺诈检测系统",
     "projects.project2.period": "2024年5月 - 2024年11月",
-    "projects.project2.description": "开发了一个使用鼠标动态和深度学习的欺诈检测系统，增强在线评估的安全性。",
-    "projects.project2.achievement1": "实施数据预处理管道，实现100%的数据可用性",
+    "projects.project2.description":
+      "开发了一个使用鼠标动态和深度学习的欺诈检测系统，增强在线评估的安全性。",
+    "projects.project2.achievement1":
+      "实施数据预处理管道，实现100%的数据可用性",
     "projects.project2.achievement2": "使用高级选择方法设计了12个优化特征集",
-    "projects.project2.achievement3": "开发并测试了多个深度学习模型（ANN、LSTM、LSTM-CNN、LSTM-Transformer）",
+    "projects.project2.achievement3":
+      "开发并测试了多个深度学习模型（ANN、LSTM、LSTM-CNN、LSTM-Transformer）",
     "projects.project2.achievement4": "构建数据可视化工具监控系统性能",
-    "projects.project2.achievement5": "超越项目目标，实现95%的检测准确率和低于5%的假阴性率",
-    "projects.project2.challenge": "现有欺诈检测系统难以进行实时分析，且计算需求高，使其难以广泛实施。",
+    "projects.project2.achievement5":
+      "超越项目目标，实现95%的检测准确率和低于5%的假阴性率",
+    "projects.project2.challenge":
+      "现有欺诈检测系统难以进行实时分析，且计算需求高，使其难以广泛实施。",
     "projects.project2.approach":
       "利用深度学习架构创建轻量级、高效的系统，能够以最小的计算开销进行实时分析，专注于优化准确性和性能。",
     "projects.project2.results":
       "该系统以不到200毫秒的延迟实时处理用户行为，同时保持95%的检测准确率，与之前的解决方案相比，计算需求减少了60%。",
     "projects.project3.title": "使用行为生物识别的持续认证",
     "projects.project3.period": "2024年5月 - 2024年11月",
-    "projects.project3.description": "对使用行为生物识别，特别是鼠标动态和击键分析进行持续用户认证的文献综述。",
+    "projects.project3.description":
+      "对使用行为生物识别，特别是鼠标动态和击键分析进行持续用户认证的文献综述。",
     "projects.project3.achievement1": "研究了该领域的当前方法、挑战和潜在改进",
-    "projects.project3.achievement2": "识别关键研究差距并提出使用实时行为生物识别信息安全（RBBIS）的新型认证方法",
-    "projects.project3.achievement3": "开发了实施和评估所提方法的研究框架和工作计划",
+    "projects.project3.achievement2":
+      "识别关键研究差距并提出使用实时行为生物识别信息安全（RBBIS）的新型认证方法",
+    "projects.project3.achievement3":
+      "开发了实施和评估所提方法的研究框架和工作计划",
     "projects.project3.challenge":
       "传统认证方法依赖一次性验证，一旦用户登录就会产生安全漏洞，而持续方法往往会在用户体验中造成摩擦。",
     "projects.project3.approach":
@@ -568,13 +622,17 @@ const translations: TranslationsType = {
     // Services
     "services.title": "我的服务",
     "services.web": "Web应用程序开发",
-    "services.web.desc": "使用React和Next.js构建的自定义Web应用程序，注重性能和用户体验。",
+    "services.web.desc":
+      "使用React和Next.js构建的自定义Web应用程序，注重性能和用户体验。",
     "services.backend": "后端开发",
-    "services.backend.desc": "使用Node.js、Express和Fastify的强大可扩展服务器端解决方案。",
+    "services.backend.desc":
+      "使用Node.js、Express和Fastify的强大可扩展服务器端解决方案。",
     "services.api": "API开发",
-    "services.api.desc": "RESTful和GraphQL API设计和实现，实现客户端和服务器之间的无缝数据流。",
+    "services.api.desc":
+      "RESTful和GraphQL API设计和实现，实现客户端和服务器之间的无缝数据流。",
     "services.responsive": "响应式设计",
-    "services.responsive.desc": "移动优先的响应式Web设计，在所有设备和屏幕尺寸上完美运行。",
+    "services.responsive.desc":
+      "移动优先的响应式Web设计，在所有设备和屏幕尺寸上完美运行。",
 
     // Education
     "education.title": "教育与认证",
@@ -609,11 +667,13 @@ const translations: TranslationsType = {
     "education.cert2.title": "数字营销基础",
     "education.cert2.issuer": "Google数字车库",
     "education.cert2.date": "2023年4月3日",
-    "education.cert2.description": "全面的认证，涵盖数字营销基础，包括搜索引擎优化、社交媒体营销和分析。",
+    "education.cert2.description":
+      "全面的认证，涵盖数字营销基础，包括搜索引擎优化、社交媒体营销和分析。",
     "education.cert3.title": "Google数据分析",
     "education.cert3.issuer": "Google",
     "education.cert3.date": "2023年",
-    "education.cert3.description": "专业认证，涵盖使用Google分析工具进行数据分析、可视化和解释。",
+    "education.cert3.description":
+      "专业认证，涵盖使用Google分析工具进行数据分析、可视化和解释。",
     "education.verifyAuthenticity": "在以下位置验证此证书的真实性：",
     "education.certificateId": "证书ID：",
     "education.verificationInfo": "验证信息",
@@ -626,7 +686,8 @@ const translations: TranslationsType = {
     "contact.phone": "电话",
     "contact.address": "地址",
     "contact.connect": "与我联系",
-    "contact.connect.desc": "我随时欢迎讨论新项目、创意想法或成为您愿景一部分的机会。",
+    "contact.connect.desc":
+      "我随时欢迎讨论新项目、创意想法或成为您愿景一部分的机会。",
     "contact.form.name": "姓名",
     "contact.form.email": "电子邮件",
     "contact.form.subject": "主题",
@@ -676,7 +737,8 @@ const translations: TranslationsType = {
 
     // Terminal
     "terminal.title": "KSL 开发控制台",
-    "terminal.welcome": "欢迎来到 Kaung Sithu Linn 的作品集。输入 'help' 查看可用命令。",
+    "terminal.welcome":
+      "欢迎来到 Kaung Sithu Linn 的作品集。输入 'help' 查看可用命令。",
     "terminal.help": "可用命令",
     "terminal.about": "关于",
     "terminal.skills": "技能",
@@ -758,6 +820,7 @@ const translations: TranslationsType = {
     "nav.testimonials": "Testimoni",
     "nav.education": "Pendidikan",
     "nav.contact": "Hubungi",
+    "nav.blog": "Blog",
     "nav.scrollTo": "Skrol ke {section}",
 
     // Hero
@@ -787,13 +850,15 @@ const translations: TranslationsType = {
       "Saya percaya dalam mencipta teknologi yang bukan sahaja menyelesaikan masalah tetapi meningkatkan pengalaman manusia. Matlamat saya adalah untuk membina penyelesaian yang selamat, cekap, dan mesra pengguna yang membuat perbezaan sebenar.",
     "about.decorativeImageAlt": "Latar belakang hiasan",
     "about.skills.frontend.title": "Frontend",
-    "about.skills.frontend.description": "JavaScript, HTML5, CSS, Reka Bentuk UI",
+    "about.skills.frontend.description":
+      "JavaScript, HTML5, CSS, Reka Bentuk UI",
     "about.skills.backend.title": "Backend",
     "about.skills.backend.description": "Python, Java, C++, .NET",
     "about.skills.database.title": "Pangkalan Data",
     "about.skills.database.description": "SQL, Pengurusan Data",
     "about.skills.ai.title": "AI/ML",
-    "about.skills.ai.description": "Biometrik Tingkah Laku, Pembelajaran Mendalam",
+    "about.skills.ai.description":
+      "Biometrik Tingkah Laku, Pembelajaran Mendalam",
     "about.skills.marketing.title": "Pemasaran Digital",
     "about.skills.marketing.description": "SEO, Analitik, Strategi Kandungan",
     "about.skills.languages.title": "Bahasa",
@@ -811,10 +876,12 @@ const translations: TranslationsType = {
     "skills.title": "Kemahiran & Kepakaran",
     "skills.frontend": "Pembangunan Frontend",
     "skills.frontend.tech": "JavaScript, HTML5, CSS",
-    "skills.frontend.desc": "Membina antara muka pengguna yang responsif dan interaktif dengan teknologi web moden.",
+    "skills.frontend.desc":
+      "Membina antara muka pengguna yang responsif dan interaktif dengan teknologi web moden.",
     "skills.backend": "Pembangunan Backend",
     "skills.backend.tech": "Python, Java, C++, .NET",
-    "skills.backend.desc": "Mencipta aplikasi pelayan yang teguh dengan fokus pada prestasi dan kebolehpercayaan.",
+    "skills.backend.desc":
+      "Mencipta aplikasi pelayan yang teguh dengan fokus pada prestasi dan kebolehpercayaan.",
     "skills.database": "Pengurusan Pangkalan Data",
     "skills.database.tech": "SQL, Pengurusan Data",
     "skills.database.desc":
@@ -833,7 +900,8 @@ const translations: TranslationsType = {
       "Menulis kod yang cekap dalam pelbagai bahasa pengaturcaraan untuk aplikasi yang pelbagai.",
     "skills.multilingual": "Berbilang Bahasa",
     "skills.multilingual.tech": "Bahasa Inggeris, Burma, Cina, Jepun",
-    "skills.multilingual.desc": "Berkomunikasi secara berkesan dalam pelbagai bahasa untuk kerjasama antarabangsa.",
+    "skills.multilingual.desc":
+      "Berkomunikasi secara berkesan dalam pelbagai bahasa untuk kerjasama antarabangsa.",
     "skills.communication": "Komunikasi",
     "skills.communication.tech": "Penulisan Teknikal, Pengucapan Awam",
     "skills.communication.desc":
@@ -876,7 +944,8 @@ const translations: TranslationsType = {
     "projects.results": "Keputusan",
     "projects.technologies": "Teknologi Digunakan",
     "projects.achievements": "Pencapaian Utama",
-    "projects.project1.title": "Dinamik Tetikus untuk Pengesanan Penipuan Penilaian Dalam Talian",
+    "projects.project1.title":
+      "Dinamik Tetikus untuk Pengesanan Penipuan Penilaian Dalam Talian",
     "projects.project1.period": "Mei 2024 - Nov 2024",
     "projects.project1.description":
       "Membangunkan model pembelajaran mesin untuk mengesan tingkah laku penipuan semasa penilaian dalam talian menggunakan dinamik tetikus sebagai biometrik tingkah laku.",
@@ -892,15 +961,19 @@ const translations: TranslationsType = {
       "Membangunkan sistem biometrik tingkah laku yang tidak mengganggu yang menganalisis corak pergerakan tetikus untuk mengenal pasti tingkah laku anomali tanpa menjejaskan privasi pengguna atau memerlukan perkakasan tambahan.",
     "projects.project1.results":
       "Sistem ini mencapai ketepatan 92% dalam mengesan tingkah laku penipuan dengan kadar positif palsu hanya 3%, meningkatkan integriti penilaian dengan ketara sambil mengekalkan pengalaman pengguna yang positif.",
-    "projects.project2.title": "Sistem Pengesanan Penipuan Biometrik Dinamik Tetikus menggunakan Pembelajaran Mendalam",
+    "projects.project2.title":
+      "Sistem Pengesanan Penipuan Biometrik Dinamik Tetikus menggunakan Pembelajaran Mendalam",
     "projects.project2.period": "Mei 2024 - Nov 2024",
     "projects.project2.description":
       "Membangunkan sistem pengesanan penipuan menggunakan dinamik tetikus dan pembelajaran mendalam untuk meningkatkan keselamatan penilaian dalam talian.",
-    "projects.project2.achievement1": "Melaksanakan saluran paip prapemprosesan data mencapai kebolehgunaan data 100%",
-    "projects.project2.achievement2": "Mereka bentuk 12 set ciri yang dioptimumkan menggunakan kaedah pemilihan lanjutan",
+    "projects.project2.achievement1":
+      "Melaksanakan saluran paip prapemprosesan data mencapai kebolehgunaan data 100%",
+    "projects.project2.achievement2":
+      "Mereka bentuk 12 set ciri yang dioptimumkan menggunakan kaedah pemilihan lanjutan",
     "projects.project2.achievement3":
       "Membangunkan dan menguji pelbagai model pembelajaran mendalam (ANN, LSTM, LSTM-CNN, LSTM-Transformer)",
-    "projects.project2.achievement4": "Membina alat visualisasi data untuk memantau prestasi sistem",
+    "projects.project2.achievement4":
+      "Membina alat visualisasi data untuk memantau prestasi sistem",
     "projects.project2.achievement5":
       "Melebihi matlamat projek, mencapai ketepatan pengesanan 95% dan kadar negatif palsu di bawah 5%",
     "projects.project2.challenge":
@@ -909,11 +982,13 @@ const translations: TranslationsType = {
       "Memanfaatkan seni bina pembelajaran mendalam untuk mencipta sistem ringan dan cekap yang mampu melakukan analisis masa nyata dengan kos pengiraan yang minimum, memberi tumpuan kepada mengoptimumkan kedua-dua ketepatan dan prestasi.",
     "projects.project2.results":
       "Sistem ini memproses tingkah laku pengguna dalam masa nyata dengan kependaman kurang daripada 200ms, sambil mengekalkan ketepatan pengesanan 95% dan mengurangkan keperluan pengiraan sebanyak 60% berbanding penyelesaian sebelumnya.",
-    "projects.project3.title": "Pengesahan Berterusan dengan Biometrik Tingkah Laku",
+    "projects.project3.title":
+      "Pengesahan Berterusan dengan Biometrik Tingkah Laku",
     "projects.project3.period": "Mei 2024 - Nov 2024",
     "projects.project3.description":
       "Menjalankan kajian literatur mengenai penggunaan biometrik tingkah laku, khususnya dinamik tetikus dan analisis keystroke, untuk pengesahan pengguna berterusan.",
-    "projects.project3.achievement1": "Menyelidik kaedah semasa, cabaran dan penambahbaikan yang berpotensi dalam bidang ini",
+    "projects.project3.achievement1":
+      "Menyelidik kaedah semasa, cabaran dan penambahbaikan yang berpotensi dalam bidang ini",
     "projects.project3.achievement2":
       "Mengenal pasti jurang penyelidikan utama dan mencadangkan kaedah pengesahan novel menggunakan keselamatan maklumat biometrik tingkah laku masa nyata (RBBIS)",
     "projects.project3.achievement3":
@@ -931,7 +1006,8 @@ const translations: TranslationsType = {
     "services.web.desc":
       "Aplikasi web tersuai yang dibina dengan React dan Next.js, memberi tumpuan kepada prestasi dan pengalaman pengguna.",
     "services.backend": "Pembangunan Backend",
-    "services.backend.desc": "Penyelesaian pelayan yang teguh dan boleh diskalakan menggunakan Node.js, Express dan Fastify.",
+    "services.backend.desc":
+      "Penyelesaian pelayan yang teguh dan boleh diskalakan menggunakan Node.js, Express dan Fastify.",
     "services.api": "Pembangunan API",
     "services.api.desc":
       "Reka bentuk dan pelaksanaan API RESTful dan GraphQL untuk aliran data yang lancar antara pelanggan dan pelayan.",
@@ -944,22 +1020,33 @@ const translations: TranslationsType = {
     "education.master": "Sarjana Teknologi Maklumat (Informatik Perniagaan)",
     "education.master.institution": "James Cook University Singapore",
     "education.master.period": "Mac 2024 – Apr 2025",
-    "education.master.achievement1": "Kepakaran dalam analisis data dan kecerdasan perniagaan",
-    "education.master.achievement2": "Menjalankan penyelidikan dalam biometrik tingkah laku dan pengesanan penipuan",
-    "education.master.achievement3": "Membangunkan model pembelajaran mesin lanjutan untuk aplikasi keselamatan",
+    "education.master.achievement1":
+      "Kepakaran dalam analisis data dan kecerdasan perniagaan",
+    "education.master.achievement2":
+      "Menjalankan penyelidikan dalam biometrik tingkah laku dan pengesanan penipuan",
+    "education.master.achievement3":
+      "Membangunkan model pembelajaran mesin lanjutan untuk aplikasi keselamatan",
     "education.bachelor": "Sarjana Muda Teknologi Maklumat",
     "education.bachelor.institution": "James Cook University Singapore",
     "education.bachelor.period": "Nov 2022 – Feb 2024",
-    "education.bachelor.achievement1": "Fokus pada pembangunan perisian dan reka bentuk sistem",
-    "education.bachelor.achievement2": "Menyiapkan projek dalam reka bentuk antara muka pengguna dan pembangunan aplikasi",
-    "education.bachelor.achievement3": "Memperoleh kepakaran dalam pelbagai bahasa dan rangka kerja pengaturcaraan",
-    "education.bachelor.achievement4": "Dianugerahkan pada 7 Mac 2024 dengan GPA 5.27",
-    "education.diploma": "Diploma Kebangsaan Tinggi Kejuruteraan Perisian (Tahap 5)",
+    "education.bachelor.achievement1":
+      "Fokus pada pembangunan perisian dan reka bentuk sistem",
+    "education.bachelor.achievement2":
+      "Menyiapkan projek dalam reka bentuk antara muka pengguna dan pembangunan aplikasi",
+    "education.bachelor.achievement3":
+      "Memperoleh kepakaran dalam pelbagai bahasa dan rangka kerja pengaturcaraan",
+    "education.bachelor.achievement4":
+      "Dianugerahkan pada 7 Mac 2024 dengan GPA 5.27",
+    "education.diploma":
+      "Diploma Kebangsaan Tinggi Kejuruteraan Perisian (Tahap 5)",
     "education.diploma.institution": "INET IT ACADEMY",
     "education.diploma.period": "Mac 2018 – Okt 2022",
-    "education.diploma.achievement1": "Membangunkan pengetahuan asas dalam prinsip kejuruteraan perisian",
-    "education.diploma.achievement2": "Menyiapkan projek praktikal dalam pembangunan aplikasi",
-    "education.diploma.achievement3": "Mempelajari metodologi analisis dan reka bentuk sistem",
+    "education.diploma.achievement1":
+      "Membangunkan pengetahuan asas dalam prinsip kejuruteraan perisian",
+    "education.diploma.achievement2":
+      "Menyiapkan projek praktikal dalam pembangunan aplikasi",
+    "education.diploma.achievement3":
+      "Mempelajari metodologi analisis dan reka bentuk sistem",
     "education.achievements": "Pencapaian Utama",
     "education.certifications": "Sijil & Testamur",
     "education.verification": "Butiran Pengesahan",
@@ -968,7 +1055,8 @@ const translations: TranslationsType = {
     "education.cert1.date": "7 Mac 2024",
     "education.cert1.description":
       "Testamur rasmi untuk ijazah Sarjana Muda Teknologi Maklumat, dianugerahkan pada 7 Mac 2024. Ijazah ini menyediakan asas yang komprehensif dalam konsep teknologi maklumat, pengaturcaraan, reka bentuk pangkalan data dan pembangunan sistem.",
-    "education.cert1.verificationMessage": "Butiran pengesahan tidak tersedia untuk testamur ini.",
+    "education.cert1.verificationMessage":
+      "Butiran pengesahan tidak tersedia untuk testamur ini.",
     "education.cert2.title": "Asas Pemasaran Digital",
     "education.cert2.issuer": "Google Digital Garage",
     "education.cert2.date": "3 April 2023",
@@ -999,7 +1087,8 @@ const translations: TranslationsType = {
     "contact.form.message": "Mesej",
     "contact.form.send": "Hantar Mesej",
     "contact.form.sending": "Menghantar...",
-    "contact.form.success": "Terima kasih! Mesej anda telah berjaya dihantar. Saya akan menghubungi anda tidak lama lagi.",
+    "contact.form.success":
+      "Terima kasih! Mesej anda telah berjaya dihantar. Saya akan menghubungi anda tidak lama lagi.",
     "contact.form.error": "Gagal menghantar borang. Sila cuba lagi.",
     "contact.form.nameRequired": "Nama mesti sekurang-kurangnya 2 aksara",
     "contact.form.emailRequired": "Sila masukkan alamat e-mel yang sah",
@@ -1042,7 +1131,8 @@ const translations: TranslationsType = {
 
     // Terminal
     "terminal.title": "Konsol Pembangun KSL",
-    "terminal.welcome": "Selamat datang ke portfolio Kaung Sithu Linn. Taip 'help' untuk melihat arahan yang tersedia.",
+    "terminal.welcome":
+      "Selamat datang ke portfolio Kaung Sithu Linn. Taip 'help' untuk melihat arahan yang tersedia.",
     "terminal.help": "Arahan tersedia",
     "terminal.about": "Tentang",
     "terminal.skills": "Kemahiran",
@@ -1059,11 +1149,13 @@ const translations: TranslationsType = {
     "fileExplorer.projects": "Projek",
     "fileExplorer.resume": "Resume",
     "fileExplorer.certificates": "Sijil",
-    "fileExplorer.mainPython": "Skrip Python utama untuk sistem pengesanan penipuan",
+    "fileExplorer.mainPython":
+      "Skrip Python utama untuk sistem pengesanan penipuan",
     "fileExplorer.model": "Model pembelajaran mesin terlatih",
     "fileExplorer.readme": "Dokumentasi projek",
     "fileExplorer.authSystem": "Pelaksanaan sistem pengesahan",
-    "fileExplorer.researchPaper": "Kertas penyelidikan mengenai biometrik tingkah laku",
+    "fileExplorer.researchPaper":
+      "Kertas penyelidikan mengenai biometrik tingkah laku",
     "fileExplorer.currentResume": "Resume profesional semasa",
     "fileExplorer.profilePhoto": "Gambar profil profesional",
     "fileExplorer.bachelorCert": "Sijil ijazah Sarjana Muda Teknologi Maklumat",
@@ -1073,7 +1165,8 @@ const translations: TranslationsType = {
     "a11y.keyboardNav.arrowKeys": "Gunakan kekunci anak panah untuk menavigasi",
     "a11y.keyboardNav.enterSelect": "Tekan Enter untuk memilih",
     "a11y.keyboardNav.escClose": "Tekan Escape untuk menutup",
-    "a11y.keyboardNav.tabKey": "Tekan Tab untuk bergerak antara elemen interaktif",
+    "a11y.keyboardNav.tabKey":
+      "Tekan Tab untuk bergerak antara elemen interaktif",
   },
   ta: {
     // Common
@@ -1098,6 +1191,7 @@ const translations: TranslationsType = {
     "nav.testimonials": "சான்றுகள்",
     "nav.education": "கல்வி",
     "nav.contact": "தொடர்பு",
+    "nav.blog": "வலைப்பதிவு",
 
     // System Monitor
     "systemMonitor.title": "கணினி கண்காணிப்பு",
@@ -1138,6 +1232,7 @@ const translations: TranslationsType = {
     "nav.testimonials": "آراء العملاء",
     "nav.education": "التعليم",
     "nav.contact": "اتصل",
+    "nav.blog": "المدونة",
 
     // System Monitor
     "systemMonitor.title": "مراقب النظام",
@@ -1155,6 +1250,6 @@ const translations: TranslationsType = {
     "form.errors.email": "الرجاء إدخال عنوان بريد إلكتروني صحيح",
     "form.errors.general": "حدث خطأ ما. الرجاء المحاولة مرة أخرى.",
   },
-}
+};
 
-export default translations
+export default translations;

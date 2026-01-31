@@ -1,0 +1,8 @@
+runtimes:
+    - python@3.11.11
+    - go@1.22.3
+tools:
+    - lizard@1.17.31
+    - pylint@3.3.6
+    - revive@1.7.0
+    - semgrep@1.78.0

@@ -1,95 +1,57 @@
-import { Metadata } from "next"
-import { ThemeProvider } from "@/components/theme-provider"
-import { LanguageProvider } from "@/context/language-provider"
-import { RTLProvider } from "@/context/rtl-provider"
-import { Inter, Noto_Sans_SC, Noto_Sans_Arabic, Noto_Sans_Tamil } from "next/font/google"
-import { type Language } from "@/context/language-utils"
-import { i18n } from "@/config/language.config"
-import { isRTL } from "@/lib/rtl-utils"
-import LanguageSelector from "@/components/LanguageSelector"
-import DevInterface from "../components/terminal/DevInterface"
-import "../globals.css"
-
-// Load fonts with proper subsets and weights
-const inter = Inter({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-inter",
-})
-
-const notoSansArabic = Noto_Sans_Arabic({
-  subsets: ["arabic"],
-  display: "swap",
-  variable: "--font-noto-arabic",
-  preload: true,
-  adjustFontFallback: true,
-})
-
-const notoSansSC = Noto_Sans_SC({
-  subsets: ["latin"],
-  weight: ["400", "500", "700"],
-  display: "swap",
-  variable: "--font-noto-sc",
-  preload: true,
-})
-
-const notoSansTamil = Noto_Sans_Tamil({
-  subsets: ["tamil"],
-  weight: ["400", "500", "700"],
-  display: "swap",
-  variable: "--font-noto-tamil",
-  preload: true,
-  adjustFontFallback: true,
-})
+import { Metadata } from "next";
+import { LanguageProvider } from "@/context/language-provider";
+import { RTLProvider } from "@/context/rtl-provider";
+import { type Language } from "@/context/language-utils";
+import { i18n } from "@/config/language.config";
+import { isRTL } from "@/lib/rtl-utils";
+import LanguageSelector from "@/components/LanguageSelector";
+import DevInterface from "../components/terminal/DevInterface";
+import HtmlAttributeManager from "@/components/HtmlAttributeManager";
+import "../globals.css";
 
 // Generate metadata for each locale
-export async function generateMetadata({ params: { locale } }: { params: { locale: Language } }): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: Language }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
   return {
-    title: `Kaung Sithu Linn - ${locale === 'en' ? 'Software Developer Portfolio' : 'Portfolio'}`,
-    description: "Personal portfolio website of Kaung Sithu Linn, a software developer specializing in full-stack development, fraud detection, and behavioral biometrics.",
-  }
+    title: `Kaung Sithu Linn - ${locale === "en" ? "Software Developer Portfolio" : "Portfolio"}`,
+    description:
+      "Personal portfolio website of Kaung Sithu Linn, a software developer specializing in full-stack development, fraud detection, and behavioral biometrics.",
+  };
 }
 
 // Generate static params for all supported locales
 export function generateStaticParams() {
-  return i18n.locales.map((locale) => ({ locale }))
+  return i18n.locales.map((locale) => ({ locale }));
 }
 
-export default function LocaleLayout({
+export default async function LocaleLayout({
   children,
-  params: { locale },
+  params,
 }: {
-  children: React.ReactNode
-  params: { locale: Language }
+  children: React.ReactNode;
+  params: Promise<{ locale: string }>;
 }) {
+  const { locale } = (await params) as { locale: Language };
   // Pre-calculate RTL state for initial render using server-compatible function
-  const defaultRTL = isRTL(locale)
+  const defaultRTL = isRTL(locale);
 
+  // The <html> and <body> tags are already provided by the root layout (app/layout.tsx)
+  // This component should only return the content that goes INSIDE the body
   return (
-    <html
-      lang={locale}
-      dir={defaultRTL ? "rtl" : "ltr"}
-      suppressHydrationWarning
-      className={`${inter.variable} ${notoSansArabic.variable} ${notoSansSC.variable} ${notoSansTamil.variable}`}
-    >
-      <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="dir" content={defaultRTL ? "rtl" : "ltr"} />
-        <link rel="icon" href="/placeholder-logo.svg" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-      </head>
-      <body>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
-          <LanguageProvider initialLocale={locale}>
-            <RTLProvider defaultRTL={defaultRTL}>
-              <LanguageSelector />
-              {children}
-              <DevInterface />
-            </RTLProvider>
-          </LanguageProvider>
-        </ThemeProvider>
-      </body>
-    </html>
-  )
+    <LanguageProvider initialLocale={locale}>
+      <RTLProvider defaultRTL={defaultRTL}>
+        <HtmlAttributeManager
+          initialLocale={locale}
+          initialDirection={defaultRTL ? "rtl" : "ltr"}
+        />
+        <LanguageSelector />
+        {children}
+        <DevInterface />
+      </RTLProvider>
+    </LanguageProvider>
+  );
 }

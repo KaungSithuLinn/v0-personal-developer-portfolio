@@ -1,19 +1,27 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { motion } from "framer-motion"
-import { Folder, ChevronRight, ChevronDown, Code, FileText, ImageIcon, Database } from "lucide-react"
-import { useMounted } from "@/lib/use-mounted"
-import { useTranslation } from "@/context/language-context"
-import type { ReactNode } from "react"
+import { useState } from "react";
+import { motion } from "framer-motion";
+import {
+  Folder,
+  ChevronRight,
+  ChevronDown,
+  Code,
+  FileText,
+  ImageIcon,
+  Database,
+} from "lucide-react";
+import { useMounted } from "@/lib/use-mounted";
+import { useTranslation } from "@/context/language-context";
+import type { ReactNode } from "react";
 
 type FileItem = {
-  name: string
-  type: "file" | "folder"
-  icon?: ReactNode
-  children?: FileItem[]
-  description?: string
-}
+  name: string;
+  type: "file" | "folder";
+  icon?: ReactNode;
+  children?: FileItem[];
+  description?: string;
+};
 
 const fileSystem: FileItem[] = [
   {
@@ -105,22 +113,22 @@ const fileSystem: FileItem[] = [
       },
     ],
   },
-]
+];
 
 interface FileItemProps {
-  item: FileItem
-  level: number
+  item: FileItem;
+  level: number;
 }
 
-function FileItemComponent({ item, level }: FileItemProps): JSX.Element {
-  const [isOpen, setIsOpen] = useState<boolean>(false)
-  const [isHovered, setIsHovered] = useState<boolean>(false)
+function FileItemComponent({ item, level }: FileItemProps): React.ReactElement {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isHovered, setIsHovered] = useState<boolean>(false);
 
   const toggleOpen = (): void => {
     if (item.type === "folder") {
-      setIsOpen(!isOpen)
+      setIsOpen(!isOpen);
     }
-  }
+  };
 
   return (
     <div>
@@ -134,7 +142,9 @@ function FileItemComponent({ item, level }: FileItemProps): JSX.Element {
         onMouseLeave={() => setIsHovered(false)}
       >
         {item.type === "folder" ? (
-          <div className="mr-1">{isOpen ? <ChevronDown size={16} /> : <ChevronRight size={16} />}</div>
+          <div className="mr-1">
+            {isOpen ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+          </div>
         ) : (
           <div className="w-4 mr-1"></div>
         )}
@@ -160,14 +170,14 @@ function FileItemComponent({ item, level }: FileItemProps): JSX.Element {
         </div>
       )}
     </div>
-  )
+  );
 }
 
-export default function FileExplorer(): JSX.Element | null {
-  const mounted = useMounted()
-  const { t } = useTranslation()
+export default function FileExplorer(): React.ReactElement | null {
+  const mounted = useMounted();
+  const { t } = useTranslation();
 
-  if (!mounted) return null
+  if (!mounted) return null;
 
   return (
     <motion.div
@@ -184,5 +194,5 @@ export default function FileExplorer(): JSX.Element | null {
         ))}
       </div>
     </motion.div>
-  )
+  );
 }

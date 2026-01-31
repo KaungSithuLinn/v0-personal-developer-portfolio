@@ -1,31 +1,32 @@
-import { type Language } from "@/context/language-utils"
-import { headers } from "next/headers"
+import React from "react";
+import { type Language } from "@/context/language-utils";
+import { headers } from "next/headers";
 
 interface LanguageAlternate {
-  language: Language
-  url: string
+  language: Language;
+  url: string;
 }
 
 interface SEOMetadata {
-  title: string
-  description: string
-  canonical: string
-  alternates: LanguageAlternate[]
-  robots?: string
+  title: string;
+  description: string;
+  canonical: string;
+  alternates: LanguageAlternate[];
+  robots?: string;
   openGraph?: {
-    title?: string
-    description?: string
-    type?: string
-    url?: string
-    locale?: string
-    siteName?: string
+    title?: string;
+    description?: string;
+    type?: string;
+    url?: string;
+    locale?: string;
+    siteName?: string;
     images?: {
-      url: string
-      width?: number
-      height?: number
-      alt?: string
-    }[]
-  }
+      url: string;
+      width?: number;
+      height?: number;
+      alt?: string;
+    }[];
+  };
 }
 
 const LANGUAGE_LOCALES: Record<Language, string> = {
@@ -34,34 +35,36 @@ const LANGUAGE_LOCALES: Record<Language, string> = {
   ms: "ms_MY",
   ta: "ta_IN",
   ar: "ar_SA",
-}
+};
 
-export function generateSEOMetadata({
+export async function generateSEOMetadata({
   title,
   description,
   path,
   language,
   openGraph,
 }: {
-  title: string
-  description: string
-  path: string
-  language: Language
-  openGraph?: SEOMetadata["openGraph"]
-}): SEOMetadata {
-  const headersList = headers()
-  const host = headersList.get("host") || ""
-  const protocol = process.env.NODE_ENV === "development" ? "http" : "https"
-  const baseUrl = `${protocol}://${host}`
-  
+  title: string;
+  description: string;
+  path: string;
+  language: Language;
+  openGraph?: SEOMetadata["openGraph"];
+}): Promise<SEOMetadata> {
+  const headersList = await headers();
+  const host = headersList.get("host") || "";
+  const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
+  const baseUrl = `${protocol}://${host}`;
+
   // Generate canonical URL for current language
-  const canonical = `${baseUrl}/${language}${path}`
-  
+  const canonical = `${baseUrl}/${language}${path}`;
+
   // Generate alternates for other languages
-  const alternates: LanguageAlternate[] = Object.keys(LANGUAGE_LOCALES).map((lang) => ({
-    language: lang as Language,
-    url: `${baseUrl}/${lang}${path}`,
-  }))
+  const alternates: LanguageAlternate[] = Object.keys(LANGUAGE_LOCALES).map(
+    (lang) => ({
+      language: lang as Language,
+      url: `${baseUrl}/${lang}${path}`,
+    })
+  );
 
   return {
     title,
@@ -78,7 +81,7 @@ export function generateSEOMetadata({
       siteName: openGraph?.siteName || title,
       images: openGraph?.images || [],
     },
-  }
+  };
 }
 
 export function generateStructuredData(
@@ -90,57 +93,61 @@ export function generateStructuredData(
     "@type": "WebPage",
     inLanguage: LANGUAGE_LOCALES[language],
     ...data,
-  })
+  });
 }
 
-export function generateHrefLangTags(alternates: LanguageAlternate[]): JSX.Element[] {
-  return alternates.map(({ language, url }) => (
-    <link
-      key={language}
-      rel="alternate"
-      hrefLang={language}
-      href={url}
-    />
-  ))
+export function generateHrefLangTags(
+  alternates: LanguageAlternate[]
+): React.ReactElement[] {
+  return alternates.map(({ language, url }) =>
+    React.createElement("link", {
+      key: language,
+      rel: "alternate",
+      hrefLang: language,
+      href: url,
+    })
+  );
 }
 
-export function generateLanguageMetaTags(language: Language): JSX.Element[] {
+export function generateLanguageMetaTags(
+  language: Language
+): React.ReactElement[] {
   return [
-    <meta
-      key="content-language"
-      httpEquiv="content-language"
-      content={language}
-    />,
-    <meta
-      key="language"
-      name="language"
-      content={LANGUAGE_LOCALES[language]}
-    />,
-  ]
+    React.createElement("meta", {
+      key: "content-language",
+      httpEquiv: "content-language",
+      content: language,
+    }),
+    React.createElement("meta", {
+      key: "language",
+      name: "language",
+      content: LANGUAGE_LOCALES[language],
+    }),
+  ];
 }
 
-export function generateRTLMetaTags(isRTL: boolean): JSX.Element[] {
-  if (!isRTL) return []
-  
+export function generateRTLMetaTags(isRTL: boolean): React.ReactElement[] {
+  if (!isRTL) return [];
+
   return [
-    <meta
-      key="dir"
-      name="dir"
-      content="rtl"
-    />,
-    <link
-      key="rtl-stylesheet"
-      rel="stylesheet"
-      href="/styles/rtl.css"
-      type="text/css"
-    />,
-  ]
+    React.createElement("meta", {
+      key: "dir",
+      name: "dir",
+      content: "rtl",
+    }),
+    React.createElement("link", {
+      key: "rtl-stylesheet",
+      rel: "stylesheet",
+      href: "/styles/rtl.css",
+      type: "text/css",
+    }),
+  ];
 }
 
 interface LocalizedURLProps {
-  path: string
-  language: Language
-  query?: Record<string, string>
+  path: string;
+  language: Language;
+  query?: Record<string, string>;
 }
 
 export function generateLocalizedURL({
@@ -149,9 +156,12 @@ export function generateLocalizedURL({
   query = {},
 }: LocalizedURLProps): string {
   const queryString = Object.entries(query)
-    .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
-    .join("&")
+    .map(
+      ([key, value]) =>
+        `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
+    )
+    .join("&");
 
-  const baseUrl = `/${language}${path}`
-  return queryString ? `${baseUrl}?${queryString}` : baseUrl
+  const baseUrl = `/${language}${path}`;
+  return queryString ? `${baseUrl}?${queryString}` : baseUrl;
 }

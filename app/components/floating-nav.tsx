@@ -1,12 +1,12 @@
-"use client"
+"use client";
 
-import { useEffect, useState, useMemo } from "react"
-import { motion } from "framer-motion"
-import { useTranslation } from "@/context/language-context"
+import { useEffect, useState, useMemo } from "react";
+import { motion } from "framer-motion";
+import { useTranslation } from "@/context/language-context";
 
 export default function FloatingNav() {
-  const [activeSection, setActiveSection] = useState("hero")
-  const { t } = useTranslation()
+  const [activeSection, setActiveSection] = useState("hero");
+  const { t, isRTL } = useTranslation();
 
   const sections = useMemo(
     () => [
@@ -19,28 +19,28 @@ export default function FloatingNav() {
       { id: "education", label: t("nav.education") },
       { id: "contact", label: t("nav.contact") },
     ],
-    [t],
-  )
+    [t]
+  );
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setActiveSection(entry.target.id)
+            setActiveSection(entry.target.id);
           }
-        })
+        });
       },
-      { threshold: 0.5 },
-    )
+      { threshold: 0.5 }
+    );
 
     sections.forEach(({ id }) => {
-      const element = document.getElementById(id)
-      if (element) observer.observe(element)
-    })
+      const element = document.getElementById(id);
+      if (element) observer.observe(element);
+    });
 
-    return () => observer.disconnect()
-  }, [sections])
+    return () => observer.disconnect();
+  }, [sections]);
 
   return (
     <motion.div
@@ -53,11 +53,17 @@ export default function FloatingNav() {
         {sections.map(({ id, label }) => (
           <button
             key={id}
-            onClick={() => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" })}
+            onClick={() =>
+              document
+                .getElementById(id)
+                ?.scrollIntoView({ behavior: "smooth" })
+            }
             className="group relative flex items-center justify-center"
             aria-label={t("nav.scrollTo", { section: label })}
           >
-            <span className={`absolute ${isRTL ? "right-full" : "left-full"} hidden sm:block mr-2 px-2 py-1 rounded bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap`}>
+            <span
+              className={`absolute ${isRTL ? "right-full" : "left-full"} hidden sm:block mr-2 px-2 py-1 rounded bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap`}
+            >
               {label}
             </span>
             <div
@@ -71,5 +77,5 @@ export default function FloatingNav() {
         ))}
       </div>
     </motion.div>
-  )
+  );
 }

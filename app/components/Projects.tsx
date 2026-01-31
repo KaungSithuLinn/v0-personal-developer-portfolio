@@ -1,30 +1,43 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { ExternalLink, Brain, Shield, LineChart, ChevronDown, ChevronUp } from "lucide-react"
-import Image from "next/image"
-import AnimatedSectionHeader from "./AnimatedSectionHeader"
-import { useState } from "react"
-import { useTranslation } from "@/context/language-context"
+import { motion } from "framer-motion";
+import {
+  ExternalLink,
+  Brain,
+  Shield,
+  LineChart,
+  ChevronDown,
+  ChevronUp,
+} from "lucide-react";
+import Image from "next/image";
+import AnimatedSectionHeader from "./AnimatedSectionHeader";
+import { useState } from "react";
+import { useTranslation } from "@/context/language-context";
 
 interface ProjectProps {
-  title: string
-  period: string
-  link: string
-  icon: JSX.Element
-  description: string
-  achievements: string[]
+  title: string;
+  period: string;
+  link: string;
+  icon: React.ReactNode;
+  description: string;
+  achievements: string[];
   caseStudy?: {
-    challenge: string
-    approach: string
-    results: string
-    technologies: string[]
-  }
+    challenge: string;
+    approach: string;
+    results: string;
+    technologies: string[];
+  };
 }
 
-const Project = ({ project, index }: { project: ProjectProps; index: number }) => {
-  const [expanded, setExpanded] = useState(false)
-  const { t } = useTranslation()
+const Project = ({
+  project,
+  index,
+}: {
+  project: ProjectProps;
+  index: number;
+}) => {
+  const [expanded, setExpanded] = useState(false);
+  const { t } = useTranslation();
 
   return (
     <motion.div
@@ -37,18 +50,31 @@ const Project = ({ project, index }: { project: ProjectProps; index: number }) =
       <div className="p-8">
         <div className="flex flex-col md:flex-row gap-6">
           <div className="md:w-1/6 flex justify-center">
-            <div className="p-4 bg-indigo-50 dark:bg-indigo-900/30 rounded-full">{project.icon}</div>
+            <div className="p-4 bg-indigo-50 dark:bg-indigo-900/30 rounded-full">
+              {project.icon}
+            </div>
           </div>
           <div className="md:w-5/6">
             <div className="flex flex-col md:flex-row md:items-center justify-between mb-4">
-              <h3 className="text-2xl font-semibold dark:text-white">{project.title}</h3>
-              <p className="text-gray-600 dark:text-gray-400">{project.period}</p>
+              <h3 className="text-2xl font-semibold dark:text-white">
+                {project.title}
+              </h3>
+              <p className="text-gray-600 dark:text-gray-400">
+                {project.period}
+              </p>
             </div>
-            <p className="text-gray-700 dark:text-gray-300 mb-4">{project.description}</p>
-            <h4 className="font-semibold text-lg mb-2 dark:text-gray-200">{t("projects.achievements")}:</h4>
+            <p className="text-gray-700 dark:text-gray-300 mb-4">
+              {project.description}
+            </p>
+            <h4 className="font-semibold text-lg mb-2 dark:text-gray-200">
+              {t("projects.achievements")}:
+            </h4>
             <ul className="list-none space-y-2 mb-4">
               {project.achievements.map((achievement, idx) => (
-                <li key={idx} className="text-gray-700 dark:text-gray-300 flex items-start">
+                <li
+                  key={idx}
+                  className="text-gray-700 dark:text-gray-300 flex items-start"
+                >
                   <span className="text-blue-500 mr-2">•</span>
                   {achievement}
                 </li>
@@ -62,7 +88,8 @@ const Project = ({ project, index }: { project: ProjectProps; index: number }) =
                 rel="noopener noreferrer"
                 className="inline-flex items-center text-blue-600 dark:text-blue-400 hover:underline"
               >
-                {t("projects.viewProject")} <ExternalLink className="w-4 h-4 ml-1" />
+                {t("projects.viewProject")}{" "}
+                <ExternalLink className="w-4 h-4 ml-1" />
               </a>
 
               {project.caseStudy && (
@@ -73,7 +100,11 @@ const Project = ({ project, index }: { project: ProjectProps; index: number }) =
                   aria-controls={`case-study-${index}`}
                 >
                   {expanded ? t("projects.hideCase") : t("projects.viewCase")}
-                  {expanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                  {expanded ? (
+                    <ChevronUp className="w-4 h-4" />
+                  ) : (
+                    <ChevronDown className="w-4 h-4" />
+                  )}
                 </button>
               )}
             </div>
@@ -94,19 +125,33 @@ const Project = ({ project, index }: { project: ProjectProps; index: number }) =
             <div className="border-t border-gray-200 dark:border-gray-700 pt-6 mt-2">
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
-                  <h5 className="font-semibold text-gray-900 dark:text-white mb-2">{t("projects.challenge")}</h5>
-                  <p className="text-gray-700 dark:text-gray-300">{project.caseStudy.challenge}</p>
+                  <h5 className="font-semibold text-gray-900 dark:text-white mb-2">
+                    {t("projects.challenge")}
+                  </h5>
+                  <p className="text-gray-700 dark:text-gray-300">
+                    {project.caseStudy.challenge}
+                  </p>
                 </div>
                 <div>
-                  <h5 className="font-semibold text-gray-900 dark:text-white mb-2">{t("projects.approach")}</h5>
-                  <p className="text-gray-700 dark:text-gray-300">{project.caseStudy.approach}</p>
+                  <h5 className="font-semibold text-gray-900 dark:text-white mb-2">
+                    {t("projects.approach")}
+                  </h5>
+                  <p className="text-gray-700 dark:text-gray-300">
+                    {project.caseStudy.approach}
+                  </p>
                 </div>
                 <div>
-                  <h5 className="font-semibold text-gray-900 dark:text-white mb-2">{t("projects.results")}</h5>
-                  <p className="text-gray-700 dark:text-gray-300">{project.caseStudy.results}</p>
+                  <h5 className="font-semibold text-gray-900 dark:text-white mb-2">
+                    {t("projects.results")}
+                  </h5>
+                  <p className="text-gray-700 dark:text-gray-300">
+                    {project.caseStudy.results}
+                  </p>
                 </div>
                 <div>
-                  <h5 className="font-semibold text-gray-900 dark:text-white mb-2">{t("projects.technologies")}</h5>
+                  <h5 className="font-semibold text-gray-900 dark:text-white mb-2">
+                    {t("projects.technologies")}
+                  </h5>
                   <div className="flex flex-wrap gap-2">
                     {project.caseStudy.technologies.map((tech, idx) => (
                       <span
@@ -124,11 +169,11 @@ const Project = ({ project, index }: { project: ProjectProps; index: number }) =
         )}
       </div>
     </motion.div>
-  )
-}
+  );
+};
 
 export default function Projects() {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
   const projects = [
     {
@@ -150,11 +195,18 @@ export default function Projects() {
           "Developed a non-intrusive behavioral biometric system that analyzes mouse movement patterns to identify anomalous behavior without compromising user privacy or requiring additional hardware.",
         results:
           "The system achieved 92% accuracy in detecting fraudulent behavior with a false positive rate of only 3%, significantly improving assessment integrity while maintaining a positive user experience.",
-        technologies: ["Python", "TensorFlow", "Scikit-learn", "Data Visualization", "Statistical Analysis"],
+        technologies: [
+          "Python",
+          "TensorFlow",
+          "Scikit-learn",
+          "Data Visualization",
+          "Statistical Analysis",
+        ],
       },
     },
     {
-      title: "Mouse Dynamics Biometric Fraud Detection System using Deep Learning",
+      title:
+        "Mouse Dynamics Biometric Fraud Detection System using Deep Learning",
       period: "May 2024 - Nov 2024",
       link: "https://drive.google.com/drive/folders/1SKbM027E4zU-2a9kLFBKcUMcd9hGhhJ",
       icon: <Brain className="w-10 h-10 text-purple-500" />,
@@ -213,7 +265,7 @@ export default function Projects() {
         ],
       },
     },
-  ]
+  ];
 
   return (
     <section
@@ -229,8 +281,13 @@ export default function Projects() {
         </div>
       </div>
       <div className="absolute top-0 left-0 w-64 h-64 -mt-32 -ml-32 opacity-20">
-        <Image src="/placeholder.svg?height=256&width=256" alt="Decorative background" width={256} height={256} />
+        <Image
+          src="/placeholder.svg?height=256&width=256"
+          alt="Decorative background"
+          width={256}
+          height={256}
+        />
       </div>
     </section>
-  )
+  );
 }

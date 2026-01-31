@@ -1,20 +1,21 @@
-import MainContent from "@/components/MainContent"
-import type { Language } from "@/context/language-utils"
-import { getTextDirection } from "@/lib/rtl-utils"
+import MainContent from "@/components/MainContent";
+import type { Language } from "@/context/language-utils";
+import { getTextDirection } from "@/lib/rtl-utils";
 
 interface Props {
-  params: {
-    locale: Language
-  }
+  params: Promise<{
+    locale: Language;
+  }>;
 }
 
-export default function Home({ params: { locale } }: Props) {
+export default async function Home({ params }: Props) {
+  const { locale } = await params;
   // Use server-compatible direction detection
-  const direction = getTextDirection(locale)
-  
+  const direction = getTextDirection(locale);
+
   return (
     <div dir={direction}>
       <MainContent />
     </div>
-  )
+  );
 }

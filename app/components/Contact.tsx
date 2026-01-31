@@ -1,46 +1,44 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { motion, TargetAndTransition } from "framer-motion"
-import { Mail, Phone, MapPin } from "lucide-react"
-import AnimatedSectionHeader from "./AnimatedSectionHeader"
-import { useTranslation } from "@/context/language-utils"
-import { useI18nForm } from "@/hooks/use-i18n-form"
-import { useLanguageAnimation } from "@/hooks/use-language-animation"
-
-interface AnimationConfig {
-  direction?: 'x' | 'y'; // Ensure 'direction' is part of the type
-  initial?: TargetAndTransition;
-  animate?: TargetAndTransition;
-  transition?: object;
-}
+import { useState } from "react";
+import { motion, TargetAndTransition } from "framer-motion";
+import { Mail, Phone, MapPin } from "lucide-react";
+import AnimatedSectionHeader from "./AnimatedSectionHeader";
+import { useTranslation } from "@/context/language-utils";
+import { useI18nForm } from "@/hooks/use-i18n-form";
+import { useLanguageAnimation } from "@/hooks/use-language-animation";
 
 // Remove duplicate interface and use AnimationConfig instead
 
 export default function Contact() {
-  const { t, isRTL } = useTranslation()
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle")
-  
-  const animation = useLanguageAnimation({}) as unknown as { initial: TargetAndTransition; animate: TargetAndTransition; transition: object }
-  
-  const { handleChange, handleBlur, errors, validateField } = useI18nForm({
+  const { t, isRTL } = useTranslation();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<
+    "idle" | "success" | "error"
+  >("idle");
+
+  const animation = useLanguageAnimation({}) as unknown as {
+    initial: TargetAndTransition;
+    animate: TargetAndTransition;
+    transition: object;
+  };
+
+  const { handleChange, handleBlur, validateField } = useI18nForm({
     customFields: {
       name: { required: true, minLength: 2 },
       email: { required: true, pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/ },
       subject: { required: true, minLength: 5 },
       message: { required: true, minLength: 10 },
     },
-  } as any) // Cast to 'any' if the type cannot be modified
+  } as any); // Cast to 'any' if the type cannot be modified
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    setIsSubmitting(true)
-    setSubmitStatus("idle")
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus("idle");
 
-    const form = e.currentTarget
-    const formData = new FormData(form)
-    const data = Object.fromEntries(formData)
+    const form = e.currentTarget;
+    const formData = new FormData(form);
 
     // Validate all fields
     const validations = {
@@ -48,34 +46,36 @@ export default function Contact() {
       email: validateField("email"),
       subject: validateField("subject"),
       message: validateField("message"),
-    }
+    };
 
     // Check if there are any validation errors
-    const hasErrors = Object.values(validations).some((result) => Array.isArray(result))
+    const hasErrors = Object.values(validations).some((result) =>
+      Array.isArray(result)
+    );
     if (hasErrors) {
-      setSubmitStatus("error")
-      setIsSubmitting(false)
-      return
+      setSubmitStatus("error");
+      setIsSubmitting(false);
+      return;
     }
 
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
         body: formData,
-      })
+      });
 
       if (response.ok) {
-        setSubmitStatus("success")
-        form.reset()
+        setSubmitStatus("success");
+        form.reset();
       } else {
-        setSubmitStatus("error")
+        setSubmitStatus("error");
       }
     } catch (error) {
-      setSubmitStatus("error")
+      setSubmitStatus("error");
     }
 
-    setIsSubmitting(false)
-  }
+    setIsSubmitting(false);
+  };
 
   return (
     <section
@@ -85,7 +85,11 @@ export default function Contact() {
       <div className="container mx-auto px-6">
         <AnimatedSectionHeader title={t("contact.title")} />
 
-        <div className={`grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl mx-auto ${isRTL ? "md:flex-row-reverse" : ""}`}>
+        <div
+          className={`grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl mx-auto ${
+            isRTL ? "md:flex-row-reverse" : ""
+          }`}
+        >
           {/* Contact Information */}
           <motion.div
             className="space-y-6"
@@ -93,14 +97,22 @@ export default function Contact() {
             animate={animation.animate}
             transition={animation.transition}
           >
-            <h3 className="text-2xl font-semibold mb-4 dark:text-white">{t("contact.info")}</h3>
-            
-            <div className={`flex items-center gap-4 ${isRTL ? "flex-row-reverse" : ""}`}>
+            <h3 className="text-2xl font-semibold mb-4 dark:text-white">
+              {t("contact.info")}
+            </h3>
+
+            <div
+              className={`flex items-center gap-4 ${
+                isRTL ? "flex-row-reverse" : ""
+              }`}
+            >
               <div className="p-3 rounded-full bg-blue-500/10 text-blue-500">
                 <Mail size={24} />
               </div>
               <div>
-                <h4 className="font-medium dark:text-gray-200">{t("contact.email")}</h4>
+                <h4 className="font-medium dark:text-gray-200">
+                  {t("contact.email")}
+                </h4>
                 <a
                   href="mailto:your.email@example.com"
                   className="text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400"
@@ -110,12 +122,18 @@ export default function Contact() {
               </div>
             </div>
 
-            <div className={`flex items-center gap-4 ${isRTL ? "flex-row-reverse" : ""}`}>
+            <div
+              className={`flex items-center gap-4 ${
+                isRTL ? "flex-row-reverse" : ""
+              }`}
+            >
               <div className="p-3 rounded-full bg-green-500/10 text-green-500">
                 <Phone size={24} />
               </div>
               <div>
-                <h4 className="font-medium dark:text-gray-200">{t("contact.phone")}</h4>
+                <h4 className="font-medium dark:text-gray-200">
+                  {t("contact.phone")}
+                </h4>
                 <a
                   href="tel:+1234567890"
                   className="text-gray-600 dark:text-gray-400 hover:text-green-500 dark:hover:text-green-400"
@@ -125,19 +143,29 @@ export default function Contact() {
               </div>
             </div>
 
-            <div className={`flex items-center gap-4 ${isRTL ? "flex-row-reverse" : ""}`}>
+            <div
+              className={`flex items-center gap-4 ${
+                isRTL ? "flex-row-reverse" : ""
+              }`}
+            >
               <div className="p-3 rounded-full bg-purple-500/10 text-purple-500">
                 <MapPin size={24} />
               </div>
               <div>
-                <h4 className="font-medium dark:text-gray-200">{t("contact.address")}</h4>
+                <h4 className="font-medium dark:text-gray-200">
+                  {t("contact.address")}
+                </h4>
                 <p className="text-gray-600 dark:text-gray-400">Singapore</p>
               </div>
             </div>
 
             <div className={`mt-8 ${isRTL ? "text-right" : ""}`}>
-              <h4 className="text-xl font-semibold mb-2 dark:text-white">{t("contact.connect")}</h4>
-              <p className="text-gray-600 dark:text-gray-400">{t("contact.connect.desc")}</p>
+              <h4 className="text-xl font-semibold mb-2 dark:text-white">
+                {t("contact.connect")}
+              </h4>
+              <p className="text-gray-600 dark:text-gray-400">
+                {t("contact.connect.desc")}
+              </p>
             </div>
           </motion.div>
 
@@ -150,7 +178,10 @@ export default function Contact() {
             transition={{ ...(animation.transition || {}), delay: 0.2 }}
           >
             <div>
-              <label htmlFor="name" className="block text-sm font-medium mb-2 dark:text-white">
+              <label
+                htmlFor="name"
+                className="block text-sm font-medium mb-2 dark:text-white"
+              >
                 {t("contact.form.name")}
               </label>
               <input
@@ -165,7 +196,10 @@ export default function Contact() {
             </div>
 
             <div>
-              <label htmlFor="email" className="block text-sm font-medium mb-2 dark:text-white">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium mb-2 dark:text-white"
+              >
                 {t("contact.form.email")}
               </label>
               <input
@@ -179,7 +213,10 @@ export default function Contact() {
             </div>
 
             <div>
-              <label htmlFor="subject" className="block text-sm font-medium mb-2 dark:text-white">
+              <label
+                htmlFor="subject"
+                className="block text-sm font-medium mb-2 dark:text-white"
+              >
                 {t("contact.form.subject")}
               </label>
               <input
@@ -193,7 +230,10 @@ export default function Contact() {
             </div>
 
             <div>
-              <label htmlFor="message" className="block text-sm font-medium mb-2 dark:text-white">
+              <label
+                htmlFor="message"
+                className="block text-sm font-medium mb-2 dark:text-white"
+              >
                 {t("contact.form.message")}
               </label>
               <textarea
@@ -213,7 +253,9 @@ export default function Contact() {
                 isSubmitting ? "opacity-50 cursor-not-allowed" : ""
               }`}
             >
-              {isSubmitting ? t("contact.form.sending") : t("contact.form.send")}
+              {isSubmitting
+                ? t("contact.form.sending")
+                : t("contact.form.send")}
             </button>
 
             {submitStatus === "success" && (
@@ -239,5 +281,5 @@ export default function Contact() {
         </div>
       </div>
     </section>
-  )
+  );
 }
