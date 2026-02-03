@@ -29,11 +29,11 @@ If you discover a security vulnerability, please do the following:
    - Potential impact
    - Any relevant logs or screenshots
 3. **Use a PGP key**: For secure communication, use the following PGP key:
-   ```
+   \`\`\`
    -----BEGIN PGP PUBLIC KEY BLOCK-----
    ...PGP key here...
    -----END PGP PUBLIC KEY BLOCK-----
-   ```
+   \`\`\`
 
 ### Response Times
 

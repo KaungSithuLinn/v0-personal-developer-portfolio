@@ -26,27 +26,27 @@ Follow the steps below to set up the project locally:
 
 1. **Clone the Repository**:
 
-   ```bash
+   \`\`\`bash
    git clone https://github.com/your-username/v0-personal-developer-portfolio.git
-   ```
+   \`\`\`
 
 2. **Navigate to the Project Directory**:
 
-   ```bash
+   \`\`\`bash
    cd v0-personal-developer-portfolio
-   ```
+   \`\`\`
 
 3. **Install Dependencies** (pnpm recommended):
 
-   ```bash
+   \`\`\`bash
    pnpm install
-   ```
+   \`\`\`
 
 4. **Start the Development Server**:
 
-   ```bash
+   \`\`\`bash
    pnpm dev
-   ```
+   \`\`\`
 
 Once the server is running, open your browser and navigate to `http://localhost:3000` to view the project.
 
@@ -82,18 +82,18 @@ For any inquiries or feedback, feel free to reach out via the contact form on th
 - After cloning, run `pnpm install` (or `pnpm install --lockfile-only`) to ensure overrides are applied.
 - Verify the enforced versions anytime:
 
-  ```bash
+  \`\`\`bash
   pnpm why next glob jsondiffpatch negotiator react react-dom
-  ```
+  \`\`\`
 
 - Run a quick security check:
 
-  ```bash
+  \`\`\`bash
   pnpm audit
-  ```
+  \`\`\`
 
 - If prompted about blocked build scripts (e.g., sharp), allow as needed:
 
-  ```bash
+  \`\`\`bash
   pnpm approve-builds
-  ```
+  \`\`\`
