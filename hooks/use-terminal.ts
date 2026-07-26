@@ -4,7 +4,7 @@ import { useState, useCallback, useEffect } from "react"
 import { generateText } from "ai"
 import { groq } from "@ai-sdk/groq"
 import type { FormEvent, ReactNode } from "react"
-import { useTranslation } from "@/context/language-context"
+import { useTranslation } from "@/context/language-utils"
 
 // Define types for command history
 type CommandHistory = {
@@ -114,7 +114,7 @@ export function useTerminal() {
             User query: ${command}
             
             Provide a helpful, concise response in 2-3 sentences maximum. If the query is not related to Kaung's portfolio or professional background, politely suggest using the built-in commands like 'help', 'about', 'skills', etc.`,
-            maxTokens: 200,
+            maxOutputTokens: 200,
           })
           output = response.text
           outputType = "text"

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { useTheme } from "next-themes"
-import { useTranslation } from "@/context/language-context"
+import { useTranslation } from "@/context/language-utils"
 
 export default function Header() {
   const [mounted, setMounted] = useState(false)
@@ -81,7 +81,7 @@ export default function Header() {
     >
       <nav className="container mx-auto px-4 sm:px-6 py-3 sm:py-4">
         <div className="flex justify-between sm:justify-center items-center">
-          <ul className="flex overflow-x-auto scrollbar-hide gap-3 sm:gap-6 sm:flex-wrap sm:justify-center">
+          <ul className="flex gap-3 sm:gap-6 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {navItems.map(([id, label]) => (
               <li key={id} className="flex-shrink-0">
                 <button

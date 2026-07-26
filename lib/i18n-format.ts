@@ -2,7 +2,7 @@ import { type Language } from "@/context/language-utils"
 import { LANGUAGE_REGIONS } from "@/config/language.config"
 
 // Language-specific date formats
-const DATE_FORMATS: Record<Language, Intl.DateTimeFormatOptions> = {
+const DATE_FORMATS: Record<Language, Record<string, Intl.DateTimeFormatOptions>> = {
   en: {
     short: { month: "short", day: "numeric", year: "numeric" },
     medium: { month: "long", day: "numeric", year: "numeric" },
@@ -31,7 +31,7 @@ const DATE_FORMATS: Record<Language, Intl.DateTimeFormatOptions> = {
 } as const
 
 // Language-specific number formats
-const NUMBER_FORMATS: Record<Language, Intl.NumberFormatOptions> = {
+const NUMBER_FORMATS: Record<Language, Record<string, Intl.NumberFormatOptions>> = {
   en: {
     decimal: { minimumFractionDigits: 2, maximumFractionDigits: 2 },
     percent: { style: "percent", minimumFractionDigits: 1 },

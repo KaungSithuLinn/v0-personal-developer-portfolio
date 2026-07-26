@@ -4,14 +4,14 @@ import { motion } from "framer-motion"
 import { ExternalLink, Brain, Shield, LineChart, ChevronDown, ChevronUp } from "lucide-react"
 import Image from "next/image"
 import AnimatedSectionHeader from "./AnimatedSectionHeader"
-import { useState } from "react"
-import { useTranslation } from "@/context/language-context"
+import { useState, type ReactElement } from "react"
+import { useTranslation } from "@/context/language-utils"
 
 interface ProjectProps {
   title: string
   period: string
   link: string
-  icon: JSX.Element
+  icon: ReactElement
   description: string
   achievements: string[]
   caseStudy?: {
@@ -32,7 +32,7 @@ const Project = ({ project, index }: { project: ProjectProps; index: number }) =
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: index * 0.2 }}
-      className="bg-white dark:bg-gray-800 rounded-xl shadow-lg transition-all duration-300 hover:shadow-2xl relative overflow-hidden"
+      className="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-2xl ring-1 ring-gray-200/50 dark:ring-gray-700/50 hover:ring-blue-500/30 transition-all duration-300 relative overflow-hidden"
     >
       <div className="p-8">
         <div className="flex flex-col md:flex-row gap-6">
@@ -128,7 +128,7 @@ const Project = ({ project, index }: { project: ProjectProps; index: number }) =
 }
 
 export default function Projects() {
-  const { t } = useTranslation()
+  const { t, isRTL } = useTranslation()
 
   const projects = [
     {
@@ -228,7 +228,7 @@ export default function Projects() {
           ))}
         </div>
       </div>
-      <div className="absolute top-0 left-0 w-64 h-64 -mt-32 -ml-32 opacity-20">
+      <div className={`absolute top-0 ${isRTL ? "right-0" : "left-0"} w-64 h-64 -mt-32 ${isRTL ? "-mr-32" : "-ml-32"} opacity-20`}>
         <Image src="/placeholder.svg?height=256&width=256" alt="Decorative background" width={256} height={256} />
       </div>
     </section>

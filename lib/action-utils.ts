@@ -97,14 +97,16 @@ export function getErrorMessage(
 }
 
 export function formatZodError(error: ZodError, language: Language): ActionErrorMessages {
+  const fieldErrors: Record<string, string[]> = {}
+  for (const issue of error.issues) {
+    const field = (issue.path[0] as string) || ""
+    if (!fieldErrors[field]) {
+      fieldErrors[field] = []
+    }
+    fieldErrors[field].push(getErrorMessage(issue.message, language))
+  }
   return {
-    formErrors: error.errors.map(err => getErrorMessage(err.message, language)),
-    fieldErrors: Object.fromEntries(
-      Object.entries(error.formErrors?.fieldErrors || {}).map(([field, errors]) => [
-        field,
-        (errors ?? []).map(err => getErrorMessage(err, language)),
-      ])
-    ),
+    fieldErrors,
   }
 }
 

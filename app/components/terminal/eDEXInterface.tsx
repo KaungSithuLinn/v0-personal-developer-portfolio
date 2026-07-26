@@ -1,16 +1,16 @@
 "use client"
 
-import { useState } from "react"
+import { useState, type ReactElement } from "react"
 import { motion } from "framer-motion"
 import { useMounted } from "@/lib/use-mounted"
-import { useTranslation } from "@/context/language-context"
+import { useTranslation } from "@/context/language-utils"
 import TerminalUI from "./TerminalUI"
 import SystemMonitor from "./SystemMonitor"
 import HexGrid from "./HexGrid"
 import FileExplorer from "./FileExplorer"
 import LanguageSelector from "@/components/LanguageSelector"
 
-export default function DevConsoleInterface(): JSX.Element | null {
+export default function DevConsoleInterface(): ReactElement | null {
   const [isVisible, setIsVisible] = useState<boolean>(false)
   const mounted = useMounted()
   const { t } = useTranslation()
@@ -26,7 +26,7 @@ export default function DevConsoleInterface(): JSX.Element | null {
       <LanguageSelector />
 
       {/* Terminal UI (always visible) */}
-      <TerminalUI />
+      <TerminalUI onClose={() => setIsVisible(false)} />
 
       {/* Floating action button to toggle interface */}
       <motion.button
@@ -65,7 +65,7 @@ export default function DevConsoleInterface(): JSX.Element | null {
               transition={{ delay: 0.4 }}
               className="w-full md:w-1/4 pointer-events-auto"
             >
-              <SystemMonitor />
+              <SystemMonitor onClose={() => setIsVisible(false)} />
             </motion.div>
           </div>
         </motion.div>

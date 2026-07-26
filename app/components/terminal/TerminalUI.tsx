@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Maximize2, Minimize2, X, ChevronRight, Code } from "lucide-react"
 import { useTerminal } from "@/hooks/use-terminal"
 import { useMounted } from "@/lib/use-mounted"
-import { useTranslation } from "@/context/language-context"
+import { useTranslation } from "@/context/language-utils"
 
 interface CommandOutput {
   command: string

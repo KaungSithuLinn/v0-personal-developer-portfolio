@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useMemo } from "react"
 import { motion } from "framer-motion"
-import { useTranslation } from "@/context/language-context"
+import { useTranslation } from "@/context/language-utils"
 
 export default function FloatingNav() {
   const [activeSection, setActiveSection] = useState("hero")

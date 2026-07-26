@@ -1,11 +1,10 @@
 "use client"
 
-import { useState } from "react"
+import { useState, type ReactElement, type ReactNode } from "react"
 import { motion } from "framer-motion"
 import { Folder, ChevronRight, ChevronDown, Code, FileText, ImageIcon, Database } from "lucide-react"
 import { useMounted } from "@/lib/use-mounted"
-import { useTranslation } from "@/context/language-context"
-import type { ReactNode } from "react"
+import { useTranslation } from "@/context/language-utils"
 
 type FileItem = {
   name: string
@@ -112,7 +111,7 @@ interface FileItemProps {
   level: number
 }
 
-function FileItemComponent({ item, level }: FileItemProps): JSX.Element {
+function FileItemComponent({ item, level }: FileItemProps): ReactElement {
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const [isHovered, setIsHovered] = useState<boolean>(false)
 
@@ -163,7 +162,7 @@ function FileItemComponent({ item, level }: FileItemProps): JSX.Element {
   )
 }
 
-export default function FileExplorer(): JSX.Element | null {
+export default function FileExplorer(): ReactElement | null {
   const mounted = useMounted()
   const { t } = useTranslation()
 

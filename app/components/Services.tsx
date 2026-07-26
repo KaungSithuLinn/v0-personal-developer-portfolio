@@ -3,10 +3,10 @@
 import { motion } from "framer-motion"
 import { Code, Layout, Server, Smartphone } from "lucide-react"
 import Image from "next/image"
-import { useTranslation } from "@/context/language-context"
+import { useTranslation } from "@/context/language-utils"
 
 export default function Services() {
-  const { t } = useTranslation()
+  const { t, isRTL } = useTranslation()
 
   const services = [
     {
@@ -50,7 +50,7 @@ export default function Services() {
           {services.map((service, index) => (
             <motion.div
               key={index}
-              className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
+              className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-xl ring-1 ring-gray-200/50 dark:ring-gray-700/50 hover:ring-blue-500/30 transition-all duration-300"
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -58,14 +58,14 @@ export default function Services() {
             >
               <div className="flex items-center mb-4">
                 {service.icon}
-                <h3 className="text-2xl font-semibold ml-4 dark:text-white">{service.title}</h3>
+                <h3 className="text-2xl font-semibold ms-4 dark:text-white">{service.title}</h3>
               </div>
               <p className="text-gray-600 dark:text-gray-300">{service.description}</p>
             </motion.div>
           ))}
         </div>
       </div>
-      <div className="absolute top-0 left-0 w-64 h-64 -mt-32 -ml-32 opacity-20">
+      <div className={`absolute top-0 ${isRTL ? "right-0" : "left-0"} w-64 h-64 -mt-32 ${isRTL ? "-mr-32" : "-ml-32"} opacity-20`}>
         <Image src="/placeholder.svg?height=256&width=256" alt="Decorative background" width={256} height={256} />
       </div>
     </section>

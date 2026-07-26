@@ -5,7 +5,7 @@ import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
 import { Cpu, HardDrive, Activity, Clock, Zap, X } from "lucide-react"
 import { useMounted } from "@/lib/use-mounted"
-import { useTranslation } from "@/context/language-context"
+import { useTranslation } from "@/context/language-utils"
 
 type Skill = {
   name: string

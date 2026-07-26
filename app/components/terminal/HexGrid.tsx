@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState, type ReactElement } from "react"
 import { motion } from "framer-motion"
 import { useMounted } from "@/lib/use-mounted"
 
@@ -8,7 +8,7 @@ interface HexGridProps {
   className?: string
 }
 
-export default function HexGrid({ className = "" }: HexGridProps): JSX.Element | null {
+export default function HexGrid({ className = "" }: HexGridProps): ReactElement | null {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [dimensions, setDimensions] = useState<{ width: number; height: number }>({ width: 0, height: 0 })
   const mounted = useMounted()

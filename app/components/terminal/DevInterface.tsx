@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Code, Monitor } from "lucide-react"
-import { useTranslation } from "@/context/language-context"
+import { useTranslation } from "@/context/language-utils"
 import { useMounted } from "@/lib/use-mounted"
 import TerminalUI from "./TerminalUI"
 import SystemMonitor from "./SystemMonitor"

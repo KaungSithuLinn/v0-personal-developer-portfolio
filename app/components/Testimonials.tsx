@@ -4,7 +4,7 @@ import { motion } from "framer-motion"
 import { Quote } from "lucide-react"
 import { useState } from "react"
 import AnimatedSectionHeader from "./AnimatedSectionHeader"
-import { useTranslation } from "@/context/language-context"
+import { useTranslation } from "@/context/language-utils"
 
 export default function Testimonials() {
   const [activeIndex, setActiveIndex] = useState(0)
@@ -65,7 +65,7 @@ export default function Testimonials() {
               </div>
 
               <blockquote className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 italic mt-6 mb-8">
-                "{testimonials[activeIndex].quote}"
+                {testimonials[activeIndex].quote}
               </blockquote>
 
               <div className="flex items-center">
