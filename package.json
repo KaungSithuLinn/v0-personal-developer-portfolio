@@ -5,24 +5,16 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev",
-    "lint": "next lint",
-    "start": "next start"
-  },
-  "resolutions": {
-    "glob": "^10.3.10",
-    "jsondiffpatch": "^0.6.0",
-    "negotiator": "^0.6.4",
-    "next": "^15.5.9",
-    "react": "^19.2.3",
-    "react-dom": "^19.2.3"
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "start": "next start",
+    "test:e2e": "playwright test"
   },
   "overrides": {
-    "glob": "^10.3.10",
-    "jsondiffpatch": "^0.6.0",
-    "negotiator": "^0.6.4",
     "next": "^15.5.9",
-    "react": "^19.2.3",
-    "react-dom": "^19.2.3"
+    "react": "^19",
+    "react-dom": "^19",
+    "zod": "^3"
   },
   "dependencies": {
     "@ai-sdk/groq": "latest",
@@ -44,7 +36,7 @@
     "@radix-ui/react-navigation-menu": "1.2.3",
     "@radix-ui/react-popover": "1.1.4",
     "@radix-ui/react-progress": "1.1.1",
-    "@radix-ui/react-radio-group": "1.2.2",
+    "@radix-ui/react-radio-group": "1.1.2",
     "@radix-ui/react-scroll-area": "1.2.2",
     "@radix-ui/react-select": "2.1.4",
     "@radix-ui/react-separator": "1.1.1",
@@ -82,27 +74,19 @@
     "zod": "latest"
   },
   "devDependencies": {
+    "@playwright/test": "^1.49.0",
     "@tailwindcss/postcss": "^4",
     "@types/negotiator": "^0.6.3",
     "@types/node": "^22",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@typescript-eslint/eslint-plugin": "^8.65.0",
+    "@typescript-eslint/parser": "^8.65.0",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "^15",
     "postcss": "8.5.6",
     "tailwindcss": "^4",
     "typescript": "^5"
   },
-  "packageManager": "pnpm@10.10.0",
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "sharp"
-    ],
-    "overrides": {
-      "glob": "^10.3.10",
-      "jsondiffpatch": "^0.6.0",
-      "negotiator": "^0.6.4",
-      "next": "^15.5.9",
-      "react": "^19.2.3",
-      "react-dom": "^19.2.3"
-    }
-  }
+  "packageManager": "pnpm@10.10.0"
 }

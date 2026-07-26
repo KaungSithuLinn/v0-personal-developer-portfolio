@@ -43,35 +43,39 @@ const notoSansTamil = Noto_Sans_Tamil({
 })
 
 // Generate metadata for each locale
-export async function generateMetadata({ params: { locale } }: { params: { locale: Language } }): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params
+  const localeLang = locale as Language
   return {
-    title: `Kaung Sithu Linn - ${locale === 'en' ? 'Software Developer Portfolio' : 'Portfolio'}`,
+    title: `Kaung Sithu Linn - ${localeLang === 'en' ? 'Software Developer Portfolio' : 'Portfolio'}`,
     description: "Personal portfolio website of Kaung Sithu Linn, a software developer specializing in full-stack development, fraud detection, and behavioral biometrics.",
   }
 }
 
 // Generate static params for all supported locales
-export function generateStaticParams() {
+export function generateStaticParams(): { locale: Language }[] {
   return i18n.locales.map((locale) => ({ locale }))
 }
 
-export default function LocaleLayout({
+export default async function LocaleLayout({
   children,
-  params: { locale },
+  params,
 }: {
   children: React.ReactNode
-  params: { locale: Language }
+  params: Promise<{ locale: string }>
 }) {
+  const { locale } = await params
+  const localeLang = locale as Language
   // Pre-calculate RTL state for initial render using server-compatible function
-  const defaultRTL = isRTL(locale)
+  const defaultRTL = isRTL(localeLang)
 
   return (
-    <html
-      lang={locale}
-      dir={defaultRTL ? "rtl" : "ltr"}
-      suppressHydrationWarning
-      className={`${inter.variable} ${notoSansArabic.variable} ${notoSansSC.variable} ${notoSansTamil.variable}`}
-    >
+      <html
+        lang={localeLang}
+        dir={defaultRTL ? "rtl" : "ltr"}
+        suppressHydrationWarning
+        className={`${inter.variable} ${notoSansArabic.variable} ${notoSansSC.variable} ${notoSansTamil.variable}`}
+      >
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="dir" content={defaultRTL ? "rtl" : "ltr"} />
@@ -81,7 +85,7 @@ export default function LocaleLayout({
       </head>
       <body>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
-          <LanguageProvider initialLocale={locale}>
+          <LanguageProvider initialLocale={localeLang}>
             <RTLProvider defaultRTL={defaultRTL}>
               <LanguageSelector />
               {children}
