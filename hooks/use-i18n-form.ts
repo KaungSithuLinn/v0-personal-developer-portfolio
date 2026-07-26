@@ -69,7 +69,7 @@ export function useI18nForm<T extends Record<string, unknown>>({
         return true;
       } catch (error) {
         if (error instanceof z.ZodError) {
-          const fieldError = error.errors[0];
+          const fieldError = error.issues[0];
           setState((prev) => ({
             ...prev,
             errors: {
@@ -97,7 +97,7 @@ export function useI18nForm<T extends Record<string, unknown>>({
     } catch (error) {
       if (error instanceof z.ZodError) {
         const newErrors: Record<string, string> = {};
-        error.errors.forEach((err) => {
+        error.issues.forEach((err) => {
           const field = err.path[0] as string;
           newErrors[field] = getErrorMessage(err.message, language);
         });

@@ -2,8 +2,9 @@
 
 import { useState, useEffect, useMemo } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Home, User, Briefcase, Wrench, FolderGit2, GraduationCap, PhoneCall } from "lucide-react"
+import { Home, User, Briefcase, Wrench, FolderGit2, GraduationCap, PhoneCall, BookOpen } from "lucide-react"
 import { useTranslation } from "@/context/language-utils"
+import Link from "next/link"
 
 export default function FloatingNav() {
   const [activeSection, setActiveSection] = useState("")
@@ -11,13 +12,14 @@ export default function FloatingNav() {
   const { t, isRTL, isTransitioning } = useTranslation()
 
   const navItems = useMemo(() => [
-    { id: "home", label: t("nav.home"), icon: Home },
-    { id: "about", label: t("nav.about"), icon: User },
-    { id: "experience", label: t("nav.experience"), icon: Briefcase },
-    { id: "skills", label: t("nav.skills"), icon: Wrench },
-    { id: "projects", label: t("nav.projects"), icon: FolderGit2 },
-    { id: "education", label: t("nav.education"), icon: GraduationCap },
-    { id: "contact", label: t("nav.contact"), icon: PhoneCall },
+    { id: "home", label: t("nav.home"), icon: Home, href: null },
+    { id: "about", label: t("nav.about"), icon: User, href: null },
+    { id: "experience", label: t("nav.experience"), icon: Briefcase, href: null },
+    { id: "skills", label: t("nav.skills"), icon: Wrench, href: null },
+    { id: "projects", label: t("nav.projects"), icon: FolderGit2, href: null },
+    { id: "education", label: t("nav.education"), icon: GraduationCap, href: null },
+    { id: "blog", label: t("nav.blog"), icon: BookOpen, href: "/blog" },
+    { id: "contact", label: t("nav.contact"), icon: PhoneCall, href: null },
   ], [t])
 
   useEffect(() => {
@@ -58,27 +60,48 @@ export default function FloatingNav() {
           style={{ direction: isRTL ? "rtl" : "ltr" }}
         >
           <ul className={`flex gap-4 sm:gap-6 ${isRTL ? "flex-row-reverse" : ""}`}>
-            {navItems.map(({ id, label, icon: Icon }) => (
+            {navItems.map(({ id, label, icon: Icon, href }) => (
               <li key={id}>
                 <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-                  <a
-                    href={`#${id}`}
-                    className={`block p-2 rounded-full transition-colors relative group ${
-                      activeSection === id
-                        ? "text-blue-400 bg-blue-500/10"
-                        : "text-gray-400 hover:text-blue-400 hover:bg-blue-500/10"
-                    }`}
-                    aria-label={label}
-                  >
-                    <Icon size={20} />
-                    <span
-                      className={`absolute ${
-                        isRTL ? "right-full mr-2" : "left-full ml-2"
-                      } top-1/2 -translate-y-1/2 px-2 py-1 rounded bg-gray-900 text-gray-200 text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none`}
+                  {href ? (
+                    <Link
+                      href={href}
+                      className={`block p-2 rounded-full transition-colors relative group ${
+                        activeSection === id
+                          ? "text-blue-400 bg-blue-500/10"
+                          : "text-gray-400 hover:text-blue-400 hover:bg-blue-500/10"
+                      }`}
+                      aria-label={label}
                     >
-                      {label}
-                    </span>
-                  </a>
+                      <Icon size={20} />
+                      <span
+                        className={`absolute ${
+                          isRTL ? "right-full mr-2" : "left-full ml-2"
+                        } top-1/2 -translate-y-1/2 px-2 py-1 rounded bg-gray-900 text-gray-200 text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none`}
+                      >
+                        {label}
+                      </span>
+                    </Link>
+                  ) : (
+                    <a
+                      href={`#${id}`}
+                      className={`block p-2 rounded-full transition-colors relative group ${
+                        activeSection === id
+                          ? "text-blue-400 bg-blue-500/10"
+                          : "text-gray-400 hover:text-blue-400 hover:bg-blue-500/10"
+                      }`}
+                      aria-label={label}
+                    >
+                      <Icon size={20} />
+                      <span
+                        className={`absolute ${
+                          isRTL ? "right-full mr-2" : "left-full ml-2"
+                        } top-1/2 -translate-y-1/2 px-2 py-1 rounded bg-gray-900 text-gray-200 text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none`}
+                      >
+                        {label}
+                      </span>
+                    </a>
+                  )}
                 </motion.div>
               </li>
             ))}

@@ -1,6 +1,5 @@
 import { createClient } from "next-sanity";
 import imageUrlBuilder from "@sanity/image-url";
-import type { Image } from "@sanity/types";
 
 import { apiVersion, dataset, projectId } from "../sanity/env";
 
@@ -31,11 +30,11 @@ export const getClient = (usePreview = false) =>
 const builder = imageUrlBuilder({ projectId, dataset });
 
 // Helper function to generate Sanity image URLs
-export const urlFor = (source: Image | string) => builder.image(source);
+export const urlFor = (source: string) => builder.image(source);
 
 // Helper function to generate responsive image URLs
 export const getImageUrl = (
-  source: Image | string,
+  source: string,
   width?: number,
   height?: number,
   quality = 80
@@ -49,10 +48,10 @@ export const getImageUrl = (
 };
 
 // Helper function that returns the URL builder for chaining
-export const buildImageUrl = (source: Image | string) => urlFor(source);
+export const buildImageUrl = (source: string) => urlFor(source);
 
 // Helper function for responsive image sets
-export const getResponsiveImageUrls = (source: Image | string) => ({
+export const getResponsiveImageUrls = (source: string) => ({
   mobile: getImageUrl(source, 768),
   tablet: getImageUrl(source, 1024),
   desktop: getImageUrl(source, 1200),

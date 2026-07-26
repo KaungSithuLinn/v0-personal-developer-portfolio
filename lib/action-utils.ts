@@ -100,16 +100,20 @@ export function formatZodError(
   language: Language,
 ): ActionErrorMessages {
   return {
-    formErrors: error.errors.map((err) =>
+    formErrors: error.issues.map((err) =>
       getErrorMessage(err.message, language),
     ),
     fieldErrors: Object.fromEntries(
-      Object.entries(error.formErrors?.fieldErrors || {}).map(
-        ([field, errors]) => [
-          field,
-          (errors ?? []).map((err) => getErrorMessage(err, language)),
-        ],
-      ),
+      error.issues.reduce<[string, string[]][]>((acc, err) => {
+        if (err.path.length > 0) {
+          const field = err.path[0] as string;
+          if (!acc.find(([f]) => f === field)) {
+            acc.push([field, []]);
+          }
+          acc.find(([f]) => f === field)?.[1].push(getErrorMessage(err.message, language));
+        }
+        return acc;
+      }, []),
     ),
   };
 }
