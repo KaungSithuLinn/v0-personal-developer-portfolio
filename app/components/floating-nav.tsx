@@ -6,7 +6,7 @@ import { useTranslation } from "@/context/language-context"
 
 export default function FloatingNav() {
   const [activeSection, setActiveSection] = useState("hero")
-  const { t } = useTranslation()
+  const { t, isRTL } = useTranslation()
 
   const sections = useMemo(
     () => [
