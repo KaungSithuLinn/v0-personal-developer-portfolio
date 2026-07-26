@@ -8,7 +8,7 @@ import { useTranslation } from "@/context/language-utils"
 
 export default function Testimonials() {
   const [activeIndex, setActiveIndex] = useState(0)
-  const { t } = useTranslation()
+  const { t, isRTL } = useTranslation()
 
   const testimonials = [
     {
@@ -69,7 +69,7 @@ export default function Testimonials() {
               </blockquote>
 
               <div className="flex items-center">
-                <div className="w-16 h-16 rounded-full overflow-hidden mr-4">
+                <div className={`w-16 h-16 rounded-full overflow-hidden ${isRTL ? "ms-4" : "mr-4"}`}>
                   <img
                     src={testimonials[activeIndex].image || "/placeholder.svg"}
                     alt={testimonials[activeIndex].name}

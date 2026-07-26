@@ -13,7 +13,7 @@ import LanguageSelector from "@/components/LanguageSelector"
 export default function DevConsoleInterface(): ReactElement | null {
   const [isVisible, setIsVisible] = useState<boolean>(false)
   const mounted = useMounted()
-  const { t } = useTranslation()
+  const { t, isRTL } = useTranslation()
 
   if (!mounted) return null
 
@@ -30,7 +30,7 @@ export default function DevConsoleInterface(): ReactElement | null {
 
       {/* Floating action button to toggle interface */}
       <motion.button
-        className="fixed top-24 right-6 z-50 p-3 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-300"
+        className={`fixed top-24 ${isRTL ? "left-6" : "right-6"} z-50 p-3 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-300`}
         onClick={() => setIsVisible(!isVisible)}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
@@ -50,7 +50,7 @@ export default function DevConsoleInterface(): ReactElement | null {
           <div className="container mx-auto h-full flex flex-col md:flex-row gap-4">
             {/* Left panel */}
             <motion.div
-              initial={{ x: -50, opacity: 0 }}
+              initial={{ x: isRTL ? 50 : -50, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               transition={{ delay: 0.2 }}
               className="w-full md:w-1/4 pointer-events-auto"
@@ -60,7 +60,7 @@ export default function DevConsoleInterface(): ReactElement | null {
 
             {/* Right panel */}
             <motion.div
-              initial={{ x: 50, opacity: 0 }}
+              initial={{ x: isRTL ? -50 : 50, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               transition={{ delay: 0.4 }}
               className="w-full md:w-1/4 pointer-events-auto"

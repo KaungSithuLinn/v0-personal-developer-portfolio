@@ -1,0 +1,118 @@
+---
+description: Essential knowledge for AI agents working on this Next.js 15 multilingual portfolio
+globs: *
+---
+
+## TECH STACK & ARCHITECTURE
+
+**Core**: Next.js 15, React 19, TypeScript, Tailwind CSS, pnpm  
+**Key Dependencies**: Radix UI, Framer Motion, next-themes, zod  
+**Hosting**: Vercel with security headers and performance optimizations
+
+**Multilingual Architecture** (5 languages: en, zh, ms, ta, ar):
+- Locale-based routing via `app/[locale]/` with middleware-driven auto-detection
+- Translation system in `context/translations.ts` with type-safe keys
+- RTL support for Arabic with dynamic CSS classes and font switching
+- Language-specific breakpoints and text expansion factors in `lib/utils.ts`
+
+## ESSENTIAL PATTERNS
+
+### Internationalization Flow
+1. **Middleware** (`middleware.ts`): Auto-detects locale, redirects to `/[locale]/path`
+2. **Translation Hook**: `useTranslation()` from `context/language-context.tsx`
+3. **Translation Keys**: Type-safe via `TranslationKey` type, format: `"section.key"`
+4. **RTL Logic**: `isRTL()` function drives layout, margin/padding classes
+
+```tsx
+// Standard component pattern
+const { t, isRTL } = useTranslation()
+const text = t("nav.about") // Type-safe translation
+const classes = `${isRTL ? "mr-4" : "ml-4"}` // RTL-aware spacing
+```
+
+### Component Architecture
+- **UI Components**: Radix-based system in `components/ui/` (button, card, dialog, etc.)
+- **Page Components**: Feature sections in `app/components/` (Hero, About, Projects, etc.)
+- **Layouts**: Root layout + locale-specific layout with font loading
+- **Dev Tools**: Terminal and system monitor overlays (`app/components/terminal/`)
+
+### Server Actions & Validation
+- **Pattern**: `app/actions/` contains server actions with timeout protection
+- **Validation**: Zod schemas with multilingual error messages in `lib/action-utils.ts`
+- **Example**: Contact form uses `submitContact()` with language-aware validation
+
+```typescript
+// Server action pattern
+export async function submitContact(formData: ContactFormData) {
+  return withTimeout(async () => {
+    const schema = createContactSchema(formData.language)
+    return validateAction(formData, schema, formData.language, async (validData) => {
+      // Implementation
+    })
+  }, 5000)
+}
+```
+
+## DEVELOPMENT WORKFLOW
+
+**Scripts**: 
+- `pnpm dev` - Development server
+- `pnpm build` - Production build
+- `pnpm start` - Production server
+- `pnpm lint` - ESLint (disabled during builds)
+
+**Key Files to Understand**:
+- `config/language.config.ts` - Language definitions and font mappings
+- `middleware.ts` - Locale detection and routing logic
+- `next.config.mjs` - Security headers, image domains, rewrites
+- `lib/utils.ts` - RTL utilities, responsive breakpoints, text calculations
+
+**Font System**: 
+- Multi-font loading in layouts (Inter, Noto Sans variants)
+- CSS variables: `--font-inter`, `--font-noto-arabic`, etc.
+- Language-specific font family switching via context
+
+**State Management**: React Context for language state, no external state library
+
+## CODING CONVENTIONS
+
+**File Organization**:
+- Page components: `app/components/[ComponentName].tsx`
+- UI primitives: `components/ui/[component].tsx`  
+- Utilities: `lib/[feature].ts`, `hooks/use-[feature].ts`
+- Context: `context/[feature]-context.tsx` + provider
+
+**Styling**: 
+- Tailwind CSS with `cn()` utility for conditional classes
+- Custom CSS in `app/globals.css` for complex animations
+- Dark theme via `next-themes` with system detection
+
+**Type Safety**:
+- Strict TypeScript with language types: `Language`, `TranslationKey`
+- Zod validation for forms with multilingual error handling
+- Proper typing for context providers and hooks
+
+## SECURITY & PERFORMANCE
+
+**Security Headers** (in `next.config.mjs`):
+- CSP, HSTS, X-Frame-Options, nosniff protection
+- Production console removal
+
+**Performance**:
+- Image optimization with Vercel domains
+- Font preloading and display swap
+- Static generation for locale pages
+- Timeout protection on server actions (5s default)
+
+**Git Workflow**:
+- Use GitHub noreply email: `git config --global user.email "username@users.noreply.github.com"`
+- Branch protection with linear history required
+- Prioritize Dependabot security updates
+
+## DEBUGGING
+
+**Common Issues**:
+- Terminal exit code -1073741510: Process terminated, restart terminal
+- RTL layout issues: Check `isRTL` usage and margin/padding classes
+- Translation missing: Verify key exists in `context/translations.ts`
+- Font loading: Ensure CSS variables are defined in layout

@@ -1,0 +1,208 @@
+
+# GitHub Copilot Instructions for Kaung Sithu Linn's Portfolio
+
+Welcome, AI agent! This guide will help you understand the key architectural patterns, conventions, and workflows for this multilingual Next.js 15 portfolio website. The core design principle is **"multilingual-first"**.
+
+## 🏛️ Architecture Overview
+
+This is a highly customized portfolio built with Next.js (App Router), React 19, and Tailwind CSS. Its primary architectural challenge is robust internationalization (i18n) with full Right-to-Left (RTL) language support.
+
+-   **Tech Stack**: Next.js 15, React 19, TypeScript, Tailwind CSS, Framer Motion, Radix UI (primitives), Zod (validation), Resend (email). Hosted on Vercel.
+-   **Critical Files**:
+    -   `middleware.ts`: The entry point for i18n. It detects the user's locale and redirects to the correct language path (e.g., `/en`, `/ar`).
+    -   `config/language.config.ts`: The single source of truth for all supported languages and their properties (`dir`, `font`, `expansionRatio`).
+    -   `app/[locale]/layout.tsx`: The main layout for localized pages. It sets the `dir` attribute, loads language-specific fonts via CSS variables, and provides the translation context.
+    -   `lib/utils.ts`: Contains the `cn` utility for Tailwind class merging and other shared functions.
+
+---
+
+## 🌍 Internationalization (i18n) & Translations
+
+This is the most critical workflow. Every feature must support all languages and writing directions.
+
+-   **Translation Hook**: Use the `useTranslations` hook from `context/language-provider.tsx` to access translations.
+    -   **Example**: `const { t } = useTranslations();` then use `<h1>{t('page.home.title')}</h1>`.
+-   **Workflow for Adding New Text**:
+    1.  **Define the Key**: Add the new key to the `TranslationKeys` type in `context/translations.ts`. This provides type safety.
+    2.  **Add Translations**: Add the key and its translated value to **all** JSON files in `public/locales/{lang}/common.json`.
+    3.  **Implement**: Use the `t('your.new.key')` function in your component.
+-   **RTL Styling**: Always use Tailwind's logical properties for direction-agnostic styling (e.g., `ms-4` instead of `ml-4`, `text-start` instead of `text-left`). The root layout handles the `dir` attribute.
+
+---
+
+## 🎨 Components & Styling
+
+The project follows a structured pattern for creating reusable and feature-specific components.
+
+-   **UI Primitives (`components/ui/`)**: These are general-purpose, styled components built on Radix UI primitives (e.g., `button.tsx`, `input.tsx`).
+    -   **Pattern**: They use `cva` (Class Variance Authority) for defining variants (e.g., `variant`, `size`) and the `cn` utility to merge classes. When creating a new UI component, follow this pattern.
+-   **Feature Components (`app/components/`)**: These are larger components that compose UI primitives to build features (e.g., `Header`, `Footer`, `DevInterface`).
+-   **Icons (`app/components/Icon.tsx`)**: Use the custom `<Icon name="..." />` component. To add a new icon, add its SVG path data to the `icons` object in the file.
+
+---
+
+## ⚡ Server Actions
+
+Backend logic is handled exclusively by Next.js Server Actions.
+
+-   **Location**: `app/actions/`.
+-   **Pattern**: Actions should be strongly typed, use `zod` for input validation, and leverage the `withTimeout` utility from `lib/action-utils.ts` to prevent indefinite execution.
+-   **Example**: `app/actions/contact-actions.ts` is the blueprint for creating new server actions. It validates form data, calls the Resend API, and returns a structured response.
+
+---
+
+## 🚀 Development & Debugging
+
+-   **Running the Project**: `npm run dev`
+-   **Linting**: `npm run lint` to check for code quality and style issues.
+-   **Environment**: Copy `.env.example` to `.env.local` and add your `RESEND_API_KEY`.
+-   **RTL Gotcha**: When testing RTL, ensure that flexbox layouts and text alignment behave as expected. Margins, padding, and positioning are common failure points if logical properties are not used.
+-   **Performance**: Fonts are a key performance factor. They are preloaded in the root layout, and different font subsets are loaded per language via CSS variables to keep the initial payload small.
+
+---
+
+## 🛡️ Security
+
+-   **Dependency Vulnerabilities**: Run `npm audit fix` to automatically update vulnerable dependencies to patched versions. Regularly audit dependencies to keep them up-to-date.
+-   **Security Headers**: Enhance the `headers` section in `next.config.mjs` by adding a comprehensive Content Security Policy (CSP), `Strict-Transport-Security`, and `Permissions-Policy`.
+
+    ```javascript
+    // In next.config.mjs
+
+    // A basic but effective CSP. This should be tailored to your specific needs.
+    const cspHeader = `
+        default-src 'self';
+        script-src 'self' 'unsafe-eval' 'unsafe-inline';
+        style-src 'self' 'unsafe-inline';
+        img-src 'self' blob: data:;
+        font-src 'self';
+        object-src 'none';
+        base-uri 'self';
+        form-action 'self';
+        frame-ancestors 'none';
+        upgrade-insecure-requests;
+    `;
+
+    const nextConfig = {
+      // ... existing config
+      async headers() {
+        return [
+          {
+            source: '/(.*)',
+            headers: [
+              // ... existing headers
+              {
+                key: 'Content-Security-Policy',
+                value: cspHeader.replace(/\s{2,}/g, ' ').trim(),
+              },
+              {
+                key: 'Strict-Transport-Security',
+                value: 'max-age=63072000; includeSubDomains; preload',
+              },
+            ],
+          },
+        ];
+      },
+    };
+    ```
+
+---
+
+## ✨ Performance & Maintainability
+
+-   **Dynamic Imports**: Use `next/dynamic` to lazy-load heavy components like `DevInterface.tsx` to improve initial page load time. Disable server-side rendering if the component is client-only interactive.
+
+    ```typescript
+    // Example (`app/[locale]/page.tsx`):
+    import dynamic from 'next/dynamic';
+
+    const DevInterface = dynamic(
+      () => import('@/app/components/terminal/DevInterface'),
+      { ssr: false } // Disable server-side rendering if it's client-only interactive
+    );
+
+    export default function Home() {
+      return (
+        <main>
+          {/* ... */}
+          <DevInterface />
+        </main>
+      );
+    }
+    ```
+
+-   **Centralize Icon Definitions**: Move the `icons` object from `Icon.tsx` to a separate file (e.g., `config/icons.config.ts`) to improve maintainability.
+
+    ```typescript
+    // Example (`config/icons.config.ts`):
+    import { IconCollection } from '@/app/components/Icon'; // Assuming you export this type
+
+    export const icons: IconCollection = {
+      github: {
+        path: <path d="..." />,
+      },
+      linkedin: {
+        path: <path d="..." />,
+      },
+      // ... more icons
+    };
+    ```
+
+    ```typescript
+    // Then in `app/components/Icon.tsx`:
+    import { icons } from '@/config/icons.config';
+    // ... component logic remains the same
+    ```
+
+---
+
+## 📝 Blog/Notes Section - Sanity.io Integration
+
+This section outlines the setup and integration of a Sanity.io powered Blog/Notes feature.
+
+-   **CMS**: Sanity.io is used as a headless CMS for managing blog content.
+    -   **Key Features:**
+        -   Excellent free tier (3 users, unlimited API requests).
+        -   Superior multilingual content management.
+        -   Real-time collaboration and preview.
+        -   TypeScript-first with great DX.
+-   **Setup**:
+    1.  **Create a New Sanity Project**: Use the Sanity CLI (`npx @sanity/cli init`) to create a new project.
+    2.  **Configure Multilingual Blog Schemas**: Enhance the default schema to support the portfolio's 5-language setup. This includes schemas for:
+        -   Multilingual Blog Post: Language selection, base slug system for cross-language linking, enhanced SEO fields, rich content with enhanced block editor, publishing workflow, and reading time estimation.
+        -   Smart Category System: Language-specific categories with base keys, visual color coding for organization, and SEO optimization per language.
+        -   Enhanced Author Schema: Multilingual bios, social media integration, and professional details.
+        -   Advanced Content Editor: Code blocks with syntax highlighting, image management, callout boxes, video embeds, and enhanced rich text formatting.
+    3.  **Organized Studio Structure**: Content is organized by language with status-based filtering and quick actions for content creation. Access the Sanity Studio at `http://localhost:3001/studio`.
+-   **Implementation**:
+    -   Sanity Studio for content management.
+    -   Next.js Server Components for data fetching.
+    -   Existing i18n system for localized content.
+    -   MDX support for rich code examples.
+
+---
+
+## 🛠️ Code Quality and Security
+
+-   **Security Vulnerabilities**: Use `npm audit` to identify and `npm update` to fix dependency vulnerabilities. Pay particular attention to Next.js vulnerabilities.
+-   **TypeScript Errors**: Address TypeScript errors to ensure code correctness.
+-   **ESLint Issues**: Resolve ESLint warnings and errors for code quality and consistency.
+-   **Priority**:
+    1.  Fix TypeScript JSX errors in utility files (`lib/font-utils.ts` and `lib/seo-utils.ts`).
+    2.  Update Next.js to resolve moderate security vulnerability.
+    3.  Update other dependencies.
+    4.  Resolve linter issues.
+
+---
+
+## 🚀 Portfolio Enhancement Roadmap
+
+-   **Phase 1: Add High-Impact Features (Focus Here Now)**
+    1.  **Implement a Blog or "Notes" Section with a Headless CMS:** Integrate a headless CMS like Sanity.io or Contentful. Build the frontend in Next.js using Server Components to fetch posts.
+    2.  **Create Interactive Project Case Studies:** Create a dedicated, detailed page for each project detailing the problem, tech stack, solution, and outcome.
+    3.  **Add a "Wow" Feature: A Real-Time Guestbook:** Use Next.js Server Actions to write messages to a database (Vercel Postgres or Supabase). Use Next.js's `revalidatePath` or a library like SWR to have new messages appear for all users in near real-time.
+
+-   **Phase 2: Technical Debt & Polish (Schedule for Later)**
+    1.  **Address Remaining Issues:** Fix remaining TypeScript errors and ESLint warnings.
+    2.  **Accessibility Audit:** Use browser tools like Lighthouse to audit your site for accessibility compliance.
+    3.  **Performance Tuning:** Profile your site's performance and optimize where needed.

@@ -1,0 +1,255 @@
+
+---
+
+description: AI rules derived by SpecStory from the project AI interaction history
+globs: \*
+
+---
+
+## 🏛️ ARCHITECTURE OVERVIEW
+
+This is a **multilingual-first** Next.js 15 portfolio with sophisticated internationalization and RTL support as its core architectural challenge.
+
+**Tech Stack**: Next.js 15, React 19, TypeScript, Tailwind CSS, pnpm  
+**Key Dependencies**: Radix UI, Framer Motion, next-themes, zod, Resend
+**Hosting**: Vercel with security headers and performance optimizations
+
+**Critical Files**:
+
+- `middleware.ts` - Entry point for i18n, handles locale detection and redirects
+- `app/[locale]/layout.tsx` - Sets up language context, directionality, fonts
+- `config/language.config.ts` - Single source of truth for language definitions
+- `context/translations.ts` - Type-safe translation keys and translation system
+- `next.config.mjs` - Security headers, image domains, rewrites
+
+## 🌍 INTERNATIONALIZATION (I18N) - MOST CRITICAL
+
+**5 Languages**: en, zh, ms, ta, ar (with full RTL support for Arabic)
+
+### Translation Workflow
+
+1. **Middleware** (`middleware.ts`): Auto-detects locale from headers/cookies, redirects to `/[locale]/path`
+2. **Translation Hook**: `useTranslation()` from `context/language-context.tsx`
+3. **Adding New Text**: Update `TranslationKey` type in `context/translations.ts`, add keys to all language objects
+4. **Usage Pattern**:
+
+```tsx
+const { t, isRTL } = useTranslation();
+const text = t("nav.about"); // Type-safe translation
+const spacing = `${isRTL ? "mr-4" : "ml-4"}`; // RTL-aware spacing
+```
+
+### RTL Support
+
+- **Layout**: `app/[locale]/layout.tsx` dynamically sets `dir="rtl"` for Arabic
+- **Styling**: Use Tailwind logical properties (`ms-2` not `ml-2`, `text-start` not `text-left`)
+- **Fonts**: Language-specific fonts loaded via CSS variables (`--font-inter`, `--font-noto-arabic`)
+- **Utilities**: `lib/utils.ts` contains RTL-aware margin/padding helpers and text expansion factors
+
+## 🎨 COMPONENTS & STYLING
+
+### UI Component Pattern
+
+**Location**: `components/ui/` - Built on Radix UI primitives
+**Pattern**: Use `cva` (Class Variance Authority) for variants + `cn()` for class merging
+
+```tsx
+// Standard UI component structure
+const buttonVariants = cva("base-classes", {
+  variants: { variant: {...}, size: {...} }
+})
+const Button = ({ className, variant, size, ...props }) => (
+  <Comp className={cn(buttonVariants({ variant, size, className }))} {...props} />
+)
+```
+
+### Component Organization
+
+- **UI Primitives**: `components/ui/[component].tsx` (button, card, dialog, etc.)
+- **Feature Components**: `app/components/[ComponentName].tsx` (Hero, About, Projects)
+- **Dev Tools**: `app/components/terminal/` - Interactive terminal and system monitor
+- **Icons**: Custom `Icon` component with SVG content in `app/components/Icon.tsx`
+
+### Server Actions & Validation
+
+- **Pattern**: `app/actions/` contains server actions with timeout protection
+- **Validation**: Zod schemas with multilingual error messages in `lib/action-utils.ts`
+- **Example**: Contact form uses `submitContact()` with language-aware validation
+
+```typescript
+// Server action pattern
+export async function submitContact(formData: ContactFormData) {
+  return withTimeout(async () => {
+    const schema = createContactSchema(formData.language);
+    return validateAction(
+      formData,
+      schema,
+      formData.language,
+      async (validData) => {
+        // Implementation
+      }
+    );
+  }, 5000);
+}
+```
+
+## 🚀 DEVELOPMENT WORKFLOW
+
+### Scripts & Commands
+
+- `pnpm dev` - Development server with hot reload
+- `pnpm build` - Production build with type checking
+- `pnpm start` - Production server
+- `pnpm lint` - ESLint (disabled during builds to prevent failures)
+
+### Adding New Features
+
+1. **New Text**: Add to `TranslationKey` type and all language objects in `context/translations.ts`
+2. **New Component**: Follow Radix UI + CVA pattern for UI components, use feature component pattern for page sections
+3. **Server Actions**: Add to `app/actions/` with timeout protection and Zod validation
+4. **Styling**: Use Tailwind logical properties for RTL support, `cn()` for conditional classes
+
+### Font Management
+
+- **System**: Multi-font loading in layouts with CSS variables
+- **Languages**: Inter (default), Noto Sans variants for specific languages
+- **Usage**: Applied automatically via language context, no manual font switching needed
+
+## 🐛 DEBUGGING & GOTCHAS
+
+### Common Issues
+
+- **Terminal exit code -1073741510**: Process terminated, restart terminal
+- **RTL layout broken**: Check `isRTL` usage and use logical properties (`ms-` not `ml-`)
+- **Translation missing**: Verify key exists in all language objects in `context/translations.ts`
+- **Font not loading**: Ensure CSS variables defined in layout and font files imported
+
+### RTL Development
+
+- Use `ms-2` instead of `ml-2` for margins
+- Use `text-start` instead of `text-left` for text alignment
+- Test with Arabic locale to verify RTL layout works
+- Check `lib/utils.ts` for RTL-aware utility functions
+
+### Performance Tips
+
+- Images optimized automatically through Vercel config
+- Font preloading handled in layouts
+- Server actions have 5s timeout protection
+- Static generation for locale pages
+
+## 🔒 SECURITY & CONFIGURATION
+
+**Security Headers** (`next.config.mjs`):
+
+- CSP, HSTS, X-Frame-Options, nosniff protection
+- Production console removal for security
+
+**Environment Setup**:
+
+- Use GitHub noreply email: `git config --global user.email "username@users.noreply.github.com"`
+- Branch protection with linear history
+- Prioritize Dependabot security updates
+
+## AI AGENT GUIDANCE
+
+To enhance AI agent productivity within this codebase, the following architectural insights and patterns are crucial:
+
+**Multilingual Architecture**: This is a sophisticated internationalized portfolio with 5 languages (English, Chinese, Malay, Tamil, Arabic) featuring:
+
+- Middleware-driven locale detection and auto-routing (`middleware.ts` and `app/[locale]/`)
+- Comprehensive RTL support for Arabic with dynamic CSS classes (driven by `isRTL()` in `lib/utils.ts`)
+- Language-specific font loading and text expansion calculations (`config/language.config.ts` and `lib/utils.ts`)
+- Type-safe translation system with structured keys (`context/translations.ts` and `context/language-context.tsx`)
+
+**Modern Tech Stack**: Built on Next.js 15 with React 19, featuring:
+
+- Server actions with timeout protection and multilingual validation (`app/actions/` and `lib/action-utils.ts`)
+- Radix UI component system with custom variants (`components/ui/`)
+- Framer Motion animations (`app/globals.css`)
+- Comprehensive security headers and performance optimizations (`next.config.mjs`)
+
+**Unique Features**:
+
+- Developer interface with terminal and system monitor overlays (`app/components/terminal/`)
+- Complex RTL layout logic with margin/padding utilities (`lib/utils.ts` and Tailwind classes)
+- Language-aware responsive breakpoints (`lib/utils.ts`)
+- Server-side font optimization with multiple font families (`config/language.config.ts` and layouts)
+
+## DEVELOPMENT WORKFLOW
+
+**Scripts**:
+
+- `pnpm dev` - Development server
+- `pnpm build` - Production build
+- `pnpm start` - Production server
+- `pnpm lint` - ESLint (disabled during builds)
+
+**Key Files to Understand**:
+
+- `config/language.config.ts` - Language definitions and font mappings
+- `middleware.ts` - Locale detection and routing logic
+- `next.config.mjs` - Security headers, image domains, rewrites
+- `lib/utils.ts` - RTL utilities, responsive breakpoints, text calculations
+
+**Font System**:
+
+- Multi-font loading in layouts (Inter, Noto Sans variants)
+- CSS variables: `--font-inter`, `--font-noto-arabic`, etc.
+- Language-specific font family switching via context
+
+**State Management**: React Context for language state, no external state library
+
+## CODING CONVENTIONS
+
+**File Organization**:
+
+- Page components: `app/components/[ComponentName].tsx`
+- UI primitives: `components/ui/[component].tsx`
+- Utilities: `lib/[feature].ts`, `hooks/use-[feature].ts`
+- Context: `context/[feature]-context.tsx` + provider
+
+**Styling**:
+
+- Tailwind CSS with `cn()` utility for conditional classes
+- Custom CSS in `app/globals.css` for complex animations
+- Dark theme via `next-themes` with system detection
+
+**Type Safety**:
+
+- Strict TypeScript with language types: `Language`, `TranslationKey`
+- Zod validation for forms with multilingual error handling
+- Proper typing for context providers and hooks
+
+## SECURITY & PERFORMANCE
+
+**Security Headers** (in `next.config.mjs`):
+
+- CSP, HSTS, X-Frame-Options, nosniff protection
+- Production console removal
+
+**Performance**:
+
+- Image optimization with Vercel domains
+- Font preloading and display swap
+- Static generation for locale pages
+- Timeout protection on server actions (5s default)
+
+**Git Workflow**:
+
+- Use GitHub noreply email: `git config --global user.email "username@users.noreply.github.com"`
+- Branch protection with linear history required
+- Prioritize Dependabot security updates
+
+## DEBUGGING
+
+**Common Issues**:
+
+- Terminal exit code -1073741510: Process terminated, restart terminal
+- RTL layout issues: Check `isRTL` usage and margin/padding classes
+- Translation missing: Verify key exists in `context/translations.ts`
+- Font loading: Ensure CSS variables are defined in layout
+
+## ADDITIONAL RESOURCES
+
+`.github/copilot-instructions.md`: This file contains specific instructions for AI agents working on this codebase. It details architectural patterns, conventions, and key workflows.

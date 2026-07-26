@@ -1,0 +1,46 @@
+
+## HEADERS
+
+## TECH STACK
+
+## PROJECT DOCUMENTATION & CONTEXT SYSTEM
+
+## CODING STANDARDS
+
+## WORKFLOW & RELEASE RULES
+
+### Git Workflow
+
+*   **GitHub Email Configuration**: Ensure Git uses the GitHub `noreply` email address to prevent exposure of private email addresses.
+
+    ```bash
+    git config --global user.email "your_username@users.noreply.github.com"
+    ```
+
+    If commits have already been made with a private email, amend the commit:
+
+    ```bash
+    git commit --amend --author="Your Name <your_username@users.noreply.github.com>"
+    ```
+
+    Force-push the amended commit:
+
+    ```bash
+    git push origin main --force
+    ```
+*   **Branch Protection Rules**: To protect branches, these rules should be enabled in GitHub's "Rulesets/New branch ruleset" settings:
+    *   Restrict deletions
+    *   Block force pushes
+    *   Require a pull request before merging
+    *   Require status checks to pass
+    *   Require signed commits
+    *   Require linear history
+
+### Pull Requests
+
+*   **Dependabot PRs**: Prioritize Dependabot pull requests, especially for security-related updates. Review and merge these PRs after confirming that builds and tests pass.
+*   **Next.js Updates**: Pay close attention to Next.js updates, especially those that address security vulnerabilities. Upgrade to the versions specified in security advisories.
+
+## DEBUGGING
+
+*   **Terminal Exit Code -1073741510**: This error code usually indicates that the process was terminated by the user. Try restarting the terminal, checking the default shell, and ensuring VS Code is updated.

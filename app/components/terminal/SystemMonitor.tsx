@@ -32,7 +32,7 @@ export default function SystemMonitor({ onClose }: { onClose: () => void }): Rea
   const [memoryUsage, setMemoryUsage] = useState<number>(0)
   const [networkActivity, setNetworkActivity] = useState<number>(0)
   const mounted = useMounted()
-  const { t, language } = useTranslation()
+  const { t, language, isRTL } = useTranslation()
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -63,7 +63,7 @@ export default function SystemMonitor({ onClose }: { onClose: () => void }): Rea
       {/* Close button */}
       <button
         onClick={onClose}
-        className="absolute top-2 right-2 text-gray-400 hover:text-white transition-colors"
+        className={`${isRTL ? "absolute top-2 left-2" : "absolute top-2 right-2"} text-gray-400 hover:text-white transition-colors`}
         aria-label="Close System Monitor"
       >
         <X size={16} />
@@ -78,7 +78,7 @@ export default function SystemMonitor({ onClose }: { onClose: () => void }): Rea
 
           <div className="flex items-center justify-between flex-wrap gap-2">
             <div className="flex items-center">
-              <Clock className="text-blue-400 mr-2" size={18} />
+              <Clock className="text-blue-400 me-2" size={18} />
               <span className="text-gray-300 font-mono">{t("systemMonitor.systemTime")}</span>
             </div>
             <span className="text-blue-400 font-mono">
@@ -93,7 +93,7 @@ export default function SystemMonitor({ onClose }: { onClose: () => void }): Rea
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
-                  <Cpu className="text-blue-500 mr-2" size={18} />
+                  <Cpu className="text-blue-500 me-2" size={18} />
                   <span className="text-gray-300 font-mono">{t("systemMonitor.cpuUsage")}</span>
                 </div>
                 <span className="text-blue-500 font-mono">{cpuUsage}%</span>
@@ -112,7 +112,7 @@ export default function SystemMonitor({ onClose }: { onClose: () => void }): Rea
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
-                  <HardDrive className="text-indigo-500 mr-2" size={18} />
+                  <HardDrive className="text-indigo-500 me-2" size={18} />
                   <span className="text-gray-300 font-mono">{t("systemMonitor.memoryUsage")}</span>
                 </div>
                 <span className="text-indigo-500 font-mono">{memoryUsage}%</span>
@@ -131,7 +131,7 @@ export default function SystemMonitor({ onClose }: { onClose: () => void }): Rea
             <div className="space-y-2 sm:col-span-2">
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
-                  <Activity className="text-purple-500 mr-2" size={18} />
+                  <Activity className="text-purple-500 me-2" size={18} />
                   <span className="text-gray-300 font-mono">{t("systemMonitor.networkActivity")}</span>
                 </div>
                 <span className="text-purple-500 font-mono">{networkActivity} KB/s</span>
@@ -159,7 +159,7 @@ export default function SystemMonitor({ onClose }: { onClose: () => void }): Rea
               <div key={index} className="space-y-1">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center">
-                    <Zap className="text-blue-400 mr-2" size={14} />
+                    <Zap className="text-blue-400 me-2" size={14} />
                     <span className="text-gray-300 font-mono text-sm">{skill.name}</span>
                   </div>
                   <span className="text-blue-400 font-mono text-sm">{skill.level}%</span>

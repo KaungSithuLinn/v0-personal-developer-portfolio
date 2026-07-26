@@ -207,7 +207,7 @@ export default function Education() {
                                    className="text-blue-600 dark:text-blue-400 ms-1 inline-flex items-center hover:underline"
                                 >
                                   {cert.verificationUrl.replace("https://", "")}
-                                  <ExternalLink className="w-3 h-3 ml-1" />
+                                   <ExternalLink className="w-3 h-3 ms-1" />
                                 </a>
                               </p>
                               <p className="text-gray-700 dark:text-gray-300">

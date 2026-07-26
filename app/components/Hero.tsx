@@ -14,7 +14,7 @@ export default function Hero() {
       className="min-h-screen pt-28 pb-20 bg-gradient-to-br from-indigo-50 to-blue-100 dark:from-gray-900 dark:to-blue-900 transition-colors duration-300 overflow-hidden relative"
     >
       <div className="container mx-auto px-6 relative">
-        <div className={`flex flex-col ${isRTL ? "items-end text-right" : "items-start text-left"} max-w-[800px] mx-auto relative`}>
+        <div className={`flex flex-col ${isRTL ? "items-end text-end" : "items-start text-start"} max-w-[800px] mx-auto relative`}>
           <motion.h1
             className="text-4xl sm:text-6xl font-bold mb-4"
             initial={{ opacity: 0, y: 20 }}

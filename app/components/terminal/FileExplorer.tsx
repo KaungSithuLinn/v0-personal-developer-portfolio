@@ -114,6 +114,7 @@ interface FileItemProps {
 function FileItemComponent({ item, level }: FileItemProps): ReactElement {
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const [isHovered, setIsHovered] = useState<boolean>(false)
+  const { isRTL } = useTranslation()
 
   const toggleOpen = (): void => {
     if (item.type === "folder") {
@@ -127,17 +128,17 @@ function FileItemComponent({ item, level }: FileItemProps): ReactElement {
         className={`flex items-center py-1 px-2 rounded-md ${
           isHovered ? "bg-blue-900/40" : "bg-transparent"
         } transition-colors cursor-pointer`}
-        style={{ paddingLeft: `${level * 16}px` }}
+        style={{ paddingInlineStart: `${level * 16}px` }}
         onClick={toggleOpen}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
         {item.type === "folder" ? (
-          <div className="mr-1">{isOpen ? <ChevronDown size={16} /> : <ChevronRight size={16} />}</div>
+          <div className={`${isRTL ? "ms-1" : "me-1"}`}>{isOpen ? <ChevronDown size={16} /> : <ChevronRight size={16} />}</div>
         ) : (
-          <div className="w-4 mr-1"></div>
+          <div className={`w-4 ${isRTL ? "ms-1" : "me-1"}`}></div>
         )}
-        <div className="mr-2">{item.icon}</div>
+        <div className={`${isRTL ? "ms-2" : "me-2"}`}>{item.icon}</div>
         <span className="text-gray-300 font-mono text-sm">{item.name}</span>
       </div>
 
@@ -145,7 +146,7 @@ function FileItemComponent({ item, level }: FileItemProps): ReactElement {
         <motion.div
           initial={{ opacity: 0, y: 5 }}
           animate={{ opacity: 1, y: 0 }}
-          className="ml-12 text-xs text-gray-400 font-mono"
+          className={`${isRTL ? "ms-12" : "ml-12"} text-xs text-gray-400 font-mono`}
         >
           {item.description}
         </motion.div>

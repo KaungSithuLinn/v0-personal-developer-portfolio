@@ -1,0 +1,183 @@
+
+# GitHub Copilot Instructions for Kaung Sithu Linn's Portfolio
+
+Welcome, AI agent! This guide will help you understand the key architectural patterns, conventions, and workflows for this multilingual Next.js 15 portfolio website. The core design principle is **"multilingual-first"**.
+
+## PROJECT OVERVIEW
+
+This is a highly customized portfolio built with Next.js (App Router), React 19, and Tailwind CSS. Its primary architectural challenge is robust internationalization (i18n) with full Right-to-Left (RTL) language support.
+
+-   **Tech Stack**: Next.js 15, React 19, TypeScript, Tailwind CSS, Framer Motion, Radix UI (primitives), Zod (validation), Resend (email). Hosted on Vercel.
+-   **Critical Files**:
+    -   `middleware.ts`: The entry point for i18n. It detects the user's locale and redirects to the correct language path (e.g., `/en`, `/ar`).
+    -   `config/language.config.ts`: The single source of truth for all supported languages and their properties (`dir`, `font`, `expansionRatio`).
+    -   `app/[locale]/layout.tsx`: The main layout for localized pages. It sets the `dir` attribute, loads language-specific fonts via CSS variables, and provides the translation context.
+    -   `lib/utils.ts`: Contains the `cn` utility for Tailwind class merging and other shared functions.
+    -   `app/[locale]/studio/[[...index]]/page.tsx`: The route file for the Sanity Studio.
+
+---
+
+## CODE STYLE
+
+(No updates in this section)
+
+---
+
+## FOLDER ORGANIZATION
+
+(No updates in this section)
+
+---
+
+## TECH STACK
+
+(No updates in this section)
+
+---
+
+## PROJECT-SPECIFIC STANDARDS
+
+(No updates in this section)
+
+---
+
+## WORKFLOW & RELEASE RULES
+
+(No updates in this section)
+
+---
+
+## REFERENCE EXAMPLES
+
+(No updates in this section)
+
+---
+
+## PROJECT DOCUMENTATION & CONTEXT SYSTEM
+
+(No updates in this section)
+
+---
+
+## DEBUGGING
+
+-   **Running the Project**: `npm run dev`
+-   **Linting**: `npm run lint` to check for code quality and style issues.
+-   **Environment**: Copy `.env.example` to `.env.local` and add your `RESEND_API_KEY`.
+-   **RTL Gotcha**: When testing RTL, ensure that flexbox layouts and text alignment behave as expected. Margins, padding, and positioning are common failure points if logical properties are not used.
+-   **Performance**: Fonts are a key performance factor. They are preloaded in the root layout, and different font subsets are loaded per language via CSS variables to keep the initial payload small.
+-   **Next.js 15 `params` Error:** In `app/[locale]/layout.tsx` and `app/[locale]/page.tsx`, `params` should be passed as a whole object and destructure the `locale` inside the component body instead of in the function signature. The same pattern applies to the `generateMetadata` function in `app/[locale]/layout.tsx`. The following code blocks show the required changes:
+
+    **In `app/[locale]/layout.tsx`:**
+
+    *   **Change this:**
+
+        ```tsx
+        export default function LocaleLayout({
+          children,
+          params: { locale },
+        }: {
+          children: React.ReactNode
+          params: { locale: Language }
+        }) {
+        ```
+
+    *   **To this** (we pass `params` as a whole object and destructure it inside):
+
+        ```tsx
+        export default async function LocaleLayout({ // Add 'async'
+          children,
+          params,
+        }: {
+          children: React.ReactNode
+          params: { locale: Language }
+        }) {
+          const { locale } = await params;
+        }
+        ```
+
+    *   **Also, apply the same pattern to the `generateMetadata` function in that file.**
+
+        *   **Change this:**
+            ```tsx
+            export async function generateMetadata({
+              params,
+            }: {
+              params: { locale: Language };
+            }): Promise<Metadata> {
+              const { locale } = params; // This is the error
+              return {
+                title: `Kaung Sithu Linn - ${locale === "en" ? "Software Developer Portfolio" : "Portfolio"}`,
+                description:
+                  "Kaung Sithu Linn's portfolio website showcasing his skills as a software developer.",
+              };
+            }
+            ```
+        *   **To this:**
+            ```tsx
+            export async function generateMetadata({ params }: { params: { locale: Language } }) {
+              const { locale } = await params; // Add 'await' here
+              return {
+                title: `Kaung Sithu Linn - ${locale === "en" ? "Software Developer Portfolio" : "Portfolio"}`,
+                description:
+                  "Kaung Sithu Linn's portfolio website showcasing his skills as a software developer.",
+              };
+            }
+            ```
+
+    **In `app/[locale]/page.tsx`:**
+
+    *   **Change this:**
+
+        ```tsx
+        export default function Home({ params: { locale } }: Props) {
+        ```
+
+    *   **To this:**
+
+        ```tsx
+        export default async function Home({ params }: Props) { // Add 'async'
+          const { locale } = await params;
+        }
+        ```
+-   **Conflicting Dynamic Route**: If the development server fails to start with the error `[Error: You cannot use different slug names for the same dynamic path ('index' !== 'tool').]`, it means there's a conflict between the new Sanity Studio route (`app/studio/[[...index]]/page.tsx`) and an older one. Remove the conflicting route by deleting the directory named `[tool]` or `[[...tool]]` inside the `app/studio/` directory.
+-   **Studio Location**: Move the entire `studio` directory from its current location into the `app/[locale]` directory.
+    *   **From (Current Path):** `app/studio`
+    *   **To (Correct Path):** `app/[locale]/studio`
+-   **Sanity Studio Route**: To fix 404 errors and correctly embed the Sanity Studio, create `app/[locale]/studio/[[...index]]/page.tsx` with the following content. Ensure the import path to `sanity.config.ts` is correct (4 levels up):
+
+    ```tsx
+    // app/[locale]/studio/[[...index]]/page.tsx
+
+    "use client";
+
+    import { NextStudio } from "next-sanity/studio";
+    import config from "../../../../sanity.config";
+
+    export default function StudioPage() {
+      //  Supports the same props as `import {Studio} from 'sanity'`
+      return <NextStudio config={config} />;
+    }
+    ```
+-   **Invalid HTML Structure:** The `app/[locale]/layout.tsx` file should not contain `<html>` or `<body>` tags. These tags are already defined in the root `app/layout.tsx` file. Remove the redundant tags from the `app/[locale]/layout.tsx` file. The `ThemeProvider` should also only exist in the root layout.
+    *   **Correct Code for `app/[locale]/layout.tsx`:**
+        ```tsx
+        export default async function LocaleLayout({ children, params }) {
+          // ...
+          // The <html> and <body> tags are already in the root layout (app/layout.tsx)
+          // This component should only return the content that goes INSIDE the body.
+          return (
+            <>
+              <DevInterface />
+              {children}
+            </>
+          );
+        }
+        ```
+-   **Sanity Studio Structure:** If the Sanity Studio crashes with the error `List items with same ID found (posts)`, it means there are duplicate IDs in the `structure` property of the `sanity.config.ts` file. Examine the configuration for the `structure` to ensure that every item in a list has a unique ID. This often happens in the logic for organizing posts by language, particularly if list items do not have explicit IDs defined.
+
+---
+
+## FINAL DOs AND DON'Ts
+
+(No updates in this section)
