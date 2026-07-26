@@ -47,7 +47,7 @@ export default function LanguageSelector() {
   return (
     <div className="relative language-selector">
       <motion.button
-        className="fixed top-20 sm:top-24 left-4 sm:left-6 z-50 p-2 sm:p-3 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-300"
+        className="fixed top-20 sm:top-24 left-4 sm:left-6 z-50 p-2 sm:p-3 rounded-full bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-lg hover:from-amber-600 hover:to-orange-700 transition-all duration-300"
         onClick={() => setIsOpen(!isOpen)}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}

@@ -85,7 +85,7 @@ export default function Contact() {
       <div className="container mx-auto px-6">
         <AnimatedSectionHeader title={t("contact.title")} />
 
-        <div className={`grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl mx-auto ${isRTL ? "md:flex-row-reverse" : ""}`}>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl mx-auto">
           {/* Contact Information */}
           <motion.div
             className="space-y-6"
@@ -95,7 +95,7 @@ export default function Contact() {
           >
             <h3 className="text-2xl font-semibold mb-4 dark:text-white">{t("contact.info")}</h3>
             
-            <div className={`flex items-center gap-4 ${isRTL ? "flex-row-reverse" : ""}`}>
+            <div className="flex items-center gap-4">
               <div className="p-3 rounded-full bg-blue-500/10 text-blue-500">
                 <Mail size={24} />
               </div>
@@ -110,7 +110,7 @@ export default function Contact() {
               </div>
             </div>
 
-            <div className={`flex items-center gap-4 ${isRTL ? "flex-row-reverse" : ""}`}>
+            <div className="flex items-center gap-4">
               <div className="p-3 rounded-full bg-green-500/10 text-green-500">
                 <Phone size={24} />
               </div>
@@ -125,7 +125,7 @@ export default function Contact() {
               </div>
             </div>
 
-            <div className={`flex items-center gap-4 ${isRTL ? "flex-row-reverse" : ""}`}>
+            <div className="flex items-center gap-4">
               <div className="p-3 rounded-full bg-purple-500/10 text-purple-500">
                 <MapPin size={24} />
               </div>
@@ -135,7 +135,7 @@ export default function Contact() {
               </div>
             </div>
 
-            <div className={`mt-8 ${isRTL ? "text-right" : ""}`}>
+            <div className="mt-8">
               <h4 className="text-xl font-semibold mb-2 dark:text-white">{t("contact.connect")}</h4>
               <p className="text-gray-600 dark:text-gray-400">{t("contact.connect.desc")}</p>
             </div>
@@ -160,8 +160,9 @@ export default function Contact() {
                 required
                 onChange={(e) => handleChange(e)}
                 onBlur={(e) => handleBlur(e)}
-                className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none transition-colors"
+                className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-800 focus:border-blue-500 outline-none transition-colors"
               />
+              {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
             </div>
 
             <div>
@@ -174,8 +175,9 @@ export default function Contact() {
                 name="email"
                 onChange={(e) => handleChange(e)}
                 onBlur={(e) => handleBlur(e)}
-                className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none transition-colors"
+                className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-800 focus:border-blue-500 outline-none transition-colors"
               />
+              {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
             </div>
 
             <div>
@@ -188,8 +190,9 @@ export default function Contact() {
                 onChange={(e) => handleChange(e)}
                 onBlur={(e) => handleBlur(e)}
                 name="subject"
-                className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none transition-colors"
+                className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-800 focus:border-blue-500 outline-none transition-colors"
               />
+              {errors.subject && <p className="text-red-500 text-sm mt-1">{errors.subject}</p>}
             </div>
 
             <div>
@@ -202,8 +205,9 @@ export default function Contact() {
                 rows={4}
                 required
                 onChange={handleChange}
-                className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none transition-colors"
+                className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-800 focus:border-blue-500 outline-none transition-colors"
               />
+              {errors.message && <p className="text-red-500 text-sm mt-1">{errors.message}</p>}
             </div>
 
             <button

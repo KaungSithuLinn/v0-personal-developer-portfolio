@@ -111,16 +111,9 @@ body {
   transition: background-color 0.3s, color 0.3s;
 }
 
-/* Smooth transitions for language changes */
-* {
-  transition-property: opacity, transform;
-  transition-duration: 300ms;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.language-transition * {
-  opacity: 0.5;
-  transform: scale(0.98);
+/* Theme transitions */
+body, .theme-aware {
+  transition: background-color 0.3s, color 0.3s;
 }
 
 /* RTL Support */
@@ -128,68 +121,15 @@ body {
   text-align: right;
 }
 
-[dir="rtl"] .reverse-flex {
-  flex-direction: row-reverse;
-}
-
-[dir="rtl"] .reverse-margin {
-  margin-right: 0;
-  margin-left: auto;
-}
-
-[dir="rtl"] .reverse-padding {
-  padding-right: 0;
-  padding-left: 1rem;
-}
-
-/* RTL margin adjustments */
-[dir="rtl"] .ml-1 { margin-left: 0; margin-right: 0.25rem; }
-[dir="rtl"] .ml-2 { margin-left: 0; margin-right: 0.5rem; }
-[dir="rtl"] .ml-3 { margin-left: 0; margin-right: 0.75rem; }
-[dir="rtl"] .ml-4 { margin-left: 0; margin-right: 1rem; }
-[dir="rtl"] .ml-6 { margin-left: 0; margin-right: 1.5rem; }
-[dir="rtl"] .ml-8 { margin-left: 0; margin-right: 2rem; }
-[dir="rtl"] .ml-10 { margin-left: 0; margin-right: 2.5rem; }
-[dir="rtl"] .ml-12 { margin-left: 0; margin-right: 3rem; }
-
-[dir="rtl"] .mr-1 { margin-right: 0; margin-left: 0.25rem; }
-[dir="rtl"] .mr-2 { margin-right: 0; margin-left: 0.5rem; }
-[dir="rtl"] .mr-3 { margin-right: 0; margin-left: 0.75rem; }
-[dir="rtl"] .mr-4 { margin-right: 0; margin-left: 1rem; }
-[dir="rtl"] .mr-6 { margin-right: 0; margin-left: 1.5rem; }
-[dir="rtl"] .mr-8 { margin-right: 0; margin-left: 2rem; }
-[dir="rtl"] .mr-10 { margin-right: 0; margin-left: 2.5rem; }
-[dir="rtl"] .mr-12 { margin-right: 0; margin-left: 3rem; }
-
-/* RTL padding adjustments */
-[dir="rtl"] .pl-1 { padding-left: 0; padding-right: 0.25rem; }
-[dir="rtl"] .pl-2 { padding-left: 0; padding-right: 0.5rem; }
-[dir="rtl"] .pl-3 { padding-left: 0; padding-right: 0.75rem; }
-[dir="rtl"] .pl-4 { padding-left: 0; padding-right: 1rem; }
-
-[dir="rtl"] .pr-1 { padding-right: 0; padding-left: 0.25rem; }
-[dir="rtl"] .pr-2 { padding-right: 0; padding-left: 0.5rem; }
-[dir="rtl"] .pr-3 { padding-right: 0; padding-left: 0.75rem; }
-[dir="rtl"] .pr-4 { padding-right: 0; padding-left: 1rem; }
-
-/* RTL text alignment */
-[dir="rtl"] .text-left { text-align: right; }
-[dir="rtl"] .text-right { text-align: left; }
-
-/* RTL transforms */
-[dir="rtl"] .translate-x-1 { --tw-translate-x: -0.25rem; }
-[dir="rtl"] .translate-x-2 { --tw-translate-x: -0.5rem; }
-[dir="rtl"] .translate-x-3 { --tw-translate-x: -0.75rem; }
-[dir="rtl"] .translate-x-4 { --tw-translate-x: -1rem; }
-[dir="rtl"] .-translate-x-1 { --tw-translate-x: 0.25rem; }
-[dir="rtl"] .-translate-x-2 { --tw-translate-x: 0.5rem; }
-[dir="rtl"] .-translate-x-3 { --tw-translate-x: 0.75rem; }
-[dir="rtl"] .-translate-x-4 { --tw-translate-x: 1rem; }
-
-/* RTL flexbox direction */
-[dir="rtl"] .flex-row { flex-direction: row-reverse; }
-
 /* Language-specific typography adjustments */
+[lang="ar"] {
+  letter-spacing: 0;
+  line-height: 1.8;
+}
+
+[lang="zh"] {
+  letter-spacing: 0.05em;
+}
 [lang="ar"] {
   letter-spacing: 0;
   line-height: 1.8;
@@ -231,9 +171,8 @@ body {
 }
 
 /* Ensure smooth theme transitions */
-* {
-  transition-property: color, background-color, border-color;
-  transition-duration: 200ms;
+body, .theme-aware {
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
 }
 
 /* Language transition effects */
@@ -271,11 +210,6 @@ h1, h2, h3, h4, h5, h6, p, span, a, button {
 /* Hero image container */
 .hero-image-container {
   z-index: 30;
-}
-
-/* Base border color */
-* {
-  border-color: var(--border);
 }
 
 /* Terminal and system monitor buttons */

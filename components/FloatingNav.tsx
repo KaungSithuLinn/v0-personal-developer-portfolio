@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef, useMemo } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Home, User, Briefcase, Wrench, FolderGit2, GraduationCap, PhoneCall } from "lucide-react"
 import { useTranslation } from "@/context/language-utils"
@@ -9,23 +9,27 @@ export default function FloatingNav() {
   const [activeSection, setActiveSection] = useState("")
   const [visible, setVisible] = useState(true)
   const { t, isRTL, isTransitioning } = useTranslation()
+  const lastScrollRef = useRef(0)
 
-  const navItems = [
-    { id: "home", label: t("nav.home"), icon: Home },
-    { id: "about", label: t("nav.about"), icon: User },
-    { id: "experience", label: t("nav.experience"), icon: Briefcase },
-    { id: "skills", label: t("nav.skills"), icon: Wrench },
-    { id: "projects", label: t("nav.projects"), icon: FolderGit2 },
-    { id: "education", label: t("nav.education"), icon: GraduationCap },
-    { id: "contact", label: t("nav.contact"), icon: PhoneCall },
-  ]
+  const navItems = useMemo(
+    () => [
+      { id: "home", label: t("nav.home"), icon: Home },
+      { id: "about", label: t("nav.about"), icon: User },
+      { id: "experience", label: t("nav.experience"), icon: Briefcase },
+      { id: "skills", label: t("nav.skills"), icon: Wrench },
+      { id: "projects", label: t("nav.projects"), icon: FolderGit2 },
+      { id: "education", label: t("nav.education"), icon: GraduationCap },
+      { id: "contact", label: t("nav.contact"), icon: PhoneCall },
+    ],
+    [t]
+  )
 
   useEffect(() => {
     const handleScroll = () => {
       // Hide nav when scrolling down, show when scrolling up
       const currentScroll = window.scrollY
-      setVisible(currentScroll < lastScroll || currentScroll < 100)
-      lastScroll = currentScroll
+      setVisible(currentScroll < lastScrollRef.current || currentScroll < 100)
+      lastScrollRef.current = currentScroll
 
       // Update active section
       const sections = navItems.map((item) => document.getElementById(item.id)).filter(Boolean)
@@ -39,10 +43,9 @@ export default function FloatingNav() {
       }
     }
 
-    let lastScroll = 0
     window.addEventListener("scroll", handleScroll, { passive: true })
     return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+  }, [navItems])
 
   return (
     <AnimatePresence>
@@ -61,24 +64,24 @@ export default function FloatingNav() {
             {navItems.map(({ id, label, icon: Icon }) => (
               <li key={id}>
                 <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-                  <a
-                    href={`#${id}`}
-                    className={`block p-2 rounded-full transition-colors relative group ${
-                      activeSection === id
-                        ? "text-blue-400 bg-blue-500/10"
-                        : "text-gray-400 hover:text-blue-400 hover:bg-blue-500/10"
-                    }`}
-                    aria-label={label}
-                  >
-                    <Icon size={20} />
-                    <span
-                      className={`absolute ${
-                        isRTL ? "right-full mr-2" : "left-full ml-2"
-                      } top-1/2 -translate-y-1/2 px-2 py-1 rounded bg-gray-900 text-gray-200 text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none`}
-                    >
-                      {label}
-                    </span>
-                  </a>
+                   <button
+                     onClick={() => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" })}
+                     className={`block p-2 rounded-full transition-colors relative group ${
+                       activeSection === id
+                         ? "text-blue-400 bg-blue-500/10"
+                         : "text-gray-400 hover:text-blue-400 hover:bg-blue-500/10"
+                     }`}
+                     aria-label={label}
+                   >
+                     <Icon size={20} />
+                     <span
+                       className={`absolute ${
+                         isRTL ? "start-full ms-2" : "left-full ml-2"
+                       } top-1/2 -translate-y-1/2 px-2 py-1 rounded bg-gray-900 text-gray-200 text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none`}
+                     >
+                       {label}
+                     </span>
+                   </button>
                 </motion.div>
               </li>
             ))}

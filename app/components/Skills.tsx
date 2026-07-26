@@ -7,7 +7,7 @@ import AnimatedSectionHeader from "./AnimatedSectionHeader"
 import { useTranslation } from "@/context/language-utils"
 
 export default function Skills() {
-  const { t } = useTranslation()
+  const { t, isRTL } = useTranslation()
 
   const skills = [
     {
@@ -70,7 +70,7 @@ export default function Skills() {
   return (
     <section
       id="skills"
-      className="py-20 bg-gradient-to-br from-indigo-50 to-blue-100 dark:from-gray-900 dark:to-blue-900 transition-colors duration-300 overflow-hidden relative"
+      className="py-20 bg-gradient-to-br from-purple-50 to-pink-100 dark:from-gray-900 dark:to-pink-900 transition-colors duration-300 overflow-hidden relative"
     >
       <div className="container mx-auto px-6 relative z-10">
         <AnimatedSectionHeader title={t("skills.title")} />
@@ -84,7 +84,7 @@ export default function Skills() {
           {skills.map((skill, index) => (
             <motion.div
               key={index}
-              className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
+              className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-xl ring-1 ring-gray-200/50 dark:ring-gray-700/50 hover:ring-blue-500/30 transition-all duration-300"
               variants={item}
               whileHover={{ scale: 1.03 }}
             >
@@ -103,7 +103,7 @@ export default function Skills() {
           transition={{ duration: 0.5 }}
         >
           <h3 className="text-2xl font-semibold mb-6 dark:text-white flex items-center">
-            <Zap className="w-6 h-6 mr-2 text-blue-500" />
+            <Zap className="w-6 h-6 me-2 text-blue-500" />
             {t("skills.programming")}
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -112,7 +112,7 @@ export default function Skills() {
               <div className="space-y-2">
                 {["JavaScript", "TypeScript", "React", "Next.js", "HTML/CSS", "Tailwind CSS"].map((tech, idx) => (
                   <div key={idx} className="flex items-center">
-                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5 mr-2">
+                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5 me-2">
                       <motion.div
                         className="bg-blue-600 dark:bg-blue-500 h-2.5 rounded-full"
                         initial={{ width: 0 }}
@@ -121,7 +121,7 @@ export default function Skills() {
                         transition={{ duration: 1, delay: idx * 0.1 }}
                       />
                     </div>
-                    <span className="text-sm text-gray-600 dark:text-gray-300 w-24">{tech}</span>
+                    <span className="text-sm text-gray-600 dark:text-gray-300 min-w-[5rem]">{tech}</span>
                   </div>
                 ))}
               </div>
@@ -132,7 +132,7 @@ export default function Skills() {
               <div className="space-y-2">
                 {["Node.js", "Python", "Java", "C++", ".NET", "Express"].map((tech, idx) => (
                   <div key={idx} className="flex items-center">
-                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5 mr-2">
+                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5 me-2">
                       <motion.div
                         className="bg-green-600 dark:bg-green-500 h-2.5 rounded-full"
                         initial={{ width: 0 }}
@@ -141,7 +141,7 @@ export default function Skills() {
                         transition={{ duration: 1, delay: idx * 0.1 }}
                       />
                     </div>
-                    <span className="text-sm text-gray-600 dark:text-gray-300 w-24">{tech}</span>
+                    <span className="text-sm text-gray-600 dark:text-gray-300 min-w-[5rem]">{tech}</span>
                   </div>
                 ))}
               </div>
@@ -152,7 +152,7 @@ export default function Skills() {
               <div className="space-y-2">
                 {["SQL", "MongoDB", "Machine Learning", "Data Analysis", "UI/UX Design", "DevOps"].map((tech, idx) => (
                   <div key={idx} className="flex items-center">
-                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5 mr-2">
+                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5 me-2">
                       <motion.div
                         className="bg-purple-600 dark:bg-purple-500 h-2.5 rounded-full"
                         initial={{ width: 0 }}
@@ -161,7 +161,7 @@ export default function Skills() {
                         transition={{ duration: 1, delay: idx * 0.1 }}
                       />
                     </div>
-                    <span className="text-sm text-gray-600 dark:text-gray-300 w-24">{tech}</span>
+                    <span className="text-sm text-gray-600 dark:text-gray-300 min-w-[5rem]">{tech}</span>
                   </div>
                 ))}
               </div>
@@ -169,7 +169,7 @@ export default function Skills() {
           </div>
         </motion.div>
       </div>
-      <div className="absolute bottom-0 right-0 w-64 h-64 -mb-32 -mr-32 opacity-20">
+      <div className={`absolute bottom-0 ${isRTL ? "left-0" : "right-0"} w-64 h-64 -mb-32 ${isRTL ? "-ml-32" : "-mr-32"} opacity-20`}>
         <Image src="/placeholder.svg?height=256&width=256" alt="Decorative background" width={256} height={256} />
       </div>
     </section>

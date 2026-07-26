@@ -84,7 +84,7 @@ export function useScreenReader() {
     document.body.appendChild(announcer)
     
     // Force a reflow
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    // eslint-disable-next-line no-unused-expressions
     announcer.offsetHeight
     
     // Set the message

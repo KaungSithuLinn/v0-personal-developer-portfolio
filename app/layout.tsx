@@ -38,7 +38,6 @@ const notoSansTamil = Noto_Sans_Tamil({
 export const metadata: Metadata = {
   title: "Kaung Sithu Linn - Portfolio",
   description: "Software developer portfolio specializing in full-stack development, fraud detection, and behavioral biometrics.",
-    generator: 'v0.app'
 }
 
 export default function RootLayout({

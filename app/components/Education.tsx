@@ -5,9 +5,11 @@ import { GraduationCap, Calendar, Award, BookOpen, ExternalLink, Check } from "l
 import Image from "next/image"
 import AnimatedSectionHeader from "./AnimatedSectionHeader"
 import { motion } from "framer-motion"
+import { useTranslation } from "@/context/language-utils"
 
 export default function Education() {
   const [expandedCert, setExpandedCert] = useState<number | null>(null)
+  const { t, isRTL } = useTranslation()
 
   const education = [
     {
@@ -96,21 +98,21 @@ export default function Education() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.2 }}
-                className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg transition-all duration-300 hover:shadow-2xl relative overflow-hidden"
+                className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg hover:shadow-2xl ring-1 ring-gray-200/50 dark:ring-gray-700/50 hover:ring-blue-500/30 transition-all duration-300 relative overflow-hidden"
               >
                 <div className="absolute top-0 left-0 w-32 h-32 bg-purple-200 dark:bg-purple-700 rounded-br-full z-0 opacity-50"></div>
                 <div className="relative z-10">
                   <h3 className="text-2xl font-semibold mb-2 dark:text-white flex items-center">
-                    <GraduationCap className="w-6 h-6 mr-2" />
+                     <GraduationCap className="w-6 h-6 me-2" />
                     {edu.degree}
                   </h3>
                   <p className="text-xl text-gray-600 dark:text-gray-300 mb-4">{edu.institution}</p>
                   <p className="text-gray-600 dark:text-gray-300 mb-4 flex items-center">
-                    <Calendar className="w-4 h-4 mr-2" />
+                     <Calendar className="w-4 h-4 me-2" />
                     {edu.period}
                   </p>
                   <h4 className="text-lg font-medium mb-2 dark:text-gray-200 flex items-center">
-                    <Award className="w-5 h-5 mr-2" />
+                     <Award className="w-5 h-5 me-2" />
                     Key Achievements:
                   </h4>
                   <ul className="list-disc list-inside space-y-2">
@@ -130,10 +132,10 @@ export default function Education() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg"
+            className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg ring-1 ring-gray-200/50 dark:ring-gray-700/50"
           >
             <h3 className="text-2xl font-semibold mb-6 dark:text-white flex items-center">
-              <BookOpen className="w-6 h-6 mr-2" />
+               <BookOpen className="w-6 h-6 me-2" />
               Certifications & Testamurs
             </h3>
             <div className="space-y-6">
@@ -180,9 +182,9 @@ export default function Education() {
                     <div className="p-4 border-t border-gray-200 dark:border-gray-700">
                       <p className="text-gray-700 dark:text-gray-300 mb-4">{cert.description}</p>
 
-                      {cert.image && (
-                        <div className="mb-4">
-                          <div className="relative w-full h-[500px] rounded-lg overflow-hidden shadow-md mb-4">
+                       {cert.image && (
+                         <div className="mb-4">
+                           <div className="relative w-full aspect-video sm:h-[500px] rounded-lg overflow-hidden shadow-md mb-4">
                             <Image
                               src={cert.image || "/placeholder.svg"}
                               alt={`${cert.title} Certificate`}
@@ -194,7 +196,7 @@ export default function Education() {
                           {cert.verificationUrl && cert.certId && (
                             <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
                               <h5 className="font-medium text-blue-700 dark:text-blue-300 mb-2 flex items-center">
-                                <Check className="w-4 h-4 mr-2" /> Verification Details
+                                 <Check className="w-4 h-4 me-2" /> Verification Details
                               </h5>
                               <p className="text-gray-700 dark:text-gray-300 mb-2">
                                 Verify the authenticity of this certificate at:
@@ -202,7 +204,7 @@ export default function Education() {
                                   href={cert.verificationUrl}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="text-blue-600 dark:text-blue-400 ml-1 inline-flex items-center hover:underline"
+                                   className="text-blue-600 dark:text-blue-400 ms-1 inline-flex items-center hover:underline"
                                 >
                                   {cert.verificationUrl.replace("https://", "")}
                                   <ExternalLink className="w-3 h-3 ml-1" />
@@ -220,7 +222,7 @@ export default function Education() {
                           {cert.verificationMessage && (
                             <div className="bg-gray-50 dark:bg-gray-700/30 p-4 rounded-lg">
                               <h5 className="font-medium text-gray-700 dark:text-gray-300 mb-2 flex items-center">
-                                <Check className="w-4 h-4 mr-2" /> Verification Information
+                                 <Check className="w-4 h-4 me-2" /> Verification Information
                               </h5>
                               <p className="text-gray-600 dark:text-gray-400">{cert.verificationMessage}</p>
                             </div>
@@ -236,7 +238,7 @@ export default function Education() {
                             rel="noopener noreferrer"
                             className="inline-flex items-center text-blue-600 dark:text-blue-400 hover:underline"
                           >
-                            Verify Certificate <ExternalLink className="w-4 h-4 ml-1" />
+                             Verify Certificate <ExternalLink className="w-4 h-4 ms-1" />
                           </a>
                         )}
                       </div>
@@ -248,7 +250,7 @@ export default function Education() {
           </motion.div>
         </div>
       </div>
-      <div className="absolute top-0 left-0 w-64 h-64 -mt-32 -ml-32 opacity-20">
+      <div className={`absolute top-0 ${isRTL ? "right-0" : "left-0"} w-64 h-64 -mt-32 ${isRTL ? "-mr-32" : "-ml-32"} opacity-20`}>
         <Image src="/placeholder.svg?height=256&width=256" alt="Decorative background" width={256} height={256} />
       </div>
     </section>

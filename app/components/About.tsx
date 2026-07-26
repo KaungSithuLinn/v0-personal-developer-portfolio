@@ -6,7 +6,7 @@ import Image from "next/image"
 import { useTranslation } from "@/context/language-utils"
 
 export default function About() {
-  const { t } = useTranslation()
+  const { t, isRTL } = useTranslation()
 
   const skills = [
     {
@@ -103,7 +103,7 @@ export default function About() {
             {skills.map((skill, index) => (
               <motion.div
                 key={index}
-                className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
+                className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-xl ring-1 ring-gray-200/50 dark:ring-gray-700/50 hover:ring-blue-500/30 transition-all duration-300"
                 variants={item}
                 whileHover={{ scale: 1.03 }}
                 role="group"
@@ -117,7 +117,7 @@ export default function About() {
           </motion.div>
         </div>
       </div>
-      <div className="absolute bottom-0 right-0 w-64 h-64 -mb-32 -mr-32 opacity-20">
+      <div className={`absolute bottom-0 ${isRTL ? "left-0" : "right-0"} w-64 h-64 -mb-32 ${isRTL ? "-ml-32" : "-mr-32"} opacity-20`}>
         <Image
           src="/placeholder.svg?height=256&width=256"
           alt={t("about.decorativeImageAlt")}
