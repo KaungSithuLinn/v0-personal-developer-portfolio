@@ -43,40 +43,34 @@ export default function Hero() {
           </motion.p>
 
           <motion.div
-            className={`flex flex-wrap gap-4 ${isRTL ? "flex-row-reverse" : ""}`}
+            className="flex flex-wrap gap-4"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
           >
             <a
-              href="https://github.com/kaungthu97" // Replace with your actual GitHub username
+              href="https://github.com/kaungthu97"
               target="_blank"
               rel="noopener noreferrer"
-              className={`flex items-center gap-2 ${
-                isRTL ? "flex-row-reverse" : ""
-              } bg-gray-900 text-white px-4 py-2 rounded-full hover:bg-gray-700 transition-colors`}
+              className="flex items-center gap-2 bg-gray-900 text-white px-4 py-2 rounded-full hover:bg-gray-700 transition-colors"
             >
               <Github size={20} />
               {t("hero.githubProfile")}
             </a>
 
             <a
-              href="https://linkedin.com/in/kaung-sithu-linn" // Replace with your actual LinkedIn username
+              href="https://linkedin.com/in/kaung-sithu-linn"
               target="_blank"
               rel="noopener noreferrer"
-              className={`flex items-center gap-2 ${
-                isRTL ? "flex-row-reverse" : ""
-              } bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-500 transition-colors`}
+              className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-500 transition-colors"
             >
               <Linkedin size={20} />
               {t("hero.linkedinProfile")}
             </a>
 
             <a
-              href="mailto:kaungthu.sithu97@gmail.com" // Replace with your actual email
-              className={`flex items-center gap-2 ${
-                isRTL ? "flex-row-reverse" : ""
-              } bg-purple-600 text-white px-4 py-2 rounded-full hover:bg-purple-500 transition-colors`}
+              href="mailto:kaungthu.sithu97@gmail.com"
+              className="flex items-center gap-2 bg-purple-600 text-white px-4 py-2 rounded-full hover:bg-purple-500 transition-colors"
             >
               <Mail size={20} />
               {t("hero.emailContact")}
@@ -86,9 +80,7 @@ export default function Hero() {
               href="/KaungSithuLinn_SoftwareDeveloper_Resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className={`flex items-center gap-2 ${
-                isRTL ? "flex-row-reverse" : ""
-              } bg-green-600 text-white px-4 py-2 rounded-full hover:bg-green-500 transition-colors`}
+              className="flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-full hover:bg-green-500 transition-colors"
             >
               <FileText size={20} />
               {t("hero.downloadResume")}

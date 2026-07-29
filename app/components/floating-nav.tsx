@@ -44,7 +44,7 @@ export default function FloatingNav() {
 
   return (
     <motion.div
-      className="fixed bottom-4 sm:right-4 sm:bottom-auto sm:top-1/2 sm:-translate-y-1/2 z-50 left-1/2 -translate-x-1/2 sm:translate-x-0 sm:left-auto"
+      className={`fixed bottom-4 left-1/2 -translate-x-1/2 sm:translate-x-0 sm:bottom-auto sm:top-1/2 sm:-translate-y-1/2 z-50 ${isRTL ? "sm:left-4" : "sm:right-4"}`}
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: 0.5 }}
@@ -57,7 +57,7 @@ export default function FloatingNav() {
             className="group relative flex items-center justify-center"
             aria-label={t("nav.scrollTo", { section: label })}
           >
-            <span className={`absolute ${isRTL ? "right-full" : "left-full"} hidden sm:block mr-2 px-2 py-1 rounded bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap`}>
+            <span className={`absolute ${isRTL ? "left-full ms-2" : "right-full me-2"} hidden sm:block px-2 py-1 rounded bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap`}>
               {label}
             </span>
             <div

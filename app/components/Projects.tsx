@@ -24,7 +24,7 @@ interface ProjectProps {
 
 const Project = ({ project, index }: { project: ProjectProps; index: number }) => {
   const [expanded, setExpanded] = useState(false)
-  const { t, isRTL } = useTranslation()
+  const { t } = useTranslation()
 
   return (
     <motion.div
@@ -49,7 +49,7 @@ const Project = ({ project, index }: { project: ProjectProps; index: number }) =
             <ul className="list-none space-y-2 mb-4">
                   {project.achievements.map((achievement, idx) => (
                     <li key={idx} className="text-gray-700 dark:text-gray-300 flex items-start">
-                      <span className={`text-blue-500 ${isRTL ? "ms-2" : "mr-2"}`}>•</span>
+                      <span className="text-blue-500 me-2">•</span>
                       {achievement}
                     </li>
                   ))}
@@ -62,7 +62,7 @@ const Project = ({ project, index }: { project: ProjectProps; index: number }) =
                  rel="noopener noreferrer"
                  className="inline-flex items-center text-blue-600 dark:text-blue-400 hover:underline"
                >
-                 {t("projects.viewProject")} <ExternalLink className={`w-4 h-4 ${isRTL ? "ms-1" : "ml-1"}`} />
+                 {t("projects.viewProject")} <ExternalLink className="w-4 h-4 ms-1" />
                </a>
 
               {project.caseStudy && (

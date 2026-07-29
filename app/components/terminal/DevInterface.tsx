@@ -11,7 +11,7 @@ import SystemMonitor from "./SystemMonitor"
 export default function DevInterface() {
   const [terminalOpen, setTerminalOpen] = useState(false)
   const [monitorOpen, setMonitorOpen] = useState(false)
-  const { t, isRTL } = useTranslation()
+  const { t } = useTranslation()
   const mounted = useMounted()
 
   // Handle ESC key to close windows
@@ -64,7 +64,7 @@ export default function DevInterface() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
             transition={{ type: "spring", damping: 20 }}
-            className={`fixed bottom-36 ${isRTL ? "right-6" : "left-6"} z-40 w-[90%] md:w-[400px]`}
+            className={`fixed bottom-36 start-6 z-40 w-[90%] md:w-[400px]`}
           >
             <SystemMonitor onClose={() => setMonitorOpen(false)} />
           </motion.div>

@@ -60,7 +60,7 @@ export default function Testimonials() {
               transition={{ duration: 0.5 }}
               className="bg-white dark:bg-gray-800 p-8 md:p-12 rounded-xl shadow-xl"
             >
-              <div className="absolute -top-6 left-10 text-blue-500 dark:text-blue-400">
+              <div className={`absolute -top-6 ${isRTL ? "right-10" : "left-10"} text-blue-500 dark:text-blue-400`}>
                 <Quote size={48} />
               </div>
 
@@ -69,7 +69,7 @@ export default function Testimonials() {
               </blockquote>
 
               <div className="flex items-center">
-                <div className={`w-16 h-16 rounded-full overflow-hidden ${isRTL ? "ms-4" : "mr-4"}`}>
+                <div className={`w-16 h-16 rounded-full overflow-hidden me-4`}>
                   <img
                     src={testimonials[activeIndex].image || "/placeholder.svg"}
                     alt={testimonials[activeIndex].name}

@@ -100,7 +100,7 @@ export default function Education() {
                 transition={{ duration: 0.5, delay: index * 0.2 }}
                 className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg hover:shadow-2xl ring-1 ring-gray-200/50 dark:ring-gray-700/50 hover:ring-blue-500/30 transition-all duration-300 relative overflow-hidden"
               >
-                <div className="absolute top-0 left-0 w-32 h-32 bg-purple-200 dark:bg-purple-700 rounded-br-full z-0 opacity-50"></div>
+                <div className={`absolute top-0 ${isRTL ? "right-0 rounded-bl-full" : "left-0 rounded-br-full"} w-32 h-32 bg-purple-200 dark:bg-purple-700 z-0 opacity-50`}></div>
                 <div className="relative z-10">
                   <h3 className="text-2xl font-semibold mb-2 dark:text-white flex items-center">
                      <GraduationCap className="w-6 h-6 me-2" />

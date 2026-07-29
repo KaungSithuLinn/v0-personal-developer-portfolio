@@ -63,7 +63,7 @@ export default function TerminalUI({ onClose }: { onClose: () => void }): React.
           <motion.div
             animate={{ rotate: 360 }}
             transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-            className={`${isRTL ? "ms-2" : "mr-2"}`}
+            className="me-2"
           >
             ⟳
           </motion.div>
@@ -87,7 +87,7 @@ export default function TerminalUI({ onClose }: { onClose: () => void }): React.
     <>
       {/* Terminal toggle button */}
       <motion.button
-        className={`fixed bottom-6 ${isRTL ? "left-6" : "right-6"} z-50 p-3 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-300`}
+        className="fixed bottom-6 end-6 z-50 p-3 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-300"
         onClick={toggleTerminal}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
@@ -116,7 +116,7 @@ export default function TerminalUI({ onClose }: { onClose: () => void }): React.
                 />
                 <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
                 <div className="w-3 h-3 rounded-full bg-green-500"></div>
-                 <span className={`${isRTL ? "ms-2" : "ml-2"} text-blue-300 text-sm font-mono`}>{t("terminal.title")}</span>
+                 <span className="ms-2 text-blue-300 text-sm font-mono">{t("terminal.title")}</span>
               </div>
               <div className="flex items-center space-x-2">
                 <button
@@ -141,12 +141,12 @@ export default function TerminalUI({ onClose }: { onClose: () => void }): React.
               {history.map((item, index) => (
                 <div key={index} className="mb-2">
                   {item.command !== "system" && (
-                    <div className={`flex items-center ${isRTL ? "flex-row-reverse" : ""} text-blue-400 mb-1`}>
-                      <span className={`${isRTL ? "ms-1" : "mr-1"} text-blue-400`}>ksl@portfolio:~$</span>
+                    <div className="flex items-center text-blue-400 mb-1">
+                      <span className="me-1 text-blue-400">ksl@portfolio:~$</span>
                       <span>{item.command}</span>
                     </div>
                   )}
-                  <div className={`${isRTL ? "ps-0" : "pl-0"} ${item.command === "system" ? "text-indigo-300" : "text-blue-100"}`}>
+                  <div className={`ps-0 ${item.command === "system" ? "text-indigo-300" : "text-blue-100"}`}>
                     {renderCommandOutput(item)}
                   </div>
                 </div>
@@ -155,13 +155,13 @@ export default function TerminalUI({ onClose }: { onClose: () => void }): React.
 
             {/* Terminal input */}
             <form onSubmit={handleSubmit} className="terminal-input">
-              <span className={`text-blue-400 ${isRTL ? "ms-2" : "mr-2"} flex-shrink-0`}>ksl@portfolio:~$</span>
+              <span className="text-blue-400 me-2 flex-shrink-0">ksl@portfolio:~$</span>
               <input
                 ref={inputRef}
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                className="flex-1 bg-transparent border-none outline-none text-blue-200 font-mono focus:ring-1 focus:ring-blue-400 rounded"
+                className="flex-1 bg-transparent border-none outline-none text-blue-200 font-mono focus:ring-1 focus:ring-white/30"
                 placeholder={t("terminal.commandPlaceholder")}
                 disabled={isProcessing}
                 autoComplete="off"
