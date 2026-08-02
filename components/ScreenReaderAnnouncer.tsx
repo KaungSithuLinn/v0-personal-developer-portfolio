@@ -26,9 +26,10 @@ export function ScreenReaderAnnouncer({
   }, [message])
 
   useEffect(() => {
+    const currentRef = announcerRef.current
     return () => {
-      if (clearOnUnmount && announcerRef.current) {
-        announcerRef.current.textContent = ""
+      if (clearOnUnmount && currentRef) {
+        currentRef.textContent = ""
       }
     }
   }, [clearOnUnmount])

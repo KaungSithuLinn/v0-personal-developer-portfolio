@@ -129,6 +129,7 @@ export function generateRTLMetaTags(isRTL: boolean): ReactElement[] {
       name="dir"
       content="rtl"
     />,
+    // eslint-disable-next-line @next/next/no-css-tags
     <link
       key="rtl-stylesheet"
       rel="stylesheet"

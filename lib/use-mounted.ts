@@ -17,12 +17,15 @@ export function useMounted(): boolean {
 export function useMountedEffect(effect: () => void | (() => void), deps: any[] = []) {
   const mounted = useMounted()
   const hasRunRef = useRef(false)
+  const effectRef = useRef(effect)
+  effectRef.current = effect
 
   useEffect(() => {
     if (mounted && !hasRunRef.current) {
       hasRunRef.current = true
-      return effect()
+      return effectRef.current()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mounted, ...deps])
 }
 

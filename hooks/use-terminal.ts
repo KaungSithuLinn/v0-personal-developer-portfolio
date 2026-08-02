@@ -6,12 +6,42 @@ import { groq } from "@ai-sdk/groq"
 import type { FormEvent, ReactNode } from "react"
 import { useTranslation } from "@/context/language-utils"
 
-// Define types for command history
 type CommandHistory = {
   command: string
   output: string | ReactNode
   isProcessing?: boolean
   type?: "text" | "jsx"
+}
+
+const COMMAND_OUTPUTS = {
+  help: {
+    type: "jsx" as const,
+    content: "help-content",
+  },
+  about: {
+    type: "jsx" as const,
+    content: "about-content",
+  },
+  skills: {
+    type: "jsx" as const,
+    content: "skills-content",
+  },
+  projects: {
+    type: "jsx" as const,
+    content: "projects-content",
+  },
+  contact: {
+    type: "jsx" as const,
+    content: "contact-content",
+  },
+  experience: {
+    type: "jsx" as const,
+    content: "experience-content",
+  },
+  education: {
+    type: "jsx" as const,
+    content: "education-content",
+  },
 }
 
 export function useTerminal() {
@@ -20,7 +50,6 @@ export function useTerminal() {
   const [isProcessing, setIsProcessing] = useState<boolean>(false)
   const { t, language } = useTranslation()
 
-  // Initialize messages when language changes
   useEffect(() => {
     const INITIAL_MESSAGES: CommandHistory[] = [
       {
@@ -38,38 +67,6 @@ export function useTerminal() {
     setHistory(INITIAL_MESSAGES)
   }, [language, t])
 
-  // Command output templates
-  const COMMAND_OUTPUTS = {
-    help: {
-      type: "jsx" as const,
-      content: "help-content", // This will be replaced with actual JSX in the component
-    },
-    about: {
-      type: "jsx" as const,
-      content: "about-content",
-    },
-    skills: {
-      type: "jsx" as const,
-      content: "skills-content",
-    },
-    projects: {
-      type: "jsx" as const,
-      content: "projects-content",
-    },
-    contact: {
-      type: "jsx" as const,
-      content: "contact-content",
-    },
-    experience: {
-      type: "jsx" as const,
-      content: "experience-content",
-    },
-    education: {
-      type: "jsx" as const,
-      content: "education-content",
-    },
-  }
-
   const processCommand = useCallback(
     async (command: string) => {
       setIsProcessing(true)
@@ -78,7 +75,6 @@ export function useTerminal() {
       let output: string | ReactNode = ""
       let outputType: "text" | "jsx" = "text"
 
-      // Process built-in commands
       const lowerCommand = command.toLowerCase()
 
       if (COMMAND_OUTPUTS[lowerCommand as keyof typeof COMMAND_OUTPUTS]) {
@@ -104,7 +100,6 @@ export function useTerminal() {
         output = "Exiting terminal mode..."
         outputType = "text"
       } else {
-        // Use Groq API for AI responses
         try {
           const response = await generateText({
             model: groq("llama3-70b-8192"),

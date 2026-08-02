@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 import { Quote } from "lucide-react"
+import Image from "next/image"
 import { useState } from "react"
 import AnimatedSectionHeader from "./AnimatedSectionHeader"
 import { useTranslation } from "@/context/language-utils"
@@ -70,9 +71,11 @@ export default function Testimonials() {
 
               <div className="flex items-center">
                 <div className={`w-16 h-16 rounded-full overflow-hidden me-4`}>
-                  <img
+                  <Image
                     src={testimonials[activeIndex].image || "/placeholder.svg"}
                     alt={testimonials[activeIndex].name}
+                    width={80}
+                    height={80}
                     className="w-full h-full object-cover"
                   />
                 </div>
