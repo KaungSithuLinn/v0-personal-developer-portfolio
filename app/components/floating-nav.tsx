@@ -2,11 +2,18 @@
 
 import { useEffect, useState, useMemo } from "react"
 import { motion } from "framer-motion"
+import { useReducedMotion } from "framer-motion"
 import { useTranslation } from "@/context/language-utils"
+import { memo } from "react"
 
-export default function FloatingNav() {
+// Audit P0-2: respect reduced motion preference
+
+// Audit P0-5: memoized presentational component
+
+const FloatingNavComponent = () => {
   const [activeSection, setActiveSection] = useState("hero")
   const { t, isRTL } = useTranslation()
+  const shouldReduceMotion = useReducedMotion()
 
   const sections = useMemo(
     () => [
@@ -45,9 +52,9 @@ export default function FloatingNav() {
   return (
     <motion.div
       className={`fixed bottom-4 left-1/2 -translate-x-1/2 sm:translate-x-0 sm:bottom-auto sm:top-1/2 sm:-translate-y-1/2 z-50 ${isRTL ? "sm:left-4" : "sm:right-4"}`}
-      initial={{ opacity: 0, x: 20 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ delay: 0.5 }}
+      initial={shouldReduceMotion ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
+      animate={shouldReduceMotion ? { opacity: 1, x: 0 } : { opacity: 1, x: 0 }}
+      transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.5 }}
     >
       <div className="flex sm:flex-col gap-3 bg-gradient-to-r sm:bg-gradient-to-b from-gray-900/90 to-blue-900/50 backdrop-blur-sm p-3 rounded-full border border-blue-500/30 shadow-lg shadow-blue-500/10">
         {sections.map(({ id, label }) => (
@@ -73,3 +80,7 @@ export default function FloatingNav() {
     </motion.div>
   )
 }
+
+// Audit P0-5: memoized presentational component
+
+export default memo(FloatingNavComponent)

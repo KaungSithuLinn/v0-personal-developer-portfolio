@@ -1,5 +1,7 @@
 import { defineConfig, devices } from "@playwright/test"
 
+// Audit P1-11: added Playwright visual regression project
+
 export default defineConfig({
   testDir: "./tests/e2e",
   fullyParallel: true,
@@ -14,6 +16,10 @@ export default defineConfig({
   projects: [
     {
       name: "chromium",
+      use: { ...devices["Desktop Chrome"] },
+    },
+    {
+      name: "visual-regression",
       use: { ...devices["Desktop Chrome"] },
     },
   ],

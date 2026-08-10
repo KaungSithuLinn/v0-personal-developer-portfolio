@@ -1,30 +1,34 @@
 "use client"
 
-import Hero from "@/app/components/Hero"
-import About from "@/app/components/About"
-import Experience from "@/app/components/Experience" 
-import Skills from "@/app/components/Skills"
-import Projects from "@/app/components/Projects"
-import Testimonials from "@/app/components/Testimonials"
-import Education from "@/app/components/Education"
-import Contact from "@/app/components/Contact"
-import FloatingNav from "@/app/components/floating-nav"
-import DevConsoleInterface from "@/app/components/terminal/eDEXInterface"
+import dynamic from "next/dynamic"
 import TranslationTester from "@/components/TranslationTester"
+
+// Audit P0-4: dynamic import with ssr disabled
+
+const DynamicHero = dynamic(() => import("@/app/components/Hero"), { ssr: false })
+const DynamicAbout = dynamic(() => import("@/app/components/About"), { ssr: false })
+const DynamicExperience = dynamic(() => import("@/app/components/Experience"), { ssr: false })
+const DynamicSkills = dynamic(() => import("@/app/components/Skills"), { ssr: false })
+const DynamicProjects = dynamic(() => import("@/app/components/Projects"), { ssr: false })
+const DynamicTestimonials = dynamic(() => import("@/app/components/Testimonials"), { ssr: false })
+const DynamicEducation = dynamic(() => import("@/app/components/Education"), { ssr: false })
+const DynamicContact = dynamic(() => import("@/app/components/Contact"), { ssr: false })
+const DynamicFloatingNav = dynamic(() => import("@/app/components/floating-nav"), { ssr: false })
+const DynamicDevConsole = dynamic(() => import("@/app/components/terminal/eDEXInterface"), { ssr: false })
 
 export default function MainContent() {
   return (
     <main className="bg-gray-50 dark:bg-gray-900 min-h-screen">
-      <FloatingNav />
-      <DevConsoleInterface />
-      <Hero />
-      <About />
-      <Experience />
-      <Skills />
-      <Projects />
-      <Testimonials />
-      <Education />
-      <Contact />
+      <DynamicFloatingNav />
+      <DynamicDevConsole />
+      <DynamicHero />
+      <DynamicAbout />
+      <DynamicExperience />
+      <DynamicSkills />
+      <DynamicProjects />
+      <DynamicTestimonials />
+      <DynamicEducation />
+      <DynamicContact />
       {process.env.NODE_ENV === "development" && <TranslationTester />}
     </main>
   )

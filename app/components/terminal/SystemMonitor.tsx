@@ -3,9 +3,12 @@
 import * as React from "react"
 import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
+import { useReducedMotion } from "framer-motion"
 import { Cpu, HardDrive, Activity, Clock, Zap, X } from "lucide-react"
 import { useMounted } from "@/lib/use-mounted"
 import { useTranslation } from "@/context/language-utils"
+
+// Audit P0-2: respect reduced motion preference
 
 type Skill = {
   name: string
@@ -33,6 +36,7 @@ export default function SystemMonitor({ onClose }: { onClose: () => void }): Rea
   const [networkActivity, setNetworkActivity] = useState<number>(0)
   const mounted = useMounted()
   const { t, language, isRTL } = useTranslation()
+  const shouldReduceMotion = useReducedMotion()
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -56,8 +60,8 @@ export default function SystemMonitor({ onClose }: { onClose: () => void }): Rea
 
   return (
     <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
+      initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
+      animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1 }}
       className="monitor-window bg-gradient-to-br from-gray-900/90 to-blue-900/50 backdrop-blur-sm border border-blue-500/30 rounded-lg p-4 shadow-lg shadow-blue-500/10"
     >
       {/* Close button */}
@@ -101,9 +105,9 @@ export default function SystemMonitor({ onClose }: { onClose: () => void }): Rea
               <div className="w-full bg-gray-700 rounded-full h-2.5">
                 <motion.div
                   className="bg-blue-500 h-2.5 rounded-full"
-                  initial={{ width: 0 }}
-                  animate={{ width: `${cpuUsage}%` }}
-                  transition={{ duration: 0.5 }}
+                  initial={shouldReduceMotion ? { width: `${cpuUsage}%` } : { width: 0 }}
+                  animate={shouldReduceMotion ? { width: `${cpuUsage}%` } : { width: `${cpuUsage}%` }}
+                  transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5 }}
                 />
               </div>
             </div>
@@ -120,9 +124,9 @@ export default function SystemMonitor({ onClose }: { onClose: () => void }): Rea
               <div className="w-full bg-gray-700 rounded-full h-2.5">
                 <motion.div
                   className="bg-indigo-500 h-2.5 rounded-full"
-                  initial={{ width: 0 }}
-                  animate={{ width: `${memoryUsage}%` }}
-                  transition={{ duration: 0.5 }}
+                  initial={shouldReduceMotion ? { width: `${memoryUsage}%` } : { width: 0 }}
+                  animate={shouldReduceMotion ? { width: `${memoryUsage}%` } : { width: `${memoryUsage}%` }}
+                  transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5 }}
                 />
               </div>
             </div>
@@ -139,9 +143,9 @@ export default function SystemMonitor({ onClose }: { onClose: () => void }): Rea
               <div className="w-full bg-gray-700 rounded-full h-2.5">
                 <motion.div
                   className="bg-purple-500 h-2.5 rounded-full"
-                  initial={{ width: 0 }}
-                  animate={{ width: `${networkActivity}%` }}
-                  transition={{ duration: 0.5 }}
+                  initial={shouldReduceMotion ? { width: `${networkActivity}%` } : { width: 0 }}
+                  animate={shouldReduceMotion ? { width: `${networkActivity}%` } : { width: `${networkActivity}%` }}
+                  transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5 }}
                 />
               </div>
             </div>
@@ -175,9 +179,9 @@ export default function SystemMonitor({ onClose }: { onClose: () => void }): Rea
                             ? "bg-purple-500"
                             : "bg-blue-600"
                     }`}
-                    initial={{ width: 0 }}
-                    animate={{ width: `${skill.level}%` }}
-                    transition={{ duration: 0.8, delay: index * 0.1 }}
+                    initial={shouldReduceMotion ? { width: `${skill.level}%` } : { width: 0 }}
+                    animate={shouldReduceMotion ? { width: `${skill.level}%` } : { width: `${skill.level}%` }}
+                    transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.8, delay: index * 0.1 }}
                   />
                 </div>
               </div>

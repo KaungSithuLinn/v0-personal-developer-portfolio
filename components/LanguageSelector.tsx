@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useTransition } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Globe, Check } from "lucide-react"
 import { useTranslation, type Language } from "@/context/language-utils"
@@ -11,6 +11,9 @@ export default function LanguageSelector() {
   const { language, setLanguage, t, languageName, isRTL } = useTranslation()
   const [mounted, setMounted] = useState(false)
   const router = useRouter()
+  const [isPending, startTransition] = useTransition()
+
+  // Audit P0-6: useTransition for async state
 
   const languages: Language[] = ["en", "zh", "ms", "ta", "ar"]
 
@@ -34,11 +37,12 @@ export default function LanguageSelector() {
   }, [isOpen])
 
   const handleLanguageChange = (lang: Language) => {
-    setLanguage(lang)
-    setIsOpen(false)
-    localStorage.setItem("language", lang)
-    // Use router.push for client-side navigation
-    router.push(`/${lang}${window.location.pathname.substring(3)}`)
+    startTransition(() => {
+      setLanguage(lang)
+      setIsOpen(false)
+      localStorage.setItem("language", lang)
+      router.push(`/${lang}${window.location.pathname.substring(3)}`)
+    })
   }
 
   // Don't render anything until mounted to prevent hydration issues
@@ -52,6 +56,7 @@ export default function LanguageSelector() {
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         aria-label={t("common.language")}
+        disabled={isPending}
         style={isRTL ? { left: "auto", right: "1rem" } : {}}
       >
         <Globe size={18} className="sm:size-20" />

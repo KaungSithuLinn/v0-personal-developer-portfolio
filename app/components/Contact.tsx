@@ -1,12 +1,20 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useTransition } from "react"
 import { motion, TargetAndTransition } from "framer-motion"
+import { useReducedMotion } from "framer-motion"
 import { Mail, Phone, MapPin } from "lucide-react"
 import AnimatedSectionHeader from "./AnimatedSectionHeader"
 import { useTranslation } from "@/context/language-utils"
 import { useI18nForm } from "@/hooks/use-i18n-form"
 import { useLanguageAnimation } from "@/hooks/use-language-animation"
+import { memo } from "react"
+
+// Audit P0-2: respect reduced motion preference
+
+// Audit P0-5: memoized presentational component
+
+// Audit P0-6: useTransition for async state
 
 interface AnimationConfig {
   direction?: 'x' | 'y'; // Ensure 'direction' is part of the type
@@ -17,10 +25,11 @@ interface AnimationConfig {
 
 // Remove duplicate interface and use AnimationConfig instead
 
-export default function Contact() {
+const ContactComponent = () => {
   const { t, isRTL } = useTranslation()
-  const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle")
+  const [isSubmitting, startTransition] = useTransition()
+  const shouldReduceMotion = useReducedMotion()
   
   const animation = useLanguageAnimation({}) as unknown as { initial: TargetAndTransition; animate: TargetAndTransition; transition: object }
   
@@ -35,46 +44,44 @@ export default function Contact() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    setIsSubmitting(true)
-    setSubmitStatus("idle")
+    startTransition(async () => {
+      setSubmitStatus("idle")
 
-    const form = e.currentTarget
-    const formData = new FormData(form)
-    const data = Object.fromEntries(formData)
+      const form = e.currentTarget
+      const formData = new FormData(form)
+      const data = Object.fromEntries(formData)
 
-    // Validate all fields
-    const validations = {
-      name: validateField("name"),
-      email: validateField("email"),
-      subject: validateField("subject"),
-      message: validateField("message"),
-    }
+      // Validate all fields
+      const validations = {
+        name: validateField("name"),
+        email: validateField("email"),
+        subject: validateField("subject"),
+        message: validateField("message"),
+      }
 
-    // Check if there are any validation errors
-    const hasErrors = Object.values(validations).some((result) => Array.isArray(result))
-    if (hasErrors) {
-      setSubmitStatus("error")
-      setIsSubmitting(false)
-      return
-    }
+      // Check if there are any validation errors
+      const hasErrors = Object.values(validations).some((result) => Array.isArray(result))
+      if (hasErrors) {
+        setSubmitStatus("error")
+        return
+      }
 
-    try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        body: formData,
-      })
+      try {
+        const response = await fetch("/api/contact", {
+          method: "POST",
+          body: formData,
+        })
 
-      if (response.ok) {
-        setSubmitStatus("success")
-        form.reset()
-      } else {
+        if (response.ok) {
+          setSubmitStatus("success")
+          form.reset()
+        } else {
+          setSubmitStatus("error")
+        }
+      } catch (error) {
         setSubmitStatus("error")
       }
-    } catch (error) {
-      setSubmitStatus("error")
-    }
-
-    setIsSubmitting(false)
+    })
   }
 
   return (
@@ -89,9 +96,9 @@ export default function Contact() {
           {/* Contact Information */}
           <motion.div
             className="space-y-6"
-            initial={animation.initial}
-            animate={animation.animate}
-            transition={animation.transition}
+            initial={shouldReduceMotion ? animation.initial : animation.initial}
+            animate={shouldReduceMotion ? animation.animate : animation.animate}
+            transition={shouldReduceMotion ? { duration: 0 } : animation.transition}
           >
             <h3 className="text-2xl font-semibold mb-4 dark:text-white">{t("contact.info")}</h3>
             
@@ -145,9 +152,9 @@ export default function Contact() {
           <motion.form
             className="space-y-6"
             onSubmit={handleSubmit}
-            initial={animation.initial}
-            animate={animation.animate}
-            transition={{ ...(animation.transition || {}), delay: 0.2 }}
+            initial={shouldReduceMotion ? animation.initial : animation.initial}
+            animate={shouldReduceMotion ? animation.animate : animation.animate}
+            transition={shouldReduceMotion ? { duration: 0 } : { ...(animation.transition || {}), delay: 0.2 }}
           >
             <div>
               <label htmlFor="name" className="block text-sm font-medium mb-2 dark:text-white">
@@ -222,8 +229,8 @@ export default function Contact() {
 
             {submitStatus === "success" && (
               <motion.p
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
+                initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+                animate={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
                 className="text-green-500 dark:text-green-400 text-center"
               >
                 {t("contact.form.success")}
@@ -232,8 +239,8 @@ export default function Contact() {
 
             {submitStatus === "error" && (
               <motion.p
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
+                initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+                animate={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
                 className="text-red-500 dark:text-red-400 text-center"
               >
                 {t("contact.form.error")}
@@ -245,3 +252,7 @@ export default function Contact() {
     </section>
   )
 }
+
+// Audit P0-5: memoized presentational component
+
+export default memo(ContactComponent)

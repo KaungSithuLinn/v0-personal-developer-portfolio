@@ -1,4 +1,7 @@
 /** @type {import('next').NextConfig} */
+// Audit P3-16: bundle analyzer for build-time inspection
+import bundleAnalyzer from "@next/bundle-analyzer"
+
 const nextConfig = {
   reactStrictMode: true,
   images: {
@@ -8,6 +11,10 @@ const nextConfig = {
   compiler: {
     removeConsole: process.env.NODE_ENV === "production",
   },
+  experimental: {
+    optimizeCss: true,
+  },
+  // Audit P2-13: critical CSS extraction config
   // Handle static files and avoid redirect loops
   async rewrites() {
     return {
@@ -61,4 +68,6 @@ const nextConfig = {
   }
 }
 
-export default nextConfig
+export default bundleAnalyzer({
+  enabled: process.env.ANALYZE === "true",
+})(nextConfig)

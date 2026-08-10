@@ -1,15 +1,21 @@
 "use client"
 
 import { motion } from "framer-motion"
+import { useReducedMotion } from "framer-motion"
 import { Quote } from "lucide-react"
 import Image from "next/image"
-import { useState } from "react"
+import { useState, memo } from "react"
 import AnimatedSectionHeader from "./AnimatedSectionHeader"
 import { useTranslation } from "@/context/language-utils"
 
-export default function Testimonials() {
+// Audit P0-2: respect reduced motion preference
+
+// Audit P0-5: memoized presentational component
+
+const TestimonialsComponent = () => {
   const [activeIndex, setActiveIndex] = useState(0)
   const { t, isRTL } = useTranslation()
+  const shouldReduceMotion = useReducedMotion()
 
   const testimonials = [
     {
@@ -55,10 +61,10 @@ export default function Testimonials() {
           <div className="relative">
             <motion.div
               key={activeIndex}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.5 }}
+              initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              animate={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+              exit={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
+              transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5 }}
               className="bg-white dark:bg-gray-800 p-8 md:p-12 rounded-xl shadow-xl"
             >
               <div className={`absolute -top-6 ${isRTL ? "right-10" : "left-10"} text-blue-500 dark:text-blue-400`}>
@@ -143,3 +149,5 @@ export default function Testimonials() {
     </section>
   )
 }
+
+export default memo(TestimonialsComponent)

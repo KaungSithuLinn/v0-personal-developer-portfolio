@@ -139,6 +139,20 @@ body, .theme-aware {
   letter-spacing: 0.05em;
 }
 
+/* Audit P0-7: content-visibility for below-the-fold performance */
+
+/* Below-the-fold sections */
+#about,
+#experience,
+#skills,
+#projects,
+#testimonials,
+#education,
+#contact,
+#services {
+  content-visibility: auto;
+}
+
 /* Motion-safe animations */
 @media (prefers-reduced-motion: no-preference) {
   .animate-fade-in {

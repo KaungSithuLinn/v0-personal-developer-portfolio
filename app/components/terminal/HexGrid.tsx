@@ -2,7 +2,10 @@
 
 import { useEffect, useRef, useState, type ReactElement } from "react"
 import { motion } from "framer-motion"
+import { useReducedMotion } from "framer-motion"
 import { useMounted } from "@/lib/use-mounted"
+
+// Audit P0-2: respect reduced motion preference
 
 interface HexGridProps {
   className?: string
@@ -12,6 +15,7 @@ export default function HexGrid({ className = "" }: HexGridProps): ReactElement 
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [dimensions, setDimensions] = useState<{ width: number; height: number }>({ width: 0, height: 0 })
   const mounted = useMounted()
+  const shouldReduceMotion = useReducedMotion()
 
   useEffect(() => {
     if (!mounted) return
@@ -59,7 +63,11 @@ export default function HexGrid({ className = "" }: HexGridProps): ReactElement 
     let time = 0
 
     const animate = (): void => {
-      time += 0.005
+      if (shouldReduceMotion) {
+        time += 0
+      } else {
+        time += 0.005
+      }
 
       // Clear canvas
       ctx.clearRect(0, 0, dimensions.width, dimensions.height)
@@ -112,14 +120,14 @@ export default function HexGrid({ className = "" }: HexGridProps): ReactElement 
     return () => {
       cancelAnimationFrame(animationFrameId)
     }
-  }, [dimensions, mounted])
+  }, [dimensions, mounted, shouldReduceMotion])
 
   if (!mounted) return null
 
   return (
     <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
+      initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
+      animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1 }}
       className={`absolute inset-0 z-0 overflow-hidden ${className}`}
     >
       <canvas ref={canvasRef} className="w-full h-full" />

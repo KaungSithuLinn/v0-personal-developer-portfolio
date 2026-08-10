@@ -1,12 +1,19 @@
 "use client"
 
 import { motion } from "framer-motion"
+import { useReducedMotion } from "framer-motion"
 import { Github, Linkedin, Mail, FileText } from "lucide-react"
 import Image from "next/image"
 import { useTranslation } from "@/context/language-utils"
+import { memo } from "react"
 
-export default function Hero() {
+// Audit P0-2: respect reduced motion preference
+
+// Audit P0-5: memoized presentational component
+
+const HeroComponent = () => {
   const { t, isRTL } = useTranslation()
+  const shouldReduceMotion = useReducedMotion()
 
   return (
     <section
@@ -17,36 +24,36 @@ export default function Hero() {
         <div className={`flex flex-col ${isRTL ? "items-end text-end" : "items-start text-start"} max-w-[800px] mx-auto relative`}>
           <motion.h1
             className="text-4xl sm:text-6xl font-bold mb-4"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            animate={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5 }}
           >
             {t("hero.title")}
           </motion.h1>
 
           <motion.h2
             className="text-2xl sm:text-3xl text-gray-600 dark:text-gray-300 mb-8"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
+            initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            animate={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5, delay: 0.1 }}
           >
             {t("hero.subtitle")}
           </motion.h2>
 
           <motion.p
             className="text-lg text-gray-700 dark:text-gray-200 mb-8 max-w-2xl"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
+            initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            animate={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5, delay: 0.2 }}
           >
             {t("hero.description")}
           </motion.p>
 
           <motion.div
             className="flex flex-wrap gap-4"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
+            initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            animate={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5, delay: 0.3 }}
           >
             <a
               href="https://github.com/kaungthu97"
@@ -115,3 +122,7 @@ export default function Hero() {
     </section>
   )
 }
+
+// Audit P0-5: memoized presentational component
+
+export default memo(HeroComponent)

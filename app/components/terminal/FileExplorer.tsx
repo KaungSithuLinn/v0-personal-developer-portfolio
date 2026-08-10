@@ -2,9 +2,12 @@
 
 import { useState, type ReactElement, type ReactNode } from "react"
 import { motion } from "framer-motion"
+import { useReducedMotion } from "framer-motion"
 import { Folder, ChevronRight, ChevronDown, Code, FileText, ImageIcon, Database } from "lucide-react"
 import { useMounted } from "@/lib/use-mounted"
 import { useTranslation } from "@/context/language-utils"
+
+// Audit P0-2: respect reduced motion preference
 
 type FileItem = {
   name: string
@@ -114,6 +117,7 @@ interface FileItemProps {
 function FileItemComponent({ item, level }: FileItemProps): ReactElement {
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const [isHovered, setIsHovered] = useState<boolean>(false)
+  const shouldReduceMotion = useReducedMotion()
 
   const toggleOpen = (): void => {
     if (item.type === "folder") {
@@ -143,8 +147,8 @@ function FileItemComponent({ item, level }: FileItemProps): ReactElement {
 
       {isHovered && item.description && (
         <motion.div
-          initial={{ opacity: 0, y: 5 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 5 }}
+          animate={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
           className="ms-12 text-xs text-gray-400 font-mono"
         >
           {item.description}
@@ -165,13 +169,14 @@ function FileItemComponent({ item, level }: FileItemProps): ReactElement {
 export default function FileExplorer(): ReactElement | null {
   const mounted = useMounted()
   const { t } = useTranslation()
+  const shouldReduceMotion = useReducedMotion()
 
   if (!mounted) return null
 
   return (
     <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
+      initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
+      animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1 }}
       className="bg-gradient-to-br from-gray-900/90 to-blue-900/50 backdrop-blur-sm border border-blue-500/30 rounded-lg p-4 shadow-lg shadow-blue-500/10 h-full overflow-y-auto"
     >
       <h3 className="text-blue-400 font-mono text-lg border-b border-blue-500/30 pb-2 mb-4">

@@ -1,12 +1,19 @@
 "use client"
 
 import { motion } from "framer-motion"
+import { useReducedMotion } from "framer-motion"
 import { Code, Database, Server, Globe, Brain, TrendingUp } from "lucide-react"
 import Image from "next/image"
 import { useTranslation } from "@/context/language-utils"
+import { memo } from "react"
 
-export default function About() {
+// Audit P0-2: respect reduced motion preference
+
+// Audit P0-5: memoized presentational component
+
+const AboutComponent = () => {
   const { t, isRTL } = useTranslation()
+  const shouldReduceMotion = useReducedMotion()
 
   const skills = [
     {
@@ -64,30 +71,27 @@ export default function About() {
       <div className="container mx-auto px-6 relative z-10">
         <motion.h2
           className="text-4xl font-bold mb-8 text-center dark:text-white"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          animate={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+          transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5 }}
         >
           {t("about.title")}
         </motion.h2>
         <div className="flex flex-col md:flex-row items-center justify-between">
           <motion.div
             className="md:w-1/2 mb-8 md:mb-0"
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
+            initial={shouldReduceMotion ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
+            animate={shouldReduceMotion ? { opacity: 1, x: 0 } : { opacity: 1, x: 0 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5 }}
           >
             <p className="text-xl text-gray-700 dark:text-gray-300 leading-relaxed mb-6">{t("about.paragraph1")}</p>
             <p className="text-xl text-gray-700 dark:text-gray-300 leading-relaxed">{t("about.paragraph2")}</p>
 
             <motion.div
               className="mt-8 p-4 border-l-4 border-blue-500 bg-blue-50 dark:bg-blue-900/20 dark:border-blue-400 rounded"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.3 }}
+              initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              animate={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+              transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5, delay: 0.3 }}
             >
               <p className="italic text-gray-700 dark:text-gray-300">{t("about.quote")}</p>
             </motion.div>
@@ -95,17 +99,16 @@ export default function About() {
 
           <motion.div
             className="md:w-1/2 grid grid-cols-2 gap-6"
-            variants={container}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true }}
+            initial={shouldReduceMotion ? { opacity: 1 } : "hidden"}
+            whileInView={shouldReduceMotion ? undefined : "show"}
+            viewport={shouldReduceMotion ? undefined : { once: true }}
           >
             {skills.map((skill, index) => (
               <motion.div
                 key={index}
                 className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-xl ring-1 ring-gray-200/50 dark:ring-gray-700/50 hover:ring-blue-500/30 transition-all duration-300"
                 variants={item}
-                whileHover={{ scale: 1.03 }}
+                whileHover={shouldReduceMotion ? undefined : { scale: 1.03 }}
                 role="group"
                 aria-label={`${skill.title} skills: ${skill.description}`}
               >
@@ -128,3 +131,7 @@ export default function About() {
     </section>
   )
 }
+
+// Audit P0-5: memoized presentational component
+
+export default memo(AboutComponent)

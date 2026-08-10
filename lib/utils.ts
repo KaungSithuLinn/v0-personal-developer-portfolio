@@ -8,10 +8,6 @@ export function isRTLLanguage(language: Language): boolean {
   return RTL_LANGUAGES.includes(language as (typeof RTL_LANGUAGES)[number])
 }
 
-export function getTextDirection(language: Language): "ltr" | "rtl" {
-  return isRTLLanguage(language) ? "rtl" : "ltr"
-}
-
 export function getLanguageDirection(isRTL: boolean) {
   return {
     direction: isRTL ? "rtl" : "ltr",

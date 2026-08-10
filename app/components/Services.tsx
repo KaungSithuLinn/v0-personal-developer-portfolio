@@ -1,12 +1,19 @@
 "use client"
 
 import { motion } from "framer-motion"
+import { useReducedMotion } from "framer-motion"
 import { Code, Layout, Server, Smartphone } from "lucide-react"
 import Image from "next/image"
 import { useTranslation } from "@/context/language-utils"
+import { memo } from "react"
 
-export default function Services() {
+// Audit P0-2: respect reduced motion preference
+
+// Audit P0-5: memoized presentational component
+
+const ServicesComponent = () => {
   const { t, isRTL } = useTranslation()
+  const shouldReduceMotion = useReducedMotion()
 
   const services = [
     {
@@ -39,10 +46,9 @@ export default function Services() {
       <div className="container mx-auto px-6 relative z-10">
         <motion.h2
           className="text-4xl font-bold mb-12 text-center dark:text-white"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          animate={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+          transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5 }}
         >
           {t("services.title")}
         </motion.h2>
@@ -51,10 +57,9 @@ export default function Services() {
             <motion.div
               key={index}
               className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-xl ring-1 ring-gray-200/50 dark:ring-gray-700/50 hover:ring-blue-500/30 transition-all duration-300"
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+              initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+              animate={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+              transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5, delay: index * 0.1 }}
             >
               <div className="flex items-center mb-4">
                 {service.icon}
@@ -71,3 +76,7 @@ export default function Services() {
     </section>
   )
 }
+
+// Audit P0-5: memoized presentational component
+
+export default memo(ServicesComponent)

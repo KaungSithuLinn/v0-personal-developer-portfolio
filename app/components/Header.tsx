@@ -3,8 +3,11 @@
 import { useState, useEffect } from "react"
 import { useTheme } from "next-themes"
 import { useTranslation } from "@/context/language-utils"
+import { memo } from "react"
 
-export default function Header() {
+// Audit P0-5: memoized presentational component
+
+const HeaderComponent = () => {
   const [mounted, setMounted] = useState(false)
   const [isVisible, setIsVisible] = useState(true)
   const [lastScrollY, setLastScrollY] = useState(0)
@@ -110,3 +113,7 @@ export default function Header() {
     </header>
   )
 }
+
+// Audit P0-5: memoized presentational component
+
+export default memo(HeaderComponent)

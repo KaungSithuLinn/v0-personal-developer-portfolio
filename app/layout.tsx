@@ -1,7 +1,10 @@
 import { Metadata } from "next"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Inter, Noto_Sans_SC, Noto_Sans_Arabic, Noto_Sans_Tamil } from "next/font/google"
+import { Suspense } from "react"
 import "./globals.css"
+
+// Audit P0-3: suspense boundary for non-critical content
 
 // Load fonts with proper subsets and weights
 const inter = Inter({
@@ -49,7 +52,9 @@ export default function RootLayout({
     <html suppressHydrationWarning className={`${inter.variable} ${notoSansArabic.variable} ${notoSansSC.variable} ${notoSansTamil.variable}`}>
       <body>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-          {children}
+          <Suspense fallback={<div className="min-h-screen bg-background" />}>
+            {children}
+          </Suspense>
         </ThemeProvider>
       </body>
     </html>

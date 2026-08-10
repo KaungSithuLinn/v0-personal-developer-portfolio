@@ -3,11 +3,18 @@
 import { Briefcase, Calendar, MapPin } from "lucide-react"
 import Image from "next/image"
 import { motion } from "framer-motion"
+import { useReducedMotion } from "framer-motion"
 import AnimatedSectionHeader from "./AnimatedSectionHeader"
 import { useTranslation } from "@/context/language-utils"
+import { memo } from "react"
 
-export default function Experience() {
+// Audit P0-2: respect reduced motion preference
+
+// Audit P0-5: memoized presentational component
+
+const ExperienceComponent = () => {
   const { t, isRTL } = useTranslation()
+  const shouldReduceMotion = useReducedMotion()
 
   const experiences = [
     {
@@ -36,10 +43,9 @@ export default function Experience() {
           {experiences.map((exp, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.2 }}
+              initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+              animate={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+              transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5, delay: index * 0.2 }}
               className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg hover:shadow-2xl ring-1 ring-gray-200/50 dark:ring-gray-700/50 hover:ring-blue-500/30 transition-all duration-300 relative overflow-hidden group"
             >
               <div
@@ -84,3 +90,7 @@ export default function Experience() {
     </section>
   )
 }
+
+// Audit P0-5: memoized presentational component
+
+export default memo(ExperienceComponent)

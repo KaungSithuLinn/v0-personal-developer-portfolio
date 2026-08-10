@@ -5,11 +5,18 @@ import { GraduationCap, Calendar, Award, BookOpen, ExternalLink, Check } from "l
 import Image from "next/image"
 import AnimatedSectionHeader from "./AnimatedSectionHeader"
 import { motion } from "framer-motion"
+import { useReducedMotion } from "framer-motion"
 import { useTranslation } from "@/context/language-utils"
+import { memo } from "react"
 
-export default function Education() {
+// Audit P0-2: respect reduced motion preference
+
+// Audit P0-5: memoized presentational component
+
+const EducationComponent = () => {
   const [expandedCert, setExpandedCert] = useState<number | null>(null)
   const { t, isRTL } = useTranslation()
+  const shouldReduceMotion = useReducedMotion()
 
   const education = [
     {
@@ -94,10 +101,9 @@ export default function Education() {
             {education.map((edu, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.2 }}
+                initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+                animate={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+                transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5, delay: index * 0.2 }}
                 className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg hover:shadow-2xl ring-1 ring-gray-200/50 dark:ring-gray-700/50 hover:ring-blue-500/30 transition-all duration-300 relative overflow-hidden"
               >
                 <div className={`absolute top-0 ${isRTL ? "right-0 rounded-bl-full" : "left-0 rounded-br-full"} w-32 h-32 bg-purple-200 dark:bg-purple-700 z-0 opacity-50`}></div>
@@ -128,10 +134,9 @@ export default function Education() {
           </div>
 
           <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
+            initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+            animate={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5 }}
             className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg ring-1 ring-gray-200/50 dark:ring-gray-700/50"
           >
             <h3 className="text-2xl font-semibold mb-6 dark:text-white flex items-center">
@@ -256,3 +261,7 @@ export default function Education() {
     </section>
   )
 }
+
+// Audit P0-5: memoized presentational component
+
+export default memo(EducationComponent)

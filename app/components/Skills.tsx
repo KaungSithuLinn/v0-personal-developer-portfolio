@@ -1,13 +1,20 @@
 "use client"
 
 import { motion } from "framer-motion"
+import { useReducedMotion } from "framer-motion"
 import { Code, Database, Server, Globe, Brain, Zap, MessageSquare, Settings, Search } from "lucide-react"
 import Image from "next/image"
 import AnimatedSectionHeader from "./AnimatedSectionHeader"
 import { useTranslation } from "@/context/language-utils"
+import { memo } from "react"
 
-export default function Skills() {
+// Audit P0-2: respect reduced motion preference
+
+// Audit P0-5: memoized presentational component
+
+const SkillsComponent = () => {
   const { t, isRTL } = useTranslation()
+  const shouldReduceMotion = useReducedMotion()
 
   const skills = [
     {
@@ -76,17 +83,16 @@ export default function Skills() {
         <AnimatedSectionHeader title={t("skills.title")} />
         <motion.div
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
-          variants={container}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true }}
+          initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
+          whileInView={shouldReduceMotion ? undefined : "show"}
+          viewport={shouldReduceMotion ? undefined : { once: true }}
         >
           {skills.map((skill, index) => (
             <motion.div
               key={index}
               className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-xl ring-1 ring-gray-200/50 dark:ring-gray-700/50 hover:ring-blue-500/30 transition-all duration-300"
               variants={item}
-              whileHover={{ scale: 1.03 }}
+              whileHover={shouldReduceMotion ? undefined : { scale: 1.03 }}
             >
               {skill.icon}
               <h3 className="text-xl font-semibold mt-4 mb-2 dark:text-white">{skill.title}</h3>
@@ -97,10 +103,9 @@ export default function Skills() {
 
         <motion.div
           className="mt-16 bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg"
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+          animate={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+          transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5 }}
         >
           <h3 className="text-2xl font-semibold mb-6 dark:text-white flex items-center">
             <Zap className="w-6 h-6 me-2 text-blue-500" />
@@ -115,10 +120,9 @@ export default function Skills() {
                     <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5 me-2">
                       <motion.div
                         className="bg-blue-600 dark:bg-blue-500 h-2.5 rounded-full"
-                        initial={{ width: 0 }}
-                        whileInView={{ width: `${85 - idx * 5}%` }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 1, delay: idx * 0.1 }}
+                        initial={shouldReduceMotion ? { width: `${85 - idx * 5}%` } : { width: 0 }}
+                        animate={shouldReduceMotion ? { width: `${85 - idx * 5}%` } : { width: `${85 - idx * 5}%` }}
+                        transition={shouldReduceMotion ? { duration: 0 } : { duration: 1, delay: idx * 0.1 }}
                       />
                     </div>
                     <span className="text-sm text-gray-600 dark:text-gray-300 min-w-[5rem]">{tech}</span>
@@ -135,10 +139,9 @@ export default function Skills() {
                     <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5 me-2">
                       <motion.div
                         className="bg-green-600 dark:bg-green-500 h-2.5 rounded-full"
-                        initial={{ width: 0 }}
-                        whileInView={{ width: `${80 - idx * 5}%` }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 1, delay: idx * 0.1 }}
+                        initial={shouldReduceMotion ? { width: `${80 - idx * 5}%` } : { width: 0 }}
+                        animate={shouldReduceMotion ? { width: `${80 - idx * 5}%` } : { width: `${80 - idx * 5}%` }}
+                        transition={shouldReduceMotion ? { duration: 0 } : { duration: 1, delay: idx * 0.1 }}
                       />
                     </div>
                     <span className="text-sm text-gray-600 dark:text-gray-300 min-w-[5rem]">{tech}</span>
@@ -155,10 +158,9 @@ export default function Skills() {
                     <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5 me-2">
                       <motion.div
                         className="bg-purple-600 dark:bg-purple-500 h-2.5 rounded-full"
-                        initial={{ width: 0 }}
-                        whileInView={{ width: `${85 - idx * 7}%` }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 1, delay: idx * 0.1 }}
+                        initial={shouldReduceMotion ? { width: `${85 - idx * 7}%` } : { width: 0 }}
+                        animate={shouldReduceMotion ? { width: `${85 - idx * 7}%` } : { width: `${85 - idx * 7}%` }}
+                        transition={shouldReduceMotion ? { duration: 0 } : { duration: 1, delay: idx * 0.1 }}
                       />
                     </div>
                     <span className="text-sm text-gray-600 dark:text-gray-300 min-w-[5rem]">{tech}</span>
@@ -175,3 +177,5 @@ export default function Skills() {
     </section>
   )
 }
+
+export default memo(SkillsComponent)
