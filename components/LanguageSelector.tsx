@@ -49,7 +49,7 @@ export default function LanguageSelector() {
   if (!mounted) return null
 
   return (
-    <div className="relative language-selector">
+    <div className="relative language-selector" dir="auto">
       <motion.button
         className="fixed top-20 sm:top-24 left-4 sm:left-6 z-50 p-2 sm:p-3 rounded-full bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-lg hover:from-amber-600 hover:to-orange-700 transition-all duration-300"
         onClick={() => setIsOpen(!isOpen)}

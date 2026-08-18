@@ -9,7 +9,7 @@ interface RTLProviderProps {
   defaultRTL?: boolean
 }
 
-export function RTLProvider({ children, defaultRTL = false }: RTLProviderProps) {
+export function RTLProvider({ children, defaultRTL: _defaultRTL = false }: RTLProviderProps) {
   const { language } = useTranslation()
   const isRTLValue = isRTL(language)
   

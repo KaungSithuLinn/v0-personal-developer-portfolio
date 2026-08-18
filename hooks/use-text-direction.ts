@@ -47,7 +47,7 @@ export function useTextDirection(
   direction: "ltr" | "rtl"
   isMixed: boolean
   hasRTL: boolean
-  updateDirection: (newText: string) => void
+  updateDirection: (_newText: string) => void
 } {
   const { isRTL } = useTranslation()
   const {

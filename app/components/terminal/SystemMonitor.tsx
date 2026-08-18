@@ -34,11 +34,32 @@ export default function SystemMonitor({ onClose }: { onClose: () => void }): Rea
   const [cpuUsage, setCpuUsage] = useState<number>(0)
   const [memoryUsage, setMemoryUsage] = useState<number>(0)
   const [networkActivity, setNetworkActivity] = useState<number>(0)
+  const [isVisible, setIsVisible] = useState(true)
   const mounted = useMounted()
   const { t, language, isRTL } = useTranslation()
   const shouldReduceMotion = useReducedMotion()
 
   useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting)
+      },
+      { threshold: 0.1 }
+    )
+
+    const currentElement = document.querySelector('.monitor-window')
+    if (currentElement) {
+      observer.observe(currentElement)
+    }
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!isVisible) return
+
     const timer = setInterval(() => {
       setDate(new Date())
     }, 1000)
@@ -54,7 +75,7 @@ export default function SystemMonitor({ onClose }: { onClose: () => void }): Rea
       clearInterval(timer)
       clearInterval(activityInterval)
     }
-  }, [])
+  }, [isVisible])
 
   if (!mounted) return null
 
@@ -93,17 +114,17 @@ export default function SystemMonitor({ onClose }: { onClose: () => void }): Rea
 
           {/* Stats Grid */}
           <div className="grid sm:grid-cols-2 gap-4">
-            {/* CPU Usage */}
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center">
-                  <Cpu className="text-blue-500 me-2" size={18} />
-                  <span className="text-gray-300 font-mono">{t("systemMonitor.cpuUsage")}</span>
+              {/* CPU Usage */}
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center">
+                    <Cpu className="text-blue-500 me-2" size={18} />
+                    <span className="text-gray-300 font-mono">{t("systemMonitor.cpuUsage")}</span>
+                  </div>
+                  <span className="text-blue-500 font-mono">{cpuUsage}%</span>
                 </div>
-                <span className="text-blue-500 font-mono">{cpuUsage}%</span>
-              </div>
-              <div className="w-full bg-gray-700 rounded-full h-2.5">
-                <motion.div
+                <div className="w-full bg-gray-700 rounded-full h-2.5" role="progressbar" aria-valuenow={cpuUsage} aria-valuemin={0} aria-valuemax={100} aria-label="CPU usage">
+                  <motion.div
                   className="bg-blue-500 h-2.5 rounded-full"
                   initial={shouldReduceMotion ? { width: `${cpuUsage}%` } : { width: 0 }}
                   animate={shouldReduceMotion ? { width: `${cpuUsage}%` } : { width: `${cpuUsage}%` }}
@@ -112,17 +133,17 @@ export default function SystemMonitor({ onClose }: { onClose: () => void }): Rea
               </div>
             </div>
 
-            {/* Memory Usage */}
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center">
-                  <HardDrive className="text-indigo-500 me-2" size={18} />
-                  <span className="text-gray-300 font-mono">{t("systemMonitor.memoryUsage")}</span>
+              {/* Memory Usage */}
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center">
+                    <HardDrive className="text-indigo-500 me-2" size={18} />
+                    <span className="text-gray-300 font-mono">{t("systemMonitor.memoryUsage")}</span>
+                  </div>
+                  <span className="text-indigo-500 font-mono">{memoryUsage}%</span>
                 </div>
-                <span className="text-indigo-500 font-mono">{memoryUsage}%</span>
-              </div>
-              <div className="w-full bg-gray-700 rounded-full h-2.5">
-                <motion.div
+                <div className="w-full bg-gray-700 rounded-full h-2.5" role="progressbar" aria-valuenow={memoryUsage} aria-valuemin={0} aria-valuemax={100} aria-label="Memory usage">
+                  <motion.div
                   className="bg-indigo-500 h-2.5 rounded-full"
                   initial={shouldReduceMotion ? { width: `${memoryUsage}%` } : { width: 0 }}
                   animate={shouldReduceMotion ? { width: `${memoryUsage}%` } : { width: `${memoryUsage}%` }}
@@ -140,7 +161,7 @@ export default function SystemMonitor({ onClose }: { onClose: () => void }): Rea
                 </div>
                 <span className="text-purple-500 font-mono">{networkActivity} KB/s</span>
               </div>
-              <div className="w-full bg-gray-700 rounded-full h-2.5">
+              <div className="w-full bg-gray-700 rounded-full h-2.5" role="progressbar" aria-valuenow={networkActivity} aria-valuemin={0} aria-valuemax={100} aria-label="Network activity">
                 <motion.div
                   className="bg-purple-500 h-2.5 rounded-full"
                   initial={shouldReduceMotion ? { width: `${networkActivity}%` } : { width: 0 }}

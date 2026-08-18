@@ -48,7 +48,7 @@ const AboutComponent = () => {
     },
   ]
 
-  const container = {
+  const _container = {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,

@@ -51,6 +51,8 @@ const FloatingNavComponent = () => {
 
   return (
     <motion.div
+      role="navigation"
+      aria-label="Section navigation"
       className={`fixed bottom-4 left-1/2 -translate-x-1/2 sm:translate-x-0 sm:bottom-auto sm:top-1/2 sm:-translate-y-1/2 z-50 ${isRTL ? "sm:left-4" : "sm:right-4"}`}
       initial={shouldReduceMotion ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
       animate={shouldReduceMotion ? { opacity: 1, x: 0 } : { opacity: 1, x: 0 }}

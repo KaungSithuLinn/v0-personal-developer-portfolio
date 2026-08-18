@@ -14,6 +14,7 @@ interface HexGridProps {
 export default function HexGrid({ className = "" }: HexGridProps): ReactElement | null {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [dimensions, setDimensions] = useState<{ width: number; height: number }>({ width: 0, height: 0 })
+  const [isVisible, setIsVisible] = useState(true)
   const mounted = useMounted()
   const shouldReduceMotion = useReducedMotion()
 
@@ -38,7 +39,28 @@ export default function HexGrid({ className = "" }: HexGridProps): ReactElement 
   }, [mounted])
 
   useEffect(() => {
-    if (!canvasRef.current || dimensions.width === 0) return
+    if (!canvasRef.current || dimensions.width === 0 || !isVisible) return
+
+    const canvas = canvasRef.current
+    const ctx = canvas.getContext("2d")
+    if (!ctx) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting)
+      },
+      { threshold: 0.1 }
+    )
+
+    observer.observe(canvas)
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [dimensions, isVisible])
+
+  useEffect(() => {
+    if (!canvasRef.current || dimensions.width === 0 || !isVisible) return
 
     const canvas = canvasRef.current
     const ctx = canvas.getContext("2d")
@@ -120,7 +142,7 @@ export default function HexGrid({ className = "" }: HexGridProps): ReactElement 
     return () => {
       cancelAnimationFrame(animationFrameId)
     }
-  }, [dimensions, mounted, shouldReduceMotion])
+  }, [dimensions, mounted, shouldReduceMotion, isVisible])
 
   if (!mounted) return null
 
@@ -130,7 +152,7 @@ export default function HexGrid({ className = "" }: HexGridProps): ReactElement 
       animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1 }}
       className={`absolute inset-0 z-0 overflow-hidden ${className}`}
     >
-      <canvas ref={canvasRef} className="w-full h-full" />
+      <canvas ref={canvasRef} className="w-full h-full" aria-label="Animated hexagonal grid background" role="img" />
     </motion.div>
   )
 }

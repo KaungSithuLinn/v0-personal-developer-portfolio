@@ -29,7 +29,7 @@ export async function submitContact(formData: ContactFormData) {
             success: true,
             data: validData,
           }
-        } catch (error) {
+        } catch (_error) {
           return {
             success: false,
             errors: {

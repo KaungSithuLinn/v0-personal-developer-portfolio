@@ -5,7 +5,7 @@
 
 const { execSync } = require("child_process")
 const fs = require("fs")
-const path = require("path")
+const _path = require("path")
 
 console.log("Generating package-lock.json file...")
 

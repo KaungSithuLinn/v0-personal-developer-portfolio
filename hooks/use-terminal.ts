@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useCallback, useEffect } from "react"
-import { generateText } from "ai"
+import { generateText, type LanguageModel } from "ai"
 import { groq } from "@ai-sdk/groq"
 import type { FormEvent, ReactNode } from "react"
 import { useTranslation } from "@/context/language-utils"
@@ -102,7 +102,7 @@ export function useTerminal() {
       } else {
         try {
           const response = await generateText({
-            model: groq("llama3-70b-8192"),
+            model: groq("llama3-70b-8192") as unknown as LanguageModel,
             prompt: `You are an AI assistant embedded in Kaung Sithu Linn's portfolio website. 
             The portfolio is for a Software Developer specializing in POS systems, fraud detection, and behavioral biometrics with 4+ years of experience.
             

@@ -3,7 +3,7 @@
 // Audit P0-1: root error boundary
 
 export default function Error({
-  error,
+  error: _error,
   reset,
 }: {
   error: Error & { digest?: string }

@@ -137,7 +137,7 @@ export default function TerminalUI({ onClose }: { onClose: () => void }): React.
             </div>
 
             {/* Terminal content */}
-            <div ref={terminalRef} className="terminal-content">
+            <div ref={terminalRef} className="terminal-content" aria-label="Terminal output log" role="log">
               {history.map((item, index) => (
                 <div key={index} className="mb-2">
                   {item.command !== "system" && (

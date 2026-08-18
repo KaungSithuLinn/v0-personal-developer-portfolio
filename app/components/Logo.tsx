@@ -23,6 +23,8 @@ const LogoComponent = ({ size = 40, className = "" }: LogoProps) => {
       style={{ width: size, height: size }}
       whileHover={shouldReduceMotion ? undefined : { scale: 1.1 }}
       whileTap={shouldReduceMotion ? undefined : { scale: 0.95 }}
+      aria-label="Kaung Sithu Linn - Portfolio Logo"
+      role="img"
     >
       <motion.div
         className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg"

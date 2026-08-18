@@ -59,16 +59,6 @@ const SkillsComponent = () => {
     },
   ]
 
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  }
-
   const item = {
     hidden: { opacity: 0, y: 20 },
     show: { opacity: 1, y: 0 },
@@ -117,8 +107,8 @@ const SkillsComponent = () => {
               <div className="space-y-2">
                 {["JavaScript", "TypeScript", "React", "Next.js", "HTML/CSS", "Tailwind CSS"].map((tech, idx) => (
                   <div key={idx} className="flex items-center">
-                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5 me-2">
-                      <motion.div
+                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5 me-2" role="progressbar" aria-valuenow={parseInt(`${80 - idx * 5}`)} aria-valuemin={0} aria-valuemax={100} aria-label={`${tech} proficiency`}>
+                    <motion.div
                         className="bg-blue-600 dark:bg-blue-500 h-2.5 rounded-full"
                         initial={shouldReduceMotion ? { width: `${85 - idx * 5}%` } : { width: 0 }}
                         animate={shouldReduceMotion ? { width: `${85 - idx * 5}%` } : { width: `${85 - idx * 5}%` }}
@@ -136,8 +126,8 @@ const SkillsComponent = () => {
               <div className="space-y-2">
                 {["Node.js", "Python", "Java", "C++", ".NET", "Express"].map((tech, idx) => (
                   <div key={idx} className="flex items-center">
-                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5 me-2">
-                      <motion.div
+                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5 me-2" role="progressbar" aria-valuenow={parseInt(`${80 - idx * 5}`)} aria-valuemin={0} aria-valuemax={100} aria-label={`${tech} proficiency`}>
+                    <motion.div
                         className="bg-green-600 dark:bg-green-500 h-2.5 rounded-full"
                         initial={shouldReduceMotion ? { width: `${80 - idx * 5}%` } : { width: 0 }}
                         animate={shouldReduceMotion ? { width: `${80 - idx * 5}%` } : { width: `${80 - idx * 5}%` }}
@@ -155,8 +145,8 @@ const SkillsComponent = () => {
               <div className="space-y-2">
                 {["SQL", "MongoDB", "Machine Learning", "Data Analysis", "UI/UX Design", "DevOps"].map((tech, idx) => (
                   <div key={idx} className="flex items-center">
-                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5 me-2">
-                      <motion.div
+                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5 me-2" role="progressbar" aria-valuenow={parseInt(`${80 - idx * 5}`)} aria-valuemin={0} aria-valuemax={100} aria-label={`${tech} proficiency`}>
+                    <motion.div
                         className="bg-purple-600 dark:bg-purple-500 h-2.5 rounded-full"
                         initial={shouldReduceMotion ? { width: `${85 - idx * 7}%` } : { width: 0 }}
                         animate={shouldReduceMotion ? { width: `${85 - idx * 7}%` } : { width: `${85 - idx * 7}%` }}

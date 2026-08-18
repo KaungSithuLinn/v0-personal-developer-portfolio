@@ -6,7 +6,7 @@ import {
   DEFAULT_LANGUAGE,
   type Language 
 } from "@/config/language.config"
-import translations from "./translations"
+import { translations } from "./translations/index"
 
 // Re-export the Language type
 export type { Language }

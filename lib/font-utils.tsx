@@ -61,6 +61,21 @@ const FONT_CONFIGS = {
   },
 } as const
 
+// Type guard: check if a language exists in the font configurations
+export function isSupportedLanguage(language: string): language is Language {
+  return language in FONT_CONFIGS
+}
+
+// Type guard: check if a font config has a src property (local font)
+function hasFontSrc(font: unknown): font is { src: string } {
+  return (
+    typeof font === "object" &&
+    font !== null &&
+    "src" in font &&
+    typeof (font as Record<string, unknown>).src === "string"
+  )
+}
+
 // Define font fallback stacks
 const FONT_FALLBACKS = {
   en: {
@@ -131,12 +146,12 @@ export function generateFontPreloadLinks(language: Language): ReactElement[] {
     return []
   }
 
-  const fonts = Object.values(FONT_CONFIGS[language]).filter((font) => "src" in font && typeof (font as { src?: string }).src === "string")
+  const fonts = (Object.values(FONT_CONFIGS[language]) as unknown[]).filter(hasFontSrc)
   return fonts.map((font, index) => (
     <link
       key={`${language}-font-${index}`}
       rel="preload"
-      href={(font as unknown as { src: string }).src}
+      href={font.src}
       as="font"
       type="font/woff2"
       crossOrigin="anonymous"

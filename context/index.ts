@@ -3,4 +3,4 @@
 export * from "./language-utils"
 export * from "./language-provider"
 export * from "./rtl-provider"
-export * from "./translations"
+export * from "./translations/index"

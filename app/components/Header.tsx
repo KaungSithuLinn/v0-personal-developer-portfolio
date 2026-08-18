@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { useTheme } from "next-themes"
 import { useTranslation } from "@/context/language-utils"
 import { memo } from "react"
@@ -10,7 +10,7 @@ import { memo } from "react"
 const HeaderComponent = () => {
   const [mounted, setMounted] = useState(false)
   const [isVisible, setIsVisible] = useState(true)
-  const [lastScrollY, setLastScrollY] = useState(0)
+  const lastScrollYRef = useRef(0)
   const [activeSection, setActiveSection] = useState("home")
   const { theme } = useTheme()
   const { t } = useTranslation()
@@ -20,8 +20,8 @@ const HeaderComponent = () => {
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY
-      setIsVisible(currentScrollY < lastScrollY || currentScrollY < 100)
-      setLastScrollY(currentScrollY)
+      setIsVisible(currentScrollY < lastScrollYRef.current || currentScrollY < 100)
+      lastScrollYRef.current = currentScrollY
     }
 
     const handleIntersection = (entries: IntersectionObserverEntry[]) => {
@@ -32,7 +32,7 @@ const HeaderComponent = () => {
       })
     }
 
-    window.addEventListener("scroll", handleScroll)
+    window.addEventListener("scroll", handleScroll, { passive: true })
 
     const observer = new IntersectionObserver(handleIntersection, {
       threshold: 0.3,
@@ -46,7 +46,7 @@ const HeaderComponent = () => {
       window.removeEventListener("scroll", handleScroll)
       observer.disconnect()
     }
-  }, [lastScrollY])
+  }, [])
 
   if (!mounted) return null
 

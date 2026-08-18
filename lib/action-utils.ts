@@ -1,6 +1,5 @@
 import { type Language } from "@/context/language-utils"
 import { type ZodError, z } from "zod"
-import { SUPPORTED_LANGUAGES } from "@/config/language.config"
 
 /**
  * Wraps a server action with a timeout to prevent DoS attacks
@@ -9,9 +8,9 @@ import { SUPPORTED_LANGUAGES } from "@/config/language.config"
  * @returns A wrapped server action that will timeout after the specified duration
  */
 export function withTimeout<T, Args extends any[]>(
-  action: (...args: Args) => Promise<T>,
+  action: (..._args: Args) => Promise<T>,
   timeoutMs = 5000,
-): (...args: Args) => Promise<T> {
+): (..._args: Args) => Promise<T> {
   return async (...args: Args): Promise<T> => {
     // Create a promise that rejects after the specified timeout
     const timeoutPromise = new Promise<never>((_, reject) => {
@@ -131,7 +130,7 @@ export async function validateAction<T>(
   data: unknown,
   schema: z.ZodSchema,
   language: Language,
-  action: (validData: T) => Promise<ActionResponse<T>>
+  action: (_validData: T) => Promise<ActionResponse<T>>
 ): Promise<ActionResponse<T>> {
   try {
     const validData = await schema.parseAsync(data)

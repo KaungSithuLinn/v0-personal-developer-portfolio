@@ -16,17 +16,9 @@ import { memo } from "react"
 
 // Audit P0-6: useTransition for async state
 
-interface AnimationConfig {
-  direction?: 'x' | 'y'; // Ensure 'direction' is part of the type
-  initial?: TargetAndTransition;
-  animate?: TargetAndTransition;
-  transition?: object;
-}
-
-// Remove duplicate interface and use AnimationConfig instead
 
 const ContactComponent = () => {
-  const { t, isRTL } = useTranslation()
+  const { t, isRTL: _isRTL } = useTranslation()
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle")
   const [isSubmitting, startTransition] = useTransition()
   const shouldReduceMotion = useReducedMotion()
@@ -49,7 +41,6 @@ const ContactComponent = () => {
 
       const form = e.currentTarget
       const formData = new FormData(form)
-      const data = Object.fromEntries(formData)
 
       // Validate all fields
       const validations = {
@@ -78,7 +69,7 @@ const ContactComponent = () => {
         } else {
           setSubmitStatus("error")
         }
-      } catch (error) {
+      } catch (_error) {
         setSubmitStatus("error")
       }
     })
@@ -168,8 +159,9 @@ const ContactComponent = () => {
                 onChange={(e) => handleChange(e)}
                 onBlur={(e) => handleBlur(e)}
                 className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-800 focus:border-blue-500 outline-none transition-colors"
+                aria-describedby={errors.name ? "name-error" : undefined}
               />
-              {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
+              {errors.name && <p id="name-error" className="text-red-500 text-sm mt-1">{errors.name}</p>}
             </div>
 
             <div>
@@ -183,8 +175,9 @@ const ContactComponent = () => {
                 onChange={(e) => handleChange(e)}
                 onBlur={(e) => handleBlur(e)}
                 className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-800 focus:border-blue-500 outline-none transition-colors"
+                aria-describedby={errors.email ? "email-error" : undefined}
               />
-              {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
+              {errors.email && <p id="email-error" className="text-red-500 text-sm mt-1">{errors.email}</p>}
             </div>
 
             <div>
@@ -198,8 +191,9 @@ const ContactComponent = () => {
                 onBlur={(e) => handleBlur(e)}
                 name="subject"
                 className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-800 focus:border-blue-500 outline-none transition-colors"
+                aria-describedby={errors.subject ? "subject-error" : undefined}
               />
-              {errors.subject && <p className="text-red-500 text-sm mt-1">{errors.subject}</p>}
+              {errors.subject && <p id="subject-error" className="text-red-500 text-sm mt-1">{errors.subject}</p>}
             </div>
 
             <div>
@@ -213,8 +207,9 @@ const ContactComponent = () => {
                 required
                 onChange={handleChange}
                 className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-800 focus:border-blue-500 outline-none transition-colors"
+                aria-describedby={errors.message ? "message-error" : undefined}
               />
-              {errors.message && <p className="text-red-500 text-sm mt-1">{errors.message}</p>}
+              {errors.message && <p id="message-error" className="text-red-500 text-sm mt-1">{errors.message}</p>}
             </div>
 
             <button

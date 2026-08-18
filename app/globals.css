@@ -90,17 +90,36 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
+/* Skip link for keyboard navigation */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: #000;
+  color: #fff;
+  padding: 8px 16px;
+  z-index: 100;
+  transition: top 0.3s;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
 /* Language-specific font configurations */
 :root[lang="zh"] {
   --font-sans: var(--font-noto-sc), system-ui, sans-serif;
+  --font-primary: 'Noto Sans SC', system-ui, sans-serif;
 }
 
 :root[lang="ar"] {
   --font-sans: var(--font-noto-arabic), system-ui, sans-serif;
+  --font-primary: 'Noto Sans Arabic', system-ui, sans-serif;
 }
 
 :root[lang="ta"] {
   --font-sans: var(--font-noto-tamil), system-ui, sans-serif;
+  --font-primary: 'Noto Sans Tamil', system-ui, sans-serif;
 }
 
 /* Apply fonts */
@@ -112,7 +131,7 @@ body {
 }
 
 /* Theme transitions */
-body, .theme-aware {
+.theme-aware {
   transition: background-color 0.3s, color 0.3s;
 }
 
@@ -122,14 +141,6 @@ body, .theme-aware {
 }
 
 /* Language-specific typography adjustments */
-[lang="ar"] {
-  letter-spacing: 0;
-  line-height: 1.8;
-}
-
-[lang="zh"] {
-  letter-spacing: 0.05em;
-}
 [lang="ar"] {
   letter-spacing: 0;
   line-height: 1.8;
@@ -184,11 +195,6 @@ body, .theme-aware {
   color-scheme: dark;
 }
 
-/* Ensure smooth theme transitions */
-body, .theme-aware {
-  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
-}
-
 /* Language transition effects */
 .language-transition * {
   transition: opacity 0.3s ease-in-out;
@@ -204,17 +210,6 @@ h1, h2, h3, h4, h5, h6, p, span, a, button {
 }
 
 /* Language-specific font adjustments */
-:root[lang="ar"] {
-  --font-primary: 'Noto Sans Arabic', system-ui, sans-serif;
-}
-
-:root[lang="zh"] {
-  --font-primary: 'Noto Sans SC', system-ui, sans-serif;
-}
-
-:root[lang="ta"] {
-  --font-primary: 'Noto Sans Tamil', system-ui, sans-serif;
-}
 
 /* Utility classes */
 .animate-gradient-x {

@@ -1,14 +1,14 @@
 "use client"
 
-import { useTranslation } from "@/context/language-utils"
-import { useCallback, useState } from "react"
+import { useCallback, useState, useRef } from "react"
 import { z } from "zod"
 import { getErrorMessage } from "@/lib/action-utils"
+import { useTranslation } from "@/context/language-utils"
 
 interface I18nFormOptions<T> {
   initialValues: T
   validationSchema: z.ZodObject<any>
-  onSubmit: (values: T) => Promise<void> | void
+  onSubmit: (_values: T) => Promise<void> | void
   validateOnChange?: boolean
   validateOnBlur?: boolean
 }
@@ -23,13 +23,13 @@ interface I18nFormState<T> {
 }
 
 type I18nFormHandlers = {
-  handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
-  handleBlur: (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => void
-  handleSubmit: (e: React.FormEvent) => void
-  setFieldValue: (field: string, value: any) => void
-  setFieldTouched: (field: string, touched?: boolean) => void
+  handleChange: (_e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
+  handleBlur: (_e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => void
+  handleSubmit: (_e: React.FormEvent) => void
+  setFieldValue: (_field: string, _value: any) => void
+  setFieldTouched: (_field: string, _touched?: boolean) => void
   resetForm: () => void
-  validateField: (field: string) => void
+  validateField: (_field: string) => void
   validateForm: () => boolean
 }
 
@@ -41,6 +41,7 @@ export function useI18nForm<T extends Record<string, any>>({
   validateOnBlur = true,
 }: I18nFormOptions<T>) {
   const { language } = useTranslation()
+  const valuesRef = useRef<T>(initialValues)
   const [state, setState] = useState<I18nFormState<T>>({
     values: initialValues,
     errors: {},
@@ -54,8 +55,8 @@ export function useI18nForm<T extends Record<string, any>>({
     (field: string) => {
       try {
         const schema = validationSchema.pick({ [field]: true })
-        schema.parse({ [field]: state.values[field] })
-        setState(prev => ({
+        schema.parse({ [field]: valuesRef.current[field] })
+        setState((prev) => ({
           ...prev,
           errors: {
             ...prev.errors,
@@ -63,28 +64,28 @@ export function useI18nForm<T extends Record<string, any>>({
           },
         }))
         return true
-        } catch (error) {
-          if (error instanceof z.ZodError) {
-            const fieldError = error.issues[0]
-            setState(prev => ({
-              ...prev,
-              errors: {
-                ...prev.errors,
-                [field]: getErrorMessage(fieldError.message, language),
-              },
-            }))
-            return false
-          }
-          return true
+      } catch (error) {
+        if (error instanceof z.ZodError) {
+          const fieldError = error.issues[0]
+          setState((prev) => ({
+            ...prev,
+            errors: {
+              ...prev.errors,
+              [field]: getErrorMessage(fieldError.message, language),
+            },
+          }))
+          return false
         }
+        return true
+      }
     },
-    [validationSchema, state.values, language]
+    [validationSchema, language]
   )
 
   const validateForm = useCallback(() => {
     try {
-      validationSchema.parse(state.values)
-      setState(prev => ({
+      validationSchema.parse(valuesRef.current)
+      setState((prev) => ({
         ...prev,
         errors: {},
         isValid: true,
@@ -93,11 +94,11 @@ export function useI18nForm<T extends Record<string, any>>({
     } catch (error) {
       if (error instanceof z.ZodError) {
         const newErrors: Record<string, string> = {}
-        error.issues.forEach(err => {
+        error.issues.forEach((err) => {
           const field = err.path[0] as string
           newErrors[field] = getErrorMessage(err.message, language)
         })
-        setState(prev => ({
+        setState((prev) => ({
           ...prev,
           errors: newErrors,
           isValid: false,
@@ -106,17 +107,15 @@ export function useI18nForm<T extends Record<string, any>>({
       }
       return true
     }
-  }, [validationSchema, state.values, language])
+  }, [validationSchema, language])
 
   const handlers: I18nFormHandlers = {
     handleChange: (e) => {
       const { name, value } = e.target
-      setState(prev => ({
+      valuesRef.current = { ...valuesRef.current, [name]: value }
+      setState((prev) => ({
         ...prev,
-        values: {
-          ...prev.values,
-          [name]: value,
-        },
+        values: valuesRef.current,
         isDirty: true,
       }))
       if (validateOnChange) {
@@ -126,7 +125,7 @@ export function useI18nForm<T extends Record<string, any>>({
 
     handleBlur: (e) => {
       const { name } = e.target
-      setState(prev => ({
+      setState((prev) => ({
         ...prev,
         touched: {
           ...prev.touched,
@@ -140,26 +139,24 @@ export function useI18nForm<T extends Record<string, any>>({
 
     handleSubmit: async (e) => {
       e.preventDefault()
-      setState(prev => ({ ...prev, isSubmitting: true }))
-      
+      setState((prev) => ({ ...prev, isSubmitting: true }))
+
       if (validateForm()) {
         try {
-          await onSubmit(state.values)
+          await onSubmit(valuesRef.current)
         } catch (error) {
           console.error("Form submission error:", error)
         }
       }
-      
-      setState(prev => ({ ...prev, isSubmitting: false }))
+
+      setState((prev) => ({ ...prev, isSubmitting: false }))
     },
 
     setFieldValue: (field, value) => {
-      setState(prev => ({
+      valuesRef.current = { ...valuesRef.current, [field]: value }
+      setState((prev) => ({
         ...prev,
-        values: {
-          ...prev.values,
-          [field]: value,
-        },
+        values: valuesRef.current,
         isDirty: true,
       }))
       if (validateOnChange) {
@@ -168,7 +165,7 @@ export function useI18nForm<T extends Record<string, any>>({
     },
 
     setFieldTouched: (field, touched = true) => {
-      setState(prev => ({
+      setState((prev) => ({
         ...prev,
         touched: {
           ...prev.touched,
@@ -181,6 +178,7 @@ export function useI18nForm<T extends Record<string, any>>({
     },
 
     resetForm: () => {
+      valuesRef.current = initialValues
       setState({
         values: initialValues,
         errors: {},

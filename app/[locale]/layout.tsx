@@ -7,7 +7,7 @@ import { type Language } from "@/context/language-utils"
 import { i18n } from "@/config/language.config"
 import { isRTL } from "@/lib/rtl-utils"
 import LanguageSelector from "@/components/LanguageSelector"
-import DevInterface from "../components/terminal/DevInterface"
+import UnifiedDevConsole from "../components/terminal/UnifiedDevConsole"
 import "../globals.css"
 
 // Load fonts with proper subsets and weights
@@ -87,9 +87,13 @@ export default async function LocaleLayout({
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
           <LanguageProvider initialLocale={localeLang}>
             <RTLProvider defaultRTL={defaultRTL}>
+              <a href="#main-content" className="skip-link">Skip to main content</a>
               <LanguageSelector />
               {children}
-              <DevInterface />
+              <UnifiedDevConsole />
+              <footer role="contentinfo" className="sr-only">
+                <p>Kaung Sithu Linn Portfolio</p>
+              </footer>
             </RTLProvider>
           </LanguageProvider>
         </ThemeProvider>

@@ -15,7 +15,7 @@ import { memo } from "react"
 
 const EducationComponent = () => {
   const [expandedCert, setExpandedCert] = useState<number | null>(null)
-  const { t, isRTL } = useTranslation()
+  const { isRTL } = useTranslation()
   const shouldReduceMotion = useReducedMotion()
 
   const education = [
