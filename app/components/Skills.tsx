@@ -122,7 +122,7 @@ const SkillsComponent = () => {
             </div>
 
             <div className="space-y-4">
-              <h4 className="font-medium text-lg dark:text-green-300 text-green-600">Backend</h4>
+              <h4 className="font-medium text-lg dark:text-green-300 text-green-700">Backend</h4>
               <div className="space-y-2">
                 {["Node.js", "Python", "Java", "C++", ".NET", "Express"].map((tech, idx) => (
                   <div key={idx} className="flex items-center">

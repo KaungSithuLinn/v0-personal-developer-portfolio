@@ -1,5 +1,3 @@
-export type { SectionTranslations } from "./common"
-
 export type TranslationsType = {
   en: Record<string, string>
   zh: Record<string, string>
