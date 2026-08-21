@@ -4,6 +4,7 @@ test.describe("Locale routing", () => {
   test("root redirects to detected locale", async ({ page }) => {
     const response = await page.goto("/")
     expect(response?.status()).toBe(200)
+    await page.waitForURL(/\/\w{2}(\/|$)/)
     expect(page.url()).toMatch(/\/\w{2}(\/|$)/)
   })
 

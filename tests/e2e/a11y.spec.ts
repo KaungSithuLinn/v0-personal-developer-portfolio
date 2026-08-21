@@ -6,7 +6,7 @@ import AxeBuilder from "@axe-core/playwright"
 test.describe("Accessibility", () => {
   test("home page has no detectable a11y violations", async ({ page }) => {
     await page.goto("/en")
-    await page.waitForLoadState("networkidle")
+    await expect(page.locator("#contact")).toBeVisible()
 
     const results = await new AxeBuilder({ page }).analyze()
     expect(results.violations).toEqual([])
@@ -14,12 +14,12 @@ test.describe("Accessibility", () => {
 
   test("contact form is accessible", async ({ page }) => {
     await page.goto("/en")
-    await page.waitForLoadState("networkidle")
+    await expect(page.locator("#contact")).toBeVisible()
 
     const contactSection = page.locator("#contact")
     await expect(contactSection).toBeVisible()
 
-    const results = await new AxeBuilder({ page }).exclude("#contact").analyze()
+    const results = await new AxeBuilder({ page }).include("#contact").analyze()
     expect(results.violations).toEqual([])
   })
 })
