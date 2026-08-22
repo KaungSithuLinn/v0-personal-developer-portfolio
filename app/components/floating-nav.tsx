@@ -55,7 +55,7 @@ const FloatingNavComponent = () => {
       animate={shouldReduceMotion ? { opacity: 1, x: 0 } : { opacity: 1, x: 0 }}
       transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.5 }}
     >
-      <div className="flex sm:flex-col gap-3 bg-gradient-to-r sm:bg-gradient-to-b from-gray-900/90 to-blue-900/50 backdrop-blur-sm p-3 rounded-full border border-blue-500/30 shadow-lg shadow-blue-500/10">
+      <div className="flex sm:flex-col gap-3 bg-gradient-to-r sm:bg-gradient-to-b from-slate-900/90 to-[#0a1628]/50 backdrop-blur-sm p-3 rounded-full border border-teal-500/30 shadow-lg shadow-teal-500/10">
         {sections.map(({ id, label }) => (
           <button
             key={id}

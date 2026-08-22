@@ -97,7 +97,7 @@ const HeaderComponent = () => {
       <nav className="container mx-auto px-4 sm:px-6">
         <div className="flex justify-between items-center">
           <Logo size={32} />
-          <ul className="hidden md:flex gap-1 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border border-gray-200/50 dark:border-gray-700/50 rounded-full px-2 py-1.5 shadow-lg">
+          <ul className="hidden md:flex gap-1 bg-background/80 dark:bg-card/80 backdrop-blur-md border border-border rounded-full px-2 py-1.5 shadow-lg">
             {navItems.map(([id, label]) => (
               <li key={id}>
                 <button
@@ -106,8 +106,8 @@ const HeaderComponent = () => {
                     text-sm px-3 py-1.5 rounded-full transition-all duration-200
                     ${
                       activeSection === id
-                        ? "bg-teal-500/10 text-teal-700 dark:text-teal-300 font-medium"
-                        : "text-gray-700 dark:text-gray-300 hover:text-teal-600 dark:hover:text-teal-400"
+                        ? "bg-primary/10 text-primary dark:text-primary-foreground font-medium"
+                        : "text-foreground dark:text-foreground hover:text-primary dark:hover:text-primary"
                     }
                   `}
                 >
@@ -119,7 +119,7 @@ const HeaderComponent = () => {
           <div className="flex items-center gap-2 md:hidden">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-full text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              className="p-2 rounded-full text-foreground dark:text-foreground hover:bg-muted transition-colors"
               aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
               aria-expanded={mobileMenuOpen}
             >
@@ -136,21 +136,21 @@ const HeaderComponent = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="md:hidden fixed top-16 left-4 right-4 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md border border-gray-200/50 dark:border-gray-700/50 rounded-2xl shadow-xl z-40 overflow-hidden"
+            className="md:hidden fixed top-16 left-4 right-4 bg-background/95 dark:bg-card/95 backdrop-blur-md border border-border rounded-2xl shadow-xl z-40 overflow-hidden"
           >
             <ul className="flex flex-col p-2 gap-1">
               {navItems.map(([id, label]) => (
                 <li key={id}>
                   <button
                     onClick={() => scrollToSection(id)}
-                    className={`
-                      w-full text-left py-3 px-4 rounded-xl transition-colors duration-200
-                      ${
-                        activeSection === id
-                          ? "bg-teal-500/10 text-teal-700 dark:text-teal-300"
-                          : "text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800"
-                      }
-                    `}
+                  className={`
+                    w-full text-left py-3 px-4 rounded-xl transition-colors duration-200
+                    ${
+                      activeSection === id
+                        ? "bg-primary/10 text-primary dark:text-primary-foreground"
+                        : "text-foreground dark:text-foreground hover:bg-muted dark:hover:bg-muted"
+                    }
+                  `}
                   >
                     {label}
                   </button>

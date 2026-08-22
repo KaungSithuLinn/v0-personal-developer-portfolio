@@ -39,11 +39,11 @@
 }
 
 .dark {
-  --background: hsl(222 45% 6%);
+  --background: #070c16;
   --foreground: hsl(210 40% 96%);
-  --card: hsl(221 40% 9%);
+  --card: hsl(220 30% 12%);
   --card-foreground: hsl(210 40% 96%);
-  --popover: hsl(221 40% 9%);
+  --popover: hsl(220 30% 12%);
   --popover-foreground: hsl(210 40% 96%);
   --primary: hsl(172 66% 46%);
   --primary-foreground: hsl(222 45% 8%);
@@ -172,8 +172,7 @@ body {
 #projects,
 #testimonials,
 #education,
-#contact,
-#services {
+#contact {
   content-visibility: auto;
 }
 
@@ -230,6 +229,18 @@ h1, h2, h3, h4, h5, h6, p, span, a, button {
 }
 
 /* ---- Design-system helpers ---------------------------------------- */
+
+/* Consistent card surfaces aligned to tokens */
+.card-glass {
+  background-color: hsl(0 0% 100% / 0.8);
+  border: 1px solid hsl(214 25% 90% / 0.5);
+  backdrop-filter: blur(4px);
+}
+
+.dark .card-glass {
+  background-color: hsl(220 30% 12% / 0.8);
+  border-color: hsl(220 28% 18% / 0.5);
+}
 
 /* Faint engineering grid backdrop */
 .bg-grid-faint {

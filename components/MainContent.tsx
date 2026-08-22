@@ -15,7 +15,7 @@ const DynamicFloatingNav = dynamic(() => import("@/app/components/floating-nav")
 
 export default function MainContent() {
   return (
-    <main id="main-content" role="main" className="bg-slate-50 dark:bg-[#070c16] min-h-screen">
+    <main id="main-content" role="main" className="bg-background dark:bg-background min-h-screen">
       <DynamicFloatingNav />
       <DynamicHero />
       <DynamicAbout />

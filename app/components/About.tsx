@@ -62,7 +62,7 @@ const AboutComponent = () => {
   return (
     <section
       id="about"
-      className="py-20 bg-gradient-to-br from-slate-50 to-white dark:from-[#070c16] dark:to-[#0a1628] transition-colors duration-300 overflow-hidden relative"
+      className="py-20 bg-gradient-to-br from-slate-50 to-white dark:from-background dark:to-[#0a1628] transition-colors duration-300 overflow-hidden relative"
     >
       <div className="absolute inset-0 glow-teal opacity-30" aria-hidden="true" />
       <div className={`absolute bottom-0 ${isRTL ? "left-0" : "right-0"} w-64 h-64 -mb-32 ${isRTL ? "-ml-32" : "-mr-32"} glow-navy opacity-40`} aria-hidden="true" />
@@ -76,16 +76,16 @@ const AboutComponent = () => {
             viewport={shouldReduceMotion ? undefined : { once: true, margin: "-50px" }}
             transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5 }}
           >
-            <p className="text-xl text-gray-700 dark:text-gray-300 leading-relaxed mb-6">{t("about.paragraph1")}</p>
-            <p className="text-xl text-gray-700 dark:text-gray-300 leading-relaxed">{t("about.paragraph2")}</p>
+            <p className="text-base sm:text-lg text-foreground dark:text-foreground leading-relaxed mb-6">{t("about.paragraph1")}</p>
+            <p className="text-base sm:text-lg text-foreground dark:text-foreground leading-relaxed">{t("about.paragraph2")}</p>
 
             <motion.div
-              className="mt-8 p-4 border-s-4 border-teal-500 bg-teal-50/50 dark:bg-teal-900/10 rounded"
+              className="mt-8 p-4 border-s-4 border-primary bg-accent rounded-lg"
               initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               animate={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
               transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5, delay: 0.3 }}
             >
-              <p className="italic text-gray-700 dark:text-gray-300">{t("about.quote")}</p>
+              <p className="italic text-foreground dark:text-foreground">{t("about.quote")}</p>
             </motion.div>
           </motion.div>
 
@@ -98,15 +98,15 @@ const AboutComponent = () => {
             {skills.map((skill, index) => (
               <motion.div
                 key={index}
-                className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-6 rounded-xl shadow-md hover:shadow-xl ring-1 ring-gray-200/50 dark:ring-gray-700/50 hover:ring-teal-500/30 transition-all duration-300"
+                className="card-glass p-6 rounded-xl shadow-md hover:shadow-xl hover:border-primary/30 transition-all duration-300"
                 variants={item}
                 whileHover={shouldReduceMotion ? undefined : { scale: 1.03 }}
                 role="group"
                 aria-label={`${skill.title} skills: ${skill.description}`}
               >
-                <div className="p-2 bg-teal-50 dark:bg-teal-900/20 rounded-lg w-fit">{skill.icon}</div>
-                <h3 className="text-xl font-semibold mt-4 mb-2 dark:text-white">{skill.title}</h3>
-                <p className="text-gray-600 dark:text-gray-300">{skill.description}</p>
+                <div className="p-2 bg-accent rounded-lg w-fit">{skill.icon}</div>
+                <h3 className="text-xl font-semibold mt-4 mb-2 text-foreground">{skill.title}</h3>
+                <p className="text-muted-foreground">{skill.description}</p>
               </motion.div>
             ))}
           </motion.div>

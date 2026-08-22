@@ -69,7 +69,7 @@ const ContactComponent = () => {
   return (
     <section
       id="contact"
-      className="py-20 bg-gradient-to-br from-slate-50 to-white dark:from-[#070c16] dark:to-[#0a1628] transition-colors duration-300"
+      className="py-20 bg-gradient-to-br from-slate-50 to-white dark:from-background dark:to-[#0a1628] transition-colors duration-300"
     >
       <div className="container mx-auto px-6">
         <AnimatedSectionHeader title={t("contact.title")} />
@@ -81,17 +81,17 @@ const ContactComponent = () => {
             animate={shouldReduceMotion ? animation.animate : animation.animate}
             transition={shouldReduceMotion ? { duration: 0 } : animation.transition}
           >
-            <h3 className="text-2xl font-semibold mb-4 dark:text-white">{t("contact.info")}</h3>
+            <h3 className="text-2xl font-semibold mb-4 text-foreground">{t("contact.info")}</h3>
             
             <div className="flex items-center gap-4">
-              <div className="p-3 rounded-full bg-teal-500/10 text-teal-600 dark:text-teal-400">
+              <div className="p-3 rounded-full bg-primary/10 text-primary dark:text-primary">
                 <Mail size={24} />
               </div>
               <div>
-                <h4 className="font-medium dark:text-gray-200">{t("contact.email")}</h4>
+                <h4 className="font-medium text-foreground">{t("contact.email")}</h4>
                 <a
                   href="mailto:kaungthu.sithu97@gmail.com"
-                  className="text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-teal-400"
+                  className="text-muted-foreground hover:text-primary dark:hover:text-primary"
                 >
                   kaungthu.sithu97@gmail.com
                 </a>
@@ -99,14 +99,14 @@ const ContactComponent = () => {
             </div>
 
             <div className="flex items-center gap-4">
-              <div className="p-3 rounded-full bg-teal-500/10 text-teal-600 dark:text-teal-400">
+              <div className="p-3 rounded-full bg-primary/10 text-primary dark:text-primary">
                 <Phone size={24} />
               </div>
               <div>
-                <h4 className="font-medium dark:text-gray-200">{t("contact.phone")}</h4>
+                <h4 className="font-medium text-foreground">{t("contact.phone")}</h4>
                 <a
                   href="tel:+1234567890"
-                  className="text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-teal-400"
+                  className="text-muted-foreground hover:text-primary dark:hover:text-primary"
                 >
                   +1 (234) 567-890
                 </a>
@@ -114,18 +114,18 @@ const ContactComponent = () => {
             </div>
 
             <div className="flex items-center gap-4">
-              <div className="p-3 rounded-full bg-teal-500/10 text-teal-600 dark:text-teal-400">
+              <div className="p-3 rounded-full bg-primary/10 text-primary dark:text-primary">
                 <MapPin size={24} />
               </div>
               <div>
-                <h4 className="font-medium dark:text-gray-200">{t("contact.address")}</h4>
-                <p className="text-gray-600 dark:text-gray-400">Singapore</p>
+                <h4 className="font-medium text-foreground">{t("contact.address")}</h4>
+                <p className="text-muted-foreground">Singapore</p>
               </div>
             </div>
 
             <div className="mt-8">
-              <h4 className="text-xl font-semibold mb-2 dark:text-white">{t("contact.connect")}</h4>
-              <p className="text-gray-600 dark:text-gray-400">{t("contact.connect.desc")}</p>
+              <h4 className="text-xl font-semibold mb-2 text-foreground">{t("contact.connect")}</h4>
+              <p className="text-muted-foreground">{t("contact.connect.desc")}</p>
             </div>
           </motion.div>
 
@@ -148,7 +148,7 @@ const ContactComponent = () => {
                 required
                 onChange={(e) => handleChange(e)}
                 onBlur={(e) => handleBlur(e)}
-                className={`w-full px-4 py-2 rounded-lg border bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-800 focus:border-teal-500 outline-none transition-colors ${errors.name ? "border-red-500 dark:border-red-400" : "border-gray-300 dark:border-gray-600"}`}
+                className={`w-full px-4 py-2 rounded-lg border bg-background dark:bg-card text-foreground focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background dark:focus:ring-offset-card focus:border-primary outline-none transition-colors ${errors.name ? "border-destructive dark:border-destructive" : "border-border"}`}
                 aria-invalid={!!errors.name}
                 aria-describedby={errors.name ? "name-error" : undefined}
               />
@@ -166,7 +166,7 @@ const ContactComponent = () => {
                 autoComplete="email"
                 onChange={(e) => handleChange(e)}
                 onBlur={(e) => handleBlur(e)}
-                className={`w-full px-4 py-2 rounded-lg border bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-800 focus:border-teal-500 outline-none transition-colors ${errors.email ? "border-red-500 dark:border-red-400" : "border-gray-300 dark:border-gray-600"}`}
+                className={`w-full px-4 py-2 rounded-lg border bg-background dark:bg-card text-foreground focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background dark:focus:ring-offset-card focus:border-primary outline-none transition-colors ${errors.email ? "border-destructive dark:border-destructive" : "border-border"}`}
                 aria-invalid={!!errors.email}
                 aria-describedby={errors.email ? "email-error" : undefined}
               />
@@ -184,7 +184,7 @@ const ContactComponent = () => {
                 onChange={(e) => handleChange(e)}
                 onBlur={(e) => handleBlur(e)}
                 name="subject"
-                className={`w-full px-4 py-2 rounded-lg border bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-800 focus:border-teal-500 outline-none transition-colors ${errors.subject ? "border-red-500 dark:border-red-400" : "border-gray-300 dark:border-gray-600"}`}
+                className={`w-full px-4 py-2 rounded-lg border bg-background dark:bg-card text-foreground focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background dark:focus:ring-offset-card focus:border-primary outline-none transition-colors ${errors.subject ? "border-destructive dark:border-destructive" : "border-border"}`}
                 aria-invalid={!!errors.subject}
                 aria-describedby={errors.subject ? "subject-error" : undefined}
               />
@@ -201,20 +201,20 @@ const ContactComponent = () => {
                 rows={4}
                 required
                 onChange={handleChange}
-                className={`w-full px-4 py-2 rounded-lg border bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-800 focus:border-teal-500 outline-none transition-colors ${errors.message ? "border-red-500 dark:border-red-400" : "border-gray-300 dark:border-gray-600"}`}
+                className={`w-full px-4 py-2 rounded-lg border bg-background dark:bg-card text-foreground focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background dark:focus:ring-offset-card focus:border-primary outline-none transition-colors ${errors.message ? "border-destructive dark:border-destructive" : "border-border"}`}
                 aria-invalid={!!errors.message}
                 aria-describedby={errors.message ? "message-error" : undefined}
               />
               {errors.message && <p id="message-error" className="text-red-500 text-sm mt-1">{errors.message}</p>}
             </div>
 
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className={`w-full py-3 px-6 rounded-lg bg-teal-600 text-white font-medium hover:bg-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 transition-colors ${
-                isSubmitting ? "opacity-50 cursor-not-allowed" : ""
-              }`}
-            >
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className={`w-full py-3 px-6 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-colors ${
+                  isSubmitting ? "opacity-50 cursor-not-allowed" : ""
+                }`}
+              >
               {isSubmitting ? t("contact.form.sending") : t("contact.form.send")}
             </button>
 

@@ -50,7 +50,7 @@ const TestimonialsComponent = () => {
   return (
     <section
       id="testimonials"
-      className="py-20 bg-gradient-to-br from-slate-50 to-white dark:from-[#070c16] dark:to-[#0a1628] transition-colors duration-300 overflow-hidden relative"
+      className="py-20 bg-gradient-to-br from-slate-50 to-white dark:from-background dark:to-[#0a1628] transition-colors duration-300 overflow-hidden relative"
     >
       <div className="absolute inset-0 glow-teal opacity-20" aria-hidden="true" />
       <div className="container mx-auto px-6 relative z-10">
@@ -64,14 +64,14 @@ const TestimonialsComponent = () => {
               animate={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
               exit={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
               transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5 }}
-              className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-8 md:p-12 rounded-xl shadow-xl ring-1 ring-gray-200/50 dark:ring-gray-700/50"
+              className="card-glass p-8 md:p-12 rounded-xl shadow-xl"
             >
               <div className={`absolute -top-6 ${isRTL ? "right-10" : "left-10"} text-teal-500 dark:text-teal-400`}>
                 <Quote size={48} />
               </div>
 
               <div aria-live="polite" aria-atomic="true">
-                <blockquote className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 italic mt-6 mb-8">
+                <blockquote className="text-xl md:text-2xl text-foreground dark:text-foreground italic mt-6 mb-8">
                   {testimonials[activeIndex].quote}
                 </blockquote>
               </div>
@@ -81,10 +81,10 @@ const TestimonialsComponent = () => {
                   <span className="text-xl font-bold text-white">{testimonials[activeIndex].initials}</span>
                 </div>
                 <div>
-                  <p className="font-semibold text-lg text-gray-900 dark:text-white">
+                  <p className="font-semibold text-lg text-foreground">
                     {testimonials[activeIndex].name}
                   </p>
-                  <p className="text-gray-600 dark:text-gray-400">{testimonials[activeIndex].title}</p>
+                  <p className="text-muted-foreground">{testimonials[activeIndex].title}</p>
                 </div>
               </div>
             </motion.div>
@@ -92,12 +92,12 @@ const TestimonialsComponent = () => {
             <div className="flex justify-center mt-8 gap-4">
               <button
                 onClick={prevTestimonial}
-                className="p-2 rounded-full bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-md hover:bg-teal-50 dark:hover:bg-teal-900/30 transition-colors duration-300 ring-1 ring-gray-200/50 dark:ring-gray-700/50"
+                className="p-2 rounded-full card-glass shadow-md hover:bg-accent transition-colors duration-300"
                 aria-label={t("testimonials.prev")}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6 text-teal-600 dark:text-teal-400"
+                  className="h-6 w-6 text-primary dark:text-primary"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -113,8 +113,8 @@ const TestimonialsComponent = () => {
                     onClick={() => setActiveIndex(index)}
                     className={`w-3 h-3 rounded-full transition-colors duration-300 ${
                       index === activeIndex
-                        ? "bg-teal-600 dark:bg-teal-400"
-                        : "bg-gray-300 dark:bg-gray-600 hover:bg-teal-400 dark:hover:bg-teal-500"
+                        ? "bg-primary dark:bg-primary"
+                        : "bg-muted-foreground/30 dark:bg-muted-foreground/30 hover:bg-primary/60 dark:hover:bg-primary/60"
                     }`}
                     aria-label={`${t("testimonials.goto")} ${index + 1}`}
                     aria-current={index === activeIndex ? "true" : "false"}
@@ -124,12 +124,12 @@ const TestimonialsComponent = () => {
 
               <button
                 onClick={nextTestimonial}
-                className="p-2 rounded-full bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-md hover:bg-teal-50 dark:hover:bg-teal-900/30 transition-colors duration-300 ring-1 ring-gray-200/50 dark:ring-gray-700/50"
+                className="p-2 rounded-full card-glass shadow-md hover:bg-accent transition-colors duration-300"
                 aria-label={t("testimonials.next")}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6 text-teal-600 dark:text-teal-400"
+                  className="h-6 w-6 text-primary dark:text-primary"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"

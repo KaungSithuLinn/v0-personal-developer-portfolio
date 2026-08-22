@@ -25,7 +25,7 @@ const AnimatedSectionHeaderComponent = ({ title, eyebrow }: AnimatedSectionHeade
         </motion.span>
       )}
       <motion.h2
-        className="text-4xl font-bold text-gray-900 dark:text-white relative inline-block"
+        className="text-3xl sm:text-4xl font-bold text-foreground relative inline-block"
         initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
         whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
         viewport={shouldReduceMotion ? undefined : { once: true, margin: "-50px" }}

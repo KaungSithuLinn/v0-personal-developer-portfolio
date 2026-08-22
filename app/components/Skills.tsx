@@ -62,7 +62,7 @@ const SkillsComponent = () => {
   return (
     <section
       id="skills"
-      className="py-20 bg-gradient-to-br from-slate-50 to-white dark:from-[#070c16] dark:to-[#0a1628] transition-colors duration-300 overflow-hidden relative"
+      className="py-20 bg-gradient-to-br from-slate-50 to-white dark:from-background dark:to-[#0a1628] transition-colors duration-300 overflow-hidden relative"
     >
       <div className="absolute inset-0 glow-teal opacity-20" aria-hidden="true" />
       <div className={`absolute bottom-0 ${isRTL ? "left-0" : "right-0"} w-64 h-64 -mb-32 ${isRTL ? "-ml-32" : "-mr-32"} glow-navy opacity-40`} aria-hidden="true" />
@@ -77,19 +77,19 @@ const SkillsComponent = () => {
           {skills.map((skill, index) => (
             <motion.div
               key={index}
-              className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-6 rounded-xl shadow-md hover:shadow-xl ring-1 ring-gray-200/50 dark:ring-gray-700/50 hover:ring-teal-500/30 transition-all duration-300"
+              className="card-glass p-6 rounded-xl shadow-md hover:shadow-xl hover:border-primary/30 transition-all duration-300"
               variants={item}
               whileHover={shouldReduceMotion ? undefined : { scale: 1.03 }}
             >
-              <div className="p-2 bg-teal-50 dark:bg-teal-900/20 rounded-lg w-fit">{skill.icon}</div>
-              <h3 className="text-xl font-semibold mt-4 mb-2 dark:text-white">{skill.title}</h3>
-              <p className="text-gray-600 dark:text-gray-300">{skill.description}</p>
+              <div className="p-2 bg-accent rounded-lg w-fit">{skill.icon}</div>
+              <h3 className="text-xl font-semibold mt-4 mb-2 text-foreground">{skill.title}</h3>
+              <p className="text-muted-foreground">{skill.description}</p>
             </motion.div>
           ))}
         </motion.div>
 
         <motion.div
-          className="mt-16 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-8 rounded-xl shadow-lg ring-1 ring-gray-200/50 dark:ring-gray-700/50"
+          className="mt-16 card-glass p-8 rounded-xl shadow-lg"
           initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
           whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
           viewport={shouldReduceMotion ? undefined : { once: true, margin: "-50px" }}
@@ -101,57 +101,57 @@ const SkillsComponent = () => {
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div className="space-y-4">
-              <h4 className="font-medium text-lg text-teal-700 dark:text-teal-300">Frontend</h4>
+              <h4 className="font-medium text-lg text-primary dark:text-primary-foreground">Frontend</h4>
               <div className="space-y-2">
                 {["JavaScript", "TypeScript", "React", "Next.js", "HTML/CSS", "Tailwind CSS"].map((tech, idx) => (
                   <div key={idx} className="flex items-center">
-                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5 me-2" role="progressbar" aria-valuenow={parseInt(`${80 - idx * 5}`)} aria-valuemin={0} aria-valuemax={100} aria-label={`${tech} proficiency`}>
+                    <div className="w-full bg-muted rounded-full h-2.5 me-2" role="progressbar" aria-valuenow={parseInt(`${85 - idx * 5}`)} aria-valuemin={0} aria-valuemax={100} aria-label={`${tech} proficiency`}>
                     <motion.div
-                        className="bg-teal-600 dark:bg-teal-500 h-2.5 rounded-full"
+                        className="bg-primary dark:bg-primary h-2.5 rounded-full"
                         initial={shouldReduceMotion ? { width: `${85 - idx * 5}%` } : { width: 0 }}
                         animate={shouldReduceMotion ? { width: `${85 - idx * 5}%` } : { width: `${85 - idx * 5}%` }}
                         transition={shouldReduceMotion ? { duration: 0 } : { duration: 1, delay: idx * 0.1 }}
                       />
                     </div>
-                    <span className="text-sm text-gray-600 dark:text-gray-300 min-w-[5rem]">{tech}</span>
+                    <span className="text-sm text-muted-foreground min-w-[5rem]">{tech}</span>
                   </div>
                 ))}
               </div>
             </div>
 
             <div className="space-y-4">
-              <h4 className="font-medium text-lg text-teal-700 dark:text-teal-300">Backend</h4>
+              <h4 className="font-medium text-lg text-primary dark:text-primary-foreground">Backend</h4>
               <div className="space-y-2">
                 {["Node.js", "Python", "Java", "C++", ".NET", "Express"].map((tech, idx) => (
                   <div key={idx} className="flex items-center">
-                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5 me-2" role="progressbar" aria-valuenow={parseInt(`${80 - idx * 5}`)} aria-valuemin={0} aria-valuemax={100} aria-label={`${tech} proficiency`}>
+                    <div className="w-full bg-muted rounded-full h-2.5 me-2" role="progressbar" aria-valuenow={parseInt(`${80 - idx * 5}`)} aria-valuemin={0} aria-valuemax={100} aria-label={`${tech} proficiency`}>
                     <motion.div
-                        className="bg-teal-600 dark:bg-teal-500 h-2.5 rounded-full"
+                        className="bg-primary dark:bg-primary h-2.5 rounded-full"
                         initial={shouldReduceMotion ? { width: `${80 - idx * 5}%` } : { width: 0 }}
                         animate={shouldReduceMotion ? { width: `${80 - idx * 5}%` } : { width: `${80 - idx * 5}%` }}
                         transition={shouldReduceMotion ? { duration: 0 } : { duration: 1, delay: idx * 0.1 }}
                       />
                     </div>
-                    <span className="text-sm text-gray-600 dark:text-gray-300 min-w-[5rem]">{tech}</span>
+                    <span className="text-sm text-muted-foreground min-w-[5rem]">{tech}</span>
                   </div>
                 ))}
               </div>
             </div>
 
             <div className="space-y-4">
-              <h4 className="font-medium text-lg text-teal-700 dark:text-teal-300">Specialized</h4>
+              <h4 className="font-medium text-lg text-primary dark:text-primary-foreground">Specialized</h4>
               <div className="space-y-2">
                 {["SQL", "MongoDB", "Machine Learning", "Data Analysis", "UI/UX Design", "DevOps"].map((tech, idx) => (
                   <div key={idx} className="flex items-center">
-                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5 me-2" role="progressbar" aria-valuenow={parseInt(`${80 - idx * 5}`)} aria-valuemin={0} aria-valuemax={100} aria-label={`${tech} proficiency`}>
+                    <div className="w-full bg-muted rounded-full h-2.5 me-2" role="progressbar" aria-valuenow={parseInt(`${85 - idx * 7}`)} aria-valuemin={0} aria-valuemax={100} aria-label={`${tech} proficiency`}>
                     <motion.div
-                        className="bg-teal-600 dark:bg-teal-500 h-2.5 rounded-full"
+                        className="bg-primary dark:bg-primary h-2.5 rounded-full"
                         initial={shouldReduceMotion ? { width: `${85 - idx * 7}%` } : { width: 0 }}
                         animate={shouldReduceMotion ? { width: `${85 - idx * 7}%` } : { width: `${85 - idx * 7}%` }}
                         transition={shouldReduceMotion ? { duration: 0 } : { duration: 1, delay: idx * 0.1 }}
                       />
                     </div>
-                    <span className="text-sm text-gray-600 dark:text-gray-300 min-w-[5rem]">{tech}</span>
+                    <span className="text-sm text-muted-foreground min-w-[5rem]">{tech}</span>
                   </div>
                 ))}
               </div>
