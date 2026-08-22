@@ -96,7 +96,7 @@ const HeroComponent = () => {
         </div>
 
         {/* Image container with explicit styling */}
-        <div className={`absolute bottom-0 ${isRTL ? "left-0" : "right-0"} w-[300px] h-[300px] sm:w-[500px] sm:h-[500px] -mb-12 sm:-mb-20 ${isRTL ? "-ml-12 sm:-ml-20" : "-mr-12 sm:-mr-20"} opacity-40 hidden md:block`}>
+        <div className={`absolute bottom-0 ${isRTL ? "left-0" : "right-0"} w-[300px] h-[300px] sm:w-[500px] sm:h-[500px] -mb-12 sm:-mb-20 ${isRTL ? "-ml-12 sm:-ml-20" : "-mr-12 sm:-mr-20"} opacity-80 hidden md:block`}>
           <div className="absolute inset-0 m-4 rounded-2xl overflow-hidden shadow-2xl hero-image-container">
             <div className="relative w-full h-full">
               <Image
@@ -116,7 +116,7 @@ const HeroComponent = () => {
         </div>
 
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-white/20 dark:to-black/20" />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-white/10 dark:to-black/10" />
         </div>
       </div>
     </section>
