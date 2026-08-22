@@ -4,6 +4,7 @@ import { motion } from "framer-motion"
 import { useReducedMotion } from "framer-motion"
 import { Code, Database, Server, Globe, Brain, TrendingUp } from "lucide-react"
 import Image from "next/image"
+import AnimatedSectionHeader from "./AnimatedSectionHeader"
 import { useTranslation } from "@/context/language-utils"
 import { memo } from "react"
 
@@ -66,22 +67,16 @@ const AboutComponent = () => {
   return (
     <section
       id="about"
-      className="py-20 bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-indigo-900 transition-colors duration-300 overflow-hidden relative"
+      className="py-20 bg-gradient-to-br from-indigo-50 to-blue-100 dark:from-gray-900 dark:to-blue-900 transition-colors duration-300 overflow-hidden relative"
     >
       <div className="container mx-auto px-6 relative z-10">
-        <motion.h2
-          className="text-4xl font-bold mb-8 text-center dark:text-white"
-          initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          animate={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
-          transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5 }}
-        >
-          {t("about.title")}
-        </motion.h2>
+        <AnimatedSectionHeader title={t("about.title")} />
         <div className="flex flex-col md:flex-row items-center justify-between">
           <motion.div
             className="md:w-1/2 mb-8 md:mb-0"
             initial={shouldReduceMotion ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
-            animate={shouldReduceMotion ? { opacity: 1, x: 0 } : { opacity: 1, x: 0 }}
+            whileInView={shouldReduceMotion ? undefined : { opacity: 1, x: 0 }}
+            viewport={shouldReduceMotion ? undefined : { once: true, margin: "-50px" }}
             transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5 }}
           >
             <p className="text-xl text-gray-700 dark:text-gray-300 leading-relaxed mb-6">{t("about.paragraph1")}</p>

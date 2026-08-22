@@ -6,7 +6,6 @@ import { Inter, Noto_Sans_SC, Noto_Sans_Arabic, Noto_Sans_Tamil } from "next/fon
 import { type Language } from "@/context/language-utils"
 import { i18n } from "@/config/language.config"
 import { isRTL } from "@/lib/rtl-utils"
-import LanguageSelector from "@/components/LanguageSelector"
 import UnifiedDevConsole from "../components/terminal/UnifiedDevConsole"
 import "../globals.css"
 
@@ -88,7 +87,6 @@ export default async function LocaleLayout({
           <LanguageProvider initialLocale={localeLang}>
             <RTLProvider defaultRTL={defaultRTL}>
               <a href="#main-content" className="skip-link">Skip to main content</a>
-              <LanguageSelector />
               {children}
               <UnifiedDevConsole />
               <footer role="contentinfo" className="sr-only">

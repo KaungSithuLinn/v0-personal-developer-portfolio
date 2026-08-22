@@ -71,9 +71,11 @@ const TestimonialsComponent = () => {
                 <Quote size={48} />
               </div>
 
-              <blockquote className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 italic mt-6 mb-8">
-                {testimonials[activeIndex].quote}
-              </blockquote>
+              <div aria-live="polite" aria-atomic="true">
+                <blockquote className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 italic mt-6 mb-8">
+                  {testimonials[activeIndex].quote}
+                </blockquote>
+              </div>
 
               <div className="flex items-center">
                 <div className={`w-16 h-16 rounded-full overflow-hidden me-4`}>

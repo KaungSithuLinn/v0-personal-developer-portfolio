@@ -32,6 +32,11 @@ const ExperienceComponent = () => {
     },
   ]
 
+  const item = {
+    hidden: { opacity: 0, y: 50 },
+    show: { opacity: 1, y: 0 },
+  }
+
   return (
     <section
       id="experience"
@@ -39,14 +44,18 @@ const ExperienceComponent = () => {
     >
       <div className="container mx-auto px-6 relative z-10">
         <AnimatedSectionHeader title={t("experience.title")} />
-        <div className="space-y-16">
+        <motion.div
+          className="space-y-16"
+          initial={shouldReduceMotion ? { opacity: 1 } : "hidden"}
+          whileInView={shouldReduceMotion ? undefined : "show"}
+          viewport={shouldReduceMotion ? undefined : { once: true, margin: "-50px" }}
+          transition={shouldReduceMotion ? { duration: 0 } : { staggerChildren: 0.2 }}
+        >
           {experiences.map((exp, index) => (
             <motion.div
               key={index}
-              initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-              animate={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
-              transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5, delay: index * 0.2 }}
               className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg hover:shadow-2xl ring-1 ring-gray-200/50 dark:ring-gray-700/50 hover:ring-blue-500/30 transition-all duration-300 relative overflow-hidden group"
+              variants={item}
             >
               <div
                 className={`absolute top-0 ${isRTL ? "left-0 rounded-br-full" : "right-0 rounded-bl-full"} w-32 h-32 bg-blue-200 dark:bg-blue-700 z-0 opacity-50 
@@ -77,7 +86,7 @@ const ExperienceComponent = () => {
               </div>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
       <div className={`absolute bottom-0 ${isRTL ? "left-0" : "right-0"} w-64 h-64 -mb-32 ${isRTL ? "-ml-32" : "-mr-32"} opacity-20`}>
         <Image

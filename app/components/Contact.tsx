@@ -100,10 +100,10 @@ const ContactComponent = () => {
               <div>
                 <h4 className="font-medium dark:text-gray-200">{t("contact.email")}</h4>
                 <a
-                  href="mailto:your.email@example.com"
+                  href="mailto:kaungthu.sithu97@gmail.com"
                   className="text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400"
                 >
-                  your.email@example.com
+                  kaungthu.sithu97@gmail.com
                 </a>
               </div>
             </div>

@@ -15,7 +15,7 @@ import { memo } from "react"
 
 const EducationComponent = () => {
   const [expandedCert, setExpandedCert] = useState<number | null>(null)
-  const { isRTL } = useTranslation()
+  const { isRTL, t } = useTranslation()
   const shouldReduceMotion = useReducedMotion()
 
   const education = [
@@ -89,22 +89,31 @@ const EducationComponent = () => {
     }
   }
 
+  const item = {
+    hidden: { opacity: 0, y: 50 },
+    show: { opacity: 1, y: 0 },
+  }
+
   return (
     <section
       id="education"
       className="py-20 bg-gradient-to-br from-indigo-50 to-purple-100 dark:from-gray-900 dark:to-purple-900 transition-colors duration-300 overflow-hidden relative"
     >
       <div className="container mx-auto px-6 relative z-10">
-        <AnimatedSectionHeader title="Education & Certifications" />
-        <div className="max-w-4xl mx-auto">
+        <AnimatedSectionHeader title={t("education.title")} />
+        <motion.div
+          className="max-w-4xl mx-auto"
+          initial={shouldReduceMotion ? { opacity: 1 } : "hidden"}
+          whileInView={shouldReduceMotion ? undefined : "show"}
+          viewport={shouldReduceMotion ? undefined : { once: true, margin: "-50px" }}
+          transition={shouldReduceMotion ? { duration: 0 } : { staggerChildren: 0.2 }}
+        >
           <div className="space-y-8 mb-16">
             {education.map((edu, index) => (
               <motion.div
                 key={index}
-                initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-                animate={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
-                transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5, delay: index * 0.2 }}
                 className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg hover:shadow-2xl ring-1 ring-gray-200/50 dark:ring-gray-700/50 hover:ring-blue-500/30 transition-all duration-300 relative overflow-hidden"
+                variants={item}
               >
                 <div className={`absolute top-0 ${isRTL ? "right-0 rounded-bl-full" : "left-0 rounded-br-full"} w-32 h-32 bg-purple-200 dark:bg-purple-700 z-0 opacity-50`}></div>
                 <div className="relative z-10">
@@ -135,7 +144,8 @@ const EducationComponent = () => {
 
           <motion.div
             initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-            animate={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+            whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+            viewport={shouldReduceMotion ? undefined : { once: true, margin: "-50px" }}
             transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5 }}
             className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg ring-1 ring-gray-200/50 dark:ring-gray-700/50"
           >
@@ -166,6 +176,8 @@ const EducationComponent = () => {
                       aria-label={
                         expandedCert === index ? "Collapse certificate details" : "Expand certificate details"
                       }
+                      aria-expanded={expandedCert === index}
+                      aria-controls={`cert-details-${index}`}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -180,6 +192,7 @@ const EducationComponent = () => {
                   </div>
 
                   <div
+                    id={`cert-details-${index}`}
                     className={`overflow-hidden transition-all duration-300 ${
                       expandedCert === index ? "max-h-[2000px]" : "max-h-0"
                     }`}
@@ -253,7 +266,7 @@ const EducationComponent = () => {
               ))}
             </div>
           </motion.div>
-        </div>
+        </motion.div>
       </div>
       <div className={`absolute top-0 ${isRTL ? "right-0" : "left-0"} w-64 h-64 -mt-32 ${isRTL ? "-mr-32" : "-ml-32"} opacity-20`}>
         <Image src="/placeholder.svg?height=256&width=256" alt="Decorative background" width={256} height={256} />

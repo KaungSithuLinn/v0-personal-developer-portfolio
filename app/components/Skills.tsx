@@ -94,7 +94,8 @@ const SkillsComponent = () => {
         <motion.div
           className="mt-16 bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg"
           initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-          animate={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+          whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+          viewport={shouldReduceMotion ? undefined : { once: true, margin: "-50px" }}
           transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5 }}
         >
           <h3 className="text-2xl font-semibold mb-6 dark:text-white flex items-center">

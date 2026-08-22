@@ -51,7 +51,7 @@ export default function LanguageSelector() {
   return (
     <div className="relative language-selector" dir="auto">
       <motion.button
-        className="fixed top-20 sm:top-24 left-4 sm:left-6 z-50 p-2 sm:p-3 rounded-full bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-lg hover:from-amber-600 hover:to-orange-700 transition-all duration-300"
+        className="fixed top-4 sm:top-24 left-4 sm:left-6 z-50 p-2 sm:p-3 rounded-full bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-lg hover:from-amber-600 hover:to-orange-700 transition-all duration-300"
         onClick={() => setIsOpen(!isOpen)}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
@@ -69,7 +69,7 @@ export default function LanguageSelector() {
             animate={{ opacity: 1, y: 0, x: 0 }}
             exit={{ opacity: 0, y: -20, x: isRTL ? 20 : -20 }}
             transition={{ duration: 0.2 }}
-            className="fixed top-36 sm:top-40 left-4 sm:left-6 z-50 bg-gradient-to-br from-gray-900/90 to-blue-900/50 backdrop-blur-sm border border-blue-500/30 rounded-lg shadow-lg shadow-blue-500/10 overflow-hidden language-selector max-w-[90vw] sm:max-w-none"
+             className="fixed top-20 sm:top-28 left-4 sm:left-6 z-50 bg-gradient-to-br from-gray-900/90 to-blue-900/50 backdrop-blur-sm border border-blue-500/30 rounded-lg shadow-lg shadow-blue-500/10 overflow-hidden language-selector max-w-[90vw] sm:max-w-none"
             style={isRTL ? { left: "auto", right: "1rem" } : {}}
           >
             <div className="p-2 min-w-[160px]">

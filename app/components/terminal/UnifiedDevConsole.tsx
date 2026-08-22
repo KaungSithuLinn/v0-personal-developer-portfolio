@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState, useEffect, type ReactElement } from "react"
 import { motion, AnimatePresence } from "framer-motion"
@@ -65,7 +65,7 @@ export default function UnifiedDevConsole(): ReactElement | null {
 
       {/* Advanced Console Toggle */}
       <motion.button
-        className="fixed top-24 end-6 z-50 p-3 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-300"
+        className="fixed top-4 end-4 sm:top-24 sm:end-6 z-50 p-3 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-300"
         onClick={() => setShowAdvanced(!showAdvanced)}
         whileHover={shouldReduceMotion ? undefined : { scale: 1.1 }}
         whileTap={shouldReduceMotion ? undefined : { scale: 0.9 }}
@@ -76,7 +76,7 @@ export default function UnifiedDevConsole(): ReactElement | null {
 
       <AnimatePresence>
         {terminalOpen && (
-          <TerminalUI onClose={() => setTerminalOpen(false)} />
+          <TerminalUI isOpen={terminalOpen} onClose={() => setTerminalOpen(false)} />
         )}
       </AnimatePresence>
 
@@ -127,3 +127,6 @@ export default function UnifiedDevConsole(): ReactElement | null {
     </>
   )
 }
+
+
+

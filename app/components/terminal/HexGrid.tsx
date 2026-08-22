@@ -61,6 +61,7 @@ export default function HexGrid({ className = "" }: HexGridProps): ReactElement 
 
   useEffect(() => {
     if (!canvasRef.current || dimensions.width === 0 || !isVisible) return
+    if (shouldReduceMotion) return
 
     const canvas = canvasRef.current
     const ctx = canvas.getContext("2d")

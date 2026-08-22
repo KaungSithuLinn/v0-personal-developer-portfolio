@@ -96,7 +96,7 @@ const HeroComponent = () => {
         </div>
 
         {/* Image container with explicit styling */}
-        <div className={`absolute bottom-0 ${isRTL ? "left-0" : "right-0"} w-[300px] h-[300px] sm:w-[500px] sm:h-[500px] -mb-20 sm:-mb-32 ${isRTL ? "-ml-20 sm:-ml-32" : "-mr-20 sm:-mr-32"} opacity-20 hidden md:block`}>
+        <div className={`absolute bottom-0 ${isRTL ? "left-0" : "right-0"} w-[300px] h-[300px] sm:w-[500px] sm:h-[500px] -mb-12 sm:-mb-20 ${isRTL ? "-ml-12 sm:-ml-20" : "-mr-12 sm:-mr-20"} opacity-40 hidden md:block`}>
           <div className="absolute inset-0 m-4 rounded-2xl overflow-hidden shadow-2xl hero-image-container">
             <div className="relative w-full h-full">
               <Image

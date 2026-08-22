@@ -1,9 +1,9 @@
-"use client"
+﻿"use client"
 
 import * as React from "react"
 import { useEffect, useRef, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Maximize2, Minimize2, X, ChevronRight, Code } from "lucide-react"
+import { Maximize2, Minimize2, X, ChevronRight } from "lucide-react"
 import { useTerminal } from "@/hooks/use-terminal"
 import { useMounted } from "@/lib/use-mounted"
 import { useTranslation } from "@/context/language-utils"
@@ -15,8 +15,7 @@ interface CommandOutput {
   type?: 'text' | 'jsx' | 'success' | 'error' | 'system'
 }
 
-export default function TerminalUI({ onClose }: { onClose: () => void }): React.ReactElement | null {
-  const [isOpen, setIsOpen] = useState<boolean>(false)
+export default function TerminalUI({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }): React.ReactElement | null {
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false)
   const { input, setInput, history, isProcessing, handleSubmit } = useTerminal()
   const terminalRef = useRef<HTMLDivElement>(null)
@@ -41,15 +40,6 @@ export default function TerminalUI({ onClose }: { onClose: () => void }): React.
   }, [isOpen])
 
   if (!mounted) return null
-
-  const toggleTerminal = (): void => {
-    setIsOpen(!isOpen)
-    if (!isOpen && inputRef.current) {
-      setTimeout(() => {
-        inputRef.current?.focus()
-      }, 100)
-    }
-  }
 
   const toggleFullscreen = (): void => {
     setIsFullscreen(!isFullscreen)
@@ -85,17 +75,6 @@ export default function TerminalUI({ onClose }: { onClose: () => void }): React.
 
   return (
     <>
-      {/* Terminal toggle button */}
-      <motion.button
-        className="fixed bottom-6 end-6 z-50 p-3 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-300"
-        onClick={toggleTerminal}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
-        aria-label="Toggle Terminal"
-      >
-        <Code size={24} />
-      </motion.button>
-
       {/* Terminal window */}
       <AnimatePresence>
         {isOpen && (
@@ -183,3 +162,6 @@ export default function TerminalUI({ onClose }: { onClose: () => void }): React.
     </>
   )
 }
+
+
+

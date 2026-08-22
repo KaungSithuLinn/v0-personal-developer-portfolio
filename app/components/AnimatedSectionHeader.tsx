@@ -18,7 +18,8 @@ const AnimatedSectionHeaderComponent = ({ title }: AnimatedSectionHeaderProps) =
     <motion.h2
       className="text-4xl font-bold mb-12 text-center dark:text-white"
       initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-      animate={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+      whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+      viewport={shouldReduceMotion ? undefined : { once: true, margin: "-50px" }}
       transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5 }}
     >
       {title}
