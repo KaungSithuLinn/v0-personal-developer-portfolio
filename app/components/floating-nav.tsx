@@ -6,10 +6,6 @@ import { useReducedMotion } from "framer-motion"
 import { useTranslation } from "@/context/language-utils"
 import { memo } from "react"
 
-// Audit P0-2: respect reduced motion preference
-
-// Audit P0-5: memoized presentational component
-
 const FloatingNavComponent = () => {
   const [activeSection, setActiveSection] = useState("hero")
   const { t, isRTL } = useTranslation()
@@ -73,7 +69,7 @@ const FloatingNavComponent = () => {
             <div
               className={`w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${
                 activeSection === id
-                  ? "bg-blue-600 dark:bg-blue-400 scale-125"
+                  ? "bg-teal-500 dark:bg-teal-400 scale-125"
                   : "bg-gray-400 dark:bg-gray-600 hover:scale-110"
               }`}
             />
@@ -83,7 +79,5 @@ const FloatingNavComponent = () => {
     </motion.div>
   )
 }
-
-// Audit P0-5: memoized presentational component
 
 export default memo(FloatingNavComponent)

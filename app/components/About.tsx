@@ -3,14 +3,9 @@
 import { motion } from "framer-motion"
 import { useReducedMotion } from "framer-motion"
 import { Code, Database, Server, Globe, Brain, TrendingUp } from "lucide-react"
-import Image from "next/image"
 import AnimatedSectionHeader from "./AnimatedSectionHeader"
 import { useTranslation } from "@/context/language-utils"
 import { memo } from "react"
-
-// Audit P0-2: respect reduced motion preference
-
-// Audit P0-5: memoized presentational component
 
 const AboutComponent = () => {
   const { t, isRTL } = useTranslation()
@@ -18,32 +13,32 @@ const AboutComponent = () => {
 
   const skills = [
     {
-      icon: <Code className="w-8 h-8 text-blue-500" />,
+      icon: <Code className="w-8 h-8 text-teal-600 dark:text-teal-400" />,
       title: t("about.skills.frontend.title"),
       description: t("about.skills.frontend.description"),
     },
     {
-      icon: <Server className="w-8 h-8 text-green-500" />,
+      icon: <Server className="w-8 h-8 text-teal-600 dark:text-teal-400" />,
       title: t("about.skills.backend.title"),
       description: t("about.skills.backend.description"),
     },
     {
-      icon: <Database className="w-8 h-8 text-purple-500" />,
+      icon: <Database className="w-8 h-8 text-teal-600 dark:text-teal-400" />,
       title: t("about.skills.database.title"),
       description: t("about.skills.database.description"),
     },
     {
-      icon: <Brain className="w-8 h-8 text-yellow-500" />,
+      icon: <Brain className="w-8 h-8 text-teal-600 dark:text-teal-400" />,
       title: t("about.skills.ai.title"),
       description: t("about.skills.ai.description"),
     },
     {
-      icon: <TrendingUp className="w-8 h-8 text-red-500" />,
+      icon: <TrendingUp className="w-8 h-8 text-teal-600 dark:text-teal-400" />,
       title: t("about.skills.marketing.title"),
       description: t("about.skills.marketing.description"),
     },
     {
-      icon: <Globe className="w-8 h-8 text-indigo-500" />,
+      icon: <Globe className="w-8 h-8 text-teal-600 dark:text-teal-400" />,
       title: t("about.skills.languages.title"),
       description: t("about.skills.languages.description"),
     },
@@ -67,8 +62,10 @@ const AboutComponent = () => {
   return (
     <section
       id="about"
-      className="py-20 bg-gradient-to-br from-indigo-50 to-blue-100 dark:from-gray-900 dark:to-blue-900 transition-colors duration-300 overflow-hidden relative"
+      className="py-20 bg-gradient-to-br from-slate-50 to-white dark:from-[#070c16] dark:to-[#0a1628] transition-colors duration-300 overflow-hidden relative"
     >
+      <div className="absolute inset-0 glow-teal opacity-30" aria-hidden="true" />
+      <div className={`absolute bottom-0 ${isRTL ? "left-0" : "right-0"} w-64 h-64 -mb-32 ${isRTL ? "-ml-32" : "-mr-32"} glow-navy opacity-40`} aria-hidden="true" />
       <div className="container mx-auto px-6 relative z-10">
         <AnimatedSectionHeader title={t("about.title")} />
         <div className="flex flex-col md:flex-row items-center justify-between">
@@ -83,7 +80,7 @@ const AboutComponent = () => {
             <p className="text-xl text-gray-700 dark:text-gray-300 leading-relaxed">{t("about.paragraph2")}</p>
 
             <motion.div
-              className="mt-8 p-4 border-l-4 border-blue-500 bg-blue-50 dark:bg-blue-900/20 dark:border-blue-400 rounded"
+              className="mt-8 p-4 border-s-4 border-teal-500 bg-teal-50/50 dark:bg-teal-900/10 rounded"
               initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               animate={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
               transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5, delay: 0.3 }}
@@ -101,13 +98,13 @@ const AboutComponent = () => {
             {skills.map((skill, index) => (
               <motion.div
                 key={index}
-                className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-xl ring-1 ring-gray-200/50 dark:ring-gray-700/50 hover:ring-blue-500/30 transition-all duration-300"
+                className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-6 rounded-xl shadow-md hover:shadow-xl ring-1 ring-gray-200/50 dark:ring-gray-700/50 hover:ring-teal-500/30 transition-all duration-300"
                 variants={item}
                 whileHover={shouldReduceMotion ? undefined : { scale: 1.03 }}
                 role="group"
                 aria-label={`${skill.title} skills: ${skill.description}`}
               >
-                {skill.icon}
+                <div className="p-2 bg-teal-50 dark:bg-teal-900/20 rounded-lg w-fit">{skill.icon}</div>
                 <h3 className="text-xl font-semibold mt-4 mb-2 dark:text-white">{skill.title}</h3>
                 <p className="text-gray-600 dark:text-gray-300">{skill.description}</p>
               </motion.div>
@@ -115,18 +112,8 @@ const AboutComponent = () => {
           </motion.div>
         </div>
       </div>
-      <div className={`absolute bottom-0 ${isRTL ? "left-0" : "right-0"} w-64 h-64 -mb-32 ${isRTL ? "-ml-32" : "-mr-32"} opacity-20`}>
-        <Image
-          src="/placeholder.svg?height=256&width=256"
-          alt={t("about.decorativeImageAlt")}
-          width={256}
-          height={256}
-        />
-      </div>
     </section>
   )
 }
-
-// Audit P0-5: memoized presentational component
 
 export default memo(AboutComponent)

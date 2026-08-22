@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" role="img" aria-label="Abstract continuous authentication pattern of signal waveforms flowing into concentric verification arcs">
+  <defs>
+    <linearGradient id="bg3" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0a1220"/>
+      <stop offset="1" stop-color="#0c1a2a"/>
+    </linearGradient>
+    <linearGradient id="wave" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#2dd4bf" stop-opacity="0"/>
+      <stop offset="1" stop-color="#5eead4"/>
+    </linearGradient>
+    <radialGradient id="glow3" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#14b8a6" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#14b8a6" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#bg3)"/>
+  <g stroke="#334155" stroke-width="1" opacity="0.3">
+    <path d="M0 112H800M0 225H800M0 337H800M133 0V450M266 0V450M400 0V450M533 0V450M666 0V450"/>
+  </g>
+  <circle cx="580" cy="225" r="240" fill="url(#glow3)"/>
+  <!-- signal waveforms converging -->
+  <g fill="none" stroke-linecap="round">
+    <path d="M40 225 L90 225 L110 150 L130 300 L150 190 L170 260 L190 225 L240 225" stroke="url(#wave)" stroke-width="3"/>
+    <path d="M40 260 L80 260 L100 210 L120 310 L140 220 L160 280 L180 260 L240 260" stroke="url(#wave)" stroke-width="2" opacity="0.55"/>
+    <path d="M40 190 L80 190 L100 160 L120 250 L140 175 L160 235 L180 190 L240 190" stroke="url(#wave)" stroke-width="2" opacity="0.4"/>
+  </g>
+  <path d="M240 225 L330 225" stroke="#5eead4" stroke-width="2" opacity="0.7"/>
+  <!-- fingerprint-like concentric arcs -->
+  <g fill="none" stroke="#2dd4bf" stroke-width="2.5" stroke-linecap="round">
+    <circle cx="580" cy="225" r="26" opacity="0.95"/>
+    <path d="M580 175 a50 50 0 0 1 50 50 a50 50 0 0 1 -50 50" opacity="0.85"/>
+    <path d="M580 150 a75 75 0 0 1 75 75 a75 75 0 0 1 -75 75" opacity="0.7"/>
+    <path d="M580 125 a100 100 0 0 1 100 100 a100 100 0 0 1 -100 100" opacity="0.55"/>
+    <path d="M580 100 a125 125 0 0 1 125 125" opacity="0.4"/>
+    <path d="M580 350 a125 125 0 0 1 -125 -125" opacity="0.4"/>
+  </g>
+  <circle cx="580" cy="225" r="6" fill="#99f6e4"/>
+  <!-- scan line -->
+  <path d="M470 90 L470 360" stroke="#5eead4" stroke-width="1" opacity="0.35" stroke-dasharray="4 6"/>
+</svg>

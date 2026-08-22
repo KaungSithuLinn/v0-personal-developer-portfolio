@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" role="img" aria-label="Abstract visualization of mouse cursor movement trajectories used for behavioral biometric fraud detection">
+  <defs>
+    <linearGradient id="bg1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0a1220"/>
+      <stop offset="1" stop-color="#0d1f30"/>
+    </linearGradient>
+    <linearGradient id="trail" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#14b8a6" stop-opacity="0"/>
+      <stop offset="1" stop-color="#2dd4bf"/>
+    </linearGradient>
+    <radialGradient id="glow1" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#14b8a6" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#14b8a6" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#bg1)"/>
+  <g stroke="#334155" stroke-width="1" opacity="0.35">
+    <path d="M100 0V450M200 0V450M300 0V450M400 0V450M500 0V450M600 0V450M700 0V450M0 90H800M0 180H800M0 270H800M0 360H800"/>
+  </g>
+  <circle cx="620" cy="120" r="260" fill="url(#glow1)"/>
+  <circle cx="180" cy="340" r="220" fill="url(#glow1)" opacity="0.7"/>
+  <g fill="none" stroke-linecap="round">
+    <path d="M110 350 C 220 300, 250 380, 340 330 S 480 240, 560 260 S 660 190, 700 150" stroke="url(#trail)" stroke-width="3"/>
+    <path d="M130 300 C 230 260, 280 320, 370 280 S 500 190, 590 210 S 670 140, 720 110" stroke="url(#trail)" stroke-width="2" opacity="0.65"/>
+    <path d="M150 390 C 250 360, 290 420, 380 380 S 520 300, 610 310" stroke="url(#trail)" stroke-width="2" opacity="0.4"/>
+  </g>
+  <g fill="#2dd4bf">
+    <circle cx="340" cy="330" r="5"/><circle cx="560" cy="260" r="5"/>
+    <circle cx="370" cy="280" r="4" opacity="0.8"/><circle cx="590" cy="210" r="4" opacity="0.8"/>
+    <circle cx="380" cy="380" r="3.5" opacity="0.55"/><circle cx="610" cy="310" r="3.5" opacity="0.55"/>
+  </g>
+  <g>
+    <circle cx="700" cy="150" r="16" fill="none" stroke="#f59e0b" stroke-width="2" opacity="0.9"/>
+    <circle cx="700" cy="150" r="28" fill="none" stroke="#f59e0b" stroke-width="1" opacity="0.45"/>
+    <circle cx="700" cy="150" r="7" fill="#fbbf24"/>
+  </g>
+  <g transform="translate(96 330) rotate(-12)">
+    <path d="M0 0 L26 9 L14 13 L20 27 L15 29 L9 15 L0 22 Z" fill="#e2e8f0" stroke="#0a1220" stroke-width="1.5"/>
+  </g>
+</svg>

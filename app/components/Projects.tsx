@@ -1,17 +1,10 @@
 "use client"
 
 import { Brain, Shield, LineChart } from "lucide-react"
-import Image from "next/image"
 import AnimatedSectionHeader from "./AnimatedSectionHeader"
 import { useTranslation } from "@/context/language-utils"
 import ProjectCard from "./ProjectCard"
 import { memo } from "react"
-
-// Audit P0-2: respect reduced motion preference
-
-// Audit P0-5: memoized presentational component
-
-// Audit P1-9: extracted Project to dedicated card component
 
 function ProjectsComponent() {
   const { t, isRTL } = useTranslation()
@@ -21,7 +14,7 @@ function ProjectsComponent() {
       title: "Mouse Dynamics for Online Assessment Fraud Detection",
       period: "May 2024 - Nov 2024",
       link: "https://drive.google.com/drive/folders/1JKdj1e25EfPqS-CrV7MjFFVXa8l-GItE",
-      icon: <Shield className="w-10 h-10 text-blue-500" />,
+      icon: <Shield className="w-10 h-10 text-teal-600 dark:text-teal-400" />,
       description:
         "Developed a machine learning model to detect fraudulent behavior during online assessments using mouse dynamics as a behavioral biometric.",
       achievements: [
@@ -38,12 +31,13 @@ function ProjectsComponent() {
           "The system achieved 92% accuracy in detecting fraudulent behavior with a false positive rate of only 3%, significantly improving assessment integrity while maintaining a positive user experience.",
         technologies: ["Python", "TensorFlow", "Scikit-learn", "Data Visualization", "Statistical Analysis"],
       },
+      thumbnail: "/images/projects/mouse-dynamics-fraud-detection.svg",
     },
     {
       title: "Mouse Dynamics Biometric Fraud Detection System using Deep Learning",
       period: "May 2024 - Nov 2024",
       link: "https://drive.google.com/drive/folders/1SKbM027E4zU-2a9kLFBKcUMcd9hGhhJ",
-      icon: <Brain className="w-10 h-10 text-purple-500" />,
+      icon: <Brain className="w-10 h-10 text-teal-600 dark:text-teal-400" />,
       description:
         "Developed a fraud detection system using mouse dynamics and deep learning to enhance the security of online assessments.",
       achievements: [
@@ -70,12 +64,13 @@ function ProjectsComponent() {
           "Python",
         ],
       },
+      thumbnail: "/images/projects/deep-learning-biometrics.svg",
     },
     {
       title: "Continuous Authentication with Behavioral Biometrics",
       period: "May 2024 - Nov 2024",
       link: "https://drive.google.com/drive/folders/1JKdj1e25EfPqS-CrV7MjFFVXa8l-GItE",
-      icon: <LineChart className="w-10 h-10 text-green-500" />,
+      icon: <LineChart className="w-10 h-10 text-teal-600 dark:text-teal-400" />,
       description:
         "Conducted a literature review on the use of behavioral biometrics, specifically mouse dynamics and keystroke analysis, for continuous user authentication.",
       achievements: [
@@ -98,14 +93,17 @@ function ProjectsComponent() {
           "Security Protocols",
         ],
       },
+      thumbnail: "/images/projects/continuous-authentication.svg",
     },
   ]
 
   return (
     <section
       id="projects"
-      className="py-20 bg-gradient-to-br from-indigo-50 to-purple-100 dark:from-gray-900 dark:to-purple-900 transition-colors duration-300 overflow-hidden relative"
+      className="py-20 bg-gradient-to-br from-slate-50 to-white dark:from-[#070c16] dark:to-[#0a1628] transition-colors duration-300 overflow-hidden relative"
     >
+      <div className="absolute inset-0 glow-teal opacity-20" aria-hidden="true" />
+      <div className={`absolute top-0 ${isRTL ? "right-0" : "left-0"} w-64 h-64 -mt-32 ${isRTL ? "-mr-32" : "-ml-32"} glow-navy opacity-40`} aria-hidden="true" />
       <div className="container mx-auto px-6 relative z-10">
         <AnimatedSectionHeader title={t("projects.title")} />
         <div className="space-y-12">
@@ -114,13 +112,8 @@ function ProjectsComponent() {
           ))}
         </div>
       </div>
-      <div className={`absolute top-0 ${isRTL ? "right-0" : "left-0"} w-64 h-64 -mt-32 ${isRTL ? "-mr-32" : "-ml-32"} opacity-20`}>
-        <Image src="/placeholder.svg?height=256&width=256" alt="Decorative background" width={256} height={256} />
-      </div>
     </section>
   )
 }
-
-// Audit P0-5: memoized presentational component
 
 export default memo(ProjectsComponent)

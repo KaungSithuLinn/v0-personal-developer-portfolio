@@ -3,8 +3,6 @@
 import dynamic from "next/dynamic"
 import TranslationTester from "@/components/TranslationTester"
 
-// Audit P0-4: dynamic import with ssr disabled
-
 const DynamicHero = dynamic(() => import("@/app/components/Hero"))
 const DynamicAbout = dynamic(() => import("@/app/components/About"))
 const DynamicExperience = dynamic(() => import("@/app/components/Experience"))
@@ -17,7 +15,7 @@ const DynamicFloatingNav = dynamic(() => import("@/app/components/floating-nav")
 
 export default function MainContent() {
   return (
-    <main id="main-content" role="main" className="bg-gray-50 dark:bg-gray-900 min-h-screen">
+    <main id="main-content" role="main" className="bg-slate-50 dark:bg-[#070c16] min-h-screen">
       <DynamicFloatingNav />
       <DynamicHero />
       <DynamicAbout />

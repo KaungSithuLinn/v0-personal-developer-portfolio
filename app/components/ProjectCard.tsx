@@ -6,10 +6,6 @@ import { ExternalLink, ChevronDown, ChevronUp } from "lucide-react"
 import { useState, type ReactElement, memo } from "react"
 import { useTranslation } from "@/context/language-utils"
 
-// Audit P0-2: respect reduced motion preference
-
-// Audit P1-9: extracted Project to dedicated card component
-
 interface ProjectProps {
   title: string
   period: string
@@ -17,6 +13,7 @@ interface ProjectProps {
   icon: ReactElement
   description: string
   achievements: string[]
+  thumbnail?: string
   caseStudy?: {
     challenge: string
     approach: string
@@ -35,12 +32,20 @@ const ProjectCard = memo(function ProjectCard({ project, index }: { project: Pro
       initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
       animate={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
       transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5, delay: index * 0.2 }}
-      className="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-2xl ring-1 ring-gray-200/50 dark:ring-gray-700/50 hover:ring-blue-500/30 transition-all duration-300 relative overflow-hidden"
+      className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl shadow-lg hover:shadow-2xl ring-1 ring-gray-200/50 dark:ring-gray-700/50 hover:ring-teal-500/30 transition-all duration-300 relative overflow-hidden"
     >
+      {project.thumbnail && (
+        <div
+          className="w-full h-48 sm:h-64 bg-cover bg-center"
+          style={{ backgroundImage: `url(${project.thumbnail})` }}
+          role="img"
+          aria-label={`${project.title} thumbnail`}
+        />
+      )}
       <div className="p-8">
         <div className="flex flex-col md:flex-row gap-6">
           <div className="md:w-1/6 flex justify-center">
-            <div className="p-4 bg-indigo-50 dark:bg-indigo-900/30 rounded-full">{project.icon}</div>
+            <div className="p-4 bg-teal-50 dark:bg-teal-900/30 rounded-full">{project.icon}</div>
           </div>
           <div className="md:w-5/6">
             <div className="flex flex-col md:flex-row md:items-center justify-between mb-4">
@@ -52,7 +57,7 @@ const ProjectCard = memo(function ProjectCard({ project, index }: { project: Pro
             <ul className="list-none space-y-2 mb-4">
               {project.achievements.map((achievement, idx) => (
                 <li key={idx} className="text-gray-700 dark:text-gray-300 flex items-start">
-                  <span className="text-blue-500 me-2">•</span>
+                  <span className="text-teal-500 me-2">&#8226;</span>
                   {achievement}
                 </li>
               ))}
@@ -63,7 +68,7 @@ const ProjectCard = memo(function ProjectCard({ project, index }: { project: Pro
                 href={project.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center text-blue-600 dark:text-blue-400 hover:underline"
+                className="inline-flex items-center text-teal-600 dark:text-teal-400 hover:underline"
               >
                 {t("projects.viewProject")} <ExternalLink className="w-4 h-4 ms-1" />
               </a>
@@ -71,7 +76,7 @@ const ProjectCard = memo(function ProjectCard({ project, index }: { project: Pro
               {project.caseStudy && (
                 <button
                   onClick={() => setExpanded(!expanded)}
-                  className="flex items-center gap-1 text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                  className="flex items-center gap-1 text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors"
                   aria-expanded={expanded}
                   aria-controls={`case-study-${index}`}
                 >
@@ -114,7 +119,7 @@ const ProjectCard = memo(function ProjectCard({ project, index }: { project: Pro
                     {project.caseStudy.technologies.map((tech, idx) => (
                       <span
                         key={idx}
-                        className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 rounded-full text-sm"
+                        className="px-3 py-1 bg-teal-100 dark:bg-teal-900/30 text-teal-800 dark:text-teal-300 rounded-full text-sm"
                       >
                         {tech}
                       </span>

@@ -6,8 +6,7 @@ import { useTranslation } from "@/context/language-utils"
 import { motion, AnimatePresence } from "framer-motion"
 import { memo } from "react"
 import { Menu, X } from "lucide-react"
-
-// Audit P0-5: memoized presentational component
+import Logo from "./Logo"
 
 const HeaderComponent = () => {
   const [mounted, setMounted] = useState(false)
@@ -15,7 +14,7 @@ const HeaderComponent = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const lastScrollYRef = useRef(0)
   const [activeSection, setActiveSection] = useState("home")
-  const { theme } = useTheme()
+  const { theme: _theme } = useTheme()
   const { t } = useTranslation()
 
   useEffect(() => setMounted(true), [])
@@ -92,26 +91,23 @@ const HeaderComponent = () => {
     <header
       className={`
         fixed w-full z-50 transition-all duration-300
-        ${isVisible ? "top-0" : "-top-20"}
-        ${theme === "dark" ? "bg-gray-900/95" : "bg-white/95"}
-        backdrop-blur-sm shadow-md
+        ${isVisible ? "top-4" : "-top-24"}
       `}
     >
-      <nav className="container mx-auto px-4 sm:px-6 py-3 sm:py-4">
-        <div className="flex justify-between sm:justify-center items-center">
-          <ul className="hidden sm:flex gap-3 sm:gap-6">
+      <nav className="container mx-auto px-4 sm:px-6">
+        <div className="flex justify-between items-center">
+          <Logo size={32} />
+          <ul className="hidden md:flex gap-1 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border border-gray-200/50 dark:border-gray-700/50 rounded-full px-2 py-1.5 shadow-lg">
             {navItems.map(([id, label]) => (
-              <li key={id} className="flex-shrink-0">
+              <li key={id}>
                 <button
                   onClick={() => scrollToSection(id)}
                   className={`
-                    text-sm sm:text-base whitespace-nowrap transition-colors duration-300
+                    text-sm px-3 py-1.5 rounded-full transition-all duration-200
                     ${
                       activeSection === id
-                        ? "text-blue-600 dark:text-blue-400"
-                        : theme === "dark"
-                          ? "text-gray-300 hover:text-white"
-                          : "text-gray-800 hover:text-blue-600"
+                        ? "bg-teal-500/10 text-teal-700 dark:text-teal-300 font-medium"
+                        : "text-gray-700 dark:text-gray-300 hover:text-teal-600 dark:hover:text-teal-400"
                     }
                   `}
                 >
@@ -120,10 +116,10 @@ const HeaderComponent = () => {
               </li>
             ))}
           </ul>
-          <div className="flex items-center gap-2 sm:hidden">
+          <div className="flex items-center gap-2 md:hidden">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              className="p-2 rounded-full text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
               aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
               aria-expanded={mobileMenuOpen}
             >
@@ -136,25 +132,23 @@ const HeaderComponent = () => {
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="sm:hidden fixed top-[57px] left-0 right-0 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 shadow-lg z-40 overflow-hidden"
+            className="md:hidden fixed top-16 left-4 right-4 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md border border-gray-200/50 dark:border-gray-700/50 rounded-2xl shadow-xl z-40 overflow-hidden"
           >
-            <ul className="flex flex-col py-4 px-6 gap-2">
+            <ul className="flex flex-col p-2 gap-1">
               {navItems.map(([id, label]) => (
                 <li key={id}>
                   <button
                     onClick={() => scrollToSection(id)}
                     className={`
-                      w-full text-left py-3 px-4 rounded-lg transition-colors duration-300
+                      w-full text-left py-3 px-4 rounded-xl transition-colors duration-200
                       ${
                         activeSection === id
-                          ? "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20"
-                          : theme === "dark"
-                            ? "text-gray-200 hover:text-white hover:bg-gray-800"
-                            : "text-gray-800 hover:text-blue-600 hover:bg-gray-50"
+                          ? "bg-teal-500/10 text-teal-700 dark:text-teal-300"
+                          : "text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800"
                       }
                     `}
                   >
@@ -169,7 +163,5 @@ const HeaderComponent = () => {
     </header>
   )
 }
-
-// Audit P0-5: memoized presentational component
 
 export default memo(HeaderComponent)

@@ -9,10 +9,6 @@ import { useReducedMotion } from "framer-motion"
 import { useTranslation } from "@/context/language-utils"
 import { memo } from "react"
 
-// Audit P0-2: respect reduced motion preference
-
-// Audit P0-5: memoized presentational component
-
 const EducationComponent = () => {
   const [expandedCert, setExpandedCert] = useState<number | null>(null)
   const { isRTL, t } = useTranslation()
@@ -82,11 +78,7 @@ const EducationComponent = () => {
   ]
 
   const toggleCertificate = (index: number) => {
-    if (expandedCert === index) {
-      setExpandedCert(null)
-    } else {
-      setExpandedCert(index)
-    }
+    setExpandedCert(expandedCert === index ? null : index)
   }
 
   const item = {
@@ -97,8 +89,10 @@ const EducationComponent = () => {
   return (
     <section
       id="education"
-      className="py-20 bg-gradient-to-br from-indigo-50 to-purple-100 dark:from-gray-900 dark:to-purple-900 transition-colors duration-300 overflow-hidden relative"
+      className="py-20 bg-gradient-to-br from-slate-50 to-white dark:from-[#070c16] dark:to-[#0a1628] transition-colors duration-300 overflow-hidden relative"
     >
+      <div className="absolute inset-0 glow-navy opacity-30" aria-hidden="true" />
+      <div className={`absolute top-0 ${isRTL ? "right-0" : "left-0"} w-64 h-64 -mt-32 ${isRTL ? "-mr-32" : "-ml-32"} glow-teal opacity-40`} aria-hidden="true" />
       <div className="container mx-auto px-6 relative z-10">
         <AnimatedSectionHeader title={t("education.title")} />
         <motion.div
@@ -112,13 +106,13 @@ const EducationComponent = () => {
             {education.map((edu, index) => (
               <motion.div
                 key={index}
-                className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg hover:shadow-2xl ring-1 ring-gray-200/50 dark:ring-gray-700/50 hover:ring-blue-500/30 transition-all duration-300 relative overflow-hidden"
+                className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-8 rounded-xl shadow-lg ring-1 ring-gray-200/50 dark:ring-gray-700/50 hover:ring-teal-500/30 transition-all duration-300 relative overflow-hidden"
                 variants={item}
               >
-                <div className={`absolute top-0 ${isRTL ? "right-0 rounded-bl-full" : "left-0 rounded-br-full"} w-32 h-32 bg-purple-200 dark:bg-purple-700 z-0 opacity-50`}></div>
+                <div className={`absolute top-0 ${isRTL ? "right-0 rounded-bl-full" : "left-0 rounded-br-full"} w-32 h-32 bg-teal-100 dark:bg-teal-900/30 z-0 opacity-50`} aria-hidden="true" />
                 <div className="relative z-10">
                   <h3 className="text-2xl font-semibold mb-2 dark:text-white flex items-center">
-                     <GraduationCap className="w-6 h-6 me-2" />
+                     <GraduationCap className="w-6 h-6 me-2 text-teal-500" />
                     {edu.degree}
                   </h3>
                   <p className="text-xl text-gray-600 dark:text-gray-300 mb-4">{edu.institution}</p>
@@ -127,7 +121,7 @@ const EducationComponent = () => {
                     {edu.period}
                   </p>
                   <h4 className="text-lg font-medium mb-2 dark:text-gray-200 flex items-center">
-                     <Award className="w-5 h-5 me-2" />
+                     <Award className="w-5 h-5 me-2 text-teal-500" />
                     Key Achievements:
                   </h4>
                   <ul className="list-disc list-inside space-y-2">
@@ -147,10 +141,10 @@ const EducationComponent = () => {
             whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
             viewport={shouldReduceMotion ? undefined : { once: true, margin: "-50px" }}
             transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5 }}
-            className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg ring-1 ring-gray-200/50 dark:ring-gray-700/50"
+            className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-8 rounded-xl shadow-lg ring-1 ring-gray-200/50 dark:ring-gray-700/50"
           >
             <h3 className="text-2xl font-semibold mb-6 dark:text-white flex items-center">
-               <BookOpen className="w-6 h-6 me-2" />
+               <BookOpen className="w-6 h-6 me-2 text-teal-500" />
               Certifications & Testamurs
             </h3>
             <div className="space-y-6">
@@ -159,26 +153,21 @@ const EducationComponent = () => {
                   key={index}
                   className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden transition-all duration-300"
                 >
-                  <div
-                    className="p-4 bg-gray-50 dark:bg-gray-800 cursor-pointer flex justify-between items-center"
+                  <button
                     onClick={() => toggleCertificate(index)}
+                    className="w-full p-4 bg-gray-50 dark:bg-gray-800 cursor-pointer flex justify-between items-center text-start hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                    aria-expanded={expandedCert === index}
+                    aria-controls={`cert-details-${index}`}
                   >
                     <div>
                       <h4 className="font-medium dark:text-white text-lg">{cert.title}</h4>
                       <div className="flex items-center text-gray-600 dark:text-gray-400 text-sm mt-1">
                         <span>{cert.issuer}</span>
-                        <span className="mx-2">•</span>
+                        <span className="mx-2">&#8226;</span>
                         <span>{cert.date}</span>
                       </div>
                     </div>
-                    <button
-                      className="p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-                      aria-label={
-                        expandedCert === index ? "Collapse certificate details" : "Expand certificate details"
-                      }
-                      aria-expanded={expandedCert === index}
-                      aria-controls={`cert-details-${index}`}
-                    >
+                    <span className="p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors" aria-hidden="true">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         className={`h-5 w-5 transition-transform duration-300 ${expandedCert === index ? "transform rotate-180" : ""}`}
@@ -188,8 +177,8 @@ const EducationComponent = () => {
                       >
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                       </svg>
-                    </button>
-                  </div>
+                    </span>
+                  </button>
 
                   <div
                     id={`cert-details-${index}`}
@@ -201,52 +190,52 @@ const EducationComponent = () => {
                       <p className="text-gray-700 dark:text-gray-300 mb-4">{cert.description}</p>
 
                        {cert.image && (
-                         <div className="mb-4">
-                           <div className="relative w-full aspect-video sm:h-[500px] rounded-lg overflow-hidden shadow-md mb-4">
-                            <Image
-                              src={cert.image || "/placeholder.svg"}
-                              alt={`${cert.title} Certificate`}
-                              fill
-                              className="object-contain"
-                            />
-                          </div>
+                        <div className="mb-4">
+                          <div className="relative w-full aspect-video sm:h-[500px] rounded-lg overflow-hidden shadow-md mb-4 group">
+                           <Image
+                             src={cert.image || "/placeholder.svg"}
+                             alt={`${cert.title} Certificate`}
+                             fill
+                             className="object-contain transition-transform duration-500 group-hover:scale-110"
+                           />
+                         </div>
 
-                          {cert.verificationUrl && cert.certId && (
-                            <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
-                              <h5 className="font-medium text-blue-700 dark:text-blue-300 mb-2 flex items-center">
-                                 <Check className="w-4 h-4 me-2" /> Verification Details
-                              </h5>
-                              <p className="text-gray-700 dark:text-gray-300 mb-2">
-                                Verify the authenticity of this certificate at:
-                                <a
-                                  href={cert.verificationUrl}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                   className="text-blue-600 dark:text-blue-400 ms-1 inline-flex items-center hover:underline"
-                                >
-                                  {cert.verificationUrl.replace("https://", "")}
-                                   <ExternalLink className="w-3 h-3 ms-1" />
-                                </a>
-                              </p>
-                              <p className="text-gray-700 dark:text-gray-300">
-                                Certificate ID:{" "}
-                                <span className="font-mono bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-sm">
-                                  {cert.certId}
-                                </span>
-                              </p>
-                            </div>
-                          )}
+                           {cert.verificationUrl && cert.certId && (
+                             <div className="bg-teal-50 dark:bg-teal-900/20 p-4 rounded-lg">
+                               <h5 className="font-medium text-teal-700 dark:text-teal-300 mb-2 flex items-center">
+                                  <Check className="w-4 h-4 me-2" /> Verification Details
+                               </h5>
+                               <p className="text-gray-700 dark:text-gray-300 mb-2">
+                                 Verify the authenticity of this certificate at:
+                                 <a
+                                   href={cert.verificationUrl}
+                                   target="_blank"
+                                   rel="noopener noreferrer"
+                                    className="text-teal-600 dark:text-teal-400 ms-1 inline-flex items-center hover:underline"
+                                 >
+                                   {cert.verificationUrl.replace("https://", "")}
+                                    <ExternalLink className="w-3 h-3 ms-1" />
+                                 </a>
+                               </p>
+                               <p className="text-gray-700 dark:text-gray-300">
+                                 Certificate ID:{" "}
+                                 <span className="font-mono bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-sm">
+                                   {cert.certId}
+                                 </span>
+                               </p>
+                             </div>
+                           )}
 
-                          {cert.verificationMessage && (
-                            <div className="bg-gray-50 dark:bg-gray-700/30 p-4 rounded-lg">
-                              <h5 className="font-medium text-gray-700 dark:text-gray-300 mb-2 flex items-center">
-                                 <Check className="w-4 h-4 me-2" /> Verification Information
-                              </h5>
-                              <p className="text-gray-600 dark:text-gray-400">{cert.verificationMessage}</p>
-                            </div>
-                          )}
-                        </div>
-                      )}
+                           {cert.verificationMessage && (
+                             <div className="bg-gray-50 dark:bg-gray-700/30 p-4 rounded-lg">
+                               <h5 className="font-medium text-gray-700 dark:text-gray-300 mb-2 flex items-center">
+                                  <Check className="w-4 h-4 me-2" /> Verification Information
+                               </h5>
+                               <p className="text-gray-600 dark:text-gray-400">{cert.verificationMessage}</p>
+                             </div>
+                           )}
+                         </div>
+                       )}
 
                       <div className="flex justify-end">
                         {cert.verificationUrl && (
@@ -254,7 +243,7 @@ const EducationComponent = () => {
                             href={cert.verificationUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center text-blue-600 dark:text-blue-400 hover:underline"
+                            className="inline-flex items-center text-teal-600 dark:text-teal-400 hover:underline"
                           >
                              Verify Certificate <ExternalLink className="w-4 h-4 ms-1" />
                           </a>
@@ -268,13 +257,8 @@ const EducationComponent = () => {
           </motion.div>
         </motion.div>
       </div>
-      <div className={`absolute top-0 ${isRTL ? "right-0" : "left-0"} w-64 h-64 -mt-32 ${isRTL ? "-mr-32" : "-ml-32"} opacity-20`}>
-        <Image src="/placeholder.svg?height=256&width=256" alt="Decorative background" width={256} height={256} />
-      </div>
     </section>
   )
 }
-
-// Audit P0-5: memoized presentational component
 
 export default memo(EducationComponent)

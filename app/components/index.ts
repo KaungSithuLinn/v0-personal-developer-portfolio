@@ -9,7 +9,7 @@ export * from "./Hero"
 export * from "./Header"
 export * from "./Logo"
 export * from "./Projects"
-export * from "./Services"
+
 export * from "./Skills"
 export * from "./Testimonials"
 export * from "./floating-nav"

@@ -3,14 +3,9 @@
 import { motion } from "framer-motion"
 import { useReducedMotion } from "framer-motion"
 import { Quote } from "lucide-react"
-import Image from "next/image"
 import { useState, memo } from "react"
 import AnimatedSectionHeader from "./AnimatedSectionHeader"
 import { useTranslation } from "@/context/language-utils"
-
-// Audit P0-2: respect reduced motion preference
-
-// Audit P0-5: memoized presentational component
 
 const TestimonialsComponent = () => {
   const [activeIndex, setActiveIndex] = useState(0)
@@ -23,21 +18,24 @@ const TestimonialsComponent = () => {
         "Kaung's expertise in developing our POS system transformed our business operations. His attention to detail and problem-solving skills are exceptional.",
       name: "Sarah Chen",
       title: "Operations Manager, RetailTech Solutions",
-      image: "/placeholder.svg?height=80&width=80",
+      initials: "SC",
+      gradient: "from-teal-400 to-cyan-500",
     },
     {
       quote:
         "Working with Kaung on our fraud detection system was a game-changer. His deep understanding of behavioral biometrics and machine learning delivered results beyond our expectations.",
       name: "Michael Rodriguez",
       title: "CTO, SecureFinance",
-      image: "/placeholder.svg?height=80&width=80",
+      initials: "MR",
+      gradient: "from-blue-400 to-teal-500",
     },
     {
       quote:
         "Kaung's ability to translate complex technical requirements into user-friendly solutions is remarkable. His work on our network infrastructure significantly improved our system stability.",
       name: "Priya Sharma",
       title: "IT Director, Global Connect",
-      image: "/placeholder.svg?height=80&width=80",
+      initials: "PS",
+      gradient: "from-cyan-400 to-blue-500",
     },
   ]
 
@@ -52,8 +50,9 @@ const TestimonialsComponent = () => {
   return (
     <section
       id="testimonials"
-      className="py-20 bg-gradient-to-br from-purple-50 to-blue-50 dark:from-purple-900 dark:to-blue-900 transition-colors duration-300 overflow-hidden relative"
+      className="py-20 bg-gradient-to-br from-slate-50 to-white dark:from-[#070c16] dark:to-[#0a1628] transition-colors duration-300 overflow-hidden relative"
     >
+      <div className="absolute inset-0 glow-teal opacity-20" aria-hidden="true" />
       <div className="container mx-auto px-6 relative z-10">
         <AnimatedSectionHeader title={t("testimonials.title")} />
 
@@ -65,9 +64,9 @@ const TestimonialsComponent = () => {
               animate={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
               exit={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
               transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5 }}
-              className="bg-white dark:bg-gray-800 p-8 md:p-12 rounded-xl shadow-xl"
+              className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-8 md:p-12 rounded-xl shadow-xl ring-1 ring-gray-200/50 dark:ring-gray-700/50"
             >
-              <div className={`absolute -top-6 ${isRTL ? "right-10" : "left-10"} text-blue-500 dark:text-blue-400`}>
+              <div className={`absolute -top-6 ${isRTL ? "right-10" : "left-10"} text-teal-500 dark:text-teal-400`}>
                 <Quote size={48} />
               </div>
 
@@ -78,14 +77,8 @@ const TestimonialsComponent = () => {
               </div>
 
               <div className="flex items-center">
-                <div className={`w-16 h-16 rounded-full overflow-hidden me-4`}>
-                  <Image
-                    src={testimonials[activeIndex].image || "/placeholder.svg"}
-                    alt={testimonials[activeIndex].name}
-                    width={80}
-                    height={80}
-                    className="w-full h-full object-cover"
-                  />
+                <div className={`w-16 h-16 rounded-full bg-gradient-to-br ${testimonials[activeIndex].gradient} flex items-center justify-center me-4 shadow-lg`}>
+                  <span className="text-xl font-bold text-white">{testimonials[activeIndex].initials}</span>
                 </div>
                 <div>
                   <p className="font-semibold text-lg text-gray-900 dark:text-white">
@@ -96,15 +89,15 @@ const TestimonialsComponent = () => {
               </div>
             </motion.div>
 
-            <div className="flex justify-center mt-8 space-x-4">
+            <div className="flex justify-center mt-8 gap-4">
               <button
                 onClick={prevTestimonial}
-                className="p-2 rounded-full bg-white dark:bg-gray-800 shadow-md hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors duration-300"
+                className="p-2 rounded-full bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-md hover:bg-teal-50 dark:hover:bg-teal-900/30 transition-colors duration-300 ring-1 ring-gray-200/50 dark:ring-gray-700/50"
                 aria-label={t("testimonials.prev")}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6 text-blue-600 dark:text-blue-400"
+                  className="h-6 w-6 text-teal-600 dark:text-teal-400"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -113,16 +106,16 @@ const TestimonialsComponent = () => {
                 </svg>
               </button>
 
-              <div className="flex space-x-2">
+              <div className="flex gap-2">
                 {testimonials.map((_, index) => (
                   <button
                     key={index}
                     onClick={() => setActiveIndex(index)}
-                    className={`w-3 h-3 rounded-full ${
+                    className={`w-3 h-3 rounded-full transition-colors duration-300 ${
                       index === activeIndex
-                        ? "bg-blue-600 dark:bg-blue-400"
-                        : "bg-gray-300 dark:bg-gray-600 hover:bg-blue-400 dark:hover:bg-blue-500"
-                    } transition-colors duration-300`}
+                        ? "bg-teal-600 dark:bg-teal-400"
+                        : "bg-gray-300 dark:bg-gray-600 hover:bg-teal-400 dark:hover:bg-teal-500"
+                    }`}
                     aria-label={`${t("testimonials.goto")} ${index + 1}`}
                     aria-current={index === activeIndex ? "true" : "false"}
                   />
@@ -131,12 +124,12 @@ const TestimonialsComponent = () => {
 
               <button
                 onClick={nextTestimonial}
-                className="p-2 rounded-full bg-white dark:bg-gray-800 shadow-md hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors duration-300"
+                className="p-2 rounded-full bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-md hover:bg-teal-50 dark:hover:bg-teal-900/30 transition-colors duration-300 ring-1 ring-gray-200/50 dark:ring-gray-700/50"
                 aria-label={t("testimonials.next")}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6 text-blue-600 dark:text-blue-400"
+                  className="h-6 w-6 text-teal-600 dark:text-teal-400"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"

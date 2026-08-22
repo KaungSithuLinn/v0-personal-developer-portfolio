@@ -1,16 +1,11 @@
 "use client"
 
 import { Briefcase, Calendar, MapPin } from "lucide-react"
-import Image from "next/image"
 import { motion } from "framer-motion"
 import { useReducedMotion } from "framer-motion"
 import AnimatedSectionHeader from "./AnimatedSectionHeader"
 import { useTranslation } from "@/context/language-utils"
 import { memo } from "react"
-
-// Audit P0-2: respect reduced motion preference
-
-// Audit P0-5: memoized presentational component
 
 const ExperienceComponent = () => {
   const { t, isRTL } = useTranslation()
@@ -40,66 +35,92 @@ const ExperienceComponent = () => {
   return (
     <section
       id="experience"
-      className="py-20 bg-gradient-to-br from-emerald-50 to-teal-100 dark:from-gray-900 dark:to-teal-900 transition-colors duration-300 overflow-hidden relative"
+      className="py-20 bg-gradient-to-br from-slate-50 to-white dark:from-[#070c16] dark:to-[#0a1628] transition-colors duration-300 overflow-hidden relative"
     >
+      <div className="absolute inset-0 glow-navy opacity-30" aria-hidden="true" />
+      <div className={`absolute top-0 ${isRTL ? "left-0" : "right-0"} w-64 h-64 -mt-32 ${isRTL ? "-ml-32" : "-mr-32"} glow-teal opacity-40`} aria-hidden="true" />
       <div className="container mx-auto px-6 relative z-10">
         <AnimatedSectionHeader title={t("experience.title")} />
-        <motion.div
-          className="space-y-16"
-          initial={shouldReduceMotion ? { opacity: 1 } : "hidden"}
-          whileInView={shouldReduceMotion ? undefined : "show"}
-          viewport={shouldReduceMotion ? undefined : { once: true, margin: "-50px" }}
-          transition={shouldReduceMotion ? { duration: 0 } : { staggerChildren: 0.2 }}
-        >
-          {experiences.map((exp, index) => (
-            <motion.div
-              key={index}
-              className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg hover:shadow-2xl ring-1 ring-gray-200/50 dark:ring-gray-700/50 hover:ring-blue-500/30 transition-all duration-300 relative overflow-hidden group"
-              variants={item}
-            >
-              <div
-                className={`absolute top-0 ${isRTL ? "left-0 rounded-br-full" : "right-0 rounded-bl-full"} w-32 h-32 bg-blue-200 dark:bg-blue-700 z-0 opacity-50 
-                transition-transform duration-300 group-hover:scale-110`}
-              ></div>
-              <div className="relative z-10">
-                <h3 className="text-2xl font-semibold mb-2 dark:text-white flex items-center">{exp.company}</h3>
-                <p className="text-gray-600 dark:text-gray-300 mb-4 flex items-center">
-                  <MapPin className="w-4 h-4 me-2" />
-                  {exp.location}
-                </p>
-                <p className="text-gray-600 dark:text-gray-300 mb-4 flex items-center">
-                  <Calendar className="w-4 h-4 me-2" />
-                  {exp.period}
-                </p>
-                <p className="text-xl font-medium mb-4 dark:text-gray-200 flex items-center">
-                  <Briefcase className="w-5 h-5 me-2" />
-                  {exp.role}
-                </p>
-                <ul className="list-none space-y-2">
-                  {exp.responsibilities.map((resp, idx) => (
-                    <li key={idx} className="text-gray-700 dark:text-gray-300 flex items-start">
-                      <span className="text-blue-500 me-2">•</span>
-                      {resp}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
-      </div>
-      <div className={`absolute bottom-0 ${isRTL ? "left-0" : "right-0"} w-64 h-64 -mb-32 ${isRTL ? "-ml-32" : "-mr-32"} opacity-20`}>
-        <Image
-          src="/placeholder.svg?height=256&width=256"
-          alt={t("experience.decorativeImageAlt")}
-          width={256}
-          height={256}
-        />
+        <div className="relative">
+          <div className="hidden md:block absolute top-8 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-teal-500/30 to-transparent" aria-hidden="true" />
+          <motion.div
+            className="space-y-12 md:space-y-0"
+            initial={shouldReduceMotion ? { opacity: 1 } : "hidden"}
+            whileInView={shouldReduceMotion ? undefined : "show"}
+            viewport={shouldReduceMotion ? undefined : { once: true, margin: "-50px" }}
+            transition={shouldReduceMotion ? { duration: 0 } : { staggerChildren: 0.2 }}
+          >
+            {experiences.map((exp, index) => (
+              <motion.div
+                key={index}
+                className="relative md:flex md:items-center"
+                variants={item}
+              >
+                <div className="hidden md:flex md:w-1/2 md:justify-end md:pr-12">
+                  <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-8 rounded-xl shadow-lg ring-1 ring-gray-200/50 dark:ring-gray-700/50 max-w-lg w-full">
+                    <h3 className="text-2xl font-semibold mb-2 dark:text-white flex items-center">
+                      <Briefcase className="w-5 h-5 me-2 text-teal-500" />
+                      {exp.company}
+                    </h3>
+                    <p className="text-gray-600 dark:text-gray-300 mb-4 flex items-center">
+                      <MapPin className="w-4 h-4 me-2" />
+                      {exp.location}
+                    </p>
+                    <p className="text-gray-600 dark:text-gray-300 mb-4 flex items-center">
+                      <Calendar className="w-4 h-4 me-2" />
+                      {exp.period}
+                    </p>
+                    <p className="text-xl font-medium mb-4 dark:text-gray-200 flex items-center">
+                      <Briefcase className="w-5 h-5 me-2 text-teal-500" />
+                      {exp.role}
+                    </p>
+                    <ul className="list-none space-y-2">
+                      {exp.responsibilities.map((resp, idx) => (
+                        <li key={idx} className="text-gray-700 dark:text-gray-300 flex items-start">
+                          <span className="text-teal-500 me-2">&#8226;</span>
+                          {resp}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+                <div className="hidden md:flex md:w-0 md:justify-center">
+                  <div className="w-4 h-4 rounded-full bg-teal-500 ring-4 ring-teal-500/20 relative z-10" aria-hidden="true" />
+                </div>
+                <div className="hidden md:block md:w-1/2 md:pl-12" />
+                <div className="md:hidden bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-8 rounded-xl shadow-lg ring-1 ring-gray-200/50 dark:ring-gray-700/50">
+                  <h3 className="text-2xl font-semibold mb-2 dark:text-white flex items-center">
+                    <Briefcase className="w-5 h-5 me-2 text-teal-500" />
+                    {exp.company}
+                  </h3>
+                  <p className="text-gray-600 dark:text-gray-300 mb-4 flex items-center">
+                    <MapPin className="w-4 h-4 me-2" />
+                    {exp.location}
+                  </p>
+                  <p className="text-gray-600 dark:text-gray-300 mb-4 flex items-center">
+                    <Calendar className="w-4 h-4 me-2" />
+                    {exp.period}
+                  </p>
+                  <p className="text-xl font-medium mb-4 dark:text-gray-200 flex items-center">
+                    <Briefcase className="w-5 h-5 me-2 text-teal-500" />
+                    {exp.role}
+                  </p>
+                  <ul className="list-none space-y-2">
+                    {exp.responsibilities.map((resp, idx) => (
+                      <li key={idx} className="text-gray-700 dark:text-gray-300 flex items-start">
+                        <span className="text-teal-500 me-2">&#8226;</span>
+                        {resp}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
       </div>
     </section>
   )
 }
-
-// Audit P0-5: memoized presentational component
 
 export default memo(ExperienceComponent)
