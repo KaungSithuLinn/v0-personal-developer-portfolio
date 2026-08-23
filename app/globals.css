@@ -228,13 +228,23 @@ h1, h2, h3, h4, h5, h6, p, span, a, button {
   animation: gradient-x 15s ease infinite;
 }
 
-/* ---- Design-system helpers ---------------------------------------- */
+/* Design-system helpers ---------------------------------------- */
+
+/* Repeated section background */
+.section-bg {
+  background: linear-gradient(to bottom right, #f8fafc, #ffffff);
+}
+
+.dark .section-bg {
+  background: linear-gradient(to bottom right, #070c16, #0a1628);
+}
 
 /* Consistent card surfaces aligned to tokens */
 .card-glass {
   background-color: hsl(0 0% 100% / 0.8);
   border: 1px solid hsl(214 25% 90% / 0.5);
   backdrop-filter: blur(4px);
+  transition: background-color 0.3s, border-color 0.3s;
 }
 
 .dark .card-glass {

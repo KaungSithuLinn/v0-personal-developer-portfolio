@@ -83,7 +83,7 @@ export default function SystemMonitor({ onClose }: { onClose: () => void }): Rea
     <motion.div
       initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
       animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1 }}
-      className="monitor-window bg-gradient-to-br from-gray-900/90 to-blue-900/50 backdrop-blur-sm border border-blue-500/30 rounded-lg p-4 shadow-lg shadow-blue-500/10"
+      className="monitor-window bg-gradient-to-br from-slate-900/90 to-[#0a1628]/50 backdrop-blur-sm border border-teal-500/30 rounded-lg p-4 shadow-lg shadow-teal-500/10"
     >
       {/* Close button */}
       <button
@@ -97,16 +97,16 @@ export default function SystemMonitor({ onClose }: { onClose: () => void }): Rea
       <div className="grid grid-cols-1 gap-4">
         {/* System Stats */}
         <div className="space-y-4">
-          <h3 className="text-blue-400 font-mono text-lg border-b border-blue-500/30 pb-2">
+          <h3 className="text-teal-400 font-mono text-lg border-b border-teal-500/30 pb-2">
             {t("systemMonitor.title")}
           </h3>
 
           <div className="flex items-center justify-between flex-wrap gap-2">
             <div className="flex items-center">
-              <Clock className="text-blue-400 me-2" size={18} />
+              <Clock className="text-teal-400 me-2" size={18} />
               <span className="text-gray-300 font-mono">{t("systemMonitor.systemTime")}</span>
             </div>
-            <span className="text-blue-400 font-mono">
+              <span className="text-teal-400 font-mono">
               {date.toLocaleTimeString(language === "en" ? "en-US" : language)} -{" "}
               {date.toLocaleDateString(language === "en" ? "en-US" : language)}
             </span>
@@ -118,14 +118,14 @@ export default function SystemMonitor({ onClose }: { onClose: () => void }): Rea
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center">
-                    <Cpu className="text-blue-500 me-2" size={18} />
+                    <Cpu className="text-teal-500 me-2" size={18} />
                     <span className="text-gray-300 font-mono">{t("systemMonitor.cpuUsage")}</span>
                   </div>
-                  <span className="text-blue-500 font-mono">{cpuUsage}%</span>
+                  <span className="text-teal-500 font-mono">{cpuUsage}%</span>
                 </div>
                 <div className="w-full bg-gray-700 rounded-full h-2.5" role="progressbar" aria-valuenow={cpuUsage} aria-valuemin={0} aria-valuemax={100} aria-label="CPU usage">
                   <motion.div
-                  className="bg-blue-500 h-2.5 rounded-full"
+                  className="bg-teal-500 h-2.5 rounded-full"
                   initial={shouldReduceMotion ? { width: `${cpuUsage}%` } : { width: 0 }}
                   animate={shouldReduceMotion ? { width: `${cpuUsage}%` } : { width: `${cpuUsage}%` }}
                   transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5 }}
@@ -137,14 +137,14 @@ export default function SystemMonitor({ onClose }: { onClose: () => void }): Rea
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center">
-                    <HardDrive className="text-indigo-500 me-2" size={18} />
+                    <HardDrive className="text-teal-500 me-2" size={18} />
                     <span className="text-gray-300 font-mono">{t("systemMonitor.memoryUsage")}</span>
                   </div>
-                  <span className="text-indigo-500 font-mono">{memoryUsage}%</span>
+                  <span className="text-teal-500 font-mono">{memoryUsage}%</span>
                 </div>
                 <div className="w-full bg-gray-700 rounded-full h-2.5" role="progressbar" aria-valuenow={memoryUsage} aria-valuemin={0} aria-valuemax={100} aria-label="Memory usage">
                   <motion.div
-                  className="bg-indigo-500 h-2.5 rounded-full"
+                  className="bg-teal-500 h-2.5 rounded-full"
                   initial={shouldReduceMotion ? { width: `${memoryUsage}%` } : { width: 0 }}
                   animate={shouldReduceMotion ? { width: `${memoryUsage}%` } : { width: `${memoryUsage}%` }}
                   transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5 }}
@@ -155,15 +155,15 @@ export default function SystemMonitor({ onClose }: { onClose: () => void }): Rea
             {/* Network Activity */}
             <div className="space-y-2 sm:col-span-2">
               <div className="flex items-center justify-between">
-                <div className="flex items-center">
-                  <Activity className="text-purple-500 me-2" size={18} />
-                  <span className="text-gray-300 font-mono">{t("systemMonitor.networkActivity")}</span>
-                </div>
-                <span className="text-purple-500 font-mono">{networkActivity} KB/s</span>
+                  <div className="flex items-center">
+                    <Activity className="text-teal-500 me-2" size={18} />
+                    <span className="text-gray-300 font-mono">{t("systemMonitor.networkActivity")}</span>
+                  </div>
+                  <span className="text-teal-500 font-mono">{networkActivity} KB/s</span>
               </div>
               <div className="w-full bg-gray-700 rounded-full h-2.5" role="progressbar" aria-valuenow={networkActivity} aria-valuemin={0} aria-valuemax={100} aria-label="Network activity">
-                <motion.div
-                  className="bg-purple-500 h-2.5 rounded-full"
+                  <motion.div
+                  className="bg-teal-500 h-2.5 rounded-full"
                   initial={shouldReduceMotion ? { width: `${networkActivity}%` } : { width: 0 }}
                   animate={shouldReduceMotion ? { width: `${networkActivity}%` } : { width: `${networkActivity}%` }}
                   transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5 }}
@@ -175,7 +175,7 @@ export default function SystemMonitor({ onClose }: { onClose: () => void }): Rea
 
         {/* Skills Monitor */}
         <div className="space-y-4 mt-6">
-          <h3 className="text-blue-400 font-mono text-lg border-b border-blue-500/30 pb-2">
+          <h3 className="text-teal-400 font-mono text-lg border-b border-teal-500/30 pb-2">
             {t("systemMonitor.skillsMonitor")}
           </h3>
 
@@ -184,21 +184,21 @@ export default function SystemMonitor({ onClose }: { onClose: () => void }): Rea
               <div key={index} className="space-y-1">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center">
-                    <Zap className="text-blue-400 me-2" size={14} />
+                    <Zap className="text-teal-400 me-2" size={14} />
                     <span className="text-gray-300 font-mono text-sm">{skill.name}</span>
                   </div>
-                  <span className="text-blue-400 font-mono text-sm">{skill.level}%</span>
+                  <span className="text-teal-400 font-mono text-sm">{skill.level}%</span>
                 </div>
                 <div className="w-full bg-gray-700 rounded-full h-1.5">
                   <motion.div
                     className={`h-1.5 rounded-full ${
                       skill.category === "Frontend"
-                        ? "bg-blue-500"
+                        ? "bg-teal-500"
                         : skill.category === "Backend"
-                          ? "bg-indigo-500"
+                          ? "bg-teal-500"
                           : skill.category === "Database"
-                            ? "bg-purple-500"
-                            : "bg-blue-600"
+                            ? "bg-teal-500"
+                            : "bg-teal-600"
                     }`}
                     initial={shouldReduceMotion ? { width: `${skill.level}%` } : { width: 0 }}
                     animate={shouldReduceMotion ? { width: `${skill.level}%` } : { width: `${skill.level}%` }}

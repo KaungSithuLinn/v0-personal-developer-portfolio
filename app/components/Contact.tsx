@@ -1,9 +1,9 @@
 "use client"
 
-import { useState, useTransition } from "react"
+import { useState, useTransition, useRef, useEffect } from "react"
 import { motion, TargetAndTransition } from "framer-motion"
 import { useReducedMotion } from "framer-motion"
-import { Mail, Phone, MapPin } from "lucide-react"
+import { Mail, MapPin } from "lucide-react"
 import AnimatedSectionHeader from "./AnimatedSectionHeader"
 import { useTranslation } from "@/context/language-utils"
 import { useI18nForm } from "@/hooks/use-i18n-form"
@@ -15,6 +15,13 @@ const ContactComponent = () => {
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle")
   const [isSubmitting, startTransition] = useTransition()
   const shouldReduceMotion = useReducedMotion()
+  const statusRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (submitStatus !== "idle" && statusRef.current) {
+      statusRef.current.focus()
+    }
+  }, [submitStatus])
   
   const animation = useLanguageAnimation({}) as unknown as { initial: TargetAndTransition; animate: TargetAndTransition; transition: object }
   
@@ -69,7 +76,7 @@ const ContactComponent = () => {
   return (
     <section
       id="contact"
-      className="py-20 bg-gradient-to-br from-slate-50 to-white dark:from-background dark:to-[#0a1628] transition-colors duration-300"
+      className="py-20 section-bg transition-colors duration-300"
     >
       <div className="container mx-auto px-6">
         <AnimatedSectionHeader title={t("contact.title")} />
@@ -94,21 +101,6 @@ const ContactComponent = () => {
                   className="text-muted-foreground hover:text-primary dark:hover:text-primary"
                 >
                   kaungthu.sithu97@gmail.com
-                </a>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-4">
-              <div className="p-3 rounded-full bg-primary/10 text-primary dark:text-primary">
-                <Phone size={24} />
-              </div>
-              <div>
-                <h4 className="font-medium text-foreground">{t("contact.phone")}</h4>
-                <a
-                  href="tel:+1234567890"
-                  className="text-muted-foreground hover:text-primary dark:hover:text-primary"
-                >
-                  +1 (234) 567-890
                 </a>
               </div>
             </div>
@@ -208,35 +200,48 @@ const ContactComponent = () => {
               {errors.message && <p id="message-error" className="text-red-500 text-sm mt-1">{errors.message}</p>}
             </div>
 
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className={`w-full py-3 px-6 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-colors ${
-                  isSubmitting ? "opacity-50 cursor-not-allowed" : ""
-                }`}
-              >
+               <button
+                 type="submit"
+                 disabled={isSubmitting}
+                 aria-describedby="submit-status"
+                 className={`w-full py-3 px-6 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-colors ${
+                   isSubmitting ? "opacity-50 cursor-not-allowed" : ""
+                 }`}
+               >
               {isSubmitting ? t("contact.form.sending") : t("contact.form.send")}
             </button>
 
-            {submitStatus === "success" && (
-              <motion.p
-                initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-                animate={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
-                className="text-teal-600 dark:text-teal-400 text-center"
-              >
-                {t("contact.form.success")}
-              </motion.p>
-            )}
+            <div
+              id="submit-status"
+              ref={statusRef}
+              tabIndex={-1}
+              aria-live="polite"
+              aria-atomic="true"
+              className="outline-none"
+            >
+              {submitStatus === "success" && (
+                <motion.p
+                  initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+                  animate={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+                  className="text-teal-600 dark:text-teal-400 text-center"
+                >
+                  {t("contact.form.success")}
+                </motion.p>
+              )}
 
-            {submitStatus === "error" && (
-              <motion.p
-                initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-                animate={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
-                className="text-red-500 dark:text-red-400 text-center"
-              >
-                {t("contact.form.error")}
-              </motion.p>
-            )}
+              {submitStatus === "error" && (
+                <motion.p
+                  initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+                  animate={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+                  className="text-red-500 dark:text-red-400 text-center"
+                >
+                  {t("contact.form.error")}
+                  <span className="block text-sm text-muted-foreground mt-1">
+                    Please try again or email directly at kaungthu.sithu97@gmail.com
+                  </span>
+                </motion.p>
+              )}
+            </div>
           </motion.form>
         </div>
       </div>

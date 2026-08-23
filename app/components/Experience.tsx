@@ -35,7 +35,7 @@ const ExperienceComponent = () => {
   return (
     <section
       id="experience"
-      className="py-20 bg-gradient-to-br from-slate-50 to-white dark:from-background dark:to-[#0a1628] transition-colors duration-300 overflow-hidden relative"
+      className="py-20 section-bg transition-colors duration-300 overflow-hidden relative"
     >
       <div className="absolute inset-0 glow-navy opacity-30" aria-hidden="true" />
       <div className={`absolute top-0 ${isRTL ? "left-0" : "right-0"} w-64 h-64 -mt-32 ${isRTL ? "-ml-32" : "-mr-32"} glow-teal opacity-40`} aria-hidden="true" />
@@ -43,6 +43,7 @@ const ExperienceComponent = () => {
         <AnimatedSectionHeader title={t("experience.title")} />
         <div className="relative">
           <div className="hidden md:block absolute top-8 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-teal-500/30 to-transparent" aria-hidden="true" />
+          <div className="hidden md:block absolute top-8 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-teal-500 shadow-lg shadow-teal-500/50 z-10" aria-hidden="true" />
           <motion.div
             className="space-y-12 md:space-y-0"
             initial={shouldReduceMotion ? { opacity: 1 } : "hidden"}

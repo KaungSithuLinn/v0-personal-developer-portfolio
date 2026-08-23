@@ -50,7 +50,7 @@ const TestimonialsComponent = () => {
   return (
     <section
       id="testimonials"
-      className="py-20 bg-gradient-to-br from-slate-50 to-white dark:from-background dark:to-[#0a1628] transition-colors duration-300 overflow-hidden relative"
+      className="py-20 section-bg transition-colors duration-300 overflow-hidden relative"
     >
       <div className="absolute inset-0 glow-teal opacity-20" aria-hidden="true" />
       <div className="container mx-auto px-6 relative z-10">
@@ -111,7 +111,7 @@ const TestimonialsComponent = () => {
                   <button
                     key={index}
                     onClick={() => setActiveIndex(index)}
-                    className={`w-3 h-3 rounded-full transition-colors duration-300 ${
+                    className={`min-w-[44px] min-h-[44px] flex items-center justify-center w-3 h-3 rounded-full transition-colors duration-300 ${
                       index === activeIndex
                         ? "bg-primary dark:bg-primary"
                         : "bg-muted-foreground/30 dark:bg-muted-foreground/30 hover:bg-primary/60 dark:hover:bg-primary/60"

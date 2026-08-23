@@ -34,8 +34,8 @@ const AnimatedSectionHeaderComponent = ({ title, eyebrow }: AnimatedSectionHeade
         {title}
         <motion.span
           className="absolute -bottom-2 left-1/2 -translate-x-1/2 h-1 bg-gradient-to-r from-teal-500 to-blue-600 rounded-full"
-          initial={shouldReduceMotion ? { width: "60px" } : { width: 0 }}
-          whileInView={shouldReduceMotion ? undefined : { width: "60px" }}
+          initial={shouldReduceMotion ? { width: "4rem" } : { width: 0 }}
+          whileInView={shouldReduceMotion ? undefined : { width: "4rem" }}
           viewport={shouldReduceMotion ? undefined : { once: true }}
           transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.6, delay: 0.2 }}
         />

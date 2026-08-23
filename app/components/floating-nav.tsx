@@ -60,7 +60,7 @@ const FloatingNavComponent = () => {
           <button
             key={id}
             onClick={() => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" })}
-            className="group relative flex items-center justify-center"
+            className="group relative flex items-center justify-center min-w-[44px] min-h-[44px]"
             aria-label={t("nav.scrollTo", { section: label })}
           >
             <span className={`absolute ${isRTL ? "left-full ms-2" : "right-full me-2"} hidden sm:block px-2 py-1 rounded bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap`}>

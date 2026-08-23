@@ -14,7 +14,7 @@ const HeroComponent = () => {
   return (
     <section
       id="home"
-      className="min-h-screen pt-28 pb-20 bg-gradient-to-br from-slate-50 to-white dark:from-[#070c16] dark:to-[#0a1628] transition-colors duration-300 overflow-hidden relative"
+      className="min-h-screen pt-28 pb-20 section-bg transition-colors duration-300 overflow-hidden relative"
     >
       <div className="container mx-auto px-6 relative">
         <div className="flex flex-col md:flex-row items-center gap-12">
@@ -61,7 +61,7 @@ const HeroComponent = () => {
                 href="https://github.com/kaungthu97"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 bg-foreground text-background px-4 py-2 rounded-full hover:bg-foreground/90 transition-colors"
+                className="flex items-center gap-2 border border-foreground text-foreground px-4 py-2 rounded-full hover:bg-foreground/10 transition-colors"
               >
                 <Github size={20} />
                 {t("hero.githubProfile")}
@@ -71,7 +71,7 @@ const HeroComponent = () => {
                 href="https://linkedin.com/in/kaung-sithu-linn"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 rounded-full hover:bg-primary/90 transition-colors"
+                className="flex items-center gap-2 bg-secondary text-secondary-foreground px-4 py-2 rounded-full hover:bg-secondary/90 transition-colors"
               >
                 <Linkedin size={20} />
                 {t("hero.linkedinProfile")}
@@ -79,7 +79,7 @@ const HeroComponent = () => {
 
               <a
                 href="mailto:kaungthu.sithu97@gmail.com"
-                className="flex items-center gap-2 bg-secondary text-secondary-foreground px-4 py-2 rounded-full hover:bg-secondary/90 transition-colors"
+                className="flex items-center gap-2 border border-foreground text-foreground px-4 py-2 rounded-full hover:bg-foreground/10 transition-colors"
               >
                 <Mail size={20} />
                 {t("hero.emailContact")}
@@ -103,7 +103,7 @@ const HeroComponent = () => {
             animate={shouldReduceMotion ? { opacity: 1, scale: 1 } : { opacity: 1, scale: 1 }}
             transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.6, delay: 0.2 }}
           >
-            <div className="relative w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 opacity-80">
+            <div className="relative w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96">
               <div className="absolute inset-0 rounded-2xl overflow-hidden shadow-2xl ring-1 ring-gray-200/50 dark:ring-gray-700/50">
                 <div className="relative w-full h-full">
                   <Image

@@ -154,7 +154,7 @@ export default function HexGrid({ className = "" }: HexGridProps): ReactElement 
       className={`absolute inset-0 z-0 overflow-hidden ${className}`}
       aria-hidden="true"
     >
-      <canvas ref={canvasRef} className="w-full h-full" aria-label="Animated hexagonal grid background" role="img" />
+      <canvas ref={canvasRef} className="w-full h-full" aria-hidden="true" />
     </motion.div>
   )
 }

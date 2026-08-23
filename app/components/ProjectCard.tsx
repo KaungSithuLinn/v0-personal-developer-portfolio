@@ -36,7 +36,7 @@ const ProjectCard = memo(function ProjectCard({ project, index }: { project: Pro
     >
       {project.thumbnail && (
         <div
-          className="w-full h-48 sm:h-64 bg-cover bg-center"
+          className="w-full aspect-video bg-cover bg-center"
           style={{ backgroundImage: `url(${project.thumbnail})` }}
           role="img"
           aria-label={`${project.title} thumbnail`}
@@ -91,9 +91,9 @@ const ProjectCard = memo(function ProjectCard({ project, index }: { project: Pro
         {project.caseStudy && (
           <motion.div
             id={`case-study-${index}`}
-            initial={shouldReduceMotion ? { height: "auto", opacity: 1 } : { height: 0, opacity: 0 }}
+            initial={shouldReduceMotion ? { maxHeight: "none", opacity: 1 } : { maxHeight: 0, opacity: 0 }}
             animate={{
-              height: expanded ? "auto" : 0,
+              maxHeight: expanded ? 2000 : 0,
               opacity: expanded ? 1 : 0,
             }}
             transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.3 }}

@@ -62,7 +62,7 @@ const SkillsComponent = () => {
   return (
     <section
       id="skills"
-      className="py-20 bg-gradient-to-br from-slate-50 to-white dark:from-background dark:to-[#0a1628] transition-colors duration-300 overflow-hidden relative"
+      className="py-20 section-bg transition-colors duration-300 overflow-hidden relative"
     >
       <div className="absolute inset-0 glow-teal opacity-20" aria-hidden="true" />
       <div className={`absolute bottom-0 ${isRTL ? "left-0" : "right-0"} w-64 h-64 -mb-32 ${isRTL ? "-ml-32" : "-mr-32"} glow-navy opacity-40`} aria-hidden="true" />
@@ -107,7 +107,7 @@ const SkillsComponent = () => {
                   <div key={idx} className="flex items-center">
                     <div className="w-full bg-muted rounded-full h-2.5 me-2" role="progressbar" aria-valuenow={parseInt(`${85 - idx * 5}`)} aria-valuemin={0} aria-valuemax={100} aria-label={`${tech} proficiency`}>
                     <motion.div
-                        className="bg-primary dark:bg-primary h-2.5 rounded-full"
+                        className="bg-teal-400 dark:bg-teal-500 h-2.5 rounded-full"
                         initial={shouldReduceMotion ? { width: `${85 - idx * 5}%` } : { width: 0 }}
                         animate={shouldReduceMotion ? { width: `${85 - idx * 5}%` } : { width: `${85 - idx * 5}%` }}
                         transition={shouldReduceMotion ? { duration: 0 } : { duration: 1, delay: idx * 0.1 }}
@@ -126,7 +126,7 @@ const SkillsComponent = () => {
                   <div key={idx} className="flex items-center">
                     <div className="w-full bg-muted rounded-full h-2.5 me-2" role="progressbar" aria-valuenow={parseInt(`${80 - idx * 5}`)} aria-valuemin={0} aria-valuemax={100} aria-label={`${tech} proficiency`}>
                     <motion.div
-                        className="bg-primary dark:bg-primary h-2.5 rounded-full"
+                        className="bg-teal-400 dark:bg-teal-500 h-2.5 rounded-full"
                         initial={shouldReduceMotion ? { width: `${80 - idx * 5}%` } : { width: 0 }}
                         animate={shouldReduceMotion ? { width: `${80 - idx * 5}%` } : { width: `${80 - idx * 5}%` }}
                         transition={shouldReduceMotion ? { duration: 0 } : { duration: 1, delay: idx * 0.1 }}
@@ -145,7 +145,7 @@ const SkillsComponent = () => {
                   <div key={idx} className="flex items-center">
                     <div className="w-full bg-muted rounded-full h-2.5 me-2" role="progressbar" aria-valuenow={parseInt(`${85 - idx * 7}`)} aria-valuemin={0} aria-valuemax={100} aria-label={`${tech} proficiency`}>
                     <motion.div
-                        className="bg-primary dark:bg-primary h-2.5 rounded-full"
+                        className="bg-teal-400 dark:bg-teal-500 h-2.5 rounded-full"
                         initial={shouldReduceMotion ? { width: `${85 - idx * 7}%` } : { width: 0 }}
                         animate={shouldReduceMotion ? { width: `${85 - idx * 7}%` } : { width: `${85 - idx * 7}%` }}
                         transition={shouldReduceMotion ? { duration: 0 } : { duration: 1, delay: idx * 0.1 }}
