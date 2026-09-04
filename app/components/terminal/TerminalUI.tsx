@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { useEffect, useRef, useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion"
 import { Maximize2, Minimize2, X, ChevronRight } from "lucide-react"
 import { useTerminal } from "@/hooks/use-terminal"
 import { useMounted } from "@/lib/use-mounted"
@@ -21,6 +21,7 @@ export default function TerminalUI({ isOpen, onClose }: { isOpen: boolean; onClo
   const terminalRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const mounted = useMounted()
+  const shouldReduceMotion = useReducedMotion()
   const { t, isRTL } = useTranslation()
 
   // Auto-scroll to bottom when new content is added
@@ -51,8 +52,8 @@ export default function TerminalUI({ isOpen, onClose }: { isOpen: boolean; onClo
       return (
         <div className="flex items-center text-teal-300">
           <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+            animate={shouldReduceMotion ? { rotate: 0 } : { rotate: 360 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { duration: 1, repeat: Infinity, ease: "linear" }}
             className="me-2"
           >
             ⟳
@@ -79,10 +80,10 @@ export default function TerminalUI({ isOpen, onClose }: { isOpen: boolean; onClo
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: 100 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 100 }}
-            transition={{ type: "spring", damping: 20 }}
+            initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 100 }}
+            animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+            exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 100 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { type: "spring", damping: 20 }}
             className={`terminal-window ${isFullscreen ? "fullscreen" : "normal"} ${isRTL ? "rtl" : ""}`}
           >
             {/* Terminal header */}
