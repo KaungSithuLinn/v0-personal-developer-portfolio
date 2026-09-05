@@ -455,3 +455,20 @@ h1, h2, h3, h4, h5, h6, p, span, a, button {
 .monitor-window {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+/* Anchor offset for sticky widgets and section headers */
+section[id],
+[id="main-content"] {
+  scroll-margin-top: 4rem;
+}
+
+/* Typographic rhythm */
+h1,
+h2 {
+  text-wrap: balance;
+}
+
+p,
+li {
+  text-wrap: pretty;
+}

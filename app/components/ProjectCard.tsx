@@ -3,13 +3,15 @@
 import { motion } from "framer-motion"
 import { useReducedMotion } from "framer-motion"
 import { ExternalLink, ChevronDown, ChevronUp } from "lucide-react"
-import { useState, type ReactElement, memo } from "react"
+import { useState, useEffect, useCallback, type ReactElement, memo } from "react"
 import { useTranslation } from "@/context/language-utils"
 
 interface ProjectProps {
   title: string
   period: string
   link: string
+  github?: string
+  category?: "research" | "ml" | "security"
   icon: ReactElement
   description: string
   achievements: string[]
@@ -23,12 +25,36 @@ interface ProjectProps {
 }
 
 const ProjectCard = memo(function ProjectCard({ project, index }: { project: ProjectProps; index: number }) {
+  const hashId = `project-${index}`
   const [expanded, setExpanded] = useState(false)
   const { t } = useTranslation()
   const shouldReduceMotion = useReducedMotion()
 
+  useEffect(() => {
+    if (typeof window === "undefined") return
+    const syncFromHash = () => {
+      setExpanded(window.location.hash === `#${hashId}`)
+    }
+    syncFromHash()
+    window.addEventListener("hashchange", syncFromHash)
+    return () => window.removeEventListener("hashchange", syncFromHash)
+  }, [hashId])
+
+  const toggleExpanded = useCallback(() => {
+    const next = !expanded
+    setExpanded(next)
+    if (typeof window !== "undefined") {
+      if (next) {
+        window.history.replaceState(null, "", `#${hashId}`)
+      } else if (window.location.hash === `#${hashId}`) {
+        window.history.replaceState(null, "", window.location.pathname + window.location.search)
+      }
+    }
+  }, [expanded, hashId])
+
   return (
     <motion.div
+      id={hashId}
       initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
       animate={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
       transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5, delay: index * 0.2 }}
@@ -75,7 +101,7 @@ const ProjectCard = memo(function ProjectCard({ project, index }: { project: Pro
 
                   {project.caseStudy && (
                     <button
-                      onClick={() => setExpanded(!expanded)}
+                      onClick={toggleExpanded}
                       className="flex items-center gap-1 text-muted-foreground hover:text-primary dark:hover:text-primary transition-colors"
                       aria-expanded={expanded}
                       aria-controls={`case-study-${index}`}

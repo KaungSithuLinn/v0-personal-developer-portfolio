@@ -14,6 +14,7 @@ const ContactComponent = () => {
   const { t, isRTL: _isRTL } = useTranslation()
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle")
   const [isSubmitting, startTransition] = useTransition()
+  const [consent, setConsent] = useState(false)
   const shouldReduceMotion = useReducedMotion()
   const statusRef = useRef<HTMLDivElement>(null)
 
@@ -22,9 +23,9 @@ const ContactComponent = () => {
       statusRef.current.focus()
     }
   }, [submitStatus])
-  
+
   const animation = useLanguageAnimation({}) as unknown as { initial: TargetAndTransition; animate: TargetAndTransition; transition: object }
-  
+
   const { handleChange, handleBlur, errors, validateField } = useI18nForm({
     customFields: {
       name: { required: true, minLength: 2 },
@@ -50,7 +51,7 @@ const ContactComponent = () => {
       }
 
       const hasErrors = Object.values(validations).some((result) => Array.isArray(result))
-      if (hasErrors) {
+      if (hasErrors || !consent) {
         setSubmitStatus("error")
         return
       }
@@ -64,6 +65,7 @@ const ContactComponent = () => {
         if (response.ok) {
           setSubmitStatus("success")
           form.reset()
+          setConsent(false)
         } else {
           setSubmitStatus("error")
         }
@@ -156,6 +158,8 @@ const ContactComponent = () => {
                 id="email"
                 name="email"
                 autoComplete="email"
+                spellCheck={false}
+                inputMode="email"
                 onChange={(e) => handleChange(e)}
                 onBlur={(e) => handleBlur(e)}
                 className={`w-full px-4 py-2 rounded-lg border bg-background dark:bg-card text-foreground focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background dark:focus:ring-offset-card focus:border-primary outline-none transition-colors ${errors.email ? "border-destructive dark:border-destructive" : "border-border"}`}
@@ -172,7 +176,7 @@ const ContactComponent = () => {
               <input
                 type="text"
                 id="subject"
-                autoComplete="subject"
+                autoComplete="off"
                 onChange={(e) => handleChange(e)}
                 onBlur={(e) => handleBlur(e)}
                 name="subject"
@@ -187,6 +191,16 @@ const ContactComponent = () => {
               <label htmlFor="message" className="block text-sm font-medium mb-2 dark:text-white">
                 {t("contact.form.message")}
               </label>
+              <div className="sr-only" aria-hidden="true">
+                <label htmlFor="website">Website</label>
+                <input
+                  type="text"
+                  id="website"
+                  name="website"
+                  tabIndex={-1}
+                  autoComplete="off"
+                />
+              </div>
               <textarea
                 id="message"
                 name="message"
@@ -200,12 +214,29 @@ const ContactComponent = () => {
               {errors.message && <p id="message-error" className="text-red-500 text-sm mt-1">{errors.message}</p>}
             </div>
 
+            <div className="flex items-start gap-3">
+              <input
+                type="checkbox"
+                id="consent"
+                name="consent"
+                checked={consent}
+                onChange={(e) => setConsent(e.target.checked)}
+                required
+                className="mt-1 w-4 h-4 rounded border-border text-primary focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background"
+                aria-required="true"
+                aria-invalid={submitStatus === "error" && !consent}
+              />
+              <label htmlFor="consent" className="text-sm text-muted-foreground leading-snug">
+                {t("contact.form.consent")}
+              </label>
+            </div>
+
                <button
                  type="submit"
-                 disabled={isSubmitting}
+                 disabled={isSubmitting || !consent}
                  aria-describedby="submit-status"
                  className={`w-full py-3 px-6 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-colors ${
-                   isSubmitting ? "opacity-50 cursor-not-allowed" : ""
+                   isSubmitting || !consent ? "opacity-50 cursor-not-allowed" : ""
                  }`}
                >
               {isSubmitting ? t("contact.form.sending") : t("contact.form.send")}

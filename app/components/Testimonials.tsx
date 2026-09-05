@@ -116,7 +116,7 @@ const TestimonialsComponent = () => {
                         ? "bg-primary dark:bg-primary"
                         : "bg-muted-foreground/30 dark:bg-muted-foreground/30 hover:bg-primary/60 dark:hover:bg-primary/60"
                     }`}
-                    aria-label={`${t("testimonials.goto")} ${index + 1}`}
+                    aria-label={t("testimonials.goto", { number: index + 1, total: testimonials.length })}
                     aria-current={index === activeIndex ? "true" : "false"}
                   />
                 ))}

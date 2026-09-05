@@ -66,7 +66,7 @@ export default function UnifiedDevConsole(): ReactElement | null {
         onClick={() => setShowAdvanced(!showAdvanced)}
         whileHover={shouldReduceMotion ? undefined : { scale: 1.1 }}
         whileTap={shouldReduceMotion ? undefined : { scale: 0.9 }}
-        aria-label="Toggle Advanced Console"
+        aria-label={showAdvanced ? t("console.advancedHide") : t("console.advanced")}
       >
         <Globe size={20} />
       </motion.button>

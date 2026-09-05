@@ -48,6 +48,23 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   return {
     title: `Kaung Sithu Linn - ${localeLang === 'en' ? 'Software Developer Portfolio' : 'Portfolio'}`,
     description: "Personal portfolio website of Kaung Sithu Linn, a software developer specializing in full-stack development, fraud detection, and behavioral biometrics.",
+    openGraph: {
+      title: "Kaung Sithu Linn - Software Developer Portfolio",
+      description: "Software developer specializing in full-stack development, fraud detection, and behavioral biometrics.",
+      type: "profile",
+      locale: localeLang === "zh" ? "zh_CN" : localeLang === "ms" ? "ms_MY" : "en_US",
+      url: "https://v0-personal-developer-portfolio-psi-blush.vercel.app",
+      siteName: "Kaung Sithu Linn Portfolio",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "Kaung Sithu Linn - Software Developer Portfolio",
+      description: "Software developer specializing in full-stack development, fraud detection, and behavioral biometrics.",
+    },
+    other: {
+      "profile:first_name": "Kaung Sithu",
+      "profile:last_name": "Linn",
+    },
   }
 }
 

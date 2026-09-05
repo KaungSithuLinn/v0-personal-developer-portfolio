@@ -7,6 +7,7 @@ const contactSchema = z.object({
   email: z.string().email('Invalid email address'),
   subject: z.string().min(1, 'Subject is required').max(200),
   message: z.string().min(1, 'Message is required').max(5000),
+  website: z.string().max(0).optional(),
 })
 
 const RATE_LIMIT_WINDOW_MS = 60 * 1000
@@ -88,11 +89,16 @@ export async function POST(request: Request) {
     }
 
     const formData = await request.formData()
+    const website = (formData.get('website') ?? '').toString()
+    if (website.length > 0) {
+      return NextResponse.json({ message: 'Message sent successfully' }, { status: 200 })
+    }
     const validated = contactSchema.parse({
       name: formData.get('name'),
       email: formData.get('email'),
       subject: formData.get('subject'),
       message: formData.get('message'),
+      website,
     })
 
     if (!process.env.RESEND_API_KEY || !process.env.CONTACT_EMAIL) {
