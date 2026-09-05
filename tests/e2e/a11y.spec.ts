@@ -52,8 +52,10 @@ test.describe("Accessibility", () => {
     // test will inspect.
     await expect(page.locator("h1").first()).toBeAttached({ timeout: 5_000 })
     await expect(page.locator("main, [role='main']").first()).toBeAttached({ timeout: 5_000 })
-    await expect(page.locator("#contact")).toBeAttached({ timeout: 5_000 })
-    await expect(page.locator("#contact")).toBeVisible()
+    // Scope #contact to <main> to avoid strict-mode violations when
+    // framer-motion's whileInView pass briefly renders a second node.
+    await expect(page.locator("main #contact").first()).toBeAttached({ timeout: 5_000 })
+    await expect(page.locator("main #contact").first()).toBeVisible()
 
     // Bound the scan so a hung axe-core fails fast instead of burning
     // the whole per-test budget. The previous un-bounded call could
@@ -73,7 +75,7 @@ test.describe("Accessibility", () => {
 
   test("contact form is accessible", async ({ page }) => {
     await page.goto("/en", { waitUntil: "domcontentloaded" })
-    const contactSection = page.locator("#contact")
+    const contactSection = page.locator("main #contact").first()
     await expect(contactSection).toBeAttached({ timeout: 5_000 })
     await expect(contactSection).toBeVisible()
 

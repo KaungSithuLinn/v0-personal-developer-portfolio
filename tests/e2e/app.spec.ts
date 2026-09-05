@@ -18,8 +18,13 @@ test.describe("Locale routing", () => {
   test("contact form validates required fields", async ({ page }) => {
     await page.goto("/en")
 
-    const contactSection = page.locator("#contact")
-    await expect(contactSection).toBeVisible()
+    // Scope to <main> so the locator is unambiguous: some pages (e.g.
+    // when framer-motion's whileInView render pass produces a hidden
+    // duplicate node above the fold) have two elements with id="contact"
+    // and a strict-mode locator fails. The contact section is always
+    // inside the <main> landmark.
+    const contactSection = page.locator("main #contact")
+    await expect(contactSection).toBeAttached()
 
     // The privacy-consent checkbox gates the submit button. Enable
     // the form by checking it first; the test then exercises the
