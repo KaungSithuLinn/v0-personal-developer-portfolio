@@ -20,10 +20,12 @@ export default defineConfig({
     baseURL: process.env.BASE_URL || "http://localhost:3000",
     trace: "on-first-retry",
     // Per the a11y.spec.ts doc comment, the suite is calibrated for the
-    // production build. Revert to 5 s defaults (Playwright's built-in)
-    // so a real regression surfaces quickly.
-    navigationTimeout: 15_000,
-    actionTimeout: 10_000,
+    // production build. We keep these tight enough that a real
+    // regression surfaces quickly, but loose enough to absorb the
+    // cold-start cost when the `next start` server is hit by the
+    // chromium and visual-regression projects in parallel.
+    navigationTimeout: 30_000,
+    actionTimeout: 15_000,
   },
   projects: [
     {

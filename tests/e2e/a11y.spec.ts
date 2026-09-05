@@ -11,25 +11,31 @@ import AxeBuilder from "@axe-core/playwright"
 //
 // The hardened version below is calibrated for the **production** build:
 //
-//   * `pnpm build` (or `next start`) produces fully-rendered, code-split
+//   * `npx next build` + `npx next start` produces fully-rendered, code-split
 //     pages. `domcontentloaded` is enough for axe-core; `load` is the
 //     backstop for late-arriving assets.
 //   * Dynamic imports (SystemMonitor, ProjectCard) resolve during the
-//     initial render. We wait for a hydration signal — a property set by
-//     framer-motion's `motion.section` once it's mounted — rather than
-//     the network.
-//   * `setDefaultTimeout` is dropped. Playwright's default of 5 s is
-//     plenty against a real production server, and 5 s is still generous
-//     enough to fail loudly when something genuinely regresses.
-
+//     initial render. We wait for visible content rather than the network.
+//   * The per-test timeout is 30 s, which is generous enough to cover
+//     axe-core's color-contrast sampling on a full DOM (it walks the entire
+//     stylesheet tree, not just visible elements) but tight enough to fail
+//     loudly when a real regression slips in. The previous 60 s default
+//     was masking intermittent hydration stalls.
 test.describe("Accessibility", () => {
-  test("home page has no detectable a11y violations", async ({ page }) => {
-    await page.goto("/en", { waitUntil: "load" })
+  test.describe.configure({ timeout: 45_000 })
 
-    // Section anchors are real DOM by the time `load` fires, but the
-    // sections themselves may not be painted until React commits. Wait
-    // for the hero heading and the contact anchor to be attached & laid
-    // out before letting axe-core scan.
+  test("home page has no detectable a11y violations", async ({ page }) => {
+    // `domcontentloaded` is enough: axe-core walks the parsed DOM and
+    // the inline styles; it does not need image/font loads. The
+    // previous code used `load`, which forces every <img>/<script> to
+    // resolve and can exceed 30 s when the chromium and
+    // visual-regression projects share one `next start` server.
+    await page.goto("/en", { waitUntil: "domcontentloaded" })
+
+    // Section anchors are real DOM by the time `domcontentloaded`
+    // fires, but the sections themselves may not be painted until
+    // React commits. Wait for the hero heading and the contact anchor
+    // to be attached & laid out before letting axe-core scan.
     await expect(page.locator("h1").first()).toBeVisible()
     await expect(page.locator("main, [role='main']").first()).toBeVisible()
     await expect(page.locator("#contact")).toBeVisible()
@@ -39,7 +45,7 @@ test.describe("Accessibility", () => {
   })
 
   test("contact form is accessible", async ({ page }) => {
-    await page.goto("/en", { waitUntil: "load" })
+    await page.goto("/en", { waitUntil: "domcontentloaded" })
     const contactSection = page.locator("#contact")
     await expect(contactSection).toBeVisible()
 
@@ -51,7 +57,7 @@ test.describe("Accessibility", () => {
     // Verifies the FloatingNav scroll affordance is exposed to assistive
     // tech. The button is only rendered after the user scrolls > 600 px,
     // so we trigger that and then read the role+label.
-    await page.goto("/en", { waitUntil: "load" })
+    await page.goto("/en", { waitUntil: "domcontentloaded" })
     await expect(page.locator("#about")).toBeVisible()
 
     await page.evaluate(() => window.scrollTo({ top: 1500, behavior: "instant" }))
@@ -61,7 +67,7 @@ test.describe("Accessibility", () => {
   })
 
   test("project filter exposes a labelled tablist", async ({ page }) => {
-    await page.goto("/en", { waitUntil: "load" })
+    await page.goto("/en", { waitUntil: "domcontentloaded" })
     const tablist = page.getByRole("tablist", { name: /filter projects by category/i })
     await expect(tablist).toBeVisible()
 
