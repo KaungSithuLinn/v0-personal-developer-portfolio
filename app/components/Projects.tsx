@@ -168,7 +168,7 @@ function ProjectsComponent() {
                 whileTap={shouldReduceMotion ? undefined : { scale: 0.97 }}
                 className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium border transition-colors duration-200 ${
                   isActive
-                    ? "bg-teal-500 text-white border-teal-500 dark:bg-teal-400 dark:text-slate-900 dark:border-teal-400"
+                    ? "bg-teal-700 text-white border-teal-700 dark:bg-teal-400 dark:text-slate-900 dark:border-teal-400"
                     : "bg-white/60 dark:bg-slate-800/60 text-slate-700 dark:text-slate-200 border-slate-300 dark:border-slate-600 hover:border-teal-500 dark:hover:border-teal-400"
                 }`}
               >

@@ -10,6 +10,10 @@
     "start": "next start",
     "test": "playwright test",
     "test:e2e": "playwright test",
+    "test:e2e:prod": "node scripts/test-prod.mjs",
+    "lighthouse": "node scripts/lighthouse.mjs",
+    "lighthouse:desktop": "lhci autorun --config=./lighthouserc.json",
+    "lighthouse:mobile": "lhci autorun --config=./lighthouserc.mobile.json",
     "type-check": "tsc --noEmit",
     "validate:translations": "node scripts/validate-translations.js"
   },
@@ -84,6 +88,7 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.12.1",
+    "@lhci/cli": "^0.14.0",
     "@next/bundle-analyzer": "^16.3.0",
     "@playwright/test": "^1.49.0",
     "@tailwindcss/postcss": "^4",

@@ -191,7 +191,7 @@ const ContactComponent = () => {
               <label htmlFor="message" className="block text-sm font-medium mb-2 dark:text-white">
                 {t("contact.form.message")}
               </label>
-              <div className="sr-only" aria-hidden="true">
+              <div aria-hidden="true">
                 <label htmlFor="website">Website</label>
                 <input
                   type="text"
@@ -199,6 +199,7 @@ const ContactComponent = () => {
                   name="website"
                   tabIndex={-1}
                   autoComplete="off"
+                  hidden
                 />
               </div>
               <textarea

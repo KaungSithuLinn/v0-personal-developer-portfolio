@@ -1,0 +1,38 @@
+name: E2E Resend contact (live)
+
+# Live contact-form smoke test. Triggers only on manual dispatch and on a
+# weekly schedule — never on push or PR — because each run sends a real
+# email and burns one slot of the per-IP rate limit.
+
+on:
+  workflow_dispatch:
+  schedule:
+    # 06:00 UTC Mondays — well outside business hours for the contact
+    # mailbox, and weekly cadence is enough for a smoke test.
+    - cron: "0 6 * * 1"
+
+permissions:
+  contents: read
+
+jobs:
+  contact-resend:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      E2E_CONTACT_LIVE: "1"
+      # The Resend API key is a fine-grained API key scoped to a
+      # "read-only" or "compliance" key, never the production sending
+      # key. Provided as a secret, never committed.
+      RESEND_TEST_API_KEY: ${{ secrets.RESEND_TEST_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+      - name: Install dependencies
+        run: npm ci
+      - name: Install Playwright browsers
+        run: npx --no-install playwright install --with-deps chromium
+      - name: Run live Resend smoke test
+        run: npx --no-install playwright test contact-resend.spec.ts --reporter=line

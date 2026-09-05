@@ -21,6 +21,11 @@ test.describe("Locale routing", () => {
     const contactSection = page.locator("#contact")
     await expect(contactSection).toBeVisible()
 
+    // The privacy-consent checkbox gates the submit button. Enable
+    // the form by checking it first; the test then exercises the
+    // native HTML5 required-field validation when submit is clicked.
+    await contactSection.locator('input[name="consent"]').check()
+
     const submitButton = contactSection.locator('button[type="submit"]')
     await submitButton.click()
 
