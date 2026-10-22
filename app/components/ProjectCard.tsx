@@ -5,6 +5,7 @@ import { useReducedMotion } from "framer-motion"
 import { ExternalLink, ChevronDown, ChevronUp } from "lucide-react"
 import { useState, useEffect, useCallback, type ReactElement, memo } from "react"
 import { useTranslation } from "@/context/language-utils"
+import Image from "next/image"
 
 interface ProjectProps {
   title: string
@@ -61,12 +62,15 @@ const ProjectCard = memo(function ProjectCard({ project, index }: { project: Pro
       className="card-glass rounded-xl shadow-lg hover:shadow-2xl hover:border-primary/30 transition-all duration-300 relative overflow-hidden"
     >
       {project.thumbnail && (
-        <div
-          className="w-full aspect-video bg-cover bg-center"
-          style={{ backgroundImage: `url(${project.thumbnail})` }}
-          role="img"
-          aria-label={`${project.title} thumbnail`}
-        />
+        <div className="w-full aspect-video relative overflow-hidden bg-muted">
+          <Image
+            src={project.thumbnail}
+            alt={`${project.title} thumbnail`}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="object-cover"
+          />
+        </div>
       )}
       <div className="p-8">
         <div className="flex flex-col md:flex-row gap-6">

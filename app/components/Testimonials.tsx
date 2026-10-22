@@ -27,7 +27,7 @@ const TestimonialsComponent = () => {
       name: "Michael Rodriguez",
       title: "CTO, SecureFinance",
       initials: "MR",
-      gradient: "from-blue-400 to-teal-500",
+          gradient: "from-chart-2 to-primary",
     },
     {
       quote:
@@ -35,7 +35,7 @@ const TestimonialsComponent = () => {
       name: "Priya Sharma",
       title: "IT Director, Global Connect",
       initials: "PS",
-      gradient: "from-cyan-400 to-blue-500",
+          gradient: "from-chart-2 to-primary",
     },
   ]
 
@@ -66,7 +66,7 @@ const TestimonialsComponent = () => {
               transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5 }}
               className="card-glass p-8 md:p-12 rounded-xl shadow-xl"
             >
-              <div className={`absolute -top-6 ${isRTL ? "right-10" : "left-10"} text-teal-500 dark:text-teal-400`}>
+              <div className={`absolute -top-6 ${isRTL ? "right-10" : "left-10"} text-primary dark:text-primary`}>
                 <Quote size={48} />
               </div>
 

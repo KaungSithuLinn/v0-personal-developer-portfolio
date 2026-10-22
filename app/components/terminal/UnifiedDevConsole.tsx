@@ -8,7 +8,6 @@ import { useMounted } from "@/lib/use-mounted"
 import { useTranslation } from "@/context/language-utils"
 import TerminalUI from "./TerminalUI"
 import SystemMonitor from "./SystemMonitor"
-import HexGrid from "./HexGrid"
 import FileExplorer from "./FileExplorer"
 import LanguageSelector from "@/components/LanguageSelector"
 
@@ -37,8 +36,6 @@ export default function UnifiedDevConsole(): ReactElement | null {
 
   return (
     <>
-      <HexGrid className="opacity-30" />
-
       <LanguageSelector />
 
       <motion.button

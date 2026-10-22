@@ -5,9 +5,10 @@ import { motion, useReducedMotion } from "framer-motion"
 import { ArrowUp } from "lucide-react"
 import { useTranslation } from "@/context/language-utils"
 import { memo } from "react"
+import ModeToggle from "@/components/mode-toggle"
 
 const FloatingNavComponent = () => {
-  const [activeSection, setActiveSection] = useState("hero")
+  const [activeSection, setActiveSection] = useState("home")
   const [scrollProgress, setScrollProgress] = useState(0)
   const [showBackToTop, setShowBackToTop] = useState(false)
   const { t, isRTL } = useTranslation()
@@ -15,7 +16,7 @@ const FloatingNavComponent = () => {
 
   const sections = useMemo(
     () => [
-      { id: "hero", label: t("nav.home") },
+      { id: "home", label: t("nav.home") },
       { id: "about", label: t("nav.about") },
       { id: "experience", label: t("nav.experience") },
       { id: "skills", label: t("nav.skills") },
@@ -74,7 +75,7 @@ const FloatingNavComponent = () => {
         animate={shouldReduceMotion ? { opacity: 1, x: 0 } : { opacity: 1, x: 0 }}
         transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.5 }}
       >
-        <div className="flex sm:flex-col gap-3 bg-gradient-to-r sm:bg-gradient-to-b from-slate-900/90 to-[#0a1628]/50 backdrop-blur-sm p-3 rounded-full border border-teal-500/30 shadow-lg shadow-teal-500/10">
+        <div className="flex sm:flex-col gap-3 bg-gradient-to-r sm:bg-gradient-to-b from-background/90 to-card/50 backdrop-blur-sm p-3 rounded-full border border-primary/30 shadow-lg shadow-primary/10">
           {sections.map(({ id, label }) => (
             <button
               key={id}
@@ -83,14 +84,14 @@ const FloatingNavComponent = () => {
               aria-label={t("nav.scrollTo", { section: label })}
               aria-current={activeSection === id ? "true" : undefined}
             >
-              <span className={`absolute ${isRTL ? "left-full ms-2" : "right-full me-2"} hidden sm:block px-2 py-1 rounded bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap`}>
+              <span                  className={`absolute ${isRTL ? "left-full ms-2" : "right-full me-2"} hidden sm:block px-2 py-1 rounded bg-background text-foreground text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap`}>
                 {label}
               </span>
               <div
                 className={`w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${
                   activeSection === id
-                    ? "bg-teal-500 dark:bg-teal-400 scale-125"
-                    : "bg-gray-400 dark:bg-gray-600 hover:scale-110"
+                    ? "bg-primary dark:bg-primary scale-125"
+                    : "bg-muted-foreground/30 dark:bg-muted-foreground/30 hover:bg-primary/60 dark:hover:bg-primary/60"
                 }`}
               />
             </button>
@@ -107,7 +108,7 @@ const FloatingNavComponent = () => {
         className="fixed top-0 left-0 right-0 h-1 z-[60] pointer-events-none"
       >
         <div
-          className="h-full bg-gradient-to-r from-teal-500 to-cyan-400 transition-[width] duration-150 ease-out"
+          className="h-full bg-gradient-to-r from-primary to-chart-2 transition-[width] duration-150 ease-out"
           style={{ width: `${scrollProgress}%` }}
         />
       </div>
@@ -123,10 +124,14 @@ const FloatingNavComponent = () => {
           pointerEvents: showBackToTop ? "auto" : "none",
         }}
         transition={{ duration: 0.2 }}
-        className={`fixed bottom-6 z-50 flex items-center justify-center w-11 h-11 rounded-full bg-teal-500 text-white shadow-lg shadow-teal-500/30 hover:bg-teal-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-400 ${isRTL ? "left-6" : "right-6"}`}
+        className={`fixed bottom-6 z-50 flex items-center justify-center w-11 h-11 rounded-full bg-primary text-primary-foreground shadow-lg shadow-primary/30 hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring ${isRTL ? "left-6" : "right-6"}`}
       >
         <ArrowUp className="w-5 h-5" aria-hidden="true" />
       </motion.button>
+
+      <div className={`fixed bottom-6 z-50 ${isRTL ? "left-6" : "right-6"}`} style={{ marginTop: "3rem" }}>
+        <ModeToggle />
+      </div>
     </>
   )
 }

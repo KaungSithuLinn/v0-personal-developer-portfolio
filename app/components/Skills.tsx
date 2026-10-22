@@ -13,42 +13,42 @@ const SkillsComponent = () => {
 
   const skills = [
     {
-      icon: <Code className="w-8 h-8 text-teal-600 dark:text-teal-400" />,
+      icon: <Code className="w-8 h-8 text-primary" />,
       title: t("skills.frontend"),
       description: t("skills.frontend.desc"),
     },
     {
-      icon: <Server className="w-8 h-8 text-teal-600 dark:text-teal-400" />,
+      icon: <Server className="w-8 h-8 text-primary" />,
       title: t("skills.backend"),
       description: t("skills.backend.desc"),
     },
     {
-      icon: <Database className="w-8 h-8 text-teal-600 dark:text-teal-400" />,
+      icon: <Database className="w-8 h-8 text-primary" />,
       title: t("skills.database"),
       description: t("skills.database.desc"),
     },
     {
-      icon: <Brain className="w-8 h-8 text-teal-600 dark:text-teal-400" />,
+      icon: <Brain className="w-8 h-8 text-primary" />,
       title: t("skills.ml"),
       description: t("skills.ml.desc"),
     },
     {
-      icon: <Globe className="w-8 h-8 text-teal-600 dark:text-teal-400" />,
+      icon: <Globe className="w-8 h-8 text-primary" />,
       title: t("skills.multilingual"),
       description: t("skills.multilingual.desc"),
     },
     {
-      icon: <MessageSquare className="w-8 h-8 text-teal-600 dark:text-teal-400" />,
+      icon: <MessageSquare className="w-8 h-8 text-primary" />,
       title: t("skills.communication"),
       description: t("skills.communication.desc"),
     },
     {
-      icon: <Settings className="w-8 h-8 text-teal-600 dark:text-teal-400" />,
+      icon: <Settings className="w-8 h-8 text-primary" />,
       title: t("skills.optimization"),
       description: t("skills.optimization.desc"),
     },
     {
-      icon: <Search className="w-8 h-8 text-teal-600 dark:text-teal-400" />,
+      icon: <Search className="w-8 h-8 text-primary" />,
       title: t("skills.research"),
       description: t("skills.research.desc"),
     },
@@ -96,7 +96,7 @@ const SkillsComponent = () => {
           transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5 }}
         >
           <h3 className="text-2xl font-semibold mb-6 dark:text-white flex items-center">
-            <Zap className="w-6 h-6 me-2 text-teal-500" />
+            <Zap className="w-6 h-6 me-2 text-primary" />
             {t("skills.programming")}
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -107,7 +107,7 @@ const SkillsComponent = () => {
                   <div key={idx} className="flex items-center">
                     <div className="w-full bg-muted rounded-full h-2.5 me-2" role="progressbar" aria-valuenow={parseInt(`${85 - idx * 5}`)} aria-valuemin={0} aria-valuemax={100} aria-label={`${tech} proficiency`}>
                     <motion.div
-                        className="bg-teal-400 dark:bg-teal-500 h-2.5 rounded-full"
+                        className="bg-primary dark:bg-primary h-2.5 rounded-full"
                         initial={shouldReduceMotion ? { width: `${85 - idx * 5}%` } : { width: 0 }}
                         animate={shouldReduceMotion ? { width: `${85 - idx * 5}%` } : { width: `${85 - idx * 5}%` }}
                         transition={shouldReduceMotion ? { duration: 0 } : { duration: 1, delay: idx * 0.1 }}
@@ -126,7 +126,7 @@ const SkillsComponent = () => {
                   <div key={idx} className="flex items-center">
                     <div className="w-full bg-muted rounded-full h-2.5 me-2" role="progressbar" aria-valuenow={parseInt(`${80 - idx * 5}`)} aria-valuemin={0} aria-valuemax={100} aria-label={`${tech} proficiency`}>
                     <motion.div
-                        className="bg-teal-400 dark:bg-teal-500 h-2.5 rounded-full"
+                        className="bg-primary dark:bg-primary h-2.5 rounded-full"
                         initial={shouldReduceMotion ? { width: `${80 - idx * 5}%` } : { width: 0 }}
                         animate={shouldReduceMotion ? { width: `${80 - idx * 5}%` } : { width: `${80 - idx * 5}%` }}
                         transition={shouldReduceMotion ? { duration: 0 } : { duration: 1, delay: idx * 0.1 }}
@@ -145,7 +145,7 @@ const SkillsComponent = () => {
                   <div key={idx} className="flex items-center">
                     <div className="w-full bg-muted rounded-full h-2.5 me-2" role="progressbar" aria-valuenow={parseInt(`${85 - idx * 7}`)} aria-valuemin={0} aria-valuemax={100} aria-label={`${tech} proficiency`}>
                     <motion.div
-                        className="bg-teal-400 dark:bg-teal-500 h-2.5 rounded-full"
+                        className="bg-primary dark:bg-primary h-2.5 rounded-full"
                         initial={shouldReduceMotion ? { width: `${85 - idx * 7}%` } : { width: 0 }}
                         animate={shouldReduceMotion ? { width: `${85 - idx * 7}%` } : { width: `${85 - idx * 7}%` }}
                         transition={shouldReduceMotion ? { duration: 0 } : { duration: 1, delay: idx * 0.1 }}

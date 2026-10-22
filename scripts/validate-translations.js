@@ -4,7 +4,7 @@ const path = require('path')
 const translationsDir = path.join(__dirname, '..', 'context', 'translations')
 const files = fs.readdirSync(translationsDir).filter(f => f.endsWith('.ts') && f !== 'index.ts')
 
-const locales = ['en', 'zh', 'ms', 'ta', 'ar']
+const locales = ['en', 'zh', 'ms']
 
 function extractLocaleObject(content, locale) {
   const marker = new RegExp(`\\n\\s*${locale}\\s*:\\s*\\{`).exec(content)

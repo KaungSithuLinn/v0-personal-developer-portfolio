@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, type ReactNode } from "react"
+import { useState, useEffect, useCallback, useMemo, type ReactNode } from "react"
 import {
   LanguageContext,
   defaultTranslate,
@@ -24,17 +24,21 @@ export function LanguageProvider({ children, initialLocale }: LanguageProviderPr
     (initialLocale as Language) || DEFAULT_LANGUAGE
   )
   const [isTransitioning, setIsTransitioning] = useState(false)
-  
-  // Calculate isRTL based on current language using the server-compatible function
-  const isRTLValue = isRTL(language)
 
-  const t = (key: TranslationKey, params?: Record<string, string | number>) => {
-    return defaultTranslate(key, language, params)
-  }
+  const isRTLValue = useMemo(() => isRTL(language), [language])
 
-  const getDirection = () => isRTLValue ? "rtl" : "ltr"
+  const t = useCallback(
+    (key: TranslationKey, params?: Record<string, string | number>) =>
+      defaultTranslate(key, language, params),
+    [language],
+  )
 
-  const languageName = (code: Language): string => LANGUAGE_NAMES[code] || code
+  const getDirection = useCallback(() => (isRTL(language) ? "rtl" : "ltr"), [language])
+
+  const languageName = useCallback(
+    (code: Language) => LANGUAGE_NAMES[code] || code,
+    [],
+  )
 
   useEffect(() => {
     const savedLanguage = localStorage.getItem("language") as Language | null
@@ -43,25 +47,34 @@ export function LanguageProvider({ children, initialLocale }: LanguageProviderPr
     }
   }, [])
 
-  const handleLanguageChange = (newLanguage: Language) => {
+  useEffect(() => {
+    if (typeof document !== "undefined") {
+      document.documentElement.lang = language
+      document.documentElement.dir = isRTLValue ? "rtl" : "ltr"
+    }
+  }, [language, isRTLValue])
+
+  const handleLanguageChange = useCallback((newLanguage: Language) => {
     if (newLanguage === language) return
-    
+
     setIsTransitioning(true)
     setLanguage(newLanguage)
     localStorage.setItem("language", newLanguage)
     setTimeout(() => setIsTransitioning(false), 300)
-  }
+  }, [language])
 
-  // Always provide context values even during SSR
-  const contextValue = {
-    language,
-    setLanguage: handleLanguageChange,
-    t,
-    getDirection,
-    isRTL: isRTLValue,
-    isTransitioning,
-    languageName,
-  }
+  const contextValue = useMemo(
+    () => ({
+      language,
+      setLanguage: handleLanguageChange,
+      t,
+      getDirection,
+      isRTL: isRTLValue,
+      isTransitioning,
+      languageName,
+    }),
+    [language, handleLanguageChange, t, getDirection, isRTLValue, isTransitioning, languageName],
+  )
 
   return (
     <LanguageContext.Provider value={contextValue}>

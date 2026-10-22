@@ -13,32 +13,32 @@ const AboutComponent = () => {
 
   const skills = [
     {
-      icon: <Code className="w-8 h-8 text-teal-600 dark:text-teal-400" />,
+      icon: <Code className="w-8 h-8 text-primary" />,
       title: t("about.skills.frontend.title"),
       description: t("about.skills.frontend.description"),
     },
     {
-      icon: <Server className="w-8 h-8 text-teal-600 dark:text-teal-400" />,
+      icon: <Server className="w-8 h-8 text-primary" />,
       title: t("about.skills.backend.title"),
       description: t("about.skills.backend.description"),
     },
     {
-      icon: <Database className="w-8 h-8 text-teal-600 dark:text-teal-400" />,
+      icon: <Database className="w-8 h-8 text-primary" />,
       title: t("about.skills.database.title"),
       description: t("about.skills.database.description"),
     },
     {
-      icon: <Brain className="w-8 h-8 text-teal-600 dark:text-teal-400" />,
+      icon: <Brain className="w-8 h-8 text-primary" />,
       title: t("about.skills.ai.title"),
       description: t("about.skills.ai.description"),
     },
     {
-      icon: <TrendingUp className="w-8 h-8 text-teal-600 dark:text-teal-400" />,
+      icon: <TrendingUp className="w-8 h-8 text-primary" />,
       title: t("about.skills.marketing.title"),
       description: t("about.skills.marketing.description"),
     },
     {
-      icon: <Globe className="w-8 h-8 text-teal-600 dark:text-teal-400" />,
+      icon: <Globe className="w-8 h-8 text-primary" />,
       title: t("about.skills.languages.title"),
       description: t("about.skills.languages.description"),
     },
@@ -62,7 +62,7 @@ const AboutComponent = () => {
   return (
     <section
       id="about"
-      className="py-20 bg-gradient-to-br from-slate-50 to-white dark:from-background dark:to-[#0a1628] transition-colors duration-300 overflow-hidden relative"
+      className="py-20 bg-gradient-to-br from-background to-card dark:from-background dark:to-card transition-colors duration-300 overflow-hidden relative"
     >
       <div className="absolute inset-0 glow-teal opacity-30" aria-hidden="true" />
       <div className={`absolute bottom-0 ${isRTL ? "left-0" : "right-0"} w-64 h-64 -mb-32 ${isRTL ? "-ml-32" : "-mr-32"} glow-navy opacity-40`} aria-hidden="true" />

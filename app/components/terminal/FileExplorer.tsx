@@ -21,29 +21,29 @@ const fileSystem: FileItem[] = [
   {
     name: "Projects",
     type: "folder",
-    icon: <Folder className="text-teal-400" size={18} />,
+    icon: <Folder className="text-primary" size={18} />,
     children: [
       {
         name: "Mouse Dynamics Fraud Detection",
         type: "folder",
-        icon: <Folder className="text-teal-400" size={18} />,
+        icon: <Folder className="text-primary" size={18} />,
         children: [
           {
             name: "main.py",
             type: "file",
-            icon: <Code className="text-teal-400" size={18} />,
+            icon: <Code className="text-primary" size={18} />,
             description: "Main Python script for the fraud detection system",
           },
           {
             name: "model.h5",
             type: "file",
-            icon: <Database className="text-teal-500" size={18} />,
+            icon: <Database className="text-primary" size={18} />,
             description: "Trained machine learning model",
           },
           {
             name: "README.md",
             type: "file",
-            icon: <FileText className="text-teal-400" size={18} />,
+            icon: <FileText className="text-primary" size={18} />,
             description: "Project documentation",
           },
         ],
@@ -51,18 +51,18 @@ const fileSystem: FileItem[] = [
       {
         name: "Continuous Authentication",
         type: "folder",
-        icon: <Folder className="text-teal-400" size={18} />,
+        icon: <Folder className="text-primary" size={18} />,
         children: [
           {
             name: "auth_system.py",
             type: "file",
-            icon: <Code className="text-teal-400" size={18} />,
+            icon: <Code className="text-primary" size={18} />,
             description: "Authentication system implementation",
           },
           {
             name: "research_paper.pdf",
             type: "file",
-            icon: <FileText className="text-teal-500" size={18} />,
+            icon: <FileText className="text-primary" size={18} />,
             description: "Research paper on behavioral biometrics",
           },
         ],
@@ -72,18 +72,18 @@ const fileSystem: FileItem[] = [
   {
     name: "Resume",
     type: "folder",
-    icon: <Folder className="text-teal-400" size={18} />,
+    icon: <Folder className="text-primary" size={18} />,
     children: [
       {
         name: "KaungSithuLinn_Resume.pdf",
         type: "file",
-        icon: <FileText className="text-teal-500" size={18} />,
+        icon: <FileText className="text-primary" size={18} />,
         description: "Current professional resume",
       },
       {
         name: "profile_photo.jpg",
         type: "file",
-        icon: <ImageIcon className="text-teal-400" size={18} />,
+        icon: <ImageIcon className="text-primary" size={18} />,
         description: "Professional headshot",
       },
     ],
@@ -91,18 +91,18 @@ const fileSystem: FileItem[] = [
   {
     name: "Certificates",
     type: "folder",
-    icon: <Folder className="text-teal-400" size={18} />,
+    icon: <Folder className="text-primary" size={18} />,
     children: [
       {
         name: "Bachelor_of_IT.pdf",
         type: "file",
-        icon: <FileText className="text-teal-500" size={18} />,
+        icon: <FileText className="text-primary" size={18} />,
         description: "Bachelor of Information Technology degree certificate",
       },
       {
         name: "Google_Digital_Marketing.pdf",
         type: "file",
-        icon: <FileText className="text-teal-500" size={18} />,
+        icon: <FileText className="text-primary" size={18} />,
         description: "Google Digital Marketing certification",
       },
     ],
@@ -183,9 +183,9 @@ export default function FileExplorer(): ReactElement | null {
     <motion.div
       initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
       animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1 }}
-      className="bg-gradient-to-br from-slate-900/90 to-[#0a1628]/50 backdrop-blur-sm border border-teal-500/30 rounded-lg p-4 shadow-lg shadow-teal-500/10 h-full overflow-y-auto"
+       className="bg-gradient-to-br from-background/90 to-card/50 backdrop-blur-sm border border-primary/30 rounded-lg p-4 shadow-lg shadow-primary/10 h-full overflow-y-auto"
     >
-      <h3 className="text-teal-400 font-mono text-lg border-b border-teal-500/30 pb-2 mb-4">
+      <h3 className="text-primary font-mono text-lg border-b border-primary/30 pb-2 mb-4">
         {t("fileExplorer.title")}
       </h3>
       <div className="space-y-1">

@@ -48,7 +48,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
     <div dir={direction}>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd).replace(/</g, "\\u003c").replace(/>/g, "\\u003e").replace(/&/g, "\\u0026") }}
       />
       <MainContent />
     </div>

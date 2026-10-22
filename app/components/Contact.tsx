@@ -255,7 +255,7 @@ const ContactComponent = () => {
                 <motion.p
                   initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
                   animate={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
-                  className="text-teal-600 dark:text-teal-400 text-center"
+                  className="text-primary text-center"
                 >
                   {t("contact.form.success")}
                 </motion.p>

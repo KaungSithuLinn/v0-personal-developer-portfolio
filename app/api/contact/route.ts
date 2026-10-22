@@ -15,9 +15,14 @@ const RATE_LIMIT_MAX = 3
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>()
 
 function getClientIp(request: Request): string {
-  const forwarded = request.headers.get('x-forwarded-for')
+  const vercelIp = request.headers.get('x-vercel-forwarded-for')
+  if (vercelIp) return vercelIp.split(',')[0]?.trim() || 'unknown'
+
   const realIp = request.headers.get('x-real-ip')
-  return forwarded?.split(',')[0]?.trim() || realIp || 'unknown'
+  if (realIp) return realIp.trim()
+
+  const forwarded = request.headers.get('x-forwarded-for')
+  return forwarded?.split(',')[0]?.trim() || 'unknown'
 }
 
 function checkRateLimit(ip: string): { allowed: boolean; remaining: number } {

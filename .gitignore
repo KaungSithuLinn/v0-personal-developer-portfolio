@@ -37,6 +37,9 @@ next-env.d.ts
 # Kilo agent artifacts
 .kil/plans/
 
-# Playwright artifacts
+# Review artifacts
+.playwright-mcp/
+.codacy/
 test-results/
 playwright-report/
+.kilo/plans/

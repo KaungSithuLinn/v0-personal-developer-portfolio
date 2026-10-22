@@ -42,8 +42,8 @@ const ExperienceComponent = () => {
       <div className="container mx-auto px-6 relative z-10">
         <AnimatedSectionHeader title={t("experience.title")} />
         <div className="relative">
-          <div className="hidden md:block absolute top-8 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-teal-500/30 to-transparent" aria-hidden="true" />
-          <div className="hidden md:block absolute top-8 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-teal-500 shadow-lg shadow-teal-500/50 z-10" aria-hidden="true" />
+          <div className="hidden md:block absolute top-8 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-primary/30 to-transparent" aria-hidden="true" />
+          <div className="hidden md:block absolute top-8 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-primary shadow-lg shadow-primary/50 z-10" aria-hidden="true" />
           <motion.div
             className="space-y-12 md:space-y-0"
             initial={shouldReduceMotion ? { opacity: 1 } : "hidden"}

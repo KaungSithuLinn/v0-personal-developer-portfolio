@@ -39,7 +39,7 @@ function ProjectsComponent() {
         link: "https://drive.google.com/drive/folders/1JKdj1e25EfPqS-CrV7MjFFVXa8l-GItE",
         github: undefined,
         category: "security",
-        icon: <Shield className="w-10 h-10 text-teal-600 dark:text-teal-400" />,
+        icon: <Shield className="w-10 h-10 text-primary" />,
         description:
           "Developed a machine learning model to detect fraudulent behavior during online assessments using mouse dynamics as a behavioral biometric.",
         achievements: [
@@ -64,7 +64,7 @@ function ProjectsComponent() {
         link: "https://drive.google.com/drive/folders/1SKbM027E4zU-2a9kLFBKcUMcd9hGhhJ",
         github: undefined,
         category: "ml",
-        icon: <Brain className="w-10 h-10 text-teal-600 dark:text-teal-400" />,
+        icon: <Brain className="w-10 h-10 text-primary" />,
         description:
           "Developed a fraud detection system using mouse dynamics and deep learning to enhance the security of online assessments.",
         achievements: [
@@ -99,7 +99,7 @@ function ProjectsComponent() {
         link: "https://drive.google.com/drive/folders/1JKdj1e25EfPqS-CrV7MjFFVXa8l-GItE",
         github: undefined,
         category: "research",
-        icon: <LineChart className="w-10 h-10 text-teal-600 dark:text-teal-400" />,
+        icon: <LineChart className="w-10 h-10 text-primary" />,
         description:
           "Conducted a literature review on the use of behavioral biometrics, specifically mouse dynamics and keystroke analysis, for continuous user authentication.",
         achievements: [
@@ -143,7 +143,7 @@ function ProjectsComponent() {
   return (
     <section
       id="projects"
-      className="py-20 bg-gradient-to-br from-slate-50 to-white dark:from-background dark:to-[#0a1628] transition-colors duration-300 overflow-hidden relative"
+      className="py-20 bg-gradient-to-br from-background to-card dark:from-background dark:to-card transition-colors duration-300 overflow-hidden relative"
     >
       <div className="absolute inset-0 glow-teal opacity-20" aria-hidden="true" />
       <div className={`absolute top-0 ${isRTL ? "right-0" : "left-0"} w-64 h-64 -mt-32 ${isRTL ? "-mr-32" : "-ml-32"} glow-navy opacity-40`} aria-hidden="true" />
@@ -168,8 +168,8 @@ function ProjectsComponent() {
                 whileTap={shouldReduceMotion ? undefined : { scale: 0.97 }}
                 className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium border transition-colors duration-200 ${
                   isActive
-                    ? "bg-teal-700 text-white border-teal-700 dark:bg-teal-400 dark:text-slate-900 dark:border-teal-400"
-                    : "bg-white/60 dark:bg-slate-800/60 text-slate-700 dark:text-slate-200 border-slate-300 dark:border-slate-600 hover:border-teal-500 dark:hover:border-teal-400"
+                    ? "bg-primary text-primary-foreground border-primary dark:bg-primary dark:text-background dark:border-primary"
+                    : "bg-card/60 dark:bg-card/60 text-card-foreground dark:text-card-foreground border-border dark:border-border hover:border-primary dark:hover:border-primary"
                 }`}
               >
                 {filter.icon}

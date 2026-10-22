@@ -6,7 +6,6 @@ export * from "./Contact"
 export * from "./Education"
 export * from "./Experience"
 export * from "./Hero"
-export * from "./Header"
 export * from "./Logo"
 export * from "./Projects"
 

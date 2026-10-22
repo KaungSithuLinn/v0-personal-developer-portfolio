@@ -1,46 +1,59 @@
 "use client"
 
 import { useState, useCallback, useEffect } from "react"
-import { generateText, type LanguageModel } from "ai"
-import { groq } from "@ai-sdk/groq"
-import type { FormEvent, ReactNode } from "react"
+import type { FormEvent } from "react"
 import { useTranslation } from "@/context/language-utils"
 
 type CommandHistory = {
   command: string
-  output: string | ReactNode
+  output: string
   isProcessing?: boolean
-  type?: "text" | "jsx"
 }
 
-const COMMAND_OUTPUTS = {
+const COMMAND_OUTPUTS: Record<string, { type: "text"; content: string }> = {
   help: {
-    type: "jsx" as const,
-    content: "help-content",
+    type: "text",
+    content:
+      "Available commands:\n" +
+      "  about       - Learn more about Kaung Sithu Linn\n" +
+      "  skills      - View technical skills and proficiencies\n" +
+      "  projects    - Browse featured projects\n" +
+      "  experience  - See work experience history\n" +
+      "  education   - View education and certifications\n" +
+      "  contact     - Get contact information\n" +
+      "  clear       - Clear terminal output\n" +
+      "  help        - Show this help message\n" +
+      "  exit        - Exit terminal mode",
   },
   about: {
-    type: "jsx" as const,
-    content: "about-content",
+    type: "text",
+    content:
+      "Kaung Sithu Linn is a Software Developer specializing in POS systems, fraud detection, and behavioral biometrics with 4+ years of experience building production-grade full-stack applications.",
   },
   skills: {
-    type: "jsx" as const,
-    content: "skills-content",
+    type: "text",
+    content:
+      "Core technologies: TypeScript, React, Next.js, Node.js, Python, PostgreSQL, Redis. Specialties: fraud detection systems, behavioral biometrics, POS integrations, real-time data pipelines.",
   },
   projects: {
-    type: "jsx" as const,
-    content: "projects-content",
+    type: "text",
+    content:
+      "Featured projects include fraud detection dashboards, POS integrations, biometric authentication systems, and full-stack portfolio platforms. See the Projects section above for details.",
   },
   contact: {
-    type: "jsx" as const,
-    content: "contact-content",
+    type: "text",
+    content:
+      "Email: kaungthu.sithu97@gmail.com\nGitHub: github.com/kaungthu97\nLinkedIn: linkedin.com/in/kaung-sithu-linn",
   },
   experience: {
-    type: "jsx" as const,
-    content: "experience-content",
+    type: "text",
+    content:
+      "4+ years in software development. Focused on POS systems, fraud detection, and behavioral biometrics. Built production-grade full-stack applications with React, Node.js, and Python.",
   },
   education: {
-    type: "jsx" as const,
-    content: "education-content",
+    type: "text",
+    content:
+      "Computer Science background with focus on software engineering, data security, and applied machine learning. Continuous learner with certifications in cloud and security domains.",
   },
 }
 
@@ -51,20 +64,16 @@ export function useTerminal() {
   const { t, language } = useTranslation()
 
   useEffect(() => {
-    const INITIAL_MESSAGES: CommandHistory[] = [
+    setHistory([
       {
         command: "system",
         output: t("terminal.title") + " v1.0.0",
-        type: "text",
       },
       {
         command: "system",
         output: t("terminal.welcome"),
-        type: "text",
       },
-    ]
-
-    setHistory(INITIAL_MESSAGES)
+    ])
   }, [language, t])
 
   const processCommand = useCallback(
@@ -72,66 +81,94 @@ export function useTerminal() {
       setIsProcessing(true)
       setHistory((prev) => [...prev, { command, output: "", isProcessing: true }])
 
-      let output: string | ReactNode = ""
-      let outputType: "text" | "jsx" = "text"
-
       const lowerCommand = command.toLowerCase()
 
-      if (COMMAND_OUTPUTS[lowerCommand as keyof typeof COMMAND_OUTPUTS]) {
-        const commandOutput = COMMAND_OUTPUTS[lowerCommand as keyof typeof COMMAND_OUTPUTS]
-        output = commandOutput.content
-        outputType = commandOutput.type
-      } else if (lowerCommand === "clear") {
+      if (COMMAND_OUTPUTS[lowerCommand]) {
+        const { content } = COMMAND_OUTPUTS[lowerCommand]
+        setHistory((prev) => {
+          const newHistory = [...prev]
+          const lastIndex = newHistory.length - 1
+          newHistory[lastIndex] = {
+            command,
+            output: content,
+            isProcessing: false,
+          }
+          return newHistory
+        })
+        setIsProcessing(false)
+        return
+      }
+
+      if (lowerCommand === "clear") {
         setHistory([
           {
             command: "system",
             output: t("terminal.title") + " v1.0.0",
-            type: "text",
           },
           {
             command: "system",
             output: t("terminal.welcome"),
-            type: "text",
           },
         ])
         setIsProcessing(false)
         return
-      } else if (lowerCommand === "exit") {
-        output = "Exiting terminal mode..."
-        outputType = "text"
-      } else {
-        try {
-          const response = await generateText({
-            model: groq("llama3-70b-8192") as unknown as LanguageModel,
-            prompt: `You are an AI assistant embedded in Kaung Sithu Linn's portfolio website. 
-            The portfolio is for a Software Developer specializing in POS systems, fraud detection, and behavioral biometrics with 4+ years of experience.
-            
-            User query: ${command}
-            
-            Provide a helpful, concise response in 2-3 sentences maximum. If the query is not related to Kaung's portfolio or professional background, politely suggest using the built-in commands like 'help', 'about', 'skills', etc.`,
-            maxOutputTokens: 200,
-          })
-          output = response.text
-          outputType = "text"
-        } catch (error) {
-          console.error("Error generating AI response:", error)
-          output = "Sorry, I couldn't process that request. Please try again or type 'help' for available commands."
-          outputType = "text"
-        }
       }
 
-      setHistory((prev) => {
-        const newHistory = [...prev]
-        const lastIndex = newHistory.length - 1
-        newHistory[lastIndex] = {
-          command,
-          output,
-          isProcessing: false,
-          type: outputType,
+      if (lowerCommand === "exit") {
+        setHistory((prev) => {
+          const newHistory = [...prev]
+          const lastIndex = newHistory.length - 1
+          newHistory[lastIndex] = {
+            command,
+            output: "Exiting terminal mode...",
+            isProcessing: false,
+          }
+          return newHistory
+        })
+        setIsProcessing(false)
+        return
+      }
+
+      // Fallback: AI assistant
+      try {
+        const response = await fetch("/api/terminal", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ command }),
+        })
+
+        if (!response.ok) {
+          throw new Error(`Server error: ${response.status}`)
         }
-        return newHistory
-      })
-      setIsProcessing(false)
+
+        const data = (await response.json()) as { response?: string; error?: string }
+        const output = data.response || data.error || "Sorry, I couldn't process that request."
+
+        setHistory((prev) => {
+          const newHistory = [...prev]
+          const lastIndex = newHistory.length - 1
+          newHistory[lastIndex] = {
+            command,
+            output,
+            isProcessing: false,
+          }
+          return newHistory
+        })
+      } catch (error) {
+        console.error("Error generating AI response:", error)
+        setHistory((prev) => {
+          const newHistory = [...prev]
+          const lastIndex = newHistory.length - 1
+          newHistory[lastIndex] = {
+            command,
+            output: "Sorry, I couldn't process that request. Please try again or type 'help' for available commands.",
+            isProcessing: false,
+          }
+          return newHistory
+        })
+      } finally {
+        setIsProcessing(false)
+      }
     },
     [t],
   )
@@ -152,12 +189,10 @@ export function useTerminal() {
       {
         command: "system",
         output: t("terminal.title") + " v1.0.0",
-        type: "text",
       },
       {
         command: "system",
         output: t("terminal.welcome"),
-        type: "text",
       },
     ])
   }, [t])

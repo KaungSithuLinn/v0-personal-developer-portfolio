@@ -120,7 +120,7 @@ const HeroComponent = () => {
                   />
                 </div>
               </div>
-              <div className="absolute -inset-3 rounded-3xl border-2 border-teal-500/20 dark:border-teal-400/20 -z-10" />
+              <div className="absolute -inset-3 rounded-3xl border-2 border-primary/20 dark:border-primary/20 -z-10" />
             </div>
           </motion.div>
         </div>

@@ -89,7 +89,7 @@ const EducationComponent = () => {
   return (
     <section
       id="education"
-      className="py-20 bg-gradient-to-br from-slate-50 to-white dark:from-background dark:to-[#0a1628] transition-colors duration-300 overflow-hidden relative"
+      className="py-20 bg-gradient-to-br from-background to-card dark:from-background dark:to-card transition-colors duration-300 overflow-hidden relative"
     >
       <div className="absolute inset-0 glow-navy opacity-30" aria-hidden="true" />
       <div className={`absolute top-0 ${isRTL ? "right-0" : "left-0"} w-64 h-64 -mt-32 ${isRTL ? "-mr-32" : "-ml-32"} glow-teal opacity-40`} aria-hidden="true" />

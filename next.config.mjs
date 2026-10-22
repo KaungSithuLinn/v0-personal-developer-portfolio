@@ -5,8 +5,19 @@ import bundleAnalyzer from "@next/bundle-analyzer"
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ["v0.blob.com", "hebbkx1anhila5yf.public.blob.vercel-storage.com"],
-    unoptimized: process.env.NODE_ENV === 'development',
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "v0.blob.com",
+      },
+      {
+        protocol: "https",
+        hostname: "hebbkx1anhila5yf.public.blob.vercel-storage.com",
+      },
+    ],
+    unoptimized: process.env.NODE_ENV === "development",
+    formats: ["image/avif", "image/webp"],
+    minimumCacheTTL: 60 * 60 * 24 * 30,
   },
   compiler: {
     removeConsole: process.env.NODE_ENV === "production",
@@ -48,7 +59,12 @@ const nextConfig = {
           },
           {
             key: "X-XSS-Protection",
-            value: "1; mode=block",
+            value: "0",
+          },
+          {
+            key: "Content-Security-Policy",
+            value:
+              "default-src 'self'; base-uri 'self'; frame-ancestors 'none'; object-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://v0.blob.com https://hebbkx1anhila5yf.public.blob.vercel-storage.com; font-src 'self' data:; connect-src 'self'; form-action 'self'; upgrade-insecure-requests",
           },
           {
             key: "Strict-Transport-Security",

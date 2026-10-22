@@ -1,52 +1,15 @@
 import { Metadata } from "next"
-import { ThemeProvider } from "@/components/theme-provider"
 import { LanguageProvider } from "@/context/language-provider"
 import { RTLProvider } from "@/context/rtl-provider"
-import { Inter, Noto_Sans_SC, Noto_Sans_Arabic, Noto_Sans_Tamil } from "next/font/google"
 import { type Language } from "@/context/language-utils"
 import { i18n } from "@/config/language.config"
-import { isRTL } from "@/lib/rtl-utils"
 import UnifiedDevConsole from "../components/terminal/UnifiedDevConsole"
-import "../globals.css"
 
-// Load fonts with proper subsets and weights
-const inter = Inter({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-inter",
-})
-
-const notoSansArabic = Noto_Sans_Arabic({
-  subsets: ["arabic"],
-  display: "swap",
-  variable: "--font-noto-arabic",
-  preload: true,
-  adjustFontFallback: true,
-})
-
-const notoSansSC = Noto_Sans_SC({
-  subsets: ["latin"],
-  weight: ["400", "500", "700"],
-  display: "swap",
-  variable: "--font-noto-sc",
-  preload: true,
-})
-
-const notoSansTamil = Noto_Sans_Tamil({
-  subsets: ["tamil"],
-  weight: ["400", "500", "700"],
-  display: "swap",
-  variable: "--font-noto-tamil",
-  preload: true,
-  adjustFontFallback: true,
-})
-
-// Generate metadata for each locale
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params
   const localeLang = locale as Language
   return {
-    title: `Kaung Sithu Linn - ${localeLang === 'en' ? 'Software Developer Portfolio' : 'Portfolio'}`,
+    title: `Kaung Sithu Linn - ${localeLang === "en" ? "Software Developer Portfolio" : "Portfolio"}`,
     description: "Personal portfolio website of Kaung Sithu Linn, a software developer specializing in full-stack development, fraud detection, and behavioral biometrics.",
     openGraph: {
       title: "Kaung Sithu Linn - Software Developer Portfolio",
@@ -56,19 +19,9 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       url: "https://v0-personal-developer-portfolio-psi-blush.vercel.app",
       siteName: "Kaung Sithu Linn Portfolio",
     },
-    twitter: {
-      card: "summary_large_image",
-      title: "Kaung Sithu Linn - Software Developer Portfolio",
-      description: "Software developer specializing in full-stack development, fraud detection, and behavioral biometrics.",
-    },
-    other: {
-      "profile:first_name": "Kaung Sithu",
-      "profile:last_name": "Linn",
-    },
   }
 }
 
-// Generate static params for all supported locales
 export function generateStaticParams(): { locale: Language }[] {
   return i18n.locales.map((locale) => ({ locale }))
 }
@@ -82,37 +35,16 @@ export default async function LocaleLayout({
 }) {
   const { locale } = await params
   const localeLang = locale as Language
-  // Pre-calculate RTL state for initial render using server-compatible function
-  const defaultRTL = isRTL(localeLang)
 
   return (
-      <html
-        lang={localeLang}
-        dir={defaultRTL ? "rtl" : "ltr"}
-        suppressHydrationWarning
-        className={`${inter.variable} ${notoSansArabic.variable} ${notoSansSC.variable} ${notoSansTamil.variable}`}
-      >
-      <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="dir" content={defaultRTL ? "rtl" : "ltr"} />
-        <link rel="icon" href="/icon.svg" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-      </head>
-      <body>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
-          <LanguageProvider initialLocale={localeLang}>
-            <RTLProvider defaultRTL={defaultRTL}>
-              <a href="#main-content" className="skip-link">Skip to main content</a>
-              {children}
-              <UnifiedDevConsole />
-              <footer role="contentinfo" className="sr-only">
-                <p>Kaung Sithu Linn Portfolio</p>
-              </footer>
-            </RTLProvider>
-          </LanguageProvider>
-        </ThemeProvider>
-      </body>
-    </html>
+    <LanguageProvider initialLocale={localeLang}>
+      <RTLProvider>
+        <a href="#main-content" className="skip-link">
+          Skip to main content
+        </a>
+        {children}
+        <UnifiedDevConsole />
+      </RTLProvider>
+    </LanguageProvider>
   )
 }
