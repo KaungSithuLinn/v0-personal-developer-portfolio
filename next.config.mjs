@@ -25,7 +25,7 @@ const nextConfig = {
     removeConsole: process.env.NODE_ENV === "production",
   },
   experimental: {
-    optimizeCss: true,
+    // optimizeCss disabled to avoid production CSS loading issues
   },
   // Audit P2-13: critical CSS extraction config
   // Handle static files and avoid redirect loops
