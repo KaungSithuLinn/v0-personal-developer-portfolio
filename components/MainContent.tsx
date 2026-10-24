@@ -12,12 +12,14 @@ const DynamicTestimonials = dynamic(() => import("@/app/components/Testimonials"
 const DynamicEducation = dynamic(() => import("@/app/components/Education"))
 const DynamicContact = dynamic(() => import("@/app/components/Contact"))
 const DynamicFloatingNav = dynamic(() => import("@/app/components/floating-nav"))
+const DynamicLocationGreeting = dynamic(() => import("@/app/components/location-greeting").then((m) => m.LocationGreeting))
 
 export default function MainContent() {
   return (
     <main id="main-content" role="main" className="bg-background dark:bg-background min-h-screen">
       <DynamicFloatingNav />
       <DynamicHero />
+      <DynamicLocationGreeting />
       <DynamicAbout />
       <DynamicExperience />
       <DynamicSkills />
