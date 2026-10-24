@@ -1,11 +1,14 @@
 import { Metadata } from "next"
 import { ThemeProvider } from "@/components/theme-provider"
+import dynamic from "next/dynamic"
 import { Suspense } from "react"
 import { cookies, headers } from "next/headers"
 
 import { SUPPORTED_LANGUAGES, DEFAULT_LANGUAGE, RTL_LANGUAGES } from "@/config/language.config"
 import { Inter, Noto_Sans_SC, Noto_Sans_Arabic, Noto_Sans_Tamil } from "next/font/google"
-import "./globals.css"
+const AiAssistantWidget = dynamic(() => import("@/app/components/ai-assistant-widget").then((m) => m.AiAssistantWidget), {
+  ssr: false,
+})
 
 const inter = Inter({
   subsets: ["latin"],
@@ -75,6 +78,7 @@ export default async function RootLayout({
           <Suspense fallback={<div className="min-h-screen bg-background" />}>
             {children}
           </Suspense>
+          <AiAssistantWidget />
         </ThemeProvider>
       </body>
     </html>
