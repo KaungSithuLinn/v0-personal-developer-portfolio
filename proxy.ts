@@ -20,7 +20,7 @@ function buildCsp(nonce: string): string {
     "frame-ancestors 'none'",
     "object-src 'none'",
     `script-src 'self' 'nonce-${nonce}' 'strict-dynamic'${isDevelopment ? " 'unsafe-eval'" : ""}`,
-    `style-src 'self' 'nonce-${nonce}'${isDevelopment ? " 'unsafe-inline'" : ""}`,
+    `style-src 'self' 'unsafe-inline'${isDevelopment ? " 'unsafe-inline'" : ""}`,
     "img-src 'self' data: https://v0.blob.com https://hebbkx1anhila5yf.public.blob.vercel-storage.com",
     "font-src 'self' data:",
     "connect-src 'self'",
