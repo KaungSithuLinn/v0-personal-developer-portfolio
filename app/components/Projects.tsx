@@ -143,7 +143,7 @@ function ProjectsComponent() {
   return (
     <section
       id="projects"
-      className="py-20 bg-gradient-to-br from-background to-card dark:from-background dark:to-card transition-colors duration-300 overflow-hidden relative"
+      className="py-20 bg-gradient-to-br from-background to-card transition-colors duration-300 overflow-hidden relative"
     >
       <div className="absolute inset-0 glow-teal opacity-20" aria-hidden="true" />
       <div className={`absolute top-0 ${isRTL ? "right-0" : "left-0"} w-64 h-64 -mt-32 ${isRTL ? "-mr-32" : "-ml-32"} glow-navy opacity-40`} aria-hidden="true" />
@@ -166,10 +166,10 @@ function ProjectsComponent() {
                 onClick={() => setActiveFilter(filter.id)}
                 whileHover={shouldReduceMotion ? undefined : { y: -1 }}
                 whileTap={shouldReduceMotion ? undefined : { scale: 0.97 }}
-                className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium border transition-colors duration-200 ${
+                className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium border transition-colors duration-200 min-h-[44px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
                   isActive
-                    ? "bg-primary text-primary-foreground border-primary dark:bg-primary dark:text-background dark:border-primary"
-                    : "bg-card/60 dark:bg-card/60 text-card-foreground dark:text-card-foreground border-border dark:border-border hover:border-primary dark:hover:border-primary"
+                    ? "bg-primary text-primary-foreground border-primary"
+                    : "bg-card/70 text-card-foreground border-border hover:border-primary/60"
                 }`}
               >
                 {filter.icon}
@@ -186,7 +186,7 @@ function ProjectsComponent() {
         </div>
 
         {visibleProjects.length === 0 && (
-          <p className="text-center text-slate-500 dark:text-slate-400 py-12">
+          <p className="text-center text-muted-foreground py-12">
             {t("projects.empty")}
           </p>
         )}

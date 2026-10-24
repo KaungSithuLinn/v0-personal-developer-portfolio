@@ -47,6 +47,7 @@ export default function TerminalUI({ isOpen, onClose }: { isOpen: boolean; onClo
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
+        event.preventDefault()
         onClose()
         return
       }
@@ -98,11 +99,12 @@ export default function TerminalUI({ isOpen, onClose }: { isOpen: boolean; onClo
     (item: CommandOutput): React.ReactNode => {
       if (item.isProcessing) {
         return (
-          <div className="flex items-center text-primary">
+          <div className="flex items-center text-primary" aria-live="polite">
             <motion.div
               animate={shouldReduceMotion ? { rotate: 0 } : { rotate: 360 }}
               transition={shouldReduceMotion ? { duration: 0 } : { duration: 1, repeat: Infinity, ease: "linear" }}
               className="me-2"
+              aria-hidden="true"
             >
               ⟳
             </motion.div>
@@ -132,11 +134,11 @@ export default function TerminalUI({ isOpen, onClose }: { isOpen: boolean; onClo
         <motion.div
           role="dialog"
           aria-modal="true"
-          aria-label={t("terminal.title")}
-          initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 100 }}
+          aria-labelledby="terminal-title"
+          initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 40 }}
           animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
-          exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 100 }}
-          transition={shouldReduceMotion ? { duration: 0 } : { type: "spring", damping: 20 }}
+          exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 40 }}
+          transition={shouldReduceMotion ? { duration: 0 } : { type: "spring", damping: 25, stiffness: 300 }}
           className={`terminal-window ${isFullscreen ? "fullscreen" : "normal"} ${isRTL ? "rtl" : ""}`}
         >
           {/* Terminal header */}
@@ -145,29 +147,29 @@ export default function TerminalUI({ isOpen, onClose }: { isOpen: boolean; onClo
               <div className="w-3 h-3 rounded-full bg-red-500" aria-hidden="true" />
               <div className="w-3 h-3 rounded-full bg-yellow-500" aria-hidden="true" />
               <div className="w-3 h-3 rounded-full bg-green-500" aria-hidden="true" />
-              <span className="ms-2 text-primary text-sm font-mono">{t("terminal.title")}</span>
+              <span id="terminal-title" className="ms-2 text-primary text-sm font-mono">{t("terminal.title")}</span>
             </div>
             <div className="flex items-center space-x-2">
               <button
                 onClick={toggleFullscreen}
-                className="text-gray-400 hover:text-white transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
-                aria-label={isFullscreen ? "Exit Fullscreen" : "Enter Fullscreen"}
+                className="text-gray-400 hover:text-white transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                aria-label={isFullscreen ? t("terminal.exitFullscreen") || "Exit Fullscreen" : t("terminal.enterFullscreen") || "Enter Fullscreen"}
               >
-                {isFullscreen ? <Minimize2 size={18} /> : <Maximize2 size={18} />}
+                {isFullscreen ? <Minimize2 size={18} aria-hidden="true" /> : <Maximize2 size={18} aria-hidden="true" />}
               </button>
               <button
                 ref={closeButtonRef}
                 onClick={onClose}
-                className="text-gray-400 hover:text-white transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
-                aria-label="Close Terminal"
+                className="text-gray-400 hover:text-white transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                aria-label={t("terminal.close") || "Close Terminal"}
               >
-                <X size={18} />
+                <X size={18} aria-hidden="true" />
               </button>
             </div>
           </div>
 
           {/* Terminal content */}
-          <div ref={terminalRef} className="terminal-content" aria-label="Terminal output log" role="log">
+          <div ref={terminalRef} className="terminal-content" aria-label={t("terminal.outputLog") || "Terminal output log"} role="log" aria-live="polite" aria-relevant="additions">
             {history.map((item, index) => (
               <div key={index} className="mb-2">
                 {item.command !== "system" && (
@@ -184,14 +186,16 @@ export default function TerminalUI({ isOpen, onClose }: { isOpen: boolean; onClo
           </div>
 
           {/* Terminal input */}
-          <form onSubmit={handleSubmit} className="terminal-input">
-            <span className="text-primary me-2 flex-shrink-0">ksl@portfolio:~$</span>
+          <form onSubmit={handleSubmit} className="terminal-input" role="search">
+            <label htmlFor="terminal-input" className="sr-only">{t("terminal.commandLabel")}</label>
+            <span className="text-primary me-2 flex-shrink-0" aria-hidden="true">ksl@portfolio:~$</span>
             <input
+              id="terminal-input"
               ref={inputRef}
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              className="flex-1 bg-transparent border-none outline-none text-primary-foreground font-mono focus:ring-1 focus:ring-white/30"
+              className="flex-1 bg-transparent border-none outline-none text-primary-foreground font-mono focus-visible:ring-1 focus-visible:ring-ring rounded px-1"
               placeholder={t("terminal.commandPlaceholder")}
               disabled={isProcessing}
               autoComplete="off"
@@ -201,10 +205,10 @@ export default function TerminalUI({ isOpen, onClose }: { isOpen: boolean; onClo
             <button
               type="submit"
               disabled={isProcessing}
-              className="text-primary hover:text-primary transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
-              aria-label="Execute Command"
+              className="text-primary hover:text-primary/80 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              aria-label={t("terminal.execute") || "Execute Command"}
             >
-              <ChevronRight size={20} />
+              <ChevronRight size={20} aria-hidden="true" />
             </button>
           </form>
         </motion.div>

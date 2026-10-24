@@ -1,24 +1,24 @@
 "use client"
 
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useRef, useState, useSyncExternalStore } from "react"
 import type { ReactNode, JSX } from "react"
 
 export function useMounted(): boolean {
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => {
-    setMounted(true)
-    return () => setMounted(false)
-  }, [])
-
-  return mounted
+  return useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false,
+  )
 }
 
 export function useMountedEffect(effect: () => void | (() => void), deps: any[] = []) {
   const mounted = useMounted()
   const hasRunRef = useRef(false)
   const effectRef = useRef(effect)
-  effectRef.current = effect
+
+  useEffect(() => {
+    effectRef.current = effect
+  })
 
   useEffect(() => {
     if (mounted && !hasRunRef.current) {

@@ -49,64 +49,66 @@ const AboutComponent = () => {
     show: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1,
+        staggerChildren: shouldReduceMotion ? 0 : 0.1,
       },
     },
   }
 
   const item = {
     hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0 },
+    show: { opacity: 1, y: 0, transition: { duration: shouldReduceMotion ? 0 : 0.3, ease: [0.22, 1, 0.36, 1] as const } },
   }
 
   return (
     <section
       id="about"
-      className="py-20 bg-gradient-to-br from-background to-card dark:from-background dark:to-card transition-colors duration-300 overflow-hidden relative"
+      className="py-20 bg-gradient-to-br from-background to-card transition-colors duration-300 overflow-hidden relative"
     >
       <div className="absolute inset-0 glow-teal opacity-30" aria-hidden="true" />
       <div className={`absolute bottom-0 ${isRTL ? "left-0" : "right-0"} w-64 h-64 -mb-32 ${isRTL ? "-ml-32" : "-mr-32"} glow-navy opacity-40`} aria-hidden="true" />
       <div className="container mx-auto px-6 relative z-10">
         <AnimatedSectionHeader title={t("about.title")} />
-        <div className="flex flex-col md:flex-row items-center justify-between">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-8">
           <motion.div
             className="md:w-1/2 mb-8 md:mb-0"
-            initial={shouldReduceMotion ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
+            initial={shouldReduceMotion ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
             whileInView={shouldReduceMotion ? undefined : { opacity: 1, x: 0 }}
             viewport={shouldReduceMotion ? undefined : { once: true, margin: "-50px" }}
-            transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5, ease: [0.22, 1, 0.36, 1] as const }}
           >
-            <p className="text-base sm:text-lg text-foreground dark:text-foreground leading-relaxed mb-6">{t("about.paragraph1")}</p>
-            <p className="text-base sm:text-lg text-foreground dark:text-foreground leading-relaxed">{t("about.paragraph2")}</p>
+            <p className="text-base sm:text-lg text-foreground leading-relaxed mb-6">{t("about.paragraph1")}</p>
+            <p className="text-base sm:text-lg text-foreground leading-relaxed">{t("about.paragraph2")}</p>
 
             <motion.div
-              className="mt-8 p-4 border-s-4 border-primary bg-accent rounded-lg"
+              className="mt-8 p-4 border-s-4 border-primary bg-accent/50 rounded-lg"
               initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              animate={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
-              transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5, delay: 0.3 }}
+              whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+              viewport={shouldReduceMotion ? undefined : { once: true }}
+              transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5, delay: 0.2, ease: [0.22, 1, 0.36, 1] as const }}
             >
-              <p className="italic text-foreground dark:text-foreground">{t("about.quote")}</p>
+              <p className="italic text-foreground">{t("about.quote")}</p>
             </motion.div>
           </motion.div>
 
           <motion.div
-            className="md:w-1/2 grid grid-cols-2 gap-6"
+            className="md:w-1/2 grid grid-cols-1 sm:grid-cols-2 gap-6"
             initial={shouldReduceMotion ? { opacity: 1 } : "hidden"}
             whileInView={shouldReduceMotion ? undefined : "show"}
             viewport={shouldReduceMotion ? undefined : { once: true }}
+            variants={_container}
           >
             {skills.map((skill, index) => (
               <motion.div
                 key={index}
-                className="card-glass p-6 rounded-xl shadow-md hover:shadow-xl hover:border-primary/30 transition-all duration-300"
+                className="card-glass p-6 rounded-xl shadow-md hover:shadow-lg hover:border-primary/40 transition-shadow duration-200 border border-border/60"
                 variants={item}
-                whileHover={shouldReduceMotion ? undefined : { scale: 1.03 }}
+                whileHover={shouldReduceMotion ? undefined : { scale: 1.02 }}
                 role="group"
                 aria-label={`${skill.title} skills: ${skill.description}`}
               >
                 <div className="p-2 bg-accent rounded-lg w-fit">{skill.icon}</div>
                 <h3 className="text-xl font-semibold mt-4 mb-2 text-foreground">{skill.title}</h3>
-                <p className="text-muted-foreground">{skill.description}</p>
+                <p className="text-muted-foreground leading-relaxed">{skill.description}</p>
               </motion.div>
             ))}
           </motion.div>

@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useTransition, useRef, useEffect } from "react"
-import { motion, TargetAndTransition } from "framer-motion"
+import { motion } from "framer-motion"
 import { useReducedMotion } from "framer-motion"
 import { Mail, MapPin } from "lucide-react"
 import AnimatedSectionHeader from "./AnimatedSectionHeader"
@@ -24,7 +24,7 @@ const ContactComponent = () => {
     }
   }, [submitStatus])
 
-  const animation = useLanguageAnimation({}) as unknown as { initial: TargetAndTransition; animate: TargetAndTransition; transition: object }
+  const animation = useLanguageAnimation({}) as unknown as { initial: any; animate: any; transition: any }
 
   const { handleChange, handleBlur, errors, validateField } = useI18nForm({
     customFields: {
@@ -93,14 +93,14 @@ const ContactComponent = () => {
             <h3 className="text-2xl font-semibold mb-4 text-foreground">{t("contact.info")}</h3>
             
             <div className="flex items-center gap-4">
-              <div className="p-3 rounded-full bg-primary/10 text-primary dark:text-primary">
-                <Mail size={24} />
+              <div className="p-3 rounded-full bg-primary/10 text-primary">
+                <Mail size={24} aria-hidden="true" />
               </div>
               <div>
                 <h4 className="font-medium text-foreground">{t("contact.email")}</h4>
                 <a
                   href="mailto:kaungthu.sithu97@gmail.com"
-                  className="text-muted-foreground hover:text-primary dark:hover:text-primary"
+                  className="text-muted-foreground hover:text-primary transition-colors min-h-[44px] inline-flex items-center"
                 >
                   kaungthu.sithu97@gmail.com
                 </a>
@@ -108,8 +108,8 @@ const ContactComponent = () => {
             </div>
 
             <div className="flex items-center gap-4">
-              <div className="p-3 rounded-full bg-primary/10 text-primary dark:text-primary">
-                <MapPin size={24} />
+              <div className="p-3 rounded-full bg-primary/10 text-primary">
+                <MapPin size={24} aria-hidden="true" />
               </div>
               <div>
                 <h4 className="font-medium text-foreground">{t("contact.address")}</h4>
@@ -129,9 +129,10 @@ const ContactComponent = () => {
             initial={shouldReduceMotion ? animation.initial : animation.initial}
             animate={shouldReduceMotion ? animation.animate : animation.animate}
             transition={shouldReduceMotion ? { duration: 0 } : { ...(animation.transition || {}), delay: 0.2 }}
+            noValidate
           >
             <div>
-              <label htmlFor="name" className="block text-sm font-medium mb-2 dark:text-white">
+              <label htmlFor="name" className="block text-sm font-medium mb-2 text-foreground">
                 {t("contact.form.name")}
               </label>
               <input
@@ -142,15 +143,15 @@ const ContactComponent = () => {
                 required
                 onChange={(e) => handleChange(e)}
                 onBlur={(e) => handleBlur(e)}
-                className={`w-full px-4 py-2 rounded-lg border bg-background dark:bg-card text-foreground focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background dark:focus:ring-offset-card focus:border-primary outline-none transition-colors ${errors.name ? "border-destructive dark:border-destructive" : "border-border"}`}
+                className={`w-full px-4 py-2 rounded-lg border bg-background text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-colors min-h-[44px] ${errors.name ? "border-destructive" : "border-border"}`}
                 aria-invalid={!!errors.name}
                 aria-describedby={errors.name ? "name-error" : undefined}
               />
-              {errors.name && <p id="name-error" className="text-red-500 text-sm mt-1">{errors.name}</p>}
+              {errors.name && <p id="name-error" className="text-destructive text-sm mt-1">{errors.name}</p>}
             </div>
 
             <div>
-              <label htmlFor="email" className="block text-sm font-medium mb-2 dark:text-white">
+              <label htmlFor="email" className="block text-sm font-medium mb-2 text-foreground">
                 {t("contact.form.email")}
               </label>
               <input
@@ -162,15 +163,15 @@ const ContactComponent = () => {
                 inputMode="email"
                 onChange={(e) => handleChange(e)}
                 onBlur={(e) => handleBlur(e)}
-                className={`w-full px-4 py-2 rounded-lg border bg-background dark:bg-card text-foreground focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background dark:focus:ring-offset-card focus:border-primary outline-none transition-colors ${errors.email ? "border-destructive dark:border-destructive" : "border-border"}`}
+                className={`w-full px-4 py-2 rounded-lg border bg-background text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-colors min-h-[44px] ${errors.email ? "border-destructive" : "border-border"}`}
                 aria-invalid={!!errors.email}
                 aria-describedby={errors.email ? "email-error" : undefined}
               />
-              {errors.email && <p id="email-error" className="text-red-500 text-sm mt-1">{errors.email}</p>}
+              {errors.email && <p id="email-error" className="text-destructive text-sm mt-1">{errors.email}</p>}
             </div>
 
             <div>
-              <label htmlFor="subject" className="block text-sm font-medium mb-2 dark:text-white">
+              <label htmlFor="subject" className="block text-sm font-medium mb-2 text-foreground">
                 {t("contact.form.subject")}
               </label>
               <input
@@ -180,100 +181,73 @@ const ContactComponent = () => {
                 onChange={(e) => handleChange(e)}
                 onBlur={(e) => handleBlur(e)}
                 name="subject"
-                className={`w-full px-4 py-2 rounded-lg border bg-background dark:bg-card text-foreground focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background dark:focus:ring-offset-card focus:border-primary outline-none transition-colors ${errors.subject ? "border-destructive dark:border-destructive" : "border-border"}`}
+                className={`w-full px-4 py-2 rounded-lg border bg-background text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-colors min-h-[44px] ${errors.subject ? "border-destructive" : "border-border"}`}
                 aria-invalid={!!errors.subject}
                 aria-describedby={errors.subject ? "subject-error" : undefined}
               />
-              {errors.subject && <p id="subject-error" className="text-red-500 text-sm mt-1">{errors.subject}</p>}
+              {errors.subject && <p id="subject-error" className="text-destructive text-sm mt-1">{errors.subject}</p>}
             </div>
 
             <div>
-              <label htmlFor="message" className="block text-sm font-medium mb-2 dark:text-white">
+              <label htmlFor="message" className="block text-sm font-medium mb-2 text-foreground">
                 {t("contact.form.message")}
               </label>
-              <div aria-hidden="true">
-                <label htmlFor="website">Website</label>
-                <input
-                  type="text"
-                  id="website"
-                  name="website"
-                  tabIndex={-1}
-                  autoComplete="off"
-                  hidden
-                />
-              </div>
               <textarea
                 id="message"
                 name="message"
-                rows={4}
-                required
-                onChange={handleChange}
-                className={`w-full px-4 py-2 rounded-lg border bg-background dark:bg-card text-foreground focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background dark:focus:ring-offset-card focus:border-primary outline-none transition-colors ${errors.message ? "border-destructive dark:border-destructive" : "border-border"}`}
+                rows={5}
+                onChange={(e) => handleChange(e)}
+                onBlur={(e) => handleBlur(e)}
+                className={`w-full px-4 py-2 rounded-lg border bg-background text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-colors resize-y ${errors.message ? "border-destructive" : "border-border"}`}
                 aria-invalid={!!errors.message}
                 aria-describedby={errors.message ? "message-error" : undefined}
               />
-              {errors.message && <p id="message-error" className="text-red-500 text-sm mt-1">{errors.message}</p>}
+              {errors.message && <p id="message-error" className="text-destructive text-sm mt-1">{errors.message}</p>}
             </div>
 
             <div className="flex items-start gap-3">
               <input
                 type="checkbox"
                 id="consent"
-                name="consent"
                 checked={consent}
                 onChange={(e) => setConsent(e.target.checked)}
+                className="mt-1 min-w-[20px] min-h-[20px] rounded border-border text-primary focus-visible:ring-ring focus-visible:ring-offset-2"
                 required
-                className="mt-1 w-4 h-4 rounded border-border text-primary focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background"
-                aria-required="true"
-                aria-invalid={submitStatus === "error" && !consent}
               />
-              <label htmlFor="consent" className="text-sm text-muted-foreground leading-snug">
+              <label htmlFor="consent" className="text-sm text-muted-foreground">
                 {t("contact.form.consent")}
               </label>
             </div>
 
-               <button
-                 type="submit"
-                 disabled={isSubmitting || !consent}
-                 aria-describedby="submit-status"
-                 className={`w-full py-3 px-6 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-colors ${
-                   isSubmitting || !consent ? "opacity-50 cursor-not-allowed" : ""
-                 }`}
-               >
-              {isSubmitting ? t("contact.form.sending") : t("contact.form.send")}
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full bg-primary text-primary-foreground px-6 py-3 rounded-lg hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed min-h-[44px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            >
+              {isSubmitting ? t("contact.form.sending") : t("contact.form.submit")}
             </button>
 
             <div
-              id="submit-status"
               ref={statusRef}
               tabIndex={-1}
               aria-live="polite"
               aria-atomic="true"
-              className="outline-none"
+              className="sr-only"
             >
-              {submitStatus === "success" && (
-                <motion.p
-                  initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-                  animate={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
-                  className="text-primary text-center"
-                >
-                  {t("contact.form.success")}
-                </motion.p>
-              )}
-
-              {submitStatus === "error" && (
-                <motion.p
-                  initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-                  animate={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
-                  className="text-red-500 dark:text-red-400 text-center"
-                >
-                  {t("contact.form.error")}
-                  <span className="block text-sm text-muted-foreground mt-1">
-                    Please try again or email directly at kaungthu.sithu97@gmail.com
-                  </span>
-                </motion.p>
-              )}
+              {submitStatus === "success" && t("contact.form.success")}
+              {submitStatus === "error" && t("contact.form.error")}
             </div>
+
+            {submitStatus === "success" && (
+              <div className="p-4 bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-200 rounded-lg" role="status">
+                {t("contact.form.success")}
+              </div>
+            )}
+            {submitStatus === "error" && (
+              <div className="p-4 bg-red-100 dark:bg-red-900/20 text-red-800 dark:text-red-200 rounded-lg" role="alert">
+                {t("contact.form.error")}
+              </div>
+            )}
           </motion.form>
         </div>
       </div>

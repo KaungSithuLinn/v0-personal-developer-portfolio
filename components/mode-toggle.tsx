@@ -1,19 +1,15 @@
 "use client"
 
 import { useTheme } from "next-themes"
-import { useEffect, useState } from "react"
+import { useSyncExternalStore } from "react"
 import { motion } from "framer-motion"
 import { useReducedMotion } from "framer-motion"
 import { Sun, Moon } from "lucide-react"
 
 export default function ModeToggle() {
-  const [mounted, setMounted] = useState(false)
+  const mounted = useSyncExternalStore(() => () => {}, () => true, () => false)
   const { theme, setTheme } = useTheme()
   const shouldReduceMotion = useReducedMotion()
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
 
   if (!mounted) {
     return <div className="w-9 h-9" aria-hidden="true" />
