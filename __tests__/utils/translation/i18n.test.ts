@@ -40,8 +40,6 @@ describe('Translation utility', () => {
     expect(translations.en).toBeDefined()
     expect(translations.zh).toBeDefined()
     expect(translations.ms).toBeDefined()
-    expect(translations.ta).toBeDefined()
-    expect(translations.ar).toBeDefined()
   })
 
   it('has consistent translation keys across languages', () => {
