@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useMemo, type ReactElement } from "react"
-import { Brain, Shield, LineChart, X, FileText } from "lucide-react"
+import { Brain, Shield, LineChart, Grid3X3, FileText } from "lucide-react"
 import AnimatedSectionHeader from "./AnimatedSectionHeader"
 import { useTranslation } from "@/context/language-utils"
 import ProjectCard from "./ProjectCard"
@@ -129,7 +129,7 @@ function ProjectsComponent() {
   )
 
   const filters: Array<{ id: "all" | "research" | "ml" | "security"; label: string; icon: React.ReactNode }> = [
-    { id: "all", label: t("projects.filter.all"), icon: <X className="w-3.5 h-3.5" /> },
+    { id: "all", label: t("projects.filter.all"), icon: <Grid3X3 className="w-3.5 h-3.5" /> },
     { id: "research", label: t("projects.filter.research"), icon: <FileText className="w-3.5 h-3.5" /> },
     { id: "ml", label: t("projects.filter.ml"), icon: <Brain className="w-3.5 h-3.5" /> },
     { id: "security", label: t("projects.filter.security"), icon: <Shield className="w-3.5 h-3.5" /> },

@@ -129,7 +129,7 @@ const FloatingNavComponent = () => {
         <ArrowUp className="w-5 h-5" aria-hidden="true" />
       </motion.button>
 
-      <div className={`fixed bottom-6 z-50 ${isRTL ? "left-6" : "right-6"}`} style={{ marginTop: "3rem" }}>
+      <div className={`fixed bottom-20 z-50 ${isRTL ? "left-6" : "right-6"}`}>
         <ModeToggle />
       </div>
     </>

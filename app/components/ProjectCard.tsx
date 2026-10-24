@@ -72,7 +72,7 @@ const ProjectCard = memo(function ProjectCard({ project, index }: { project: Pro
           />
         </div>
       )}
-      <div className="p-8">
+      <div className="p-6 md:p-8">
         <div className="flex flex-col md:flex-row gap-6">
               <div className="md:w-1/6 flex justify-center">
                 <div className="p-4 bg-accent rounded-full">{project.icon}</div>
