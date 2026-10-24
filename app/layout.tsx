@@ -1,4 +1,5 @@
 import { Metadata } from "next"
+import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { AiAssistantWidget } from "@/app/components/ai-assistant-widget"
 import { Suspense } from "react"
