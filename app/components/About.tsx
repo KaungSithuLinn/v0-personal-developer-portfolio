@@ -6,6 +6,7 @@ import { Code, Database, Server, Globe, Brain, TrendingUp } from "lucide-react"
 import AnimatedSectionHeader from "./AnimatedSectionHeader"
 import { useTranslation } from "@/context/language-utils"
 import { memo } from "react"
+import { GitHubStats } from "./github-stats"
 
 const AboutComponent = () => {
   const { t, isRTL } = useTranslation()
@@ -88,6 +89,10 @@ const AboutComponent = () => {
             >
               <p className="italic text-foreground">{t("about.quote")}</p>
             </motion.div>
+
+            <div className="mt-6">
+              <GitHubStats />
+            </div>
           </motion.div>
 
           <motion.div
