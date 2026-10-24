@@ -1,14 +1,12 @@
 import { Metadata } from "next"
 import { ThemeProvider } from "@/components/theme-provider"
-import dynamic from "next/dynamic"
+import { AiAssistantWidget } from "@/app/components/ai-assistant-widget"
 import { Suspense } from "react"
 import { cookies, headers } from "next/headers"
 
 import { SUPPORTED_LANGUAGES, DEFAULT_LANGUAGE, RTL_LANGUAGES } from "@/config/language.config"
 import { Inter, Noto_Sans_SC, Noto_Sans_Arabic, Noto_Sans_Tamil } from "next/font/google"
-const AiAssistantWidget = dynamic(() => import("@/app/components/ai-assistant-widget").then((m) => m.AiAssistantWidget), {
-  ssr: false,
-})
+import "./globals.css"
 
 const inter = Inter({
   subsets: ["latin"],
