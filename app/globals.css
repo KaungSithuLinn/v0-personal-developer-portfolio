@@ -473,3 +473,7 @@ p,
 li {
   text-wrap: pretty;
 }
+
+/* Ensure content remains visible if motion fails to hydrate */
+[style*="opacity:0"] { opacity: 1 !important; transform: none !important; }
+[style*="opacity: 0"] { opacity: 1 !important; transform: none !important; }
