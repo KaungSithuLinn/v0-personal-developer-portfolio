@@ -6,7 +6,7 @@ import { cookies, headers } from "next/headers"
 
 import { SUPPORTED_LANGUAGES, DEFAULT_LANGUAGE, RTL_LANGUAGES } from "@/config/language.config"
 import { Inter, Noto_Sans_SC, Noto_Sans_Arabic, Noto_Sans_Tamil } from "next/font/google"
-import "./globals.css"
+import { Analytics } from "@vercel/analytics/next"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -77,6 +77,7 @@ export default async function RootLayout({
             {children}
           </Suspense>
           <AiAssistantWidget />
+          <Analytics />
         </ThemeProvider>
       </body>
     </html>
