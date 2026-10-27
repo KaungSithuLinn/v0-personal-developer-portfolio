@@ -2,7 +2,7 @@ export type Language = "en" | "zh" | "ms" | "ta" | "ar"
 
 export const SUPPORTED_LANGUAGES: Language[] = ["en", "zh", "ms"]
 export const DEFAULT_LANGUAGE: Language = "en"
-export const RTL_LANGUAGES: Language[] = []
+export const RTL_LANGUAGES: Language[] = ["ar"] as Language[]
 
 export const LANGUAGE_NAMES: Record<Language, string> = {
   en: "English",

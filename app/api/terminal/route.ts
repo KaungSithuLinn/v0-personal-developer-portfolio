@@ -115,8 +115,9 @@ Provide a helpful, concise response in 2-3 sentences maximum. If the query is no
       temperature: 0.7,
     })
 
+    const safeResponse = response.text.length > 1200 ? response.text.slice(0, 1200) + "…" : response.text
     return NextResponse.json(
-      { response: response.text },
+      { response: safeResponse },
       { status: 200, headers: noStoreHeaders },
     )
   } catch (_error) {

@@ -116,7 +116,7 @@ export async function POST(request: Request) {
       )
     }
 
-    console.error("Contact form error", error)
+    console.error("Contact form error", { message: error instanceof Error ? error.message : "unknown" })
     return NextResponse.json(
       { error: "Failed to send message" },
       { status: 500, headers: noStoreHeaders },
