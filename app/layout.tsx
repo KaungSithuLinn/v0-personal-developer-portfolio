@@ -2,6 +2,8 @@ import { Metadata } from "next"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { AiAssistantWidget } from "@/app/components/ai-assistant-widget"
+import SeasonalClassApplier from "@/components/seasonal/class-applier"
+import { AuthProvider } from "@/context/auth-provider"
 import { Suspense } from "react"
 import { cookies, headers } from "next/headers"
 
@@ -74,8 +76,9 @@ export default async function RootLayout({
       </head>
       <body className="antialiased min-h-screen bg-grid-faint">
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+          <SeasonalClassApplier />
           <Suspense fallback={<div className="min-h-screen bg-background" />}>
-            {children}
+            <AuthProvider>{children}</AuthProvider>
           </Suspense>
           <AiAssistantWidget />
           <Analytics />

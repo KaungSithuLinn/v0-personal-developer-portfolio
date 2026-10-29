@@ -6,6 +6,7 @@ import { ArrowUp } from "lucide-react"
 import { useTranslation } from "@/context/language-utils"
 import { memo } from "react"
 import ModeToggle from "@/components/mode-toggle"
+import SeasonalToggle from "@/components/seasonal-toggle"
 
 const FloatingNavComponent = () => {
   const [activeSection, setActiveSection] = useState("home")
@@ -131,6 +132,9 @@ const FloatingNavComponent = () => {
 
       <div className={`fixed bottom-20 z-50 ${isRTL ? "left-6" : "right-6"}`}>
         <ModeToggle />
+      </div>
+      <div className={`fixed bottom-8 z-50 ${isRTL ? "left-6" : "right-6"}`}>
+        <SeasonalToggle />
       </div>
     </>
   )

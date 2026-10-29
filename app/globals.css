@@ -477,3 +477,73 @@ li {
 /* Ensure content remains visible if motion fails to hydrate */
 [style*="opacity:0"] { opacity: 1 !important; transform: none !important; }
 [style*="opacity: 0"] { opacity: 1 !important; transform: none !important; }
+
+/* Seasonal overlay — "Haunted Secure Craft" (Halloween) */
+.halloween {
+  --background: #0b0a0e;
+  --foreground: #fafafa;
+  --card: #131118;
+  --card-foreground: #fafafa;
+  --popover: #131118;
+  --popover-foreground: #fafafa;
+  --primary: #f97316;
+  --primary-foreground: #0b0a0e;
+  --secondary: #1a1823;
+  --secondary-foreground: #fafafa;
+  --muted: #1a1823;
+  --muted-foreground: #a7a3b0;
+  --accent: #a855f7;
+  --accent-foreground: #0b0a0e;
+  --destructive: #ef4444;
+  --destructive-foreground: #fafafa;
+  --border: #332b3a;
+  --input: #332b3a;
+  --ring: #f97316;
+  --radius: 0.75rem;
+}
+
+.halloween .section-bg {
+  background: linear-gradient(to bottom right, #0b0a0e, #131118);
+}
+
+.halloween .card-glass {
+  background-color: #131118 / 0.8;
+  border: 1px solid #332b3a / 0.5;
+  backdrop-filter: blur(4px);
+}
+
+.halloween .bg-grid-faint {
+  background-image:
+    linear-gradient(to right, rgb(168 85 247 / 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(168 85 247 / 0.06) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+
+.halloween .glow-orange {
+  background: radial-gradient(closest-side, rgb(249 115 22 / 0.12), transparent 72%);
+}
+
+.halloween .glow-purple {
+  background: radial-gradient(closest-side, rgb(168 85 247 / 0.10), transparent 72%);
+}
+
+.halloween [dir="rtl"] .terminal-button,
+.halloween [dir="rtl"] .monitor-button {
+  left: auto;
+  right: 1rem;
+}
+
+/* Ensure section content stays readable under the seasonal overlay */
+.halloween h1,
+.halloween h2,
+.halloween h3,
+.halloween h4,
+.halloween h5,
+.halloween h6 {
+  color: var(--foreground);
+}
+
+.halloween .text-muted-foreground {
+  color: var(--muted-foreground);
+}
+

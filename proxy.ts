@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
 import { SUPPORTED_LANGUAGES, DEFAULT_LANGUAGE } from "@/config/language.config"
+import { verifySessionToken } from "@/lib/auth"
 
 const SECURITY_HEADERS = {
   "X-Content-Type-Options": "nosniff",
@@ -47,6 +48,24 @@ export function proxy(request: NextRequest) {
     const response = NextResponse.redirect(url, 307)
     applySecurityHeaders(response, csp)
     return response
+  }
+
+  // Admin/preview surfaces require a valid session.
+  if (pathname.startsWith("/admin") || pathname.startsWith("/preview")) {
+    const cookie = request.headers.get("cookie") ?? ""
+    const match = cookie.match(/(?:^|; )ksl_session=([^;]+)/)
+    const session = verifySessionToken(match ? match[1] : "")
+    if (!session) {
+      const locale = pathname.split("/")[1]
+      const lang = SUPPORTED_LANGUAGES.includes(locale as (typeof SUPPORTED_LANGUAGES)[number])
+        ? locale
+        : DEFAULT_LANGUAGE
+      const redirectUrl = new URL(`/${lang}/login`, request.nextUrl.origin)
+      redirectUrl.searchParams.set("callbackUrl", pathname)
+      const response = NextResponse.redirect(redirectUrl, 307)
+      applySecurityHeaders(response, csp)
+      return response
+    }
   }
 
   if (
