@@ -35,7 +35,23 @@ export function GitHubStats() {
   }, [])
 
   if (error) return null
-  if (!stats) return <p className="text-sm text-muted-foreground">Loading GitHub stats...</p>
+  if (!stats) {
+    return (
+      <div
+        className="grid grid-cols-3 gap-4 text-center"
+        aria-busy="true"
+        aria-live="polite"
+      >
+        <span className="sr-only">Loading GitHub stats</span>
+        {[0, 1, 2].map((item) => (
+          <div key={item} aria-hidden="true">
+            <p className="font-mono text-2xl font-semibold text-muted-foreground/40">---</p>
+            <p className="mt-1 h-3 animate-pulse rounded bg-muted/30" />
+          </div>
+        ))}
+      </div>
+    )
+  }
 
   return (
     <div className="grid grid-cols-3 gap-4 text-center">
