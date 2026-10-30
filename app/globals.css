@@ -507,8 +507,8 @@ li {
 }
 
 .halloween .card-glass {
-  background-color: #131118 / 0.8;
-  border: 1px solid #332b3a / 0.5;
+  background-color: rgb(19 17 24 / 0.8);
+  border: 1px solid rgb(51 43 58 / 0.5);
   backdrop-filter: blur(4px);
 }
 

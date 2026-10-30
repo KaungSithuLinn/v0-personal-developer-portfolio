@@ -76,7 +76,7 @@ const FloatingNavComponent = () => {
         animate={{ opacity: 1, x: 0 }}
         transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.3, duration: 0.4, ease: "easeOut" }}
       >
-        <div className="flex sm:flex-col gap-3 bg-surface-glass backdrop-blur-md p-3 rounded-full border border-surface-glass-border shadow-lg">
+        <div className="flex sm:flex-col gap-3 bg-card/80 backdrop-blur-md p-3 rounded-full border border-border shadow-lg">
           {sections.map(({ id, label }) => (
             <button
               key={id}
@@ -85,7 +85,7 @@ const FloatingNavComponent = () => {
               aria-label={t("nav.scrollTo", { section: label })}
               aria-current={activeSection === id ? "true" : undefined}
             >
-              <span className={`absolute ${isRTL ? "left-full ms-2" : "right-full me-2"} hidden sm:block px-2 py-1 rounded bg-surface-overlay text-foreground text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap border border-border`}>
+              <span className={`absolute ${isRTL ? "left-full ms-2" : "right-full me-2"} hidden sm:block px-2 py-1 rounded bg-card text-foreground text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap border border-border`}>
                 {label}
               </span>
               <div

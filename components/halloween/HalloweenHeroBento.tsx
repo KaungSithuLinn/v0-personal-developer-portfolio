@@ -64,7 +64,7 @@ const HeroVariantComponent = () => {
                 href="https://github.com/kaungthu97"
                 target="_blank"
                 rel="noopener noreferrer"
-                className={base("bg-orange-500 text-orange-900 hover:bg-orange-400")}
+                className={base("bg-primary text-primary-foreground hover:bg-primary/90")}
               >
                 <Github size={20} aria-hidden="true" />
                 {t("hero.githubProfile")}
@@ -74,7 +74,7 @@ const HeroVariantComponent = () => {
                 href="https://linkedin.com/in/kaung-sithu-linn"
                 target="_blank"
                 rel="noopener noreferrer"
-                className={base("bg-purple-600 text-white hover:bg-purple-500")}
+                className={base("bg-accent text-accent-foreground hover:bg-accent/90")}
               >
                 <Linkedin size={20} aria-hidden="true" />
                 {t("hero.linkedinProfile")}
@@ -92,7 +92,7 @@ const HeroVariantComponent = () => {
                 href="/KaungSithuLinn_SoftwareDeveloper_Resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                className={base("bg-purple-700 text-white hover:bg-purple-600")}
+                className={base("bg-accent text-accent-foreground hover:bg-accent/90")}
               >
                 <FileText size={20} aria-hidden="true" />
                 {t("hero.downloadResume")}
@@ -107,8 +107,8 @@ const HeroVariantComponent = () => {
             transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.6, delay: 0.2, ease: "easeOut" }}
           >
             <div className="relative w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96">
-              <div className="absolute inset-0 rounded-2xl overflow-hidden shadow-xl ring-4 ring-orange-500/40 dark:ring-orange-500/30">
-                <div className="absolute inset-0 rounded-2xl border-2 border-purple-500/40 -inset-px" aria-hidden="true" />
+              <div className="absolute inset-0 rounded-2xl overflow-hidden shadow-xl ring-4 ring-primary/40 dark:ring-primary/30">
+                <div className="absolute inset-0 rounded-2xl border-2 border-accent/40 -inset-px" aria-hidden="true" />
                 <div className="relative w-full h-full">
                   <Image
                     src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/KSTL%20Headshot%20Portrait.jpg-gxu4RedFPcOzqK3iU0lk96P56KVoZL.jpeg"
@@ -124,7 +124,7 @@ const HeroVariantComponent = () => {
                   />
                 </div>
               </div>
-              <div className="absolute -inset-3 rounded-3xl border-2 border-purple-500/20 -z-10" aria-hidden="true" />
+              <div className="absolute -inset-3 rounded-3xl border-2 border-accent/20 -z-10" aria-hidden="true" />
             </div>
           </motion.div>
         </div>
