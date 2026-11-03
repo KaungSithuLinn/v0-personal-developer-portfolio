@@ -8,7 +8,7 @@ import { Suspense } from "react"
 import { cookies, headers } from "next/headers"
 
 import { SUPPORTED_LANGUAGES, DEFAULT_LANGUAGE, RTL_LANGUAGES } from "@/config/language.config"
-import { Inter, Noto_Sans_SC, Noto_Sans_Arabic, Noto_Sans_Tamil } from "next/font/google"
+import { Inter, Noto_Sans_SC, Noto_Sans_Arabic } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 
 const inter = Inter({
@@ -31,15 +31,6 @@ const notoSansSC = Noto_Sans_SC({
   display: "swap",
   variable: "--font-noto-sc",
   preload: true,
-})
-
-const notoSansTamil = Noto_Sans_Tamil({
-  subsets: ["tamil"],
-  weight: ["400", "500", "700"],
-  display: "swap",
-  variable: "--font-noto-tamil",
-  preload: true,
-  adjustFontFallback: true,
 })
 
 export const metadata: Metadata = {
@@ -68,7 +59,7 @@ export default async function RootLayout({
       suppressHydrationWarning
       lang={initialLocale}
       dir={initialDir}
-      className={`${inter.variable} ${notoSansArabic.variable} ${notoSansSC.variable} ${notoSansTamil.variable}`}
+      className={`${inter.variable} ${notoSansArabic.variable} ${notoSansSC.variable}`}
     >
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
