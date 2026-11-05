@@ -22,7 +22,7 @@ export default function SeasonalToggle() {
       onClick={handleClick}
       aria-pressed={isHalloween}
       aria-label={isHalloween ? t("common.disableHalloween") : t("common.enableHalloween")}
-      className={`flex items-center justify-center w-9 h-9 rounded-full border transition-colors duration-200 ${
+      className={`flex items-center justify-center w-11 h-11 rounded-full border transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
         isHalloween
           ? "bg-orange-500/20 text-orange-400 border-orange-500/40 hover:bg-orange-500/30"
           : "bg-slate-900/70 text-white border-teal-500/30 hover:border-teal-400"

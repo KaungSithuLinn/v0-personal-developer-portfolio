@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion"
 import { useReducedMotion } from "framer-motion"
-import { Github, Linkedin, Mail, FileText } from "lucide-react"
+import { Github, Linkedin, Mail } from "lucide-react"
 import Image from "next/image"
 import { useTranslation } from "@/context/language-utils"
 import { memo } from "react"
@@ -79,20 +79,10 @@ const HeroComponent = () => {
 
               <a
                 href="mailto:kaungthu.sithu97@gmail.com"
-                className="flex items-center gap-2 border border-border text-foreground px-4 py-2 rounded-full min-h-[44px] hover:bg-accent hover:text-accent-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                className="flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 rounded-full min-h-[44px] hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               >
                 <Mail size={20} aria-hidden="true" />
                 {t("hero.emailContact")}
-              </a>
-
-              <a
-                href="/KaungSithuLinn_SoftwareDeveloper_Resume.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 rounded-full min-h-[44px] hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-              >
-                <FileText size={20} aria-hidden="true" />
-                {t("hero.downloadResume")}
               </a>
             </motion.div>
           </motion.div>

@@ -30,6 +30,8 @@
   --border: hsl(214 25% 90%);
   --input: hsl(214 25% 90%);
   --ring: hsl(172 66% 36%);
+  --surface-glass: hsl(0 0% 100% / 0.8);
+  --surface-glass-border: hsl(214 25% 90% / 0.5);
   --radius: 0.75rem;
   --chart-1: hsl(173 80% 34%);
   --chart-2: hsl(199 89% 38%);
@@ -58,6 +60,8 @@
   --border: hsl(220 28% 18%);
   --input: hsl(220 28% 18%);
   --ring: hsl(172 66% 46%);
+  --surface-glass: hsl(220 30% 12% / 0.8);
+  --surface-glass-border: hsl(220 28% 18% / 0.5);
   --chart-1: hsl(172 66% 46%);
   --chart-2: hsl(199 89% 48%);
   --chart-3: hsl(222 47% 60%);
@@ -85,6 +89,8 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+  --color-surface-glass: var(--surface-glass);
+  --color-surface-glass-border: var(--surface-glass-border);
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
@@ -499,6 +505,8 @@ li {
   --border: #332b3a;
   --input: #332b3a;
   --ring: #f97316;
+  --surface-glass: rgb(19 17 24 / 0.8);
+  --surface-glass-border: rgb(51 43 58 / 0.5);
   --radius: 0.75rem;
 }
 

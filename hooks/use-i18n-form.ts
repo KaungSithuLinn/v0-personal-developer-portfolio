@@ -29,7 +29,7 @@ type I18nFormHandlers = {
   setFieldValue: (_field: string, _value: any) => void
   setFieldTouched: (_field: string, _touched?: boolean) => void
   resetForm: () => void
-  validateField: (_field: string) => void
+  validateField: (_field: string) => boolean
   validateForm: () => boolean
 }
 

@@ -6,7 +6,6 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { useTranslation } from "@/context/language-utils"
 import { useAuth } from "@/hooks/use-auth"
-import { useToast } from "@/hooks/use-toast"
 
 const schema = z.object({
   email: z.string().trim().email("Invalid email address").max(254),
@@ -15,7 +14,7 @@ const schema = z.object({
 export default function LoginForm() {
   const { t } = useTranslation()
   const { user, logout } = useAuth()
-  const { toast } = useToast()
+  const [status, setStatus] = useState<{ type: "success" | "error"; message: string } | null>(null)
   const [isSending, setIsSending] = useState(false)
 
   const form = useForm<{ email: string }>({
@@ -43,6 +42,7 @@ export default function LoginForm() {
 
   async function onSubmit(values: { email: string }) {
     setIsSending(true)
+    setStatus(null)
     try {
       const res = await fetch("/api/auth/magic-link", {
         method: "POST",
@@ -50,13 +50,12 @@ export default function LoginForm() {
         body: JSON.stringify({ email: values.email.toLowerCase() }),
       })
       if (!res.ok) {
-        const text = await res.text().catch(() => "")
-        throw new Error(text || "Failed to send magic link")
+        throw new Error("Failed to send magic link")
       }
-      toast({ title: t("auth.codeSent") })
+      setStatus({ type: "success", message: t("auth.codeSent") })
       form.reset()
     } catch {
-      toast({ title: t("auth.error.server"), variant: "destructive" })
+      setStatus({ type: "error", message: t("auth.error.server") })
     } finally {
       setIsSending(false)
     }
@@ -81,6 +80,19 @@ export default function LoginForm() {
           <p className="mt-1 text-sm text-destructive">{form.formState.errors.email.message}</p>
         )}
       </div>
+      {status && (
+        <div
+          role={status.type === "error" ? "alert" : "status"}
+          aria-live="polite"
+          className={`rounded-md border px-3 py-2 text-sm ${
+            status.type === "error"
+              ? "border-destructive/30 bg-destructive/10 text-destructive"
+              : "border-primary/30 bg-primary/10 text-primary"
+          }`}
+        >
+          {status.message}
+        </div>
+      )}
       <button
         type="submit"
         disabled={isSending || !form.formState.isValid}

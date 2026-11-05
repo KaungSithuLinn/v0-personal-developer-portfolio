@@ -13,6 +13,7 @@ export function AiAssistantWidget() {
   const abortRef = useRef<AbortController | null>(null)
   const inputRef = useRef<HTMLInputElement | null>(null)
   const panelRef = useRef<HTMLDivElement | null>(null)
+  const triggerRef = useRef<HTMLButtonElement | null>(null)
 
   useEffect(() => {
     if (open) inputRef.current?.focus()
@@ -21,7 +22,28 @@ export function AiAssistantWidget() {
   useEffect(() => {
     if (!open) return
     function onKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") setOpen(false)
+      if (event.key === "Escape") {
+        event.preventDefault()
+        handleClose()
+        return
+      }
+
+      if (event.key !== "Tab") return
+      const dialog = panelRef.current
+      if (!dialog) return
+      const focusable = dialog.querySelectorAll<HTMLElement>(
+        'button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])'
+      )
+      if (focusable.length === 0) return
+      const first = focusable[0]
+      const last = focusable[focusable.length - 1]
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault()
+        last.focus()
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault()
+        first.focus()
+      }
     }
     window.addEventListener("keydown", onKeyDown)
     return () => window.removeEventListener("keydown", onKeyDown)
@@ -100,6 +122,12 @@ export function AiAssistantWidget() {
     abortRef.current?.abort()
   }
 
+  function handleClose() {
+    abortRef.current?.abort()
+    setOpen(false)
+    triggerRef.current?.focus()
+  }
+
   return (
     <div className="fixed bottom-6 right-6 z-50">
       {open ? (
@@ -114,7 +142,7 @@ export function AiAssistantWidget() {
             <span className="text-sm font-medium">Ask about my work</span>
             <button
               type="button"
-              onClick={() => setOpen(false)}
+              onClick={handleClose}
               className="text-xs text-muted-foreground hover:text-foreground"
               aria-label="Close assistant"
             >
@@ -176,6 +204,7 @@ export function AiAssistantWidget() {
         </div>
       ) : (
         <button
+          ref={triggerRef}
           type="button"
           onClick={() => setOpen(true)}
           className="rounded-full bg-primary px-4 py-2 text-sm text-primary-foreground shadow-lg"

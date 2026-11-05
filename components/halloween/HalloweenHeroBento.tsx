@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion"
 import { useReducedMotion } from "framer-motion"
-import { Github, Linkedin, Mail, FileText } from "lucide-react"
+import { Github, Linkedin, Mail } from "lucide-react"
 import Image from "next/image"
 import { memo } from "react"
 import { useTranslation } from "@/context/language-utils"
@@ -82,20 +82,10 @@ const HeroVariantComponent = () => {
 
               <a
                 href="mailto:kaungthu.sithu97@gmail.com"
-                className={base()}
+                className={base("bg-primary text-primary-foreground hover:bg-primary/90")}
               >
                 <Mail size={20} aria-hidden="true" />
                 {t("hero.emailContact")}
-              </a>
-
-              <a
-                href="/KaungSithuLinn_SoftwareDeveloper_Resume.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={base("bg-accent text-accent-foreground hover:bg-accent/90")}
-              >
-                <FileText size={20} aria-hidden="true" />
-                {t("hero.downloadResume")}
               </a>
             </motion.div>
           </motion.div>

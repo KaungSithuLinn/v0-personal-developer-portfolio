@@ -1,19 +1,26 @@
 "use client"
 
-import { useState, useTransition, useRef, useEffect } from "react"
+import { useState, useRef, useEffect } from "react"
 import { motion } from "framer-motion"
 import { useReducedMotion } from "framer-motion"
 import { Mail, MapPin } from "lucide-react"
+import { z } from "zod"
 import AnimatedSectionHeader from "./AnimatedSectionHeader"
 import { useTranslation } from "@/context/language-utils"
 import { useI18nForm } from "@/hooks/use-i18n-form"
-import { useLanguageAnimation } from "@/hooks/use-language-animation"
 import { memo } from "react"
+
+const contactFormSchema = z.object({
+  name: z.string().trim().min(2, "Name is required"),
+  email: z.string().trim().email("Invalid email address"),
+  subject: z.string().trim().min(5, "Subject is required"),
+  message: z.string().trim().min(10, "Message is required"),
+})
 
 const ContactComponent = () => {
   const { t, isRTL: _isRTL } = useTranslation()
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle")
-  const [isSubmitting, startTransition] = useTransition()
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const [consent, setConsent] = useState(false)
   const shouldReduceMotion = useReducedMotion()
   const statusRef = useRef<HTMLDivElement>(null)
@@ -24,22 +31,25 @@ const ContactComponent = () => {
     }
   }, [submitStatus])
 
-  const animation = useLanguageAnimation({}) as unknown as { initial: any; animate: any; transition: any }
+  const animation = {
+    initial: shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0 },
+    transition: shouldReduceMotion ? { duration: 0 } : { duration: 0.5, ease: "easeOut" as const },
+  }
 
   const { handleChange, handleBlur, errors, validateField } = useI18nForm({
-    customFields: {
-      name: { required: true, minLength: 2 },
-      email: { required: true, pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/ },
-      subject: { required: true, minLength: 5 },
-      message: { required: true, minLength: 10 },
-    },
-  } as any)
+    initialValues: { name: "", email: "", subject: "", message: "" },
+    validationSchema: contactFormSchema,
+    onSubmit: () => {},
+  })
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    startTransition(async () => {
-      setSubmitStatus("idle")
+    if (isSubmitting) return
+    setSubmitStatus("idle")
+    setIsSubmitting(true)
 
+    try {
       const form = e.currentTarget
       const formData = new FormData(form)
 
@@ -50,29 +60,29 @@ const ContactComponent = () => {
         message: validateField("message"),
       }
 
-      const hasErrors = Object.values(validations).some((result) => Array.isArray(result))
+      const hasErrors = Object.values(validations).some((result) => result === false)
       if (hasErrors || !consent) {
         setSubmitStatus("error")
         return
       }
 
-      try {
-        const response = await fetch("/api/contact", {
-          method: "POST",
-          body: formData,
-        })
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        body: formData,
+      })
 
-        if (response.ok) {
-          setSubmitStatus("success")
-          form.reset()
-          setConsent(false)
-        } else {
-          setSubmitStatus("error")
-        }
-      } catch (_error) {
+      if (response.ok) {
+        setSubmitStatus("success")
+        form.reset()
+        setConsent(false)
+      } else {
         setSubmitStatus("error")
       }
-    })
+    } catch (_error) {
+      setSubmitStatus("error")
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -86,9 +96,9 @@ const ContactComponent = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl mx-auto">
           <motion.div
             className="space-y-6"
-            initial={shouldReduceMotion ? animation.initial : animation.initial}
-            animate={shouldReduceMotion ? animation.animate : animation.animate}
-            transition={shouldReduceMotion ? { duration: 0 } : animation.transition}
+            initial={animation.initial}
+            animate={animation.animate}
+            transition={animation.transition}
           >
             <h3 className="text-2xl font-semibold mb-4 text-foreground">{t("contact.info")}</h3>
             
@@ -126,9 +136,9 @@ const ContactComponent = () => {
           <motion.form
             className="space-y-6"
             onSubmit={handleSubmit}
-            initial={shouldReduceMotion ? animation.initial : animation.initial}
-            animate={shouldReduceMotion ? animation.animate : animation.animate}
-            transition={shouldReduceMotion ? { duration: 0 } : { ...(animation.transition || {}), delay: 0.2 }}
+            initial={animation.initial}
+            animate={animation.animate}
+            transition={{ ...(animation.transition || {}), delay: shouldReduceMotion ? 0 : 0.2 }}
             noValidate
           >
             <div>
@@ -224,7 +234,7 @@ const ContactComponent = () => {
               disabled={isSubmitting}
               className="w-full bg-primary text-primary-foreground px-6 py-3 rounded-lg hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed min-h-[44px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             >
-              {isSubmitting ? t("contact.form.sending") : t("contact.form.submit")}
+              {isSubmitting ? t("contact.form.sending") : t("contact.form.send")}
             </button>
 
             <div
