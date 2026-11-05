@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState, useMemo } from "react"
+import { useEffect, useState, useMemo, useRef } from "react"
 import { motion, useReducedMotion } from "framer-motion"
 import { ArrowUp } from "lucide-react"
 import { useTranslation } from "@/context/language-utils"
@@ -12,6 +12,8 @@ const FloatingNavComponent = () => {
   const [activeSection, setActiveSection] = useState("home")
   const [scrollProgress, setScrollProgress] = useState(0)
   const [showBackToTop, setShowBackToTop] = useState(false)
+  const [navVisible, setNavVisible] = useState(true)
+  const lastScrollYRef = useRef(0)
   const { t, isRTL } = useTranslation()
   const shouldReduceMotion = useReducedMotion()
 
@@ -47,10 +49,18 @@ const FloatingNavComponent = () => {
     })
 
     const onScroll = () => {
+      const currentScrollY = window.scrollY
       const total = document.documentElement.scrollHeight - window.innerHeight
-      const progress = total > 0 ? Math.min(100, Math.max(0, (window.scrollY / total) * 100)) : 0
+      const progress = total > 0 ? Math.min(100, Math.max(0, (currentScrollY / total) * 100)) : 0
       setScrollProgress(progress)
-      setShowBackToTop(window.scrollY > 600)
+      setShowBackToTop(currentScrollY > 600)
+
+      if (currentScrollY > lastScrollYRef.current + 4 && currentScrollY > 80) {
+        setNavVisible(false)
+      } else if (currentScrollY < lastScrollYRef.current - 4 || currentScrollY <= 80) {
+        setNavVisible(true)
+      }
+      lastScrollYRef.current = currentScrollY
     }
 
     onScroll()
@@ -71,7 +81,13 @@ const FloatingNavComponent = () => {
         layout
         role="navigation"
         aria-label={t("nav.sectionNavigation") || "Section navigation"}
-        className={`fixed bottom-24 left-1/2 -translate-x-1/2 sm:translate-x-0 sm:bottom-auto sm:top-1/2 sm:-translate-y-1/2 z-40 ${isRTL ? "sm:left-4 sm:right-auto" : "sm:left-auto sm:right-4"}`}
+        className={`fixed bottom-24 left-1/2 -translate-x-1/2 sm:translate-x-0 sm:bottom-auto sm:top-1/2 sm:-translate-y-1/2 z-40 transition-[opacity,transform,visibility] duration-300 ease-out ${
+          isRTL ? "sm:left-4 sm:right-auto" : "sm:left-auto sm:right-4"
+        } ${
+          navVisible
+            ? "max-sm:translate-y-0 max-sm:opacity-100 max-sm:visible"
+            : "max-sm:translate-y-4 max-sm:opacity-0 max-sm:invisible max-sm:pointer-events-none"
+        }`}
         initial={shouldReduceMotion ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.3, duration: 0.4, ease: "easeOut" }}
