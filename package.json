@@ -18,7 +18,9 @@
   },
   "overrides": {
     "tmp": ">=0.2.7",
-    "uuid": ">=11.1.1"
+    "uuid": ">=11.1.1",
+    "basic-ftp": "^6.2.6",
+    "extract-zip": "^2.0.1"
   },
   "resolutions": {
     "brace-expansion": ">=5.0.9",
@@ -49,7 +51,7 @@
     "zod": "^4.6.7"
   },
   "devDependencies": {
-    "@lhci/cli": "^0.15.1",
+    "@lhci/cli": "^0.16.0",
     "@next/bundle-analyzer": "^16.3.0",
     "@tailwindcss/postcss": "^4.3.3",
     "@testing-library/dom": "^10.4.2",
