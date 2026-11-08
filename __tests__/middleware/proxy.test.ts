@@ -66,7 +66,7 @@ describe('proxy middleware routing behavior', () => {
       headers: new Headers(),
     } as any
 
-    const result = proxy(request)
+    proxy(request)
     expect(NextResponse.next).toHaveBeenCalled()
   })
 
@@ -76,7 +76,7 @@ describe('proxy middleware routing behavior', () => {
       headers: new Headers(),
     } as any
 
-    const result = proxy(request)
+    proxy(request)
     expect(NextResponse.next).toHaveBeenCalled()
   })
 
@@ -86,7 +86,7 @@ describe('proxy middleware routing behavior', () => {
       headers: new Headers(),
     } as any
 
-    const result = proxy(request)
+    proxy(request)
     expect(NextResponse.next).toHaveBeenCalled()
   })
 
@@ -96,7 +96,7 @@ describe('proxy middleware routing behavior', () => {
       headers: new Headers(),
     } as any
 
-    const result = proxy(request)
+    proxy(request)
     expect(NextResponse.next).toHaveBeenCalled()
   })
 

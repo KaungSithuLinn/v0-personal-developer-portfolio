@@ -25,7 +25,6 @@ vi.mock('@ai-sdk/groq', () => ({
 import { POST } from '@/app/api/terminal/route'
 import {
   checkCsrf,
-  createRateLimiter,
   getClientIp,
   getRequestSize,
   getRequiredEnv,
@@ -33,8 +32,6 @@ import {
 import { generateText } from 'ai'
 
 describe('Terminal API limits', () => {
-  let mockRateLimiter: any
-
   beforeEach(() => {
     vi.clearAllMocks()
     mockCheck.mockReturnValue({ allowed: true, remaining: 5, retryAfterMs: 0 })

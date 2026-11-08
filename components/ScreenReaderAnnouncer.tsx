@@ -83,9 +83,7 @@ export function useScreenReader() {
     announcer.className = "sr-only"
     
     document.body.appendChild(announcer)
-    
     // Force a reflow
-    // eslint-disable-next-line no-unused-expressions
     announcer.offsetHeight
     
     // Set the message

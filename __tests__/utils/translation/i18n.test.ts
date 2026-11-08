@@ -1,7 +1,6 @@
 ﻿import { describe, it, expect } from 'vitest'
 import { defaultTranslate } from '@/context/language-utils'
 import { translations } from '@/context/translations/index'
-import { DEFAULT_LANGUAGE } from '@/config/language.config'
 
 describe('Translation utility', () => {
   it('returns translation for default language', () => {

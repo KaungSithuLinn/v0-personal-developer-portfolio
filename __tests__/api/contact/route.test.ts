@@ -26,15 +26,12 @@ vi.mock('resend', () => ({
 
 import {
   checkCsrf,
-  createRateLimiter,
   getClientIp,
   getRequestSize,
   getRequiredEnv,
 } from '@/lib/security'
 
 describe('Contact API validation', () => {
-  let mockRateLimiter: any
-
   beforeEach(() => {
     vi.clearAllMocks()
     mockCheck.mockReturnValue({ allowed: true, remaining: 2, retryAfterMs: 0 })
