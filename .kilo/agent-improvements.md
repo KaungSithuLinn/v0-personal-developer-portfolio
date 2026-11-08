@@ -32,6 +32,16 @@ This file is the shared coordination and improvement record for the portfolio mu
 - Residual risks: GitHub status checks and CodeQL may still report pending alerts; branch-protection bypass messages remain.
 - Follow-up: Monitor production deployment `dpl_GoEDotz5pGADfwNwdWZZdFeTEQ2x` and address remaining moderate dev-only advisories.
 
+### 2026-11-08 - Lint cleanup and React effect warning reduction
+- Owner: testing-quality / frontend-ui
+- Scope: Test files, hooks, ESLint configuration
+- Files: `__tests__/api/contact/route.test.ts`, `__tests__/api/terminal/route.test.ts`, `__tests__/middleware/proxy.test.ts`, `__tests__/utils/translation/i18n.test.ts`, `components/ScreenReaderAnnouncer.tsx`, `hooks/use-mobile.tsx`, `hooks/use-seasonal-theme.ts`, `hooks/use-terminal.ts`, `hooks/use-text-direction.ts`, `context/language-provider.tsx`, `eslint.config.mjs`
+- Summary: Removed unused test imports and variables, replaced synchronous mobile detection with `useSyncExternalStore`, and deferred state updates in React effects with `queueMicrotask` to eliminate lint warnings.
+- Security impact: No security behavior changed.
+- Validation: `npm.cmd run lint` passed with 0 warnings and 0 errors; `npx.cmd tsc --noEmit` passed; `npm.cmd run test` passed (75 tests); `npm.cmd run build` passed.
+- Residual risks: GitHub CodeQL/status checks may still report pending alerts; 10 moderate dev-only advisories remain.
+- Follow-up: Monitor production deployment and consider targeted dependency updates in a separate change.
+
 ## Entries
 
 No improvements recorded yet.

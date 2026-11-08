@@ -43,7 +43,7 @@ export function LanguageProvider({ children, initialLocale }: LanguageProviderPr
   useEffect(() => {
     const savedLanguage = localStorage.getItem("language") as Language | null
     if (savedLanguage && SUPPORTED_LANGUAGES.includes(savedLanguage)) {
-      setLanguage(savedLanguage)
+      queueMicrotask(() => setLanguage(savedLanguage))
     }
   }, [])
 

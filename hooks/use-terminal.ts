@@ -64,16 +64,18 @@ export function useTerminal() {
   const { t, language } = useTranslation()
 
   useEffect(() => {
-    setHistory([
-      {
-        command: "system",
-        output: t("terminal.title") + " v1.0.0",
-      },
-      {
-        command: "system",
-        output: t("terminal.welcome"),
-      },
-    ])
+    queueMicrotask(() =>
+      setHistory([
+        {
+          command: "system",
+          output: t("terminal.title") + " v1.0.0",
+        },
+        {
+          command: "system",
+          output: t("terminal.welcome"),
+        },
+      ]),
+    )
   }, [language, t])
 
   const processCommand = useCallback(

@@ -12,13 +12,13 @@ export function useSeasonalTheme() {
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    setMounted(true)
+    queueMicrotask(() => setMounted(true))
     try {
       const raw = localStorage.getItem(STORAGE_KEY)
       if (raw === "on" || raw === "off" || raw === "auto") {
-        setStored(raw)
+        queueMicrotask(() => setStored(raw))
       } else if (isHalloweenWindow()) {
-        setStored("auto")
+        queueMicrotask(() => setStored("auto"))
       }
     } catch {
       // localStorage unavailable; fall back to no seasonal theme

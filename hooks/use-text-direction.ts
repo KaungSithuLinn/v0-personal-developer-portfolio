@@ -94,7 +94,7 @@ export function useTextDirection(
   )
 
   useEffect(() => {
-    updateDirection(text)
+    queueMicrotask(() => updateDirection(text))
   }, [text, updateDirection])
 
   return {
