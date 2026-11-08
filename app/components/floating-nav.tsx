@@ -1,8 +1,8 @@
 "use client"
 
-import { useEffect, useState, useMemo, useRef } from "react"
-import { motion, useReducedMotion } from "framer-motion"
+import { useEffect, useState, useMemo, useRef, useCallback } from "react"
 import { ArrowUp } from "lucide-react"
+import { useReducedMotion } from "framer-motion"
 import { useTranslation } from "@/context/language-utils"
 import { memo } from "react"
 import ModeToggle from "@/components/mode-toggle"
@@ -10,9 +10,12 @@ import SeasonalToggle from "@/components/seasonal-toggle"
 
 const FloatingNavComponent = () => {
   const [activeSection, setActiveSection] = useState("home")
-  const [scrollProgress, setScrollProgress] = useState(0)
   const [showBackToTop, setShowBackToTop] = useState(false)
   const [navVisible, setNavVisible] = useState(true)
+  const navRef = useRef<HTMLElement>(null)
+  const progressBarRef = useRef<HTMLDivElement>(null)
+  const progressBarContainerRef = useRef<HTMLDivElement>(null)
+  const rafIdRef = useRef(0)
   const lastScrollYRef = useRef(0)
   const { t, isRTL } = useTranslation()
   const shouldReduceMotion = useReducedMotion()
@@ -34,13 +37,19 @@ const FloatingNavComponent = () => {
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id)
-          }
-        })
+        const visibleEntries = entries.filter((entry) => entry.isIntersecting)
+        if (visibleEntries.length === 0) return
+        const currentEntry = visibleEntries.reduce((best, entry) =>
+          entry.intersectionRatio > best.intersectionRatio ? entry : best,
+        )
+        setActiveSection((previous) =>
+          previous === currentEntry.target.id ? previous : currentEntry.target.id,
+        )
       },
-      { threshold: 0.3 },
+      {
+        rootMargin: "-20% 0px -65% 0px",
+        threshold: [0, 0.1, 0.25, 0.5, 0.75, 1],
+      },
     )
 
     sections.forEach(({ id }) => {
@@ -48,60 +57,97 @@ const FloatingNavComponent = () => {
       if (element) observer.observe(element)
     })
 
-    const onScroll = () => {
+    const updateScrollState = () => {
       const currentScrollY = window.scrollY
       const total = document.documentElement.scrollHeight - window.innerHeight
-      const progress = total > 0 ? Math.min(100, Math.max(0, (currentScrollY / total) * 100)) : 0
-      setScrollProgress(progress)
-      setShowBackToTop(currentScrollY > 600)
+      const progress =
+        total > 0 ? Math.min(100, Math.max(0, (currentScrollY / total) * 100)) : 0
 
-      if (currentScrollY > lastScrollYRef.current + 4 && currentScrollY > 80) {
-        setNavVisible(false)
-      } else if (currentScrollY < lastScrollYRef.current - 4 || currentScrollY <= 80) {
+      if (progressBarRef.current) {
+        progressBarRef.current.style.transform = `scaleX(${progress / 100})`
+      }
+      if (progressBarContainerRef.current) {
+        progressBarContainerRef.current.setAttribute("aria-valuenow", String(Math.round(progress)))
+      }
+
+      const nextShowBackToTop = currentScrollY > 600
+      setShowBackToTop((previous) => (previous === nextShowBackToTop ? previous : nextShowBackToTop))
+
+      if (window.innerWidth < 768) {
+        if (currentScrollY > lastScrollYRef.current + 4 && currentScrollY > 80) {
+          setNavVisible(false)
+        } else if (currentScrollY < lastScrollYRef.current - 4 || currentScrollY <= 80) {
+          setNavVisible(true)
+        }
+      } else {
         setNavVisible(true)
       }
+
       lastScrollYRef.current = currentScrollY
+      rafIdRef.current = 0
     }
 
-    onScroll()
-    window.addEventListener("scroll", onScroll, { passive: true })
+    const handleScroll = () => {
+      if (rafIdRef.current) return
+      rafIdRef.current = requestAnimationFrame(updateScrollState)
+    }
+
+    updateScrollState()
+    window.addEventListener("scroll", handleScroll, { passive: true })
+
     return () => {
       observer.disconnect()
-      window.removeEventListener("scroll", onScroll)
+      if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current)
+      window.removeEventListener("scroll", handleScroll)
     }
   }, [sections])
 
-  const scrollToTop = () => {
+  useEffect(() => {
+    if (navVisible) return
+    const activeElement = document.activeElement
+    if (activeElement instanceof HTMLElement && navRef.current?.contains(activeElement)) {
+      activeElement.blur()
+    }
+  }, [navVisible])
+
+  const scrollToTop = useCallback(() => {
     window.scrollTo({ top: 0, behavior: shouldReduceMotion ? "auto" : "smooth" })
-  }
+  }, [shouldReduceMotion])
 
   return (
     <>
-      <motion.nav
-        layout
+      <nav
+        ref={navRef}
         role="navigation"
         aria-label={t("nav.sectionNavigation") || "Section navigation"}
-        className={`fixed bottom-24 left-1/2 -translate-x-1/2 sm:translate-x-0 sm:bottom-auto sm:top-1/2 sm:-translate-y-1/2 z-40 transition-[opacity,transform,visibility] duration-300 ease-out ${
+        aria-hidden={!navVisible}
+        className={`fixed bottom-24 left-1/2 -translate-x-1/2 sm:translate-x-0 sm:bottom-auto sm:top-1/2 sm:-translate-y-1/2 z-40 bg-card/95 border border-border shadow-lg rounded-full p-3 transition-[transform,opacity] duration-200 ease-out motion-reduce:transition-none will-change-[transform,opacity] ${
           isRTL ? "sm:left-4 sm:right-auto" : "sm:left-auto sm:right-4"
         } ${
           navVisible
-            ? "max-sm:translate-y-0 max-sm:opacity-100 max-sm:visible"
-            : "max-sm:translate-y-4 max-sm:opacity-0 max-sm:invisible max-sm:pointer-events-none"
+            ? "max-sm:translate-y-0 max-sm:opacity-100"
+            : "max-sm:translate-y-4 max-sm:opacity-0 max-sm:pointer-events-none"
         }`}
-        initial={shouldReduceMotion ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.3, duration: 0.4, ease: "easeOut" }}
       >
-        <div className="flex sm:flex-col gap-3 bg-card/80 backdrop-blur-md p-3 rounded-full border border-border shadow-lg">
+        <div className="flex sm:flex-col gap-3">
           {sections.map(({ id, label }) => (
             <button
               key={id}
-              onClick={() => document.getElementById(id)?.scrollIntoView({ behavior: shouldReduceMotion ? "auto" : "smooth" })}
+              onClick={() =>
+                document.getElementById(id)?.scrollIntoView({
+                  behavior: shouldReduceMotion ? "auto" : "smooth",
+                })
+              }
               className="group relative flex items-center justify-center min-w-[44px] min-h-[44px]"
               aria-label={t("nav.scrollTo", { section: label })}
               aria-current={activeSection === id ? "true" : undefined}
+              tabIndex={navVisible ? 0 : -1}
             >
-              <span className={`absolute ${isRTL ? "left-full ms-2" : "right-full me-2"} hidden sm:block px-2 py-1 rounded bg-card text-foreground text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap border border-border`}>
+              <span
+                className={`absolute ${
+                  isRTL ? "left-full ms-2" : "right-full me-2"
+                } hidden sm:block px-2 py-1 rounded bg-card text-foreground text-sm opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-200 whitespace-nowrap border border-border`}
+              >
                 {label}
               </span>
               <div
@@ -114,42 +160,45 @@ const FloatingNavComponent = () => {
             </button>
           ))}
         </div>
-      </motion.nav>
+      </nav>
 
       <div
+        ref={progressBarContainerRef}
         role="progressbar"
-        aria-valuenow={Math.round(scrollProgress)}
+        aria-valuenow={0}
         aria-valuemin={0}
         aria-valuemax={100}
         aria-label={t("nav.scrollProgress") || "Page scroll progress"}
         className="fixed top-0 left-0 right-0 h-1 z-[60] pointer-events-none"
       >
         <div
-          className="h-full bg-gradient-to-r from-primary to-chart-2 transition-[width] duration-150 ease-out"
-          style={{ width: `${scrollProgress}%` }}
+          ref={progressBarRef}
+          className="h-full w-full origin-left bg-gradient-to-r from-primary to-chart-2 transition-transform duration-100 ease-out motion-reduce:transition-none"
+          style={{ transform: "scaleX(0)" }}
         />
       </div>
 
-      <motion.button
+      <button
         type="button"
         onClick={scrollToTop}
         aria-label={t("nav.backToTop")}
-        initial={false}
-        animate={{
-          opacity: showBackToTop ? 1 : 0,
-          scale: showBackToTop ? 1 : 0.8,
-          pointerEvents: showBackToTop ? "auto" : "none",
-        }}
-        transition={{ duration: 0.2 }}
-        className={`fixed bottom-6 z-50 flex items-center justify-center w-11 h-11 rounded-full bg-primary text-primary-foreground shadow-lg shadow-primary/30 hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background ${isRTL ? "left-6" : "right-6"}`}
+        aria-hidden={!showBackToTop}
+        tabIndex={showBackToTop ? 0 : -1}
+        className={`fixed bottom-[4.75rem] z-50 flex items-center justify-center w-11 h-11 rounded-full bg-primary text-primary-foreground shadow-lg shadow-primary/30 hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-[transform,opacity] duration-200 ease-out motion-reduce:transition-none ${
+          isRTL ? "left-6" : "right-6"
+        } ${
+          showBackToTop
+            ? "opacity-100 scale-100"
+            : "opacity-0 scale-95 pointer-events-none"
+        }`}
       >
         <ArrowUp className="w-5 h-5" aria-hidden="true" />
-      </motion.button>
+      </button>
 
-      <div className={`fixed bottom-20 z-50 ${isRTL ? "left-6" : "right-6"}`}>
+      <div className={`fixed bottom-[11.25rem] z-50 ${isRTL ? "left-6" : "right-6"}`}>
         <ModeToggle />
       </div>
-      <div className={`fixed bottom-8 z-50 ${isRTL ? "left-6" : "right-6"}`}>
+      <div className={`fixed bottom-[8rem] z-50 ${isRTL ? "left-6" : "right-6"}`}>
         <SeasonalToggle />
       </div>
     </>

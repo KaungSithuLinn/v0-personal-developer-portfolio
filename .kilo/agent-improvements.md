@@ -35,3 +35,12 @@ This file is the shared coordination and improvement record for the portfolio mu
 ## Entries
 
 No improvements recorded yet.
+### 2026-11-08 - Fresh 60 FPS floating navigation implementation
+- Owner: frontend-ui
+- Scope: Floating navigation, scroll-to-top, widget stacking, accessibility, iconography
+- Files: `app/components/floating-nav.tsx`, `app/components/ai-assistant-widget.tsx`, `components/seasonal-toggle.tsx`, `app/components/terminal/UnifiedDevConsole.tsx`, `app/globals.css`
+- Summary: Replaced per-scroll React state updates with a requestAnimationFrame-batched scroll handler, moved progress updates to a compositor-friendly transform, removed Framer Motion layout animation, reduced backdrop blur, added accessible hidden back-to-top state, repositioned floating widgets to avoid overlap, made the AI widget RTL-aware, changed the seasonal toggle icon to Ghost, and replaced the advanced console globe icon with a Reicon monitor SVG.
+- Security impact: None.
+- Validation: `npm.cmd run lint` passed (pre-existing warnings only); `npx.cmd tsc --noEmit` passed; `npm.cmd run test` passed (75 tests); `npm.cmd run build` passed.
+- Residual risks: Widget spacing is tuned for the current 44 px button size; CSP still permits inline styles for Framer Motion.
+- Follow-up: Verify the preview deployment in a browser before promotion.

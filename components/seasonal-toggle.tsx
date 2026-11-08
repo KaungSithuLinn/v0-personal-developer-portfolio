@@ -3,7 +3,7 @@
 import { useSeasonalTheme } from "@/hooks/use-seasonal-theme"
 import { useScreenReader } from "@/components/ScreenReaderAnnouncer"
 import { useTranslation } from "@/context/language-utils"
-import { Moon } from "lucide-react"
+import { Ghost } from "lucide-react"
 
 export default function SeasonalToggle() {
   const { isHalloween, setHalloween } = useSeasonalTheme()
@@ -28,7 +28,7 @@ export default function SeasonalToggle() {
           : "bg-slate-900/70 text-white border-teal-500/30 hover:border-teal-400"
       }`}
     >
-      <Moon size={16} aria-hidden="true" />
+      <Ghost size={16} aria-hidden="true" />
     </button>
   )
 }

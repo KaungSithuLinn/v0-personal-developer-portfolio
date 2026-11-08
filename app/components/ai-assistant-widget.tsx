@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
+import { useTranslation } from "@/context/language-utils"
 
 type ChatMessage = { id: string; role: "user" | "assistant"; content: string }
 
@@ -10,6 +11,7 @@ export function AiAssistantWidget() {
   const [input, setInput] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const { isRTL } = useTranslation()
   const abortRef = useRef<AbortController | null>(null)
   const inputRef = useRef<HTMLInputElement | null>(null)
   const panelRef = useRef<HTMLDivElement | null>(null)
@@ -129,7 +131,7 @@ export function AiAssistantWidget() {
   }
 
   return (
-    <div className="fixed bottom-6 right-6 z-50">
+    <div className={`fixed bottom-6 z-50 ${isRTL ? "left-6" : "right-6"}`}>
       {open ? (
         <div
           ref={panelRef}

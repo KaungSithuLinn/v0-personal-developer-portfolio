@@ -215,18 +215,6 @@ body {
 }
 
 /* Language transition effects */
-.language-transition * {
-  transition: opacity 0.3s ease-in-out;
-}
-
-.language-transition {
-  opacity: 0.5;
-}
-
-/* Ensure smooth transitions for all translatable elements */
-h1, h2, h3, h4, h5, h6, p, span, a, button {
-  transition: opacity 0.2s ease-in-out;
-}
 
 /* Language-specific font adjustments */
 
