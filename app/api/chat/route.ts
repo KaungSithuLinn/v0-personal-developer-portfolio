@@ -6,6 +6,8 @@ import {
   createRateLimiter,
   getClientIp,
   getRequestSize,
+  NO_STORE_HEADERS,
+  rateLimitHeaders,
 } from "@/lib/security"
 
 const messageSchema: z.ZodType<ModelMessage> = z.discriminatedUnion("role", [
@@ -23,15 +25,8 @@ const bodySchema = z.object({
   messages: z.array(messageSchema).min(1).max(20),
 })
 
-const rateLimiter = createRateLimiter({
-  windowMs: 60_000,
-  maxRequests: 20,
-  maxEntries: 10_000,
-})
-
-const noStoreHeaders = {
-  "Cache-Control": "no-store, no-cache, must-revalidate",
-}
+const CHAT_RATE_LIMIT = { windowMs: 60_000, maxRequests: 20, maxEntries: 10_000 } as const
+const rateLimiter = createRateLimiter(CHAT_RATE_LIMIT)
 
 export const runtime = "nodejs"
 
@@ -40,25 +35,22 @@ export async function POST(request: Request) {
     if (!getRequestSize(request, 128 * 1024)) {
       return new Response("Request body is too large", {
         status: 413,
-        headers: noStoreHeaders,
+        headers: NO_STORE_HEADERS,
       })
     }
 
     if (!checkCsrf(request)) {
       return new Response("Invalid request origin", {
         status: 403,
-        headers: noStoreHeaders,
+        headers: NO_STORE_HEADERS,
       })
     }
 
-    const rateLimit = rateLimiter.check(getClientIp(request))
+    const rateLimit = rateLimiter.check(`chat:${getClientIp(request)}`)
     if (!rateLimit.allowed) {
       return new Response("Too many requests. Please try again later.", {
         status: 429,
-        headers: {
-          ...noStoreHeaders,
-          "Retry-After": String(Math.max(1, Math.ceil(rateLimit.retryAfterMs / 1000))),
-        },
+        headers: rateLimitHeaders(rateLimit, CHAT_RATE_LIMIT.maxRequests),
       })
     }
 
@@ -66,7 +58,7 @@ export async function POST(request: Request) {
     if (!parsed.success) {
       return new Response("Invalid request", {
         status: 400,
-        headers: noStoreHeaders,
+        headers: NO_STORE_HEADERS,
       })
     }
 
@@ -77,12 +69,12 @@ export async function POST(request: Request) {
       messages: parsed.data.messages,
     })
 
-    return result.toTextStreamResponse({ headers: noStoreHeaders })
+    return result.toTextStreamResponse({ headers: NO_STORE_HEADERS })
   } catch (error) {
     console.error("Chat API error", error instanceof Error ? error.message : "unknown")
     return new Response("Chat is temporarily unavailable", {
       status: 500,
-      headers: noStoreHeaders,
+      headers: NO_STORE_HEADERS,
     })
   }
 }

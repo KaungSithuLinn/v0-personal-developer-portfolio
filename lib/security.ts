@@ -1,5 +1,9 @@
 import { z } from "zod"
 
+export const NO_STORE_HEADERS = {
+  "Cache-Control": "no-store, no-cache, must-revalidate",
+} as const
+
 const rateLimitSchema = z.object({
   windowMs: z.number().int().positive(),
   maxRequests: z.number().int().positive(),
@@ -17,50 +21,92 @@ export type RateLimitResult = {
   retryAfterMs: number
 }
 
-export function createRateLimiter(options: z.input<typeof rateLimitSchema>) {
-  const { windowMs, maxRequests, maxEntries } = rateLimitSchema.parse(options)
-  const store = new Map<string, RateLimitRecord>()
+export type RateLimiter = {
+  check(key: string): RateLimitResult
+  reset(): void
+}
 
-  function prune(now: number) {
-    if (store.size <= maxEntries) return
+export type RateLimitStore = {
+  consume(key: string, now: number): RateLimitRecord
+  clear(): void
+}
 
-    for (const [key, record] of store) {
-      if (now >= record.resetAt) store.delete(key)
+class MemoryRateLimitStore implements RateLimitStore {
+  private store = new Map<string, RateLimitRecord>()
+
+  constructor(
+    private readonly windowMs: number,
+    private readonly maxEntries: number,
+  ) {}
+
+  private prune(now: number) {
+    if (this.store.size <= this.maxEntries) return
+
+    for (const [key, record] of this.store) {
+      if (now >= record.resetAt) this.store.delete(key)
     }
 
-    if (store.size > maxEntries) {
-      const overflow = store.size - maxEntries
+    if (this.store.size > this.maxEntries) {
+      const overflow = this.store.size - this.maxEntries
       let removed = 0
-      for (const key of store.keys()) {
-        store.delete(key)
+      for (const key of this.store.keys()) {
+        this.store.delete(key)
         removed += 1
         if (removed >= overflow) break
       }
     }
   }
 
+  consume(key: string, now: number): RateLimitRecord {
+    this.prune(now)
+    const existing = this.store.get(key)
+    if (!existing || now >= existing.resetAt) {
+      const record = { count: 1, resetAt: now + this.windowMs }
+      this.store.set(key, record)
+      return record
+    }
+    existing.count += 1
+    return existing
+  }
+
+  clear() {
+    this.store.clear()
+  }
+}
+
+export function createRateLimiter(options: z.input<typeof rateLimitSchema>): RateLimiter {
+  const { windowMs, maxRequests, maxEntries } = rateLimitSchema.parse(options)
+  const store = new MemoryRateLimitStore(windowMs, maxEntries)
+
   return {
-    check(ip: string): RateLimitResult {
+    check(key: string): RateLimitResult {
       const now = Date.now()
-      prune(now)
-
-      const existing = store.get(ip)
-      if (!existing || now >= existing.resetAt) {
-        store.set(ip, { count: 1, resetAt: now + windowMs })
-        return { allowed: true, remaining: maxRequests - 1, retryAfterMs: 0 }
+      const record = store.consume(key, now)
+      if (record.count > maxRequests) {
+        return { allowed: false, remaining: 0, retryAfterMs: Math.max(0, record.resetAt - now) }
       }
-
-      if (existing.count >= maxRequests) {
-        return { allowed: false, remaining: 0, retryAfterMs: existing.resetAt - now }
-      }
-
-      existing.count += 1
-      return { allowed: true, remaining: maxRequests - existing.count, retryAfterMs: 0 }
+      return { allowed: true, remaining: Math.max(0, maxRequests - record.count), retryAfterMs: 0 }
     },
     reset() {
       store.clear()
     },
   }
+}
+
+export function rateLimitHeaders(result: RateLimitResult, limit: number): HeadersInit {
+  const headers: Record<string, string> = {
+    ...NO_STORE_HEADERS,
+    "X-RateLimit-Limit": String(limit),
+    "X-RateLimit-Remaining": String(result.remaining),
+  }
+  if (!result.allowed) {
+    headers["Retry-After"] = String(Math.max(1, Math.ceil(result.retryAfterMs / 1000)))
+  }
+  return headers
+}
+
+export function isSameOriginRequest(request: Request): boolean {
+  return checkCsrf(request)
 }
 
 export function getClientIp(request: Request): string {

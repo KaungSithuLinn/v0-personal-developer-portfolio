@@ -6,13 +6,16 @@ const { mockCheck, mockStreamText } = vi.hoisted(() => ({
   mockStreamText: vi.fn(),
 }))
 
-vi.mock("@/lib/security", () => ({
-  checkCsrf: vi.fn(),
-  createRateLimiter: vi.fn(() => ({ check: mockCheck })),
-  getClientIp: vi.fn(),
-  getRequestSize: vi.fn(),
-  getRequiredEnv: vi.fn(),
-}))
+vi.mock("@/lib/security", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("@/lib/security")>()
+  return {
+    ...actual,
+    checkCsrf: vi.fn(),
+    createRateLimiter: vi.fn(() => ({ check: mockCheck })),
+    getClientIp: vi.fn(),
+    getRequestSize: vi.fn(),
+  }
+})
 
 vi.mock("@ai-sdk/groq", () => ({
   groq: vi.fn(() => "mock-model"),
@@ -22,11 +25,7 @@ vi.mock("ai", () => ({
   streamText: mockStreamText,
 }))
 
-import {
-  checkCsrf,
-  getClientIp,
-  getRequestSize,
-} from "@/lib/security"
+import { checkCsrf, getClientIp, getRequestSize } from "@/lib/security"
 
 describe("Chat API", () => {
   beforeEach(() => {

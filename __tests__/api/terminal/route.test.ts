@@ -4,15 +4,19 @@ const { mockCheck } = vi.hoisted(() => ({
   mockCheck: vi.fn(() => ({ allowed: true, remaining: 5, retryAfterMs: 0 })),
 }))
 
-vi.mock('@/lib/security', () => ({
-  checkCsrf: vi.fn(),
-  createRateLimiter: vi.fn(() => ({
-    check: mockCheck,
-  })),
-  getClientIp: vi.fn(),
-  getRequestSize: vi.fn(),
-  getRequiredEnv: vi.fn(),
-}))
+vi.mock('@/lib/security', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@/lib/security')>()
+  return {
+    ...actual,
+    checkCsrf: vi.fn(),
+    createRateLimiter: vi.fn(() => ({
+      check: mockCheck,
+    })),
+    getClientIp: vi.fn(),
+    getRequestSize: vi.fn(),
+    getRequiredEnv: vi.fn(),
+  }
+})
 
 vi.mock('ai', () => ({
   generateText: vi.fn(),

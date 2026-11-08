@@ -13,7 +13,8 @@ const FloatingNavComponent = () => {
   const [scrollProgress, setScrollProgress] = useState(0)
   const [showBackToTop, setShowBackToTop] = useState(false)
   const [navVisible, setNavVisible] = useState(true)
-  const lastScrollYRef = useRef(0)
+  const navRef = useRef<HTMLElement>(null)
+const lastScrollYRef = useRef(0)
   const { t, isRTL } = useTranslation()
   const shouldReduceMotion = useReducedMotion()
 
@@ -71,6 +72,12 @@ const FloatingNavComponent = () => {
     }
   }, [sections])
 
+  useEffect(() => {
+    if (!navVisible && navRef.current?.contains(document.activeElement)) {
+      ;(document.activeElement as HTMLElement | null)?.blur()
+    }
+  }, [navVisible])
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: shouldReduceMotion ? "auto" : "smooth" })
   }
@@ -99,6 +106,7 @@ const FloatingNavComponent = () => {
               onClick={() => document.getElementById(id)?.scrollIntoView({ behavior: shouldReduceMotion ? "auto" : "smooth" })}
               className="group relative flex items-center justify-center min-w-[44px] min-h-[44px]"
               aria-label={t("nav.scrollTo", { section: label })}
+              tabIndex={navVisible ? 0 : -1}
               aria-current={activeSection === id ? "true" : undefined}
             >
               <span className={`absolute ${isRTL ? "left-full ms-2" : "right-full me-2"} hidden sm:block px-2 py-1 rounded bg-card text-foreground text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap border border-border`}>

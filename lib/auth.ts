@@ -1,14 +1,18 @@
-import { createHmac, timingSafeEqual } from "crypto"
+import { createHmac, randomUUID, timingSafeEqual } from "crypto"
 
-const SESSION_NAME = "ksl_session"
+export const SESSION_COOKIE_NAME = "ksl_session"
 const SESSION_TTL_MS = 7 * 24 * 60 * 60 * 1000
 const MAGIC_LINK_TTL_MS = 15 * 60 * 1000
+const AUTH_AUDIENCE = "portfolio"
 
 export type SessionPayload = {
   purpose: "session"
   sub: string
   email: string
   isAdmin: boolean
+  iss: string
+  aud: string
+  jti: string
   iat: number
   exp: number
 }
@@ -16,6 +20,9 @@ export type SessionPayload = {
 export type MagicLinkPayload = {
   purpose: "magic-link"
   email: string
+  iss: string
+  aud: string
+  jti: string
   iat: number
   exp: number
 }
@@ -24,12 +31,30 @@ function getSecret(): string | undefined {
   return process.env.SESSION_SECRET || undefined
 }
 
+function getIssuer(): string {
+  return process.env.NEXT_PUBLIC_APP_URL || process.env.NEXT_PUBLIC_SITE_URL || "portfolio"
+}
+
+function safeEqual(a: string, b: string): boolean {
+  const left = Buffer.from(a)
+  const right = Buffer.from(b)
+  if (left.length !== right.length) return false
+  return timingSafeEqual(left, right)
+}
+
 export function signToken(payload: Record<string, unknown>, ttlMs: number): string | null {
   const secret = getSecret()
   if (!secret) return null
 
   const now = Date.now()
-  const full = { ...payload, iat: now, exp: now + ttlMs }
+  const full = {
+    iss: getIssuer(),
+    aud: AUTH_AUDIENCE,
+    jti: randomUUID(),
+    ...payload,
+    iat: now,
+    exp: now + ttlMs,
+  }
   const header = Buffer.from(JSON.stringify({ alg: "HS256", typ: "JWT" })).toString("base64url")
   const body = Buffer.from(JSON.stringify(full)).toString("base64url")
   const sig = createHmac("sha256", secret).update(`${header}.${body}`).digest("base64url")
@@ -47,23 +72,30 @@ export function verifyToken<T = Record<string, unknown>>(token: string): T | nul
     if (!header || !body || !sig) return null
 
     const expected = createHmac("sha256", secret).update(`${header}.${body}`).digest("base64url")
-    if (!timingSafeEqual(Buffer.from(expected), Buffer.from(sig))) return null
+    if (!safeEqual(expected, sig)) return null
 
-    const payload = JSON.parse(Buffer.from(body, "base64url").toString("utf8")) as T & { exp: number }
-    if (Date.now() > payload.exp) return null
+    const payload = JSON.parse(Buffer.from(body, "base64url").toString("utf8")) as T & {
+      exp: number
+      aud?: string
+      iss?: string
+    }
+    if (typeof payload.exp !== "number" || Date.now() > payload.exp) return null
+    if (payload.aud && payload.aud !== AUTH_AUDIENCE) return null
+    if (payload.iss && typeof payload.iss !== "string") return null
     return payload as T
   } catch {
     return null
   }
 }
 
-export function signSessionToken(payload: Omit<SessionPayload, "purpose" | "iat" | "exp">): string | null {
+export function signSessionToken(payload: Omit<SessionPayload, "purpose" | "iat" | "exp" | "iss" | "aud" | "jti">): string | null {
   return signToken({ ...payload, purpose: "session" }, SESSION_TTL_MS)
 }
 
 export function verifySessionToken(token: string): SessionPayload | null {
   const payload = verifyToken<SessionPayload>(token)
   if (!payload || payload.purpose !== "session") return null
+  if (typeof payload.email !== "string" || typeof payload.sub !== "string") return null
   return payload
 }
 
@@ -74,13 +106,14 @@ export function signMagicLinkToken(email: string): string | null {
 export function verifyMagicLinkToken(token: string): MagicLinkPayload | null {
   const payload = verifyToken<MagicLinkPayload>(token)
   if (!payload || payload.purpose !== "magic-link") return null
+  if (typeof payload.email !== "string") return null
   return payload
 }
 
 export function getSessionCookie(): string | undefined {
   try {
     const { cookies } = require("next/headers")
-    return cookies().get(SESSION_NAME)?.value
+    return cookies().get(SESSION_COOKIE_NAME)?.value
   } catch {
     return undefined
   }
@@ -90,16 +123,17 @@ export function setSessionCookie(response: { headers: { set: (key: string, value
   const secure = process.env.NODE_ENV === "production"
   response.headers.set(
     "Set-Cookie",
-    `${SESSION_NAME}=${token}; HttpOnly${secure ? "; Secure" : ""}; SameSite=Lax; Path=/; Max-Age=${Math.floor(
+    `${SESSION_COOKIE_NAME}=${token}; HttpOnly${secure ? "; Secure" : ""}; SameSite=Lax; Path=/; Max-Age=${Math.floor(
       SESSION_TTL_MS / 1000,
     )}`,
   )
 }
 
 export function clearSessionCookie(response: { headers: { set: (key: string, value: string) => void } }): void {
+  const secure = process.env.NODE_ENV === "production"
   response.headers.set(
     "Set-Cookie",
-    `${SESSION_NAME}=; HttpOnly; SameSite=Lax; Path=/; Max-Age=0`,
+    `${SESSION_COOKIE_NAME}=; HttpOnly${secure ? "; Secure" : ""}; SameSite=Lax; Path=/; Max-Age=0`,
   )
 }
 

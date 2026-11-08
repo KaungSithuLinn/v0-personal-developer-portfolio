@@ -7,6 +7,8 @@ import {
   getClientIp,
   getRequestSize,
   getRequiredEnv,
+  NO_STORE_HEADERS,
+  rateLimitHeaders,
 } from "@/lib/security"
 
 const contactSchema = z.object({
@@ -17,15 +19,8 @@ const contactSchema = z.object({
   website: z.string().max(0).optional(),
 })
 
-const rateLimiter = createRateLimiter({
-  windowMs: 60_000,
-  maxRequests: 3,
-  maxEntries: 10_000,
-})
-
-const noStoreHeaders = {
-  "Cache-Control": "no-store, no-cache, must-revalidate",
-}
+const CONTACT_RATE_LIMIT = { windowMs: 60_000, maxRequests: 3, maxEntries: 10_000 } as const
+const rateLimiter = createRateLimiter(CONTACT_RATE_LIMIT)
 
 function escapeHtml(value: string): string {
   return value
@@ -41,29 +36,26 @@ export async function POST(request: Request) {
     if (!getRequestSize(request, 1024 * 1024)) {
       return NextResponse.json(
         { error: "Request body is too large" },
-        { status: 413, headers: noStoreHeaders },
+        { status: 413, headers: NO_STORE_HEADERS },
       )
     }
 
     if (!checkCsrf(request)) {
       return NextResponse.json(
         { error: "Invalid request origin" },
-        { status: 403, headers: noStoreHeaders },
+        { status: 403, headers: NO_STORE_HEADERS },
       )
     }
 
     const ip = getClientIp(request)
-    const rateLimit = rateLimiter.check(ip)
+    const rateLimit = rateLimiter.check(`contact:${ip}`)
 
     if (!rateLimit.allowed) {
       return NextResponse.json(
         { error: "Too many requests. Please try again later." },
         {
           status: 429,
-          headers: {
-            ...noStoreHeaders,
-            "Retry-After": String(Math.max(1, Math.ceil(rateLimit.retryAfterMs / 1000))),
-          },
+          headers: rateLimitHeaders(rateLimit, CONTACT_RATE_LIMIT.maxRequests),
         },
       )
     }
@@ -73,7 +65,7 @@ export async function POST(request: Request) {
     if (website.length > 0) {
       return NextResponse.json(
         { message: "Message sent successfully" },
-        { status: 200, headers: noStoreHeaders },
+        { status: 200, headers: NO_STORE_HEADERS },
       )
     }
 
@@ -106,20 +98,20 @@ export async function POST(request: Request) {
 
     return NextResponse.json(
       { message: "Message sent successfully", remaining: rateLimit.remaining },
-      { status: 200, headers: noStoreHeaders },
+      { status: 200, headers: NO_STORE_HEADERS },
     )
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json(
-        { error: "Validation failed", details: error.issues },
-        { status: 400, headers: noStoreHeaders },
+        { error: "Validation failed" },
+        { status: 400, headers: NO_STORE_HEADERS },
       )
     }
 
     console.error("Contact form error", { message: error instanceof Error ? error.message : "unknown" })
     return NextResponse.json(
       { error: "Failed to send message" },
-      { status: 500, headers: noStoreHeaders },
+      { status: 500, headers: NO_STORE_HEADERS },
     )
   }
 }

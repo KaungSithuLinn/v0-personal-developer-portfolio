@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
 import { SUPPORTED_LANGUAGES, DEFAULT_LANGUAGE } from "@/config/language.config"
-import { verifySessionToken } from "@/lib/auth"
+import { SESSION_COOKIE_NAME, verifySessionToken } from "@/lib/auth"
 
 const SECURITY_HEADERS = {
   "X-Content-Type-Options": "nosniff",
@@ -21,7 +21,7 @@ function buildCsp(nonce: string): string {
     "frame-ancestors 'none'",
     "object-src 'none'",
     `script-src 'self' 'nonce-${nonce}' 'strict-dynamic'${isDevelopment ? " 'unsafe-eval'" : ""}`,
-    `style-src 'self' 'unsafe-inline'${isDevelopment ? " 'unsafe-inline'" : ""}`,
+    "style-src 'self' 'unsafe-inline'",
     "img-src 'self' data: https://v0.blob.com https://hebbkx1anhila5yf.public.blob.vercel-storage.com",
     "font-src 'self' data:",
     "connect-src 'self'",
@@ -37,6 +37,14 @@ function applySecurityHeaders(response: NextResponse, csp: string) {
   }
 }
 
+function getSessionToken(request: NextRequest): string | null {
+  const cookie = request.cookies.get(SESSION_COOKIE_NAME)?.value
+  if (cookie) return cookie
+  const header = request.headers.get("cookie") ?? ""
+  const match = header.match(new RegExp(`(?:^|; )${SESSION_COOKIE_NAME}=([^;]+)`))
+  return match?.[1] ?? null
+}
+
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
   const nonce = Buffer.from(crypto.randomUUID()).toString("base64")
@@ -50,15 +58,21 @@ export function proxy(request: NextRequest) {
     return response
   }
 
+  const localePrefix = pathname.match(/^\/(en|zh|ms)(?=\/|$)/)?.[0] ?? ""
+  const normalizedPath = localePrefix ? pathname.slice(localePrefix.length) || "/" : pathname
+
   // Admin/preview surfaces require a valid session.
-  if (pathname.startsWith("/admin") || pathname.startsWith("/preview")) {
-    const cookie = request.headers.get("cookie") ?? ""
-    const match = cookie.match(/(?:^|; )ksl_session=([^;]+)/)
-    const session = verifySessionToken(match ? match[1] : "")
+  if (
+    normalizedPath === "/admin" ||
+    normalizedPath.startsWith("/admin/") ||
+    normalizedPath === "/preview" ||
+    normalizedPath.startsWith("/preview/")
+  ) {
+    const session = verifySessionToken(getSessionToken(request) ?? "")
     if (!session) {
-      const locale = pathname.split("/")[1]
-      const lang = SUPPORTED_LANGUAGES.includes(locale as (typeof SUPPORTED_LANGUAGES)[number])
-        ? locale
+      const first = pathname.split("/")[1]
+      const lang = SUPPORTED_LANGUAGES.includes(first as (typeof SUPPORTED_LANGUAGES)[number])
+        ? first
         : DEFAULT_LANGUAGE
       const redirectUrl = new URL(`/${lang}/login`, request.nextUrl.origin)
       redirectUrl.searchParams.set("callbackUrl", pathname)

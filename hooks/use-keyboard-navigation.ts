@@ -13,6 +13,7 @@ interface KeyboardNavigationOptions {
   enterActivation?: boolean
   spaceActivation?: boolean
   escDismissal?: boolean
+  autoFocus?: boolean
 }
 
 export function useKeyboardNavigation<T extends HTMLElement>(
@@ -29,8 +30,9 @@ export function useKeyboardNavigation<T extends HTMLElement>(
     tabNavigation = true,
     enterActivation = true,
     spaceActivation = true,
-    escDismissal = false,
-  } = options
+  escDismissal = false,
+  autoFocus = false,
+} = options
 
   const announceNavigationInstructions = useCallback(() => {
     const instructions = [
@@ -232,7 +234,7 @@ export function useKeyboardNavigation<T extends HTMLElement>(
 
   // Initialize focus
   useEffect(() => {
-    if (!ref.current) return
+    if (!autoFocus || !ref.current) return
     
     const elements = getFocusableElements()
     if (elements.length) {
@@ -240,7 +242,7 @@ export function useKeyboardNavigation<T extends HTMLElement>(
       firstFocusable.setAttribute("tabindex", "0")
       firstFocusable.focus()
     }
-  }, [getFocusableElements])
+  }, [autoFocus, getFocusableElements])
 
   return ref
 }

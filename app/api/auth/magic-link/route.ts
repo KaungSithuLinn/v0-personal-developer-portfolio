@@ -7,6 +7,8 @@ import {
   getClientIp,
   getRequestSize,
   getRequiredEnv,
+  NO_STORE_HEADERS,
+  rateLimitHeaders,
 } from "@/lib/security"
 import { signMagicLinkToken } from "@/lib/auth"
 
@@ -14,15 +16,8 @@ const schema = z.object({
   email: z.string().email("Invalid email address").max(254),
 })
 
-const rateLimiter = createRateLimiter({
-  windowMs: 60_000,
-  maxRequests: 3,
-  maxEntries: 10_000,
-})
-
-const noStoreHeaders = {
-  "Cache-Control": "no-store, no-cache, must-revalidate",
-}
+const MAGIC_LINK_RATE_LIMIT = { windowMs: 60_000, maxRequests: 3, maxEntries: 10_000 } as const
+const rateLimiter = createRateLimiter(MAGIC_LINK_RATE_LIMIT)
 
 export const runtime = "nodejs"
 
@@ -31,28 +26,25 @@ export async function POST(request: Request) {
     if (!getRequestSize(request, 1024)) {
       return NextResponse.json(
         { error: "Request body is too large" },
-        { status: 413, headers: noStoreHeaders },
+        { status: 413, headers: NO_STORE_HEADERS },
       )
     }
 
     if (!checkCsrf(request)) {
       return NextResponse.json(
         { error: "Invalid request origin" },
-        { status: 403, headers: noStoreHeaders },
+        { status: 403, headers: NO_STORE_HEADERS },
       )
     }
 
     const ip = getClientIp(request)
-    const limit = rateLimiter.check(ip)
+    const limit = rateLimiter.check(`magic-link:${ip}`)
     if (!limit.allowed) {
       return NextResponse.json(
         { error: "Too many requests. Please try again later." },
         {
           status: 429,
-          headers: {
-            ...noStoreHeaders,
-            "Retry-After": String(Math.max(1, Math.ceil(limit.retryAfterMs / 1000))),
-          },
+          headers: rateLimitHeaders(limit, MAGIC_LINK_RATE_LIMIT.maxRequests),
         },
       )
     }
@@ -63,7 +55,7 @@ export async function POST(request: Request) {
     } catch {
       return NextResponse.json(
         { error: "Invalid JSON body" },
-        { status: 400, headers: noStoreHeaders },
+        { status: 400, headers: NO_STORE_HEADERS },
       )
     }
 
@@ -73,7 +65,7 @@ export async function POST(request: Request) {
     if (!token) {
       return NextResponse.json(
         { error: "Authentication is not configured" },
-        { status: 500, headers: noStoreHeaders },
+        { status: 500, headers: NO_STORE_HEADERS },
       )
     }
 
@@ -95,19 +87,19 @@ export async function POST(request: Request) {
 
     return NextResponse.json(
       { message: "Magic link sent" },
-      { status: 202, headers: noStoreHeaders },
+      { status: 202, headers: NO_STORE_HEADERS },
     )
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json(
         { error: "Validation failed", details: error.issues },
-        { status: 400, headers: noStoreHeaders },
+        { status: 400, headers: NO_STORE_HEADERS },
       )
     }
     console.error("Magic link error", error instanceof Error ? error.message : "unknown")
     return NextResponse.json(
       { error: "Failed to send magic link" },
-      { status: 500, headers: noStoreHeaders },
+      { status: 500, headers: NO_STORE_HEADERS },
     )
   }
 }

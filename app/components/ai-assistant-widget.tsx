@@ -1,10 +1,11 @@
 "use client"
 
+import dynamic from "next/dynamic"
 import { useEffect, useRef, useState } from "react"
 
 type ChatMessage = { id: string; role: "user" | "assistant"; content: string }
 
-export function AiAssistantWidget() {
+function AiAssistantWidgetInner() {
   const [open, setOpen] = useState(false)
   const [messages, setMessages] = useState<ChatMessage[]>([])
   const [input, setInput] = useState("")
@@ -135,11 +136,12 @@ export function AiAssistantWidget() {
           ref={panelRef}
           role="dialog"
           aria-modal="true"
+          aria-labelledby="ai-assistant-title"
           aria-label="AI assistant"
           className="w-[min(92vw,360px)] rounded-2xl border border-border bg-card/95 p-4 shadow-lg backdrop-blur-sm"
         >
           <div className="mb-3 flex items-center justify-between">
-            <span className="text-sm font-medium">Ask about my work</span>
+            <span id="ai-assistant-title" className="text-sm font-medium">Ask about my work</span>
             <button
               type="button"
               onClick={handleClose}
@@ -216,3 +218,8 @@ export function AiAssistantWidget() {
     </div>
   )
 }
+
+export const AiAssistantWidget = dynamic(async () => ({ default: AiAssistantWidgetInner }), {
+  ssr: false,
+  loading: () => null,
+})

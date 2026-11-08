@@ -21,7 +21,7 @@ const notoSansArabic = Noto_Sans_Arabic({
   subsets: ["arabic"],
   display: "swap",
   variable: "--font-noto-arabic",
-  preload: true,
+  preload: false,
   adjustFontFallback: true,
 })
 
@@ -30,7 +30,7 @@ const notoSansSC = Noto_Sans_SC({
   weight: ["400", "500", "700"],
   display: "swap",
   variable: "--font-noto-sc",
-  preload: true,
+  preload: false,
 })
 
 export const metadata: Metadata = {

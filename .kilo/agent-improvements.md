@@ -44,4 +44,21 @@ This file is the shared coordination and improvement record for the portfolio mu
 
 ## Entries
 
-No improvements recorded yet.
+### 2026-11-08 - Security/cache hardening and performance-safe API cleanup
+- Owner: backend-api / security-deployment / frontend-ui
+- Scope: Proxy/CSP ownership, auth/session hardening, API guard consistency, cache headers, low-risk client load reduction
+- Files: `proxy.ts`, `next.config.mjs`, `lib/auth.ts`, `lib/security.ts`, `app/api/auth/session/route.ts`, `app/api/auth/logout/route.ts`, `app/api/auth/magic-link/route.ts`, `app/api/chat/route.ts`, `app/api/contact/route.ts`, `app/api/terminal/route.ts`, `app/api/github/route.ts`, `app/api/location/route.ts`, `app/layout.tsx`, `app/components/ai-assistant-widget.tsx`, `__tests__/api/chat/route.test.ts`, `__tests__/api/contact/route.test.ts`, `__tests__/api/terminal/route.test.ts`
+- Summary: Made `proxy.ts` the authoritative security-header/CSP owner by removing duplicate global headers from `next.config.mjs` and normalizing CSP/style handling. Hardened auth tokens with issuer/audience/JTI claims and a shared cookie-name constant; ensured session responses are `no-store`. Standardized API guards with shared `NO_STORE_HEADERS`/`rateLimitHeaders`, scoped rate-limit keys per route, and added explicit cache/timeout handling for public GitHub/location fetches. Reduced startup risk/cost by disabling preload for non-default locale fonts and loading the AI assistant widget client-side only.
+- Security impact: Improves header consistency, reduces auth/session caching risk, and makes abuse controls easier to reason about. Existing CSRF/origin checks and validation remain in place. In-memory rate limiting still cannot provide global/serverless guarantees; distributed store remains follow-up work.
+- Validation: `npm.cmd run test` passed (75/75); `npx.cmd tsc --noEmit` passed; `npm.cmd run validate:translations` passed; `npm.cmd run lint` passed; `npm.cmd run build` passed.
+- Residual risks: CSP still allows `unsafe-inline` styles (framework/runtime compatibility); nonce propagation is not fully verified for all script injection points; auth is stateless without revocation/denylist; Vercel/serverless global rate limiting needs shared durable storage; `opengraph-image` Edge Runtime deprecation warning remains pre-existing.
+- Follow-up: Add shared API wrapper + contract tests for all routes, introduce approved durable rate-limit/revocation store, audit/complete nonce adoption, and address Edge Runtime migration separately.
+### 2026-11-08 - Cross-agent enhancement batch
+- Owner: coordinator / frontend-ui / backend-api / security-deployment
+- Scope: Auth cookie security, proxy path protection, contact error hygiene, CSP/console config, accessibility, CSS performance and motion safety
+- Files: `lib/auth.ts`, `proxy.ts`, `app/api/contact/route.ts`, `next.config.mjs`, `app/components/floating-nav.tsx`, `app/components/ai-assistant-widget.tsx`, `hooks/use-keyboard-navigation.ts`, `app/globals.css`
+- Summary: Secured session-cookie clearing, protected locale-prefixed admin/preview paths, removed validation detail leakage, preserved production console errors, improved hidden navigation accessibility, added dialog labeling, made focus initialization opt-in, removed a global text transition, tokenized section/card surfaces, and gated infinite animation under reduced motion.
+- Security impact: Reduced information disclosure and closed a locale-prefixed protected-route gap; improved cookie hygiene.
+- Validation: `npm.cmd run lint` passed; `npx.cmd tsc --noEmit` passed; `npm.cmd run test` passed (75 tests); `npm.cmd run build` passed.
+- Residual risks: Distributed rate limiting remains process-local; CSP still permits inline styles for Framer Motion; 10 moderate dev-only advisories remain.
+- Follow-up: Consider shared rate-limit storage and nonce-based styles only if strict CSP is required.

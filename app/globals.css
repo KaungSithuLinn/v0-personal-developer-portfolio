@@ -223,11 +223,6 @@ body {
   opacity: 0.5;
 }
 
-/* Ensure smooth transitions for all translatable elements */
-h1, h2, h3, h4, h5, h6, p, span, a, button {
-  transition: opacity 0.2s ease-in-out;
-}
-
 /* Language-specific font adjustments */
 
 /* Utility classes */
@@ -235,28 +230,29 @@ h1, h2, h3, h4, h5, h6, p, span, a, button {
   animation: gradient-x 15s ease infinite;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .animate-gradient-x {
+    animation: none;
+  }
+}
+
 /* Design-system helpers ---------------------------------------- */
 
 /* Repeated section background */
 .section-bg {
-  background: linear-gradient(to bottom right, #f8fafc, #ffffff);
+  background: linear-gradient(to bottom right, hsl(var(--background)), hsl(var(--card)));
 }
 
 .dark .section-bg {
-  background: linear-gradient(to bottom right, #070c16, #0a1628);
+  background: linear-gradient(to bottom right, hsl(var(--background)), hsl(var(--card)));
 }
 
 /* Consistent card surfaces aligned to tokens */
 .card-glass {
-  background-color: hsl(0 0% 100% / 0.8);
-  border: 1px solid hsl(214 25% 90% / 0.5);
+  background-color: var(--surface-glass);
+  border: 1px solid var(--surface-glass-border);
   backdrop-filter: blur(4px);
   transition: background-color 0.3s, border-color 0.3s;
-}
-
-.dark .card-glass {
-  background-color: hsl(220 30% 12% / 0.8);
-  border-color: hsl(220 28% 18% / 0.5);
 }
 
 /* Faint engineering grid backdrop */
