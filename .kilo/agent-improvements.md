@@ -62,3 +62,13 @@ This file is the shared coordination and improvement record for the portfolio mu
 - Validation: `npm.cmd run lint` passed; `npx.cmd tsc --noEmit` passed; `npm.cmd run test` passed (75 tests); `npm.cmd run build` passed.
 - Residual risks: Distributed rate limiting remains process-local; CSP still permits inline styles for Framer Motion; 10 moderate dev-only advisories remain.
 - Follow-up: Consider shared rate-limit storage and nonce-based styles only if strict CSP is required.
+
+### 2026-11-08 - Fixed floating widget overlap
+- Owner: frontend-ui
+- Scope: Floating action button stacking
+- Files: `app/components/floating-nav.tsx`
+- Summary: Repositioned the back-to-top, mode toggle, and seasonal toggle buttons into non-overlapping vertical stacks so the seasonal toggle is no longer obscured by the AI assistant button.
+- Security impact: None.
+- Validation: `npm.cmd run lint` passed; `npx.cmd tsc --noEmit` passed; `npm.cmd run test` passed (75 tests); `npm.cmd run build` passed.
+- Residual risks: Widget positions are tuned for the current 44px button size and may need review if button dimensions change.
+- Follow-up: Verify in production browser after deployment.

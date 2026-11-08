@@ -149,15 +149,15 @@ const lastScrollYRef = useRef(0)
           pointerEvents: showBackToTop ? "auto" : "none",
         }}
         transition={{ duration: 0.2 }}
-        className={`fixed bottom-6 z-50 flex items-center justify-center w-11 h-11 rounded-full bg-primary text-primary-foreground shadow-lg shadow-primary/30 hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background ${isRTL ? "left-6" : "right-6"}`}
+        className={`fixed bottom-[4.25rem] z-50 flex items-center justify-center w-11 h-11 rounded-full bg-primary text-primary-foreground shadow-lg shadow-primary/30 hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background ${isRTL ? "left-6" : "right-6"}`}
       >
         <ArrowUp className="w-5 h-5" aria-hidden="true" />
       </motion.button>
 
-      <div className={`fixed bottom-20 z-50 ${isRTL ? "left-6" : "right-6"}`}>
+      <div className={`fixed bottom-40 z-50 ${isRTL ? "left-6" : "right-6"}`}>
         <ModeToggle />
       </div>
-      <div className={`fixed bottom-8 z-50 ${isRTL ? "left-6" : "right-6"}`}>
+      <div className={`fixed bottom-28 z-50 ${isRTL ? "left-6" : "right-6"}`}>
         <SeasonalToggle />
       </div>
     </>
